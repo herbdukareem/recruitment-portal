@@ -1,0 +1,131 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  background-image: linear-gradient(to top left, rgba(255, 255, 255, 0.8823529412), rgba(255, 255, 255, 0.8823529412)), url(./career.jpg);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.winscroll {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  margin: 3em 0;
+}
+.winscroll div #login-section, .winscroll div #signup-section, .winscroll div #forget-password-section {
+  width: 15em;
+  max-width: 20em;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2em;
+  border-radius: 0.4em;
+  -webkit-border-radius: 0.2em;
+  -moz-border-radius: 0.2em;
+  -ms-border-radius: 0.2em;
+  -o-border-radius: 0.2em;
+}
+.winscroll div #login-section .logo, .winscroll div #signup-section .logo, .winscroll div #forget-password-section .logo {
+  text-align: center;
+}
+.winscroll div #login-section .logo img, .winscroll div #signup-section .logo img, .winscroll div #forget-password-section .logo img {
+  width: 5em;
+}
+.winscroll div #login-section .logo p, .winscroll div #signup-section .logo p, .winscroll div #forget-password-section .logo p {
+  color: #046f42;
+  font-weight: 400;
+  font-size: 0.8em;
+}
+.winscroll div #login-section form input[type=text], .winscroll div #login-section form input[type=email], .winscroll div #login-section form input[type=password], .winscroll div #signup-section form input[type=text], .winscroll div #signup-section form input[type=email], .winscroll div #signup-section form input[type=password], .winscroll div #forget-password-section form input[type=text], .winscroll div #forget-password-section form input[type=email], .winscroll div #forget-password-section form input[type=password] {
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.5em;
+  padding: 1em;
+  margin-top: 1em;
+  border: 0.15em solid #a4a7a7;
+  cursor: pointer;
+}
+.winscroll div #login-section form input[type=text]:focus, .winscroll div #login-section form input[type=email]:focus, .winscroll div #login-section form input[type=password]:focus, .winscroll div #signup-section form input[type=text]:focus, .winscroll div #signup-section form input[type=email]:focus, .winscroll div #signup-section form input[type=password]:focus, .winscroll div #forget-password-section form input[type=text]:focus, .winscroll div #forget-password-section form input[type=email]:focus, .winscroll div #forget-password-section form input[type=password]:focus {
+  border: 0.16em solid #046f42;
+  outline: none;
+}
+.winscroll div #login-section form input[type=submit], .winscroll div #login-section form input[type=button], .winscroll div #signup-section form input[type=submit], .winscroll div #signup-section form input[type=button], .winscroll div #forget-password-section form input[type=submit], .winscroll div #forget-password-section form input[type=button] {
+  background-color: #046f42;
+  color: #fff;
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.5em;
+  padding: 1em;
+  border: none;
+  margin-top: 1em;
+  font-weight: bold;
+  border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  -moz-border-radius: 0.4em;
+  -ms-border-radius: 0.4em;
+  -o-border-radius: 0.4em;
+  transition: ease 0.8s;
+  -webkit-transition: ease 0.8s;
+  -moz-transition: ease 0.8s;
+  -ms-transition: ease 0.8s;
+  -o-transition: ease 0.8s;
+  cursor: pointer;
+}
+.winscroll div #login-section form input[type=submit]:hover, .winscroll div #login-section form input[type=button]:hover, .winscroll div #signup-section form input[type=submit]:hover, .winscroll div #signup-section form input[type=button]:hover, .winscroll div #forget-password-section form input[type=submit]:hover, .winscroll div #forget-password-section form input[type=button]:hover {
+  background-color: #035231;
+}
+.winscroll div #login-section form .intel-prop, .winscroll div #signup-section form .intel-prop, .winscroll div #forget-password-section form .intel-prop {
+  font-size: 0.6em;
+  margin-top: 1em;
+  line-height: 1.8em;
+}
+.winscroll div #login-section form .intel-prop a, .winscroll div #signup-section form .intel-prop a, .winscroll div #forget-password-section form .intel-prop a {
+  text-decoration: none;
+  color: #046f42;
+  transition: ease-in 1s;
+  -webkit-transition: ease-in 1s;
+  -moz-transition: ease-in 1s;
+  -ms-transition: ease-in 1s;
+  -o-transition: ease-in 0.5s;
+}
+.winscroll div #login-section form .intel-prop a:hover, .winscroll div #signup-section form .intel-prop a:hover, .winscroll div #forget-password-section form .intel-prop a:hover {
+  text-decoration: underline;
+  color: #035231;
+}
+.winscroll div #login-section form .intel-prop input[type=checkbox], .winscroll div #signup-section form .intel-prop input[type=checkbox], .winscroll div #forget-password-section form .intel-prop input[type=checkbox] {
+  margin: auto;
+}
+.winscroll div #login-section form .intel-prop input[type=button], .winscroll div #signup-section form .intel-prop input[type=button], .winscroll div #forget-password-section form .intel-prop input[type=button] {
+  width: 100%;
+  height: 3.5em;
+  padding: 1em;
+  border: none;
+  margin-top: 1em;
+  font-weight: bold;
+  border-radius: 0.4em;
+  color: #046f42;
+  background-color: #fff;
+  cursor: pointer;
+  border: 0.15em solid #046f42;
+  transition: all ease-out 0s;
+  -webkit-transition: all ease-out 0s;
+  -moz-transition: all ease-out 0s;
+  -ms-transition: all ease-out 0s;
+  -o-transition: all ease-out 0s;
+}
+.winscroll div #login-section form .intel-prop input[type=button]:hover, .winscroll div #signup-section form .intel-prop input[type=button]:hover, .winscroll div #forget-password-section form .intel-prop input[type=button]:hover {
+  border: 0.18em solid #035231;
+  color: #035231;
+}
+.winscroll div #login-section form .input-set, .winscroll div #signup-section form .input-set, .winscroll div #forget-password-section form .input-set {
+  position: relative;
+}
+.winscroll div #login-section form .input-set svg, .winscroll div #signup-section form .input-set svg, .winscroll div #forget-password-section form .input-set svg {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  cursor: pointer;
+}/*# sourceMappingURL=session_style.css.map */
