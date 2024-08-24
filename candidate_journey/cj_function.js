@@ -43,7 +43,7 @@ lightMode.addEventListener("click", (e)=>{
     lightMode.style.display = "none";
     darkMode.style.display = "block";
     darkMode.parentElement.style.background = "#002908";
-    document.documentElement.style.setProperty('--main-bg', '#030c01');
+    document.documentElement.style.setProperty('--main-bg', '#111e27');
     document.documentElement.style.setProperty('--main-color', '#fff');
 });
 
