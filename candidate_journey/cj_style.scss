@@ -8,7 +8,7 @@ body{
     background: var(--main-bg);
     color: var(--main-color);
     font-size: 20px;
-    font-family: "Roboto", 'Sans-sarif';
+    font-family: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 .winscroll{
     .nav{
@@ -184,12 +184,109 @@ body{
             }
         }
     }
-    
-
-
+    .main{
+        header{
+            h2{
+                color: var(--main-color);
+                text-align: center;
+                margin: 0.3em;
+            }
+        }
+        section{
+            .con{
+               display: grid;
+               grid-template-columns: 45% 10% 45%; 
+               padding: 2em;
+               margin: 2em 0;
+               .left-flex, .right-flex{
+                    position: relative;
+                    display: flex;
+                    align-items: end;
+                    height: 300px;
+                    background-image: linear-gradient(to top, #000000a4, #ffffff00), url(../images/image.webp);
+                    background-position: center;
+                    background-size: cover;
+                    color: #fff;
+                    padding: 1em;
+                    border-radius:0.5em ;
+                    -webkit-border-radius:0.5em ;
+                    -moz-border-radius:0.5em ;
+                    -ms-border-radius:0.5em ;
+                    -o-border-radius:0.5em ;
+                    .back-layer{
+                        content: "Hello";
+                        position: absolute;
+                        background-color: #8b192c;
+                        width: 50%;
+                        height: 50%;
+                        bottom: -20px;
+                        z-index: -1;
+                        border-radius:1em ;
+                        -webkit-border-radius:1em ;
+                        -moz-border-radius:1em ;
+                        -ms-border-radius:1em ;
+                        -o-border-radius:1em ;
+}
+                    div{
+                        button{
+                            padding: 0.6em 0.8em;
+                            border: none;
+                            font-size: 0.8em;
+                            color: #fff;
+                            border-radius: 02em;
+                            -webkit-border-radius: 02em;
+                            -moz-border-radius: 02em;
+                            -ms-border-radius: 02em;
+                            -o-border-radius: 02em;
+                        }
+                        h3{
+                            margin: 0.5em 0;
+                        }
+                        div{
+                            a{
+                                text-decoration: none;
+                                color: #fff;
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                }
+                .left-flex{
+                    grid-column: 1/2;
+                    .back-layer{
+                        left: -20px;
+                    }
+                    div{
+                        button{
+                            background-color: #8b192c;
+                        }
+                    }
+                }
+                .right-flex{
+                    grid-column: 3/4;
+                    .back-layer{
+                        right: -20px;
+                        background-color: #01871c;
+                    }
+                    div{
+                        button{
+                            background-color: #01871c;
+                        }
+                    }
+                }
+               .cen-flex{
+                    grid-column: 2/3;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+            }
+        }
+    }
     .footer{
         background: #111e27;
         color: #fff;
+        display: grid;
         grid-template-rows:2fr 1fr ;
         .foot-link{
             grid-row: 1/2;
@@ -247,6 +344,9 @@ body{
             padding: 2em;
         }
     }
+
+
+    
     @media screen and (max-width:768px) {
         .nav{
             width: 100%;
@@ -324,6 +424,29 @@ body{
                         top: 0;
                     }
                 }
+            }
+        }
+        .main{
+            section{
+                .con{
+                    display: grid;
+                    grid-template-columns: 15% 85%;
+                    .left-flex{
+                        grid-column: 2/3;
+                    }
+                    .right-flex{
+                        grid-column: 2/3;
+                    }
+                    .cen-flex{
+                        grid-column: 1/2;
+                    }
+                }
+            }
+        }
+        .footer{
+            display: block;
+            .foot-link{
+                display: block;
             }
         }
     }
