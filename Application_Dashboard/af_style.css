@@ -1,0 +1,360 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-family: "Gruppo", sans-serif;
+  font-weight: bold;
+  font-style: normal;
+  background-color: #f7f7f7;
+}
+
+.db-winscroll {
+  display: grid;
+  grid-template-columns: 15% 85%;
+}
+.db-winscroll #db-panel {
+  grid-column: 1/2;
+  background: #616161;
+  height: 100%;
+  width: 100%;
+}
+.db-winscroll #db-panel .head-panel {
+  padding: 0.25em;
+  text-align: center;
+  position: relative;
+}
+.db-winscroll #db-panel .head-panel img {
+  width: 3em;
+}
+.db-winscroll #db-panel .head-panel::before {
+  content: "";
+  width: 100%;
+  background-color: #aaa;
+  height: 0.08em;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.db-winscroll #db-panel .body-panel ul {
+  padding: 0.3em;
+}
+.db-winscroll #db-panel .body-panel ul li {
+  list-style: none;
+  margin: 0.3em;
+}
+.db-winscroll #db-panel .body-panel ul li button {
+  cursor: pointer;
+  text-align: left;
+  background: none;
+  text-overflow: clip;
+  color: #ddd;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.7em;
+  border: none;
+  padding: 0.5em 0.3em;
+  transition: all ease-in 0.5s;
+  border-radius: 0.3em;
+  -webkit-border-radius: 0.3em;
+  -moz-border-radius: 0.3em;
+  -ms-border-radius: 0.3em;
+  -o-border-radius: 0.3em;
+  -webkit-transition: all ease-in 0.5s;
+  -moz-transition: all ease-in 0.5s;
+  -ms-transition: all ease-in 0.5s;
+  -o-transition: all ease-in 0.5s;
+}
+.db-winscroll #db-panel .body-panel ul li button:hover {
+  background-color: rgba(255, 255, 255, 0.3137254902);
+}
+.db-winscroll #display-screen {
+  grid-column: 2/3;
+}
+.db-winscroll #display-screen .nav-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 0.1em solid #a4a5a5;
+}
+.db-winscroll #display-screen .nav-bar .left-nav {
+  grid-column: 1/2;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.db-winscroll #display-screen .nav-bar .left-nav h1 {
+  font-size: 0.7em;
+  color: #9e0404;
+  font-weight: bold;
+}
+.db-winscroll #display-screen .nav-bar .left-nav svg {
+  cursor: pointer;
+}
+.db-winscroll #display-screen .nav-bar .right-nav {
+  grid-column: 2/3;
+  font-size: 0.8em;
+  font-weight: lighter;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding-right: 0.2em;
+}
+.db-winscroll #display-screen .nav-bar .right-nav svg {
+  padding-right: 5px;
+}
+.db-winscroll #display-screen #biodata-screen, .db-winscroll #display-screen #education-screen, .db-winscroll #display-screen #work-screen {
+  padding: 0 0.5em;
+}
+.db-winscroll #display-screen #biodata-screen .head-bio, .db-winscroll #display-screen #biodata-screen .head-edu, .db-winscroll #display-screen #biodata-screen .head-work, .db-winscroll #display-screen #education-screen .head-bio, .db-winscroll #display-screen #education-screen .head-edu, .db-winscroll #display-screen #education-screen .head-work, .db-winscroll #display-screen #work-screen .head-bio, .db-winscroll #display-screen #work-screen .head-edu, .db-winscroll #display-screen #work-screen .head-work {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 50px;
+}
+.db-winscroll #display-screen #biodata-screen .head-bio .left-bio, .db-winscroll #display-screen #biodata-screen .head-bio .left-edu, .db-winscroll #display-screen #biodata-screen .head-bio .left-work, .db-winscroll #display-screen #biodata-screen .head-edu .left-bio, .db-winscroll #display-screen #biodata-screen .head-edu .left-edu, .db-winscroll #display-screen #biodata-screen .head-edu .left-work, .db-winscroll #display-screen #biodata-screen .head-work .left-bio, .db-winscroll #display-screen #biodata-screen .head-work .left-edu, .db-winscroll #display-screen #biodata-screen .head-work .left-work, .db-winscroll #display-screen #education-screen .head-bio .left-bio, .db-winscroll #display-screen #education-screen .head-bio .left-edu, .db-winscroll #display-screen #education-screen .head-bio .left-work, .db-winscroll #display-screen #education-screen .head-edu .left-bio, .db-winscroll #display-screen #education-screen .head-edu .left-edu, .db-winscroll #display-screen #education-screen .head-edu .left-work, .db-winscroll #display-screen #education-screen .head-work .left-bio, .db-winscroll #display-screen #education-screen .head-work .left-edu, .db-winscroll #display-screen #education-screen .head-work .left-work, .db-winscroll #display-screen #work-screen .head-bio .left-bio, .db-winscroll #display-screen #work-screen .head-bio .left-edu, .db-winscroll #display-screen #work-screen .head-bio .left-work, .db-winscroll #display-screen #work-screen .head-edu .left-bio, .db-winscroll #display-screen #work-screen .head-edu .left-edu, .db-winscroll #display-screen #work-screen .head-edu .left-work, .db-winscroll #display-screen #work-screen .head-work .left-bio, .db-winscroll #display-screen #work-screen .head-work .left-edu, .db-winscroll #display-screen #work-screen .head-work .left-work {
+  grid-column: 1/2;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 0 0.8em;
+}
+.db-winscroll #display-screen #biodata-screen .head-bio .left-bio h2, .db-winscroll #display-screen #biodata-screen .head-bio .left-edu h2, .db-winscroll #display-screen #biodata-screen .head-bio .left-work h2, .db-winscroll #display-screen #biodata-screen .head-edu .left-bio h2, .db-winscroll #display-screen #biodata-screen .head-edu .left-edu h2, .db-winscroll #display-screen #biodata-screen .head-edu .left-work h2, .db-winscroll #display-screen #biodata-screen .head-work .left-bio h2, .db-winscroll #display-screen #biodata-screen .head-work .left-edu h2, .db-winscroll #display-screen #biodata-screen .head-work .left-work h2, .db-winscroll #display-screen #education-screen .head-bio .left-bio h2, .db-winscroll #display-screen #education-screen .head-bio .left-edu h2, .db-winscroll #display-screen #education-screen .head-bio .left-work h2, .db-winscroll #display-screen #education-screen .head-edu .left-bio h2, .db-winscroll #display-screen #education-screen .head-edu .left-edu h2, .db-winscroll #display-screen #education-screen .head-edu .left-work h2, .db-winscroll #display-screen #education-screen .head-work .left-bio h2, .db-winscroll #display-screen #education-screen .head-work .left-edu h2, .db-winscroll #display-screen #education-screen .head-work .left-work h2, .db-winscroll #display-screen #work-screen .head-bio .left-bio h2, .db-winscroll #display-screen #work-screen .head-bio .left-edu h2, .db-winscroll #display-screen #work-screen .head-bio .left-work h2, .db-winscroll #display-screen #work-screen .head-edu .left-bio h2, .db-winscroll #display-screen #work-screen .head-edu .left-edu h2, .db-winscroll #display-screen #work-screen .head-edu .left-work h2, .db-winscroll #display-screen #work-screen .head-work .left-bio h2, .db-winscroll #display-screen #work-screen .head-work .left-edu h2, .db-winscroll #display-screen #work-screen .head-work .left-work h2 {
+  font-size: 1.5em;
+  font-weight: bolder;
+}
+.db-winscroll #display-screen #biodata-screen .head-bio .right-bio, .db-winscroll #display-screen #biodata-screen .head-bio .right-edu, .db-winscroll #display-screen #biodata-screen .head-bio .right-work, .db-winscroll #display-screen #biodata-screen .head-edu .right-bio, .db-winscroll #display-screen #biodata-screen .head-edu .right-edu, .db-winscroll #display-screen #biodata-screen .head-edu .right-work, .db-winscroll #display-screen #biodata-screen .head-work .right-bio, .db-winscroll #display-screen #biodata-screen .head-work .right-edu, .db-winscroll #display-screen #biodata-screen .head-work .right-work, .db-winscroll #display-screen #education-screen .head-bio .right-bio, .db-winscroll #display-screen #education-screen .head-bio .right-edu, .db-winscroll #display-screen #education-screen .head-bio .right-work, .db-winscroll #display-screen #education-screen .head-edu .right-bio, .db-winscroll #display-screen #education-screen .head-edu .right-edu, .db-winscroll #display-screen #education-screen .head-edu .right-work, .db-winscroll #display-screen #education-screen .head-work .right-bio, .db-winscroll #display-screen #education-screen .head-work .right-edu, .db-winscroll #display-screen #education-screen .head-work .right-work, .db-winscroll #display-screen #work-screen .head-bio .right-bio, .db-winscroll #display-screen #work-screen .head-bio .right-edu, .db-winscroll #display-screen #work-screen .head-bio .right-work, .db-winscroll #display-screen #work-screen .head-edu .right-bio, .db-winscroll #display-screen #work-screen .head-edu .right-edu, .db-winscroll #display-screen #work-screen .head-edu .right-work, .db-winscroll #display-screen #work-screen .head-work .right-bio, .db-winscroll #display-screen #work-screen .head-work .right-edu, .db-winscroll #display-screen #work-screen .head-work .right-work {
+  grid-column: 2/3;
+  padding: 0 0.8em;
+  font-size: 0.8em;
+  font-weight: lighter;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.db-winscroll #display-screen #biodata-screen .head-bio .right-bio p, .db-winscroll #display-screen #biodata-screen .head-bio .right-edu p, .db-winscroll #display-screen #biodata-screen .head-bio .right-work p, .db-winscroll #display-screen #biodata-screen .head-edu .right-bio p, .db-winscroll #display-screen #biodata-screen .head-edu .right-edu p, .db-winscroll #display-screen #biodata-screen .head-edu .right-work p, .db-winscroll #display-screen #biodata-screen .head-work .right-bio p, .db-winscroll #display-screen #biodata-screen .head-work .right-edu p, .db-winscroll #display-screen #biodata-screen .head-work .right-work p, .db-winscroll #display-screen #education-screen .head-bio .right-bio p, .db-winscroll #display-screen #education-screen .head-bio .right-edu p, .db-winscroll #display-screen #education-screen .head-bio .right-work p, .db-winscroll #display-screen #education-screen .head-edu .right-bio p, .db-winscroll #display-screen #education-screen .head-edu .right-edu p, .db-winscroll #display-screen #education-screen .head-edu .right-work p, .db-winscroll #display-screen #education-screen .head-work .right-bio p, .db-winscroll #display-screen #education-screen .head-work .right-edu p, .db-winscroll #display-screen #education-screen .head-work .right-work p, .db-winscroll #display-screen #work-screen .head-bio .right-bio p, .db-winscroll #display-screen #work-screen .head-bio .right-edu p, .db-winscroll #display-screen #work-screen .head-bio .right-work p, .db-winscroll #display-screen #work-screen .head-edu .right-bio p, .db-winscroll #display-screen #work-screen .head-edu .right-edu p, .db-winscroll #display-screen #work-screen .head-edu .right-work p, .db-winscroll #display-screen #work-screen .head-work .right-bio p, .db-winscroll #display-screen #work-screen .head-work .right-edu p, .db-winscroll #display-screen #work-screen .head-work .right-work p {
+  font-size: 0.9em;
+}
+.db-winscroll #display-screen #biodata-screen .head-bio .right-bio p a, .db-winscroll #display-screen #biodata-screen .head-bio .right-edu p a, .db-winscroll #display-screen #biodata-screen .head-bio .right-work p a, .db-winscroll #display-screen #biodata-screen .head-edu .right-bio p a, .db-winscroll #display-screen #biodata-screen .head-edu .right-edu p a, .db-winscroll #display-screen #biodata-screen .head-edu .right-work p a, .db-winscroll #display-screen #biodata-screen .head-work .right-bio p a, .db-winscroll #display-screen #biodata-screen .head-work .right-edu p a, .db-winscroll #display-screen #biodata-screen .head-work .right-work p a, .db-winscroll #display-screen #education-screen .head-bio .right-bio p a, .db-winscroll #display-screen #education-screen .head-bio .right-edu p a, .db-winscroll #display-screen #education-screen .head-bio .right-work p a, .db-winscroll #display-screen #education-screen .head-edu .right-bio p a, .db-winscroll #display-screen #education-screen .head-edu .right-edu p a, .db-winscroll #display-screen #education-screen .head-edu .right-work p a, .db-winscroll #display-screen #education-screen .head-work .right-bio p a, .db-winscroll #display-screen #education-screen .head-work .right-edu p a, .db-winscroll #display-screen #education-screen .head-work .right-work p a, .db-winscroll #display-screen #work-screen .head-bio .right-bio p a, .db-winscroll #display-screen #work-screen .head-bio .right-edu p a, .db-winscroll #display-screen #work-screen .head-bio .right-work p a, .db-winscroll #display-screen #work-screen .head-edu .right-bio p a, .db-winscroll #display-screen #work-screen .head-edu .right-edu p a, .db-winscroll #display-screen #work-screen .head-edu .right-work p a, .db-winscroll #display-screen #work-screen .head-work .right-bio p a, .db-winscroll #display-screen #work-screen .head-work .right-edu p a, .db-winscroll #display-screen #work-screen .head-work .right-work p a {
+  text-decoration: none;
+  color: #000;
+}
+.db-winscroll #display-screen #biodata-screen .head-bio .right-bio p a svg, .db-winscroll #display-screen #biodata-screen .head-bio .right-edu p a svg, .db-winscroll #display-screen #biodata-screen .head-bio .right-work p a svg, .db-winscroll #display-screen #biodata-screen .head-edu .right-bio p a svg, .db-winscroll #display-screen #biodata-screen .head-edu .right-edu p a svg, .db-winscroll #display-screen #biodata-screen .head-edu .right-work p a svg, .db-winscroll #display-screen #biodata-screen .head-work .right-bio p a svg, .db-winscroll #display-screen #biodata-screen .head-work .right-edu p a svg, .db-winscroll #display-screen #biodata-screen .head-work .right-work p a svg, .db-winscroll #display-screen #education-screen .head-bio .right-bio p a svg, .db-winscroll #display-screen #education-screen .head-bio .right-edu p a svg, .db-winscroll #display-screen #education-screen .head-bio .right-work p a svg, .db-winscroll #display-screen #education-screen .head-edu .right-bio p a svg, .db-winscroll #display-screen #education-screen .head-edu .right-edu p a svg, .db-winscroll #display-screen #education-screen .head-edu .right-work p a svg, .db-winscroll #display-screen #education-screen .head-work .right-bio p a svg, .db-winscroll #display-screen #education-screen .head-work .right-edu p a svg, .db-winscroll #display-screen #education-screen .head-work .right-work p a svg, .db-winscroll #display-screen #work-screen .head-bio .right-bio p a svg, .db-winscroll #display-screen #work-screen .head-bio .right-edu p a svg, .db-winscroll #display-screen #work-screen .head-bio .right-work p a svg, .db-winscroll #display-screen #work-screen .head-edu .right-bio p a svg, .db-winscroll #display-screen #work-screen .head-edu .right-edu p a svg, .db-winscroll #display-screen #work-screen .head-edu .right-work p a svg, .db-winscroll #display-screen #work-screen .head-work .right-bio p a svg, .db-winscroll #display-screen #work-screen .head-work .right-edu p a svg, .db-winscroll #display-screen #work-screen .head-work .right-work p a svg {
+  transform: translateY(3px);
+  -webkit-transform: translateY(3px);
+  -moz-transform: translateY(3px);
+  -ms-transform: translateY(3px);
+  -o-transform: translateY(3px);
+}
+.db-winscroll #display-screen #biodata-screen .body-bio, .db-winscroll #display-screen #biodata-screen .body-edu, .db-winscroll #display-screen #biodata-screen .body-work, .db-winscroll #display-screen #education-screen .body-bio, .db-winscroll #display-screen #education-screen .body-edu, .db-winscroll #display-screen #education-screen .body-work, .db-winscroll #display-screen #work-screen .body-bio, .db-winscroll #display-screen #work-screen .body-edu, .db-winscroll #display-screen #work-screen .body-work {
+  margin: 20px;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form, .db-winscroll #display-screen #biodata-screen .body-edu form, .db-winscroll #display-screen #biodata-screen .body-work form, .db-winscroll #display-screen #education-screen .body-bio form, .db-winscroll #display-screen #education-screen .body-edu form, .db-winscroll #display-screen #education-screen .body-work form, .db-winscroll #display-screen #work-screen .body-bio form, .db-winscroll #display-screen #work-screen .body-edu form, .db-winscroll #display-screen #work-screen .body-work form {
+  margin-bottom: 1em;
+  background-color: #fff;
+  box-shadow: 0 3px 4px #6e6e6e;
+  width: 100%;
+  border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  -moz-border-radius: 0.4em;
+  -ms-border-radius: 0.4em;
+  -o-border-radius: 0.4em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-head, .db-winscroll #display-screen #biodata-screen .body-edu form .form-head, .db-winscroll #display-screen #biodata-screen .body-work form .form-head, .db-winscroll #display-screen #education-screen .body-bio form .form-head, .db-winscroll #display-screen #education-screen .body-edu form .form-head, .db-winscroll #display-screen #education-screen .body-work form .form-head, .db-winscroll #display-screen #work-screen .body-bio form .form-head, .db-winscroll #display-screen #work-screen .body-edu form .form-head, .db-winscroll #display-screen #work-screen .body-work form .form-head {
+  text-align: left;
+  background-color: #216745;
+  color: #fff;
+  font-size: 0.5em;
+  padding: 0.1em 0.5em;
+  border-radius: 0.5em 0.5em 0 0;
+  -webkit-border-radius: 0.5em 0.5em 0 0;
+  -moz-border-radius: 0.5em 0.5em 0 0;
+  -ms-border-radius: 0.5em 0.5em 0 0;
+  -o-border-radius: 0.5em 0.5em 0 0;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table, .db-winscroll #display-screen #education-screen .body-bio form .form-body table, .db-winscroll #display-screen #education-screen .body-edu form .form-body table, .db-winscroll #display-screen #education-screen .body-work form .form-body table, .db-winscroll #display-screen #work-screen .body-bio form .form-body table, .db-winscroll #display-screen #work-screen .body-edu form .form-body table, .db-winscroll #display-screen #work-screen .body-work form .form-body table {
+  width: 100%;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td, .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td, .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td, .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td, .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td, .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td, .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td {
+  padding: 0.2em 0.2em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td label, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td label, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td label, .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td label, .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td label, .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td label, .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td label, .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td label, .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td label {
+  font-size: 0.7em;
+  padding: 0.5em 0.5em 0.5em 0.3em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td label i, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td label i, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td label i, .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td label i, .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td label i, .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td label i, .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td label i, .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td label i, .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td label i {
+  font-size: 0.5em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td input[type=text], .db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td input[type=email], .db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td input[type=date], .db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td input[type=file], .db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td select, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td input[type=text], .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td input[type=email], .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td input[type=date], .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td input[type=file], .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td select, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td input[type=text], .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td input[type=email], .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td input[type=date], .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td input[type=file], .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td select, .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td input[type=text], .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td input[type=email], .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td input[type=date], .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td input[type=file], .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td select, .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td input[type=text], .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td input[type=email], .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td input[type=date], .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td input[type=file], .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td select, .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td input[type=text], .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td input[type=email], .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td input[type=date], .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td input[type=file], .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td select, .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td input[type=text], .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td input[type=email], .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td input[type=date], .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td input[type=file], .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td select, .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td input[type=text], .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td input[type=email], .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td input[type=date], .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td input[type=file], .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td select, .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td input[type=text], .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td input[type=email], .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td input[type=date], .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td input[type=file], .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td select {
+  font-family: "Gruppo", sans-serif;
+  padding: 0.4em;
+  font-size: 0.7em;
+  outline: none;
+  width: 100%;
+  border: 0.1em solid #e0e0e0;
+  box-sizing: border-box;
+  border-radius: 0.5em;
+  font-family: "Gruppo", sans-serif;
+  padding: 0.4em;
+  font-size: 0.7em;
+  outline: none;
+  width: 100%;
+  border: 0.1em solid #e0e0e0;
+  box-sizing: border-box;
+  border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -ms-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td input:focus, .db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td select:focus, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td input:focus, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td select:focus, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td input:focus, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td select:focus, .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td input:focus, .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td select:focus, .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td input:focus, .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td select:focus, .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td input:focus, .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td select:focus, .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td input:focus, .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td select:focus, .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td input:focus, .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td select:focus, .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td input:focus, .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td select:focus {
+  outline: 0.08em solid #aaa;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td input[type=checkbox], .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td input[type=checkbox], .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td input[type=checkbox], .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td input[type=checkbox], .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td input[type=checkbox], .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td input[type=checkbox], .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td input[type=checkbox], .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td input[type=checkbox], .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td input[type=checkbox] {
+  transform: translateY(3px);
+  -webkit-transform: translateY(3px);
+  -moz-transform: translateY(3px);
+  -ms-transform: translateY(3px);
+  -o-transform: translateY(3px);
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td textarea, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td textarea, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td textarea, .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td textarea, .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td textarea, .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td textarea, .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td textarea, .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td textarea, .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td textarea {
+  font-family: "Gruppo", sans-serif;
+  padding: 0.4em;
+  font-size: 0.7em;
+  outline: none;
+  width: 100%;
+  height: 200px;
+  border: 0.1em solid #e0e0e0;
+  box-sizing: border-box;
+  border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -ms-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td #Emergency, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td #Emergency, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td #Emergency, .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td #Emergency, .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td #Emergency, .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td #Emergency, .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td #Emergency, .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td #Emergency, .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td #Emergency {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td #Emergency select, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td #Emergency select, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td #Emergency select, .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td #Emergency select, .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td #Emergency select, .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td #Emergency select, .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td #Emergency select, .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td #Emergency select, .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td #Emergency select {
+  grid-column: 1/2;
+  border-radius: 0.5em 0 0 0.5em;
+  -webkit-border-radius: 0.5em 0 0 0.5em;
+  -moz-border-radius: 0.5em 0 0 0.5em;
+  -ms-border-radius: 0.5em 0 0 0.5em;
+  -o-border-radius: 0.5em 0 0 0.5em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td #Emergency input[type=text] {
+  grid-column: 2/3;
+  border-radius: 0 0.5em 0.5em 0;
+  -webkit-border-radius: 0 0.5em 0.5em 0;
+  -moz-border-radius: 0 0.5em 0.5em 0;
+  -ms-border-radius: 0 0.5em 0.5em 0;
+  -o-border-radius: 0 0.5em 0.5em 0;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #biodata-screen .body-bio form .form-body table tr td #Emergency select, .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #biodata-screen .body-edu form .form-body table tr td #Emergency select, .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #biodata-screen .body-work form .form-body table tr td #Emergency select, .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #education-screen .body-bio form .form-body table tr td #Emergency select, .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #education-screen .body-edu form .form-body table tr td #Emergency select, .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #education-screen .body-work form .form-body table tr td #Emergency select, .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #work-screen .body-bio form .form-body table tr td #Emergency select, .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #work-screen .body-edu form .form-body table tr td #Emergency select, .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td #Emergency input[type=text], .db-winscroll #display-screen #work-screen .body-work form .form-body table tr td #Emergency select {
+  font-family: "Gruppo", sans-serif;
+  padding: 0.4em;
+  font-size: 0.7em;
+  outline: none;
+  width: 100%;
+  border: 0.1em solid #aaa;
+  box-sizing: border-box;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-footer, .db-winscroll #display-screen #biodata-screen .body-edu form .form-footer, .db-winscroll #display-screen #biodata-screen .body-work form .form-footer, .db-winscroll #display-screen #education-screen .body-bio form .form-footer, .db-winscroll #display-screen #education-screen .body-edu form .form-footer, .db-winscroll #display-screen #education-screen .body-work form .form-footer, .db-winscroll #display-screen #work-screen .body-bio form .form-footer, .db-winscroll #display-screen #work-screen .body-edu form .form-footer, .db-winscroll #display-screen #work-screen .body-work form .form-footer {
+  background: #e7e7e7;
+  padding: 0.4em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-footer button, .db-winscroll #display-screen #biodata-screen .body-edu form .form-footer button, .db-winscroll #display-screen #biodata-screen .body-work form .form-footer button, .db-winscroll #display-screen #education-screen .body-bio form .form-footer button, .db-winscroll #display-screen #education-screen .body-edu form .form-footer button, .db-winscroll #display-screen #education-screen .body-work form .form-footer button, .db-winscroll #display-screen #work-screen .body-bio form .form-footer button, .db-winscroll #display-screen #work-screen .body-edu form .form-footer button, .db-winscroll #display-screen #work-screen .body-work form .form-footer button {
+  padding: 0.5em 0.7em;
+  background: #216745;
+  border: none;
+  color: #fff;
+  border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  -moz-border-radius: 0.4em;
+  -ms-border-radius: 0.4em;
+  -o-border-radius: 0.4em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-footer button svg, .db-winscroll #display-screen #biodata-screen .body-edu form .form-footer button svg, .db-winscroll #display-screen #biodata-screen .body-work form .form-footer button svg, .db-winscroll #display-screen #education-screen .body-bio form .form-footer button svg, .db-winscroll #display-screen #education-screen .body-edu form .form-footer button svg, .db-winscroll #display-screen #education-screen .body-work form .form-footer button svg, .db-winscroll #display-screen #work-screen .body-bio form .form-footer button svg, .db-winscroll #display-screen #work-screen .body-edu form .form-footer button svg, .db-winscroll #display-screen #work-screen .body-work form .form-footer button svg {
+  transform: translateY(4px);
+  -webkit-transform: translateY(4px);
+  -moz-transform: translateY(4px);
+  -ms-transform: translateY(4px);
+  -o-transform: translateY(4px);
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .form-footer button:hover, .db-winscroll #display-screen #biodata-screen .body-edu form .form-footer button:hover, .db-winscroll #display-screen #biodata-screen .body-work form .form-footer button:hover, .db-winscroll #display-screen #education-screen .body-bio form .form-footer button:hover, .db-winscroll #display-screen #education-screen .body-edu form .form-footer button:hover, .db-winscroll #display-screen #education-screen .body-work form .form-footer button:hover, .db-winscroll #display-screen #work-screen .body-bio form .form-footer button:hover, .db-winscroll #display-screen #work-screen .body-edu form .form-footer button:hover, .db-winscroll #display-screen #work-screen .body-work form .form-footer button:hover {
+  background: #035231;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .no-br, .db-winscroll #display-screen #biodata-screen .body-edu form .no-br, .db-winscroll #display-screen #biodata-screen .body-work form .no-br, .db-winscroll #display-screen #education-screen .body-bio form .no-br, .db-winscroll #display-screen #education-screen .body-edu form .no-br, .db-winscroll #display-screen #education-screen .body-work form .no-br, .db-winscroll #display-screen #work-screen .body-bio form .no-br, .db-winscroll #display-screen #work-screen .body-edu form .no-br, .db-winscroll #display-screen #work-screen .body-work form .no-br {
+  padding: 0.5em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .no-br table, .db-winscroll #display-screen #biodata-screen .body-edu form .no-br table, .db-winscroll #display-screen #biodata-screen .body-work form .no-br table, .db-winscroll #display-screen #education-screen .body-bio form .no-br table, .db-winscroll #display-screen #education-screen .body-edu form .no-br table, .db-winscroll #display-screen #education-screen .body-work form .no-br table, .db-winscroll #display-screen #work-screen .body-bio form .no-br table, .db-winscroll #display-screen #work-screen .body-edu form .no-br table, .db-winscroll #display-screen #work-screen .body-work form .no-br table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .no-br table tr td label, .db-winscroll #display-screen #biodata-screen .body-edu form .no-br table tr td label, .db-winscroll #display-screen #biodata-screen .body-work form .no-br table tr td label, .db-winscroll #display-screen #education-screen .body-bio form .no-br table tr td label, .db-winscroll #display-screen #education-screen .body-edu form .no-br table tr td label, .db-winscroll #display-screen #education-screen .body-work form .no-br table tr td label, .db-winscroll #display-screen #work-screen .body-bio form .no-br table tr td label, .db-winscroll #display-screen #work-screen .body-edu form .no-br table tr td label, .db-winscroll #display-screen #work-screen .body-work form .no-br table tr td label {
+  font-size: 0.7em;
+  padding: 0.5em 0.5em 0.5em 0.3em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .no-br table tr td label i, .db-winscroll #display-screen #biodata-screen .body-edu form .no-br table tr td label i, .db-winscroll #display-screen #biodata-screen .body-work form .no-br table tr td label i, .db-winscroll #display-screen #education-screen .body-bio form .no-br table tr td label i, .db-winscroll #display-screen #education-screen .body-edu form .no-br table tr td label i, .db-winscroll #display-screen #education-screen .body-work form .no-br table tr td label i, .db-winscroll #display-screen #work-screen .body-bio form .no-br table tr td label i, .db-winscroll #display-screen #work-screen .body-edu form .no-br table tr td label i, .db-winscroll #display-screen #work-screen .body-work form .no-br table tr td label i {
+  font-size: 0.5em;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .no-br table tr td input[type=text], .db-winscroll #display-screen #biodata-screen .body-bio form .no-br table tr td input[type=email], .db-winscroll #display-screen #biodata-screen .body-bio form .no-br table tr td input[type=date], .db-winscroll #display-screen #biodata-screen .body-bio form .no-br table tr td input[type=file], .db-winscroll #display-screen #biodata-screen .body-bio form .no-br table tr td select, .db-winscroll #display-screen #biodata-screen .body-edu form .no-br table tr td input[type=text], .db-winscroll #display-screen #biodata-screen .body-edu form .no-br table tr td input[type=email], .db-winscroll #display-screen #biodata-screen .body-edu form .no-br table tr td input[type=date], .db-winscroll #display-screen #biodata-screen .body-edu form .no-br table tr td input[type=file], .db-winscroll #display-screen #biodata-screen .body-edu form .no-br table tr td select, .db-winscroll #display-screen #biodata-screen .body-work form .no-br table tr td input[type=text], .db-winscroll #display-screen #biodata-screen .body-work form .no-br table tr td input[type=email], .db-winscroll #display-screen #biodata-screen .body-work form .no-br table tr td input[type=date], .db-winscroll #display-screen #biodata-screen .body-work form .no-br table tr td input[type=file], .db-winscroll #display-screen #biodata-screen .body-work form .no-br table tr td select, .db-winscroll #display-screen #education-screen .body-bio form .no-br table tr td input[type=text], .db-winscroll #display-screen #education-screen .body-bio form .no-br table tr td input[type=email], .db-winscroll #display-screen #education-screen .body-bio form .no-br table tr td input[type=date], .db-winscroll #display-screen #education-screen .body-bio form .no-br table tr td input[type=file], .db-winscroll #display-screen #education-screen .body-bio form .no-br table tr td select, .db-winscroll #display-screen #education-screen .body-edu form .no-br table tr td input[type=text], .db-winscroll #display-screen #education-screen .body-edu form .no-br table tr td input[type=email], .db-winscroll #display-screen #education-screen .body-edu form .no-br table tr td input[type=date], .db-winscroll #display-screen #education-screen .body-edu form .no-br table tr td input[type=file], .db-winscroll #display-screen #education-screen .body-edu form .no-br table tr td select, .db-winscroll #display-screen #education-screen .body-work form .no-br table tr td input[type=text], .db-winscroll #display-screen #education-screen .body-work form .no-br table tr td input[type=email], .db-winscroll #display-screen #education-screen .body-work form .no-br table tr td input[type=date], .db-winscroll #display-screen #education-screen .body-work form .no-br table tr td input[type=file], .db-winscroll #display-screen #education-screen .body-work form .no-br table tr td select, .db-winscroll #display-screen #work-screen .body-bio form .no-br table tr td input[type=text], .db-winscroll #display-screen #work-screen .body-bio form .no-br table tr td input[type=email], .db-winscroll #display-screen #work-screen .body-bio form .no-br table tr td input[type=date], .db-winscroll #display-screen #work-screen .body-bio form .no-br table tr td input[type=file], .db-winscroll #display-screen #work-screen .body-bio form .no-br table tr td select, .db-winscroll #display-screen #work-screen .body-edu form .no-br table tr td input[type=text], .db-winscroll #display-screen #work-screen .body-edu form .no-br table tr td input[type=email], .db-winscroll #display-screen #work-screen .body-edu form .no-br table tr td input[type=date], .db-winscroll #display-screen #work-screen .body-edu form .no-br table tr td input[type=file], .db-winscroll #display-screen #work-screen .body-edu form .no-br table tr td select, .db-winscroll #display-screen #work-screen .body-work form .no-br table tr td input[type=text], .db-winscroll #display-screen #work-screen .body-work form .no-br table tr td input[type=email], .db-winscroll #display-screen #work-screen .body-work form .no-br table tr td input[type=date], .db-winscroll #display-screen #work-screen .body-work form .no-br table tr td input[type=file], .db-winscroll #display-screen #work-screen .body-work form .no-br table tr td select {
+  font-family: "Gruppo", sans-serif;
+  padding: 0.4em;
+  font-size: 0.7em;
+  outline: none;
+  width: 100%;
+  border: 0.1em solid #e0e0e0;
+  background: #eeecec;
+  box-sizing: border-box;
+}
+.db-winscroll #display-screen #biodata-screen .body-bio form .no-br table tr td input:focus, .db-winscroll #display-screen #biodata-screen .body-bio form .no-br table tr td select:focus, .db-winscroll #display-screen #biodata-screen .body-edu form .no-br table tr td input:focus, .db-winscroll #display-screen #biodata-screen .body-edu form .no-br table tr td select:focus, .db-winscroll #display-screen #biodata-screen .body-work form .no-br table tr td input:focus, .db-winscroll #display-screen #biodata-screen .body-work form .no-br table tr td select:focus, .db-winscroll #display-screen #education-screen .body-bio form .no-br table tr td input:focus, .db-winscroll #display-screen #education-screen .body-bio form .no-br table tr td select:focus, .db-winscroll #display-screen #education-screen .body-edu form .no-br table tr td input:focus, .db-winscroll #display-screen #education-screen .body-edu form .no-br table tr td select:focus, .db-winscroll #display-screen #education-screen .body-work form .no-br table tr td input:focus, .db-winscroll #display-screen #education-screen .body-work form .no-br table tr td select:focus, .db-winscroll #display-screen #work-screen .body-bio form .no-br table tr td input:focus, .db-winscroll #display-screen #work-screen .body-bio form .no-br table tr td select:focus, .db-winscroll #display-screen #work-screen .body-edu form .no-br table tr td input:focus, .db-winscroll #display-screen #work-screen .body-edu form .no-br table tr td select:focus, .db-winscroll #display-screen #work-screen .body-work form .no-br table tr td input:focus, .db-winscroll #display-screen #work-screen .body-work form .no-br table tr td select:focus {
+  outline: 0.08em solid #aaa;
+}
+.db-winscroll #display-screen #biodata-screen .body-edu, .db-winscroll #display-screen #education-screen .body-edu, .db-winscroll #display-screen #work-screen .body-edu {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  background-color: #fff;
+  border-top: 0.1em solid #216745;
+  padding: 1em;
+  box-shadow: 0 3px 4px #6e6e6e;
+  border-radius: 0.3em;
+  -webkit-border-radius: 0.3em;
+  -moz-border-radius: 0.3em;
+  -ms-border-radius: 0.3em;
+  -o-border-radius: 0.3em;
+}
+.db-winscroll #display-screen #biodata-screen .body-edu .left-body-edu, .db-winscroll #display-screen #education-screen .body-edu .left-body-edu, .db-winscroll #display-screen #work-screen .body-edu .left-body-edu {
+  grid-column: 1/2;
+  margin: 0.2em 1.5em 0.2em 0;
+}
+.db-winscroll #display-screen #biodata-screen .body-edu .left-body-edu div, .db-winscroll #display-screen #education-screen .body-edu .left-body-edu div, .db-winscroll #display-screen #work-screen .body-edu .left-body-edu div {
+  cursor: pointer;
+  padding: 0.3em;
+  color: #00f;
+  font-size: 0.7em;
+  margin-bottom: 1em;
+  border-color: #b4b4b4;
+  border-width: 0.08em 0.08em 0 0.08em;
+  border-radius: 0.3em 0.3em 0 0;
+  -webkit-border-radius: 0.3em 0.3em 0 0;
+  -moz-border-radius: 0.3em 0.3em 0 0;
+  -ms-border-radius: 0.3em 0.3em 0 0;
+  -o-border-radius: 0.3em 0.3em 0 0;
+}
+.db-winscroll #display-screen #biodata-screen .body-edu .right-body-edu, .db-winscroll #display-screen #education-screen .body-edu .right-body-edu, .db-winscroll #display-screen #work-screen .body-edu .right-body-edu {
+  grid-column: 2/3;
+}
+.db-winscroll #display-screen #footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 0.7em;
+  padding: 0 0.5em;
+}
+.db-winscroll #display-screen #footer .left-footer {
+  grid-column: 1/2;
+}
+.db-winscroll #display-screen #footer .right-footer {
+  grid-column: 2/3;
+  text-align: right;
+}/*# sourceMappingURL=af_style.css.map */

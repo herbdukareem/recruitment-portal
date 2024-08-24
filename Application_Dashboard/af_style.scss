@@ -1,0 +1,373 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-family: "Gruppo", sans-serif;
+    font-weight: bold;
+    font-style: normal;
+    background-color: #f7f7f7;
+}
+.db-winscroll{
+    display: grid;
+    grid-template-columns: 15% 85%;
+    #db-panel{
+        grid-column: 1/2;
+        background: #616161;
+        height: 100%;
+        width: 100%;
+        .head-panel{
+            padding: 0.25em;
+            text-align: center;
+            position: relative;
+            img{
+                width: 3em;
+            }
+        }
+        .head-panel::before{
+            content: "";
+            width: 100%;
+            background-color: #aaa;
+            height: 0.08em;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        };
+        .body-panel{
+
+            ul{
+                padding: 0.3em;
+                li{
+                    list-style: none;
+                    margin: 0.3em;
+                    button{
+                        cursor: pointer;
+                        text-align: left;
+                        background: none;
+                        text-overflow: clip;
+                        color: #ddd;
+                        width: 100%;
+                        box-sizing: border-box;
+                        font-size: 0.7em;
+                        border: none;
+                        padding: 0.5em 0.3em;
+                        transition: all ease-in 0.5s;
+                        border-radius: 0.3em                    ;
+                        -webkit-border-radius: 0.3em                    ;
+                        -moz-border-radius: 0.3em                    ;
+                        -ms-border-radius: 0.3em                    ;
+                        -o-border-radius: 0.3em                    ;
+                        -webkit-transition: all ease-in 0.5s;
+                        -moz-transition: all ease-in 0.5s;
+                        -ms-transition: all ease-in 0.5s;
+                        -o-transition: all ease-in 0.5s;
+                    }
+                    button:hover{
+                        background-color: #ffffff50;
+                    }
+                }
+            }
+        }
+    };
+    #display-screen{
+        grid-column: 2/3;
+        .nav-bar{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 0.1em solid #a4a5a5;
+            .left-nav{
+                grid-column: 1/2;
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                h1{
+                    font-size: 0.7em;
+                    color: #9e0404;
+                    font-weight: bold;
+                }
+                svg{
+                    cursor: pointer;
+                }
+            }
+            .right-nav{
+                grid-column: 2/3;
+                font-size: 0.8em;
+                font-weight: lighter;
+                display: flex;
+                align-items: center;
+                justify-content: end;
+                padding-right: 0.2em;
+                svg{
+                    padding-right: 5px
+                }
+            }
+        };
+        #biodata-screen, #education-screen, #work-screen{
+            padding: 0 0.5em;
+            .head-bio, .head-edu, .head-work{
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                height: 50px;
+                .left-bio, .left-edu, .left-work{
+                    grid-column: 1/2;
+                    display: flex;
+                    align-items: center;
+                    justify-content: start;
+                    padding: 0 0.8em;
+                    h2{
+                        font-size: 1.5em;
+                        font-weight: bolder;
+                    }
+                }
+                .right-bio, .right-edu, .right-work{
+                    grid-column: 2/3;
+                    padding: 0 0.8em;
+                    font-size: 0.8em;
+                    font-weight: lighter;
+                    display: flex;
+                    align-items: center;
+                    justify-content: end;
+                    p{
+                        font-size: 0.9em;
+                        a{
+                            text-decoration: none;
+                            color: #000;
+                            svg{
+                                transform: translateY(3px);
+                                -webkit-transform: translateY(3px);
+                                -moz-transform: translateY(3px);
+                                -ms-transform: translateY(3px);
+                                -o-transform: translateY(3px);
+}
+                        }
+                    }
+                }
+            }
+            .body-bio, .body-edu, .body-work{
+                margin: 20px;
+                form{
+                    margin-bottom: 1em;
+                    background-color: #fff;
+                    box-shadow: 0 3px 4px #6e6e6e;
+                    width: 100%;
+                    border-radius: 0.4em                         ;
+                    -webkit-border-radius: 0.4em                         ;
+                    -moz-border-radius: 0.4em                         ;
+                    -ms-border-radius: 0.4em                         ;
+                    -o-border-radius: 0.4em                         ;
+                    .form-head{
+                        text-align: left;
+                        background-color: #216745;
+                        color: #fff;
+                        font-size: 0.5em;
+                        padding: 0.1em 0.5em;
+                        border-radius: 0.5em 0.5em 0 0                     ;
+                        -webkit-border-radius: 0.5em 0.5em 0 0                     ;
+                        -moz-border-radius: 0.5em 0.5em 0 0                     ;
+                        -ms-border-radius: 0.5em 0.5em 0 0                     ;
+                        -o-border-radius: 0.5em 0.5em 0 0                     ;
+}
+                    .form-body{
+                        table{
+                            width: 100%;
+                            tr{
+                                td{
+                                    padding: 0.2em 0.2em;
+                                    label{
+                                        font-size: 0.7em;
+                                        padding: 0.5em 0.5em 0.5em 0.3em;
+                                        i{
+                                            font-size: 0.5em;
+                                        }
+                                    }
+                                    input[type=text], input[type=email], input[type=date],input[type=file], select{
+                                        font-family: "Gruppo", sans-serif;
+                                        padding: 0.4em;
+                                        font-size: 0.7em;
+                                        outline: none;
+                                        width: 100%;
+                                        border: 0.1em solid #e0e0e0;
+                                        box-sizing: border-box;
+                                        border-radius: 0.5em                            ;
+                                        font-family: "Gruppo", sans-serif;
+                                        padding: 0.4em;
+                                        font-size: 0.7em;
+                                        outline: none;
+                                        width: 100%;
+                                        border: 0.1em solid #e0e0e0;
+                                        box-sizing: border-box;
+                                        border-radius: 0.5em                            ;
+                                        -webkit-border-radius: 0.5em                            ;
+                                        -moz-border-radius: 0.5em                            ;
+                                        -ms-border-radius: 0.5em                            ;
+                                        -o-border-radius: 0.5em                            ;
+                                    }
+                                    input:focus, select:focus{
+                                        outline: 0.08em solid #aaa
+                                    }
+                                    input[type=checkbox]{
+                                        transform: translateY(3px);
+                                        -webkit-transform: translateY(3px);
+                                        -moz-transform: translateY(3px);
+                                        -ms-transform: translateY(3px);
+                                        -o-transform: translateY(3px);
+}
+                                    textarea{
+                                        font-family: "Gruppo", sans-serif;
+                                        padding: 0.4em;
+                                        font-size: 0.7em;
+                                        outline: none;
+                                        width: 100%;
+                                        height: 200px;
+                                        border: 0.1em solid #e0e0e0;
+                                        box-sizing: border-box;
+                                        border-radius: 0.5em                            ;
+                                        -webkit-border-radius: 0.5em                            ;
+                                        -moz-border-radius: 0.5em                            ;
+                                        -ms-border-radius: 0.5em                            ;
+                                        -o-border-radius: 0.5em                            ;
+}
+                                    #Emergency{
+                                        display: grid;
+                                        grid-template-columns: 20% 80%;
+                                        select{
+                                            grid-column: 1/2;
+                                            border-radius: 0.5em 0 0 0.5em                            ;
+                                            -webkit-border-radius: 0.5em 0 0 0.5em                            ;
+                                            -moz-border-radius: 0.5em 0 0 0.5em                            ;
+                                            -ms-border-radius: 0.5em 0 0 0.5em                            ;
+                                            -o-border-radius: 0.5em 0 0 0.5em                            ;
+                                        }
+                                        input[type=text]{
+                                            grid-column: 2/3;
+                                            border-radius: 0 0.5em 0.5em 0                           ;
+                                            -webkit-border-radius: 0 0.5em 0.5em 0                           ;
+                                            -moz-border-radius: 0 0.5em 0.5em 0                           ;
+                                            -ms-border-radius: 0 0.5em 0.5em 0                           ;
+                                            -o-border-radius: 0 0.5em 0.5em 0                           ;
+}
+                                        input[type=text],select{
+                                            font-family: "Gruppo", sans-serif;
+                                            padding: 0.4em;
+                                            font-size: 0.7em;
+                                            outline: none;
+                                            width: 100%;
+                                            border: 0.1em solid #aaa;
+                                            box-sizing: border-box;
+                                        }
+                                        
+                                    }
+                                   
+                                }
+                            }
+                        }
+                    }
+                    .form-footer{
+                        background: #e7e7e7;
+                        padding: 0.4em;
+                        button{
+                            padding: 0.5em 0.7em;
+                            background: #216745;
+                            border: none;
+                            color: #fff;
+                            border-radius: 0.4em;
+                            -webkit-border-radius: 0.4em;
+                            -moz-border-radius: 0.4em;
+                            -ms-border-radius: 0.4em;
+                            -o-border-radius: 0.4em;
+                            svg{
+                                transform: translateY(4px);
+                                -webkit-transform: translateY(4px);
+                                -moz-transform: translateY(4px);
+                                -ms-transform: translateY(4px);
+                                -o-transform: translateY(4px);
+                            }
+                        }
+                        button:hover{
+                            background: #035231;
+                        }
+                    }
+                    .no-br{
+                        padding: 0.5em;
+                        table{
+                            width: 100%;
+                            border-spacing: 0;
+                            border-collapse: collapse;
+                            tr{
+                                td{
+                                    label{
+                                        font-size: 0.7em;
+                                        padding: 0.5em 0.5em 0.5em 0.3em;
+                                        i{
+                                            font-size: 0.5em;
+                                        }
+                                    }
+                                    input[type=text], input[type=email], input[type=date],input[type=file], select{
+                                        font-family: "Gruppo", sans-serif;
+                                        padding: 0.4em;
+                                        font-size: 0.7em;
+                                        outline: none;
+                                        width: 100%;
+                                        border: 0.1em solid #e0e0e0;
+                                        background: #eeecec;
+                                        box-sizing: border-box;
+                                    }
+                                    input:focus, select:focus{
+                                        outline: 0.08em solid #aaa
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .body-edu{
+                display: grid;
+                grid-template-columns: 35% 65%;
+                background-color: #fff;
+                border-top: 0.1em solid #216745 ;
+                padding: 1em;
+                box-shadow: 0 3px 4px #6e6e6e;
+                border-radius: 0.3em                    ;
+                -webkit-border-radius: 0.3em                    ;
+                -moz-border-radius: 0.3em                    ;
+                -ms-border-radius: 0.3em                    ;
+                -o-border-radius: 0.3em                    ;
+                .left-body-edu{
+                    grid-column: 1/2;
+                    margin:0.2em 1.5em  0.2em 0;
+                    div{
+                        cursor: pointer;
+                        padding: 0.3em;
+                        color: #00f;
+                        font-size: 0.7em;
+                        margin-bottom: 1em;
+                        border-color: #b4b4b4;
+                        border-width: 0.08em 0.08em 0 0.08em ;
+                        border-radius: 0.3em 0.3em 0 0                   ;
+                        -webkit-border-radius: 0.3em 0.3em 0 0                   ;
+                        -moz-border-radius: 0.3em 0.3em 0 0                   ;
+                        -ms-border-radius: 0.3em 0.3em 0 0                   ;
+                        -o-border-radius: 0.3em 0.3em 0 0                   ;
+}
+                }
+                .right-body-edu{
+                    grid-column: 2/3;
+                    
+                }
+            }
+        }
+        #footer{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            font-size: 0.7em;
+            padding:0  0.5em;
+            .left-footer{
+                grid-column: 1/2;
+            }
+            .right-footer{
+                grid-column: 2/3;
+                text-align: right
+            }
+        }
+    }
+};
