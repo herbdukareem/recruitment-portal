@@ -107,13 +107,13 @@ body {
   -ms-border-radius: 1em;
   -o-border-radius: 1em;
 }
-.winscroll .nav .right-nav .theme #dark-theme {
+.winscroll .nav .right-nav .theme div #dark-theme {
   cursor: pointer;
   position: absolute;
   right: 0;
   top: 0;
 }
-.winscroll .nav .right-nav .theme #light-theme {
+.winscroll .nav .right-nav .theme div #light-theme {
   cursor: pointer;
 }
 .winscroll .nav .relative {

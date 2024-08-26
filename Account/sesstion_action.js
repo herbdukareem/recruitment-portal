@@ -71,6 +71,7 @@ loginForm.addEventListener("submit", (e)=>{
         if(validateInput(lPassword.value)){
             if(lCheckBox.checked){
                 alert("Congrat, You just successfully login")
+                window.location = "../Application_Dashboard/af_form.htm"
             }else{
                 alert("You need to agree to the ")
             }
@@ -140,7 +141,9 @@ signupForm.addEventListener("submit", (e)=>{
             if(sConPassword.value === sPassword.value){
                 if(sCheckBox.checked){
                     alert("Congrat, You just successfully signup")
-                    window.location = "access.htm#signup-section"
+                        logIn.style.display = "block";
+                        forgotPass.style.display = "none";
+                        signUp.style.display = "none"
                 }else{
                     alert("You need to agree to the Terms and Privacy")
                 }

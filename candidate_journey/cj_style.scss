@@ -108,14 +108,16 @@ body{
                 -moz-border-radius: 1em;
                 -ms-border-radius: 1em;
                 -o-border-radius: 1em;
-                #dark-theme{
-                    cursor: pointer;
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                }
-                #light-theme{
-                    cursor: pointer;
+                div{
+                    #dark-theme{
+                        cursor: pointer;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                    }
+                    #light-theme{
+                        cursor: pointer;
+                    }
                 }
             }
         }
