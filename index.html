@@ -14,17 +14,19 @@
     <link rel="stylesheet" href="./candidate_journey/cj_style.css">
 </head>
 <style>
-    .gradient-text {
-        font-size: 2.5rem;
-        /* Adjust font size as needed */
-        font-weight: bold;
-        background: linear-gradient(to right, #B0B0B0, #FFD700);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        color: transparent;
-        margin-top: 100px;
+    .image-container {
+        background: radial-gradient(circle, #FFDD57, #6AB04A, #A9A9A9);
+        /* Circular gradient */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        /* Ensures the div is circular */
+        /* Circular box shadow */
     }
+
 
     .nnpc {
         font-weight: bold;
@@ -38,28 +40,27 @@
     }
 
     .image-container {
-        /* Background gradient */
+
         background: linear-gradient(to right, #FFDD57, #6AB04A, #A9A9A9);
-        /* Yellow, Green, and Ash */
-        padding: 10px;
-        /* Adds some space around the image */
+
         border-radius: 100px;
-        /* Rounds the corners */
+        box-shadow: 0 0 30px 20px #FFDD5799;
+
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-        /* Full width of the column */
-        height: 100%;
-        /* Full height of the column */
+
+        height: 80vh;
+        border-radius: 100%;
+
     }
 
     .image-container img {
-        max-width: 75%;
-        /* Limit the width to 75% of the container */
-        border-radius: 100px;
-        /* Match the border radius */
-        border: 1px solid #FFDD5757;
+        max-width: 95%;
+
+        border-radius: 100%;
+
     }
 
     .gcr {
@@ -73,32 +74,30 @@
 
     .btn-custom {
         width: fit-content;
-      background-color: transparent;
-      color: white;
-      border: 2px solid white;
-      font-size: 1rem;
-      padding: 0.75rem 1.5rem;
-      transition: all 0.3s ease;
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.3s ease;
     }
 
     .btn-custom:hover {
-      background-color: yellow;
-      color: black;
-      border-color: yellow;
+        background-color: yellow;
+        color: black;
+        border-color: yellow;
     }
 
     /* Responsive Styling */
     @media (max-width: 768px) {
-      .btn-custom {
-        display: block;
-        width: 100%;
-        font-size: 1.25rem;
-        padding: 1rem;
-        margin-bottom: 1rem;
-      }
+        .btn-custom {
+            display: block;
+            width: 100%;
+            font-size: 1.25rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
     }
-
-
 </style>
 
 <body>
@@ -300,9 +299,9 @@
                         <button class="btn btn-success ">Candidate Journey</button>
                     </div>
                 </div>
-                <div class="col-md-6 mt-5">
-                    <div class="image-container h-100 w-100 d-flex align-items-center justify-content-center">
-                        <img class="rounded img-fluid"
+                <div class="col-md-6 mt-3">
+                    <div class="image-container  d-flex align-items-center justify-content-center">
+                        <img class=" img-fluid"
                             src="https://careers.nnpcgroup.com/_next/image?url=%2Fhero.png&w=640&q=70" alt="">
                     </div>
                 </div>
@@ -349,67 +348,79 @@
                     <div class=" mt-3">
                         <div class="d-flex">
                             <div class="img-div  w-75 h-75">
-                                <img class="img-fluid rounded " src="https://careers.nnpcgroup.com/_next/image?url=%2Ffeature%2Fcareer-growth.jpg&w=640&q=75" alt="">
+                                <img class="img-fluid rounded "
+                                    src="https://careers.nnpcgroup.com/_next/image?url=%2Ffeature%2Fcareer-growth.jpg&w=640&q=75"
+                                    alt="">
                             </div>
                             <div data-orientation="horizontal" role="none"
                                 class="shrink-0 invisible w-0.5 h-44 bg-dark/50 -my-4 "></div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
                                 viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2"></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z"></path>
                             </svg>
                             <div class="txt w-50 mt-3">
                                 <h3>Career Growth</h3>
-                                <p>We believe in nurturing talent and providing opportunities for advancement. At NNPC Limited, you'll have access to professional development programs, mentorship, and clear career progression pathways to help you achieve your full potential.</p>
+                                <p>We believe in nurturing talent and providing opportunities for advancement. At NNPC
+                                    Limited, you'll have access to professional development programs, mentorship, and
+                                    clear career progression pathways to help you achieve your full potential.</p>
                             </div>
                         </div>
-                        
+
                     </div>
-                   
+
                 </div>
                 <div class="col-md-12 mt-4">
                     <div class=" mt-3">
                         <div class="d-flex">
                             <div class="img-div  w-75 h-75">
-                                <img class="img-fluid rounded " src="https://careers.nnpcgroup.com/_next/image?url=%2Ffeature%2Fglobal-impact.jpg&w=640&q=75" alt="">
+                                <img class="img-fluid rounded "
+                                    src="https://careers.nnpcgroup.com/_next/image?url=%2Ffeature%2Fglobal-impact.jpg&w=640&q=75"
+                                    alt="">
                             </div>
                             <div data-orientation="horizontal" role="none"
                                 class="shrink-0 invisible w-0.5 h-44 bg-dark/50 -my-4 "></div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
                                 viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2"></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z"></path>
                             </svg>
                             <div class="txt w-50 mt-3">
                                 <h3>Global Impact</h3>
-                                <p>NNPC Limited is a global leader in the energy sector. Your work here will have a far-reaching impact, contributing to critical energy infrastructure and solutions that support communities around the world.</p>
+                                <p>NNPC Limited is a global leader in the energy sector. Your work here will have a
+                                    far-reaching impact, contributing to critical energy infrastructure and solutions
+                                    that support communities around the world.</p>
                             </div>
                         </div>
-                        
+
                     </div>
-                   
+
                 </div>
                 <div class="col-md-12 mt-4">
                     <div class=" mt-3">
                         <div class="d-flex">
                             <div class="img-div  w-75 h-75">
-                                <img class="img-fluid rounded " src="https://careers.nnpcgroup.com/_next/image?url=%2Ffeature%2Fsustainability.jpg&w=640&q=75" alt="">
+                                <img class="img-fluid rounded "
+                                    src="https://careers.nnpcgroup.com/_next/image?url=%2Ffeature%2Fsustainability.jpg&w=640&q=75"
+                                    alt="">
                             </div>
                             <div data-orientation="horizontal" role="none"
                                 class="shrink-0 invisible w-0.5 h-44 bg-dark/50 -my-4 "></div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
                                 viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2"></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z"></path>
                             </svg>
                             <div class="txt w-50 mt-3">
                                 <h3>Sustainability Focus</h3>
-                                <p>Sustainability is at the core of our operations. By joining our team, you'll be part of initiatives aimed at reducing environmental impact, promoting renewable energy sources, and ensuring a sustainable future for generations to come.</p>
+                                <p>Sustainability is at the core of our operations. By joining our team, you'll be part
+                                    of initiatives aimed at reducing environmental impact, promoting renewable energy
+                                    sources, and ensuring a sustainable future for generations to come.</p>
                             </div>
                         </div>
-                        
+
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -417,16 +428,20 @@
         <div class="container">
             <div class="row mt-5 mb-3 text-center">
                 <h3 class="mt-5 mb-3">By the Numbers: Why Choose NNPC Limited?</h3>
-                <h5 class=" mt-2 mb-5">Our global reach, commitment to innovation, and dedication to sustainability make us a top choice for skilled professionals seeking a rewarding career.</h5>
-                <div class="col-md-4 px-3 pt-2  mx-0.1 bg-secondary-subtle text-secondary-emphasis text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-                    <h3 >100,000+</h3>
+                <h5 class=" mt-2 mb-5">Our global reach, commitment to innovation, and dedication to sustainability make
+                    us a top choice for skilled professionals seeking a rewarding career.</h5>
+                <div
+                    class="col-md-4 px-3 pt-2  mx-0.1 bg-secondary-subtle text-secondary-emphasis text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                    <h3>100,000+</h3>
                     <p>Hours of training each year</p>
                 </div>
-                <div class="col-md-4 px-3 pt-2 mx-0.1 bg-secondary-subtle text-secondary-emphasis text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                <div
+                    class="col-md-4 px-3 pt-2 mx-0.1 bg-secondary-subtle text-secondary-emphasis text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
                     <h3>99 %</h3>
                     <p>Employee retention rate</p>
                 </div>
-                <div class="col-md-4 px-3 pt-2 mx-0.1 bg-secondary-subtle text-secondary-emphasis text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                <div
+                    class="col-md-4 px-3 pt-2 mx-0.1 bg-secondary-subtle text-secondary-emphasis text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
                     <h3>30 %</h3>
                     <p>Reduction in carbon emissions achieved in the last decade</p>
                 </div>
@@ -435,25 +450,26 @@
 
         <div class="container mb-5 rounded">
             <div class="row">
-              <!-- Background image container -->
-              <div class="col-12 position-relative text-center text-white" style="background-image: url('https://careers.nnpcgroup.com/_next/image?url=%2Froad.jpg&w=1920&q=75'); background-size: cover; background-position: center; height: 400px;">
-                <!-- Overlay for buttons and text -->
-                <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                  <!-- Text -->
-                  <h1 class="mb-3 " style="font-size: 4rem;">
-                    <span style="color: #FFD700;">Start</span> your career at NNPC Limited today
-                  </h1>
-                  <!-- Buttons -->
-                  <div class="d-flex flex-column flex-md-row align-items-center">
-                    <button type="button" class="btn btn-custom   mx-4">Graduate Trainee</button>
-                    <button type="button" class="btn btn-custom   mx-4">Experience Hire </button>
-                    <!-- <button type="button" class="btn btn-custom">Button 2</button> -->
-                  </div>
+                <!-- Background image container -->
+                <div class="col-12 position-relative text-center text-white"
+                    style="background-image: url('https://careers.nnpcgroup.com/_next/image?url=%2Froad.jpg&w=1920&q=75'); background-size: cover; background-position: center; height: 400px;">
+                    <!-- Overlay for buttons and text -->
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                        <!-- Text -->
+                        <h1 class="mb-3 " style="font-size: 4rem;">
+                            <span style="color: #FFD700;">Start</span> your career at NNPC Limited today
+                        </h1>
+                        <!-- Buttons -->
+                        <div class="d-flex flex-column flex-md-row align-items-center">
+                            <button type="button" class="btn btn-custom   mx-4">Graduate Trainee</button>
+                            <button type="button" class="btn btn-custom   mx-4">Experience Hire </button>
+                            <!-- <button type="button" class="btn btn-custom">Button 2</button> -->
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          
+        </div>
+
 
         <div class="footer">
             <div class="foot-link">
@@ -498,7 +514,7 @@
 
 
     </main>
-    <script src="../cj_function.js"></script>
+    <script src="./cj_function.js"></script>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -506,4 +522,5 @@
     </script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
 </html>
