@@ -63,26 +63,27 @@ hidelPass.addEventListener("click", (e)=>{
 });
 
 // Login Function
-loginForm.addEventListener("submit", (e)=>{
-    e.preventDefault();
+// loginForm.addEventListener("submit", (e)=>{
+//     e.preventDefault();
 
-    // Input validation function
-    if (validateEmail(lEmail.value)){
-        if(validateInput(lPassword.value)){
-            if(lCheckBox.checked){
-                alert("Congrat, You just successfully login")
-                window.location = "../Application_Dashboard/af_form.htm"
-            }else{
-                alert("You need to agree to the ")
-            }
-        }else{
-            alert("Password can not be empty")
-        }
+//     // Input validation function
+//     if (validateEmail(lEmail.value)){
+//         if(validateInput(lPassword.value)){
+//             if(lCheckBox.checked){
+//                 alert("Congrat, You just successfully login")
+//                 loginForm.submit()
+//                 // window.location = "../Application_Dashboard/af_form.htm"
+//             }else{
+//                 alert("You need to agree to the ")
+//             }
+//         }else{
+//             alert("Password can not be empty")
+//         }
 
-    }else{
-        alert("Invalid email")
-    }
-})
+//     }else{
+//         alert("Invalid email")
+//     }
+// })
 
 
 //signup function
@@ -132,42 +133,42 @@ shidelPassSec.addEventListener("click", (e)=>{
 });
 
 
-signupForm.addEventListener("submit", (e)=>{
-    e.preventDefault();
+// signupForm.addEventListener("submit", (e)=>{
+//     e.preventDefault();
 
-    // Input validation function
-    if (validateEmail(sEmail.value) && validateInput(firstName.value) && validateInput(lastName.value)){
-        if(validateInput(sPassword.value)){
-            if(sConPassword.value === sPassword.value){
-                if(sCheckBox.checked){
-                    alert("Congrat, You just successfully signup")
-                        logIn.style.display = "block";
-                        forgotPass.style.display = "none";
-                        signUp.style.display = "none"
-                }else{
-                    alert("You need to agree to the Terms and Privacy")
-                }
-            }else{
-                alert("Password does't match")
-            }
-        }else{
-            alert("Password can not be empty")
-        }
-    }else{
-        alert("Field can't be empty")
-    }
-})
-
-
+//     // Input validation function
+//     if (validateEmail(sEmail.value) && validateInput(firstName.value) && validateInput(lastName.value)){
+//         if(validateInput(sPassword.value)){
+//             if(sConPassword.value === sPassword.value){
+//                 if(sCheckBox.checked){
+//                     signupForm.submit()
+//                         logIn.style.display = "block";
+//                         forgotPass.style.display = "none";
+//                         signUp.style.display = "none"
+//                 }else{
+//                     alert("You need to agree to the Terms and Privacy")
+//                 }
+//             }else{
+//                 alert("Password does't match")
+//             }
+//         }else{
+//             alert("Password can not be empty")
+//         }
+//     }else{
+//         alert("Field can't be empty")
+//     }
+// })
 
 
 
-function validateEmail(email) {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
+
+
+// function validateEmail(email) {
+//     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     return emailPattern.test(email);
     
-};
-function validateInput(val){
-    return val =! "";
-}
+// };
+// function validateInput(val){
+//     return val =! "";
+// }
 });
