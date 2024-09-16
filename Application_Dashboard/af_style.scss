@@ -172,91 +172,92 @@ body{
                             tr{
                                 td{
                                     padding: 0.2em 0.2em;
-                                    label{
-                                        font-size: 0.7em;
-                                        padding: 0.5em 0.5em 0.5em 0.3em;
-                                        i{
-                                            font-size: 0.5em;
+                                    div{
+                                        label{
+                                            font-size: 0.7em;
+                                            padding: 0.5em 0.5em 0.5em 0.3em;
+                                            i{
+                                                font-size: 0.5em;
+                                            }
                                         }
-                                    }
-                                    input[type=text], input[type=email], input[type=date],input[type=file], select{
-                                        font-family: "Gruppo", sans-serif;
-                                        padding: 0.4em;
-                                        font-size: 0.7em;
-                                        outline: none;
-                                        width: 100%;
-                                        border: 0.1em solid #e0e0e0;
-                                        box-sizing: border-box;
-                                        border-radius: 0.5em                            ;
-                                        font-family: "Gruppo", sans-serif;
-                                        padding: 0.4em;
-                                        font-size: 0.7em;
-                                        outline: none;
-                                        width: 100%;
-                                        border: 0.1em solid #e0e0e0;
-                                        box-sizing: border-box;
-                                        border-radius: 0.5em                            ;
-                                        -webkit-border-radius: 0.5em                            ;
-                                        -moz-border-radius: 0.5em                            ;
-                                        -ms-border-radius: 0.5em                            ;
-                                        -o-border-radius: 0.5em                            ;
-                                    }
-                                    input:focus, select:focus{
-                                        outline: 0.08em solid #aaa
-                                    }
-                                    input[type=checkbox]{
-                                        transform: translateY(3px);
-                                        -webkit-transform: translateY(3px);
-                                        -moz-transform: translateY(3px);
-                                        -ms-transform: translateY(3px);
-                                        -o-transform: translateY(3px);
-}
-                                    textarea{
-                                        font-family: "Gruppo", sans-serif;
-                                        padding: 0.4em;
-                                        font-size: 0.7em;
-                                        outline: none;
-                                        width: 100%;
-                                        height: 200px;
-                                        border: 0.1em solid #e0e0e0;
-                                        box-sizing: border-box;
-                                        border-radius: 0.5em                            ;
-                                        -webkit-border-radius: 0.5em                            ;
-                                        -moz-border-radius: 0.5em                            ;
-                                        -ms-border-radius: 0.5em                            ;
-                                        -o-border-radius: 0.5em                            ;
-}
-                                    #Emergency{
-                                        display: grid;
-                                        grid-template-columns: 20% 80%;
-                                        select{
-                                            grid-column: 1/2;
-                                            border-radius: 0.5em 0 0 0.5em                            ;
-                                            -webkit-border-radius: 0.5em 0 0 0.5em                            ;
-                                            -moz-border-radius: 0.5em 0 0 0.5em                            ;
-                                            -ms-border-radius: 0.5em 0 0 0.5em                            ;
-                                            -o-border-radius: 0.5em 0 0 0.5em                            ;
-                                        }
-                                        input[type=text]{
-                                            grid-column: 2/3;
-                                            border-radius: 0 0.5em 0.5em 0                           ;
-                                            -webkit-border-radius: 0 0.5em 0.5em 0                           ;
-                                            -moz-border-radius: 0 0.5em 0.5em 0                           ;
-                                            -ms-border-radius: 0 0.5em 0.5em 0                           ;
-                                            -o-border-radius: 0 0.5em 0.5em 0                           ;
-}
-                                        input[type=text],select{
+                                        input[type=text], input[type=email], input[type=date],input[type=file], select{
                                             font-family: "Gruppo", sans-serif;
                                             padding: 0.4em;
                                             font-size: 0.7em;
                                             outline: none;
                                             width: 100%;
-                                            border: 0.1em solid #aaa;
+                                            border: 0.1em solid #e0e0e0;
                                             box-sizing: border-box;
+                                            border-radius: 0.5em                            ;
+                                            font-family: "Gruppo", sans-serif;
+                                            padding: 0.4em;
+                                            font-size: 0.7em;
+                                            outline: none;
+                                            width: 100%;
+                                            border: 0.1em solid #e0e0e0;
+                                            box-sizing: border-box;
+                                            border-radius: 0.5em                            ;
+                                            -webkit-border-radius: 0.5em                            ;
+                                            -moz-border-radius: 0.5em                            ;
+                                            -ms-border-radius: 0.5em                            ;
+                                            -o-border-radius: 0.5em                            ;
                                         }
-                                        
+                                        input:focus, select:focus{
+                                            outline: 0.08em solid #aaa
+                                        }
+                                        input[type=checkbox]{
+                                            transform: translateY(3px);
+                                            -webkit-transform: translateY(3px);
+                                            -moz-transform: translateY(3px);
+                                            -ms-transform: translateY(3px);
+                                            -o-transform: translateY(3px);
+    }
+                                        textarea{
+                                            font-family: "Gruppo", sans-serif;
+                                            padding: 0.4em;
+                                            font-size: 0.7em;
+                                            outline: none;
+                                            width: 100%;
+                                            height: 200px;
+                                            border: 0.1em solid #e0e0e0;
+                                            box-sizing: border-box;
+                                            border-radius: 0.5em                            ;
+                                            -webkit-border-radius: 0.5em                            ;
+                                            -moz-border-radius: 0.5em                            ;
+                                            -ms-border-radius: 0.5em                            ;
+                                            -o-border-radius: 0.5em                            ;
+    }
+                                        #Emergency{
+                                            display: grid;
+                                            grid-template-columns: 20% 80%;
+                                            select{
+                                                grid-column: 1/2;
+                                                border-radius: 0.5em 0 0 0.5em                            ;
+                                                -webkit-border-radius: 0.5em 0 0 0.5em                            ;
+                                                -moz-border-radius: 0.5em 0 0 0.5em                            ;
+                                                -ms-border-radius: 0.5em 0 0 0.5em                            ;
+                                                -o-border-radius: 0.5em 0 0 0.5em                            ;
+                                            }
+                                            input[type=text]{
+                                                grid-column: 2/3;
+                                                border-radius: 0 0.5em 0.5em 0                           ;
+                                                -webkit-border-radius: 0 0.5em 0.5em 0                           ;
+                                                -moz-border-radius: 0 0.5em 0.5em 0                           ;
+                                                -ms-border-radius: 0 0.5em 0.5em 0                           ;
+                                                -o-border-radius: 0 0.5em 0.5em 0                           ;
+    }
+                                            input[type=text],select{
+                                                font-family: "Gruppo", sans-serif;
+                                                padding: 0.4em;
+                                                font-size: 0.7em;
+                                                outline: none;
+                                                width: 100%;
+                                                border: 0.1em solid #aaa;
+                                                box-sizing: border-box;
+                                            }
+                                            
+                                        }
                                     }
-                                   
                                 }
                             }
                         }
@@ -265,7 +266,8 @@ body{
                         background: #e7e7e7;
                         padding: 0.4em;
                         button{
-                            padding: 0.5em 0.7em;
+                            cursor: pointer;
+                            padding: 1em 1em;
                             background: #216745;
                             border: none;
                             color: #fff;
@@ -322,7 +324,7 @@ body{
             }
             .body-edu{
                 display: grid;
-                grid-template-columns: 35% 65%;
+                grid-template-columns: 30% 70%;
                 background-color: #fff;
                 border-top: 0.1em solid #216745 ;
                 padding: 1em;
