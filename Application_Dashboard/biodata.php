@@ -1,15 +1,15 @@
-<div id="biodata-screen" style="display: block;">
-                <div class="head-bio">
-                    <div class="left-bio">
+<div id="biodata-screen" class="screen" style="display: block;">
+                <div class="screen-head">
+                    <div class="screen-head-left">
                         <h2>Bio Data</h2>
                     </div>
-                    <div class="right-bio">
+                    <div class="screen-head-right">
                         <p><a href="" style="color: #008f4a;"> Job Application</a> / <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" viewBox="0 0 24 24">
                                     <path fill="#000000" d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m2-8H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2" />
                                 </svg>Bio Data</a></p>
                     </div>
                 </div>
-                <div class="body-bio">
+                <div class="screen-body">
                     <form action="" method="post">
                         <div class="form-head">
                             <h2>Candidate Bio Data</h2>
@@ -153,7 +153,7 @@
                                 <tr>
                                     <td>
                                         <div>
-                                            <label for="">Emergency number</label>
+                                            <label for="">Emergency Number</label>
                                         </div>
                                         <div id="Emergency">
                                             <select name="" id="">

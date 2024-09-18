@@ -1,0 +1,61 @@
+id
+user_id
+
+------Bio Data----
+firstname
+middlename
+lastname
+gender
+dateOfBirth
+maritalStatus
+stateOfOrigin
+localGovernmentArea
+nin
+phoneNumber
+emergencyNumber
+address
+lgaCertificate//
+birthCertificate//
+
+-------Primary Education-------
+primary_school_name
+primary_graduation_year
+
+-------Secondary Education-------
+secondarySchoolName
+secondaryGraduationYear
+secondaryCertificate//
+
+-----higher Education--------
+certificateType
+classOfDegree
+institution
+course
+highGraduationYear
+highCertificate//
+
+----------NYSC---------
+nyscCertificateNumber
+yearOfService
+nyscCertificate//
+
+----Work History db-----
+organizationName
+role
+resposibilities
+startDate
+endDate
+
+
+
+
+
+
+
+
+
+
+
+
+
+

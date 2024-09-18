@@ -2,6 +2,10 @@
 session_start();
 include_once('../db_connect.php');
 
+error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+ini_set('display_errors', 0);
+
+$user_id = $_SESSION['user_id'];
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -10,7 +14,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
 
 // Fetch user firstname and lastname from the database using user ID
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :user_id");
@@ -29,8 +32,6 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../Account/session.php");
     exit();
 }
-
-$user_id = $_SESSION['user_id'];
 
 // Prepare SQL to check if the user has existing data in user_applications
 $req = $pdo->prepare("
@@ -52,8 +53,6 @@ if (!$user_detail) {
 
 
 //save biodata form to db
-$user_id = $_SESSION['user_id'];
-
 if (isset($_POST['saveBio'])) {
     // Extract POST data
     $firstname = $_POST['firstname'];
@@ -148,18 +147,19 @@ $user_data = $fetchUserData->fetch(PDO::FETCH_ASSOC);
 
 
 //Submission of Education data to db
-$user_id = $_SESSION['user_id'];
-
 if (isset($_POST['saveEdu'])) {
-    // Retrieve POST data
+    // Retrieve POST data with null fallback for empty values
     $primary_school_name = !empty($_POST['primary_school_name']) ? $_POST['primary_school_name'] : null;
     $primary_graduation_year = !empty($_POST['primary_graduation_year']) ? $_POST['primary_graduation_year'] : null;
-    $secondary_school_name = !empty($_POST['secondary_school_name']) ? $_POST['secondary_school_name'] : null;
-    $secondary_graduation_year = !empty($_POST['secondary_graduation_year']) ? $_POST['secondary_graduation_year'] : null;
-    $higher_school_name = !empty($_POST['higher_school_name']) ? $_POST['higher_school_name'] : null;
-    $higher_graduation_year = !empty($_POST['higher_graduation_year']) ? $_POST['higher_graduation_year'] : null;
-    $nysc_camp_name = !empty($_POST['nysc_camp_name']) ? $_POST['nysc_camp_name'] : null;
-    $nysc_sevice_year = !empty($_POST['nysc_sevice_year']) ? $_POST['nysc_sevice_year'] : null;
+    $secondarySchoolName = !empty($_POST['secondarySchoolName']) ? $_POST['secondarySchoolName'] : null;
+    $secondaryGraduationYear = !empty($_POST['secondaryGraduationYear']) ? $_POST['secondaryGraduationYear'] : null;
+    $certificateType = !empty($_POST['certificateType']) ? $_POST['certificateType'] : null;
+    $classOfDegree = !empty($_POST['classOfDegree']) ? $_POST['classOfDegree'] : null;
+    $institution = !empty($_POST['institution']) ? $_POST['institution'] : null;
+    $course = !empty($_POST['course']) ? $_POST['course'] : null;
+    $highGraduationYear = !empty($_POST['highGraduationYear']) ? $_POST['highGraduationYear'] : null;
+    $nyscCertificateNumber = !empty($_POST['nyscCertificateNumber']) ? $_POST['nyscCertificateNumber'] : null;
+    $yearOfService = !empty($_POST['yearOfService']) ? $_POST['yearOfService'] : null;
 
     try {
         // Check if user education history already exists
@@ -170,26 +170,33 @@ if (isset($_POST['saveEdu'])) {
             // Insert new record
             $sql = "INSERT INTO user_education_details (
                         user_id, primary_school_name, primary_graduation_year, 
-                        secondary_school_name, secondary_graduation_year, 
-                        higher_school_name, higher_graduation_year, 
-                        nysc_camp_name, nysc_sevice_year
+                        secondarySchoolName, secondaryGraduationYear, 
+                        certificateType, classOfDegree, 
+                        institution, course,
+                        highGraduationYear, nyscCertificateNumber,
+                        yearOfService
                     ) VALUES (
                         :user_id, :primary_school_name, :primary_graduation_year, 
-                        :secondary_school_name, :secondary_graduation_year, 
-                        :higher_school_name, :higher_graduation_year, 
-                        :nysc_camp_name, :nysc_sevice_year
+                        :secondarySchoolName, :secondaryGraduationYear, 
+                        :certificateType, :classOfDegree, 
+                        :institution, :course, 
+                        :highGraduationYear, :nyscCertificateNumber, 
+                        :yearOfService
                     )";
         } else {
-            // Update existing record
+            // Update existing record (added missing commas)
             $sql = "UPDATE user_education_details SET
                         primary_school_name = :primary_school_name,
                         primary_graduation_year = :primary_graduation_year,
-                        secondary_school_name = :secondary_school_name,
-                        secondary_graduation_year = :secondary_graduation_year,
-                        higher_school_name = :higher_school_name,
-                        higher_graduation_year = :higher_graduation_year,
-                        nysc_camp_name = :nysc_camp_name,
-                        nysc_sevice_year = :nysc_sevice_year
+                        secondarySchoolName = :secondarySchoolName,
+                        secondaryGraduationYear = :secondaryGraduationYear,
+                        certificateType = :certificateType,
+                        classOfDegree = :classOfDegree,
+                        institution = :institution,
+                        course = :course,
+                        highGraduationYear = :highGraduationYear,
+                        nyscCertificateNumber = :nyscCertificateNumber,
+                        yearOfService = :yearOfService
                     WHERE user_id = :user_id";
         }
 
@@ -198,21 +205,22 @@ if (isset($_POST['saveEdu'])) {
             ':user_id' => $user_id,
             ':primary_school_name' => $primary_school_name,
             ':primary_graduation_year' => $primary_graduation_year,
-            ':secondary_school_name' => $secondary_school_name,
-            ':secondary_graduation_year' => $secondary_graduation_year,
-            ':higher_school_name' => $higher_school_name,
-            ':higher_graduation_year' => $higher_graduation_year,
-            ':nysc_camp_name' => $nysc_camp_name,
-            ':nysc_sevice_year' => $nysc_sevice_year,
+            ':secondarySchoolName' => $secondarySchoolName,
+            ':secondaryGraduationYear' => $secondaryGraduationYear,
+            ':certificateType' => $certificateType,
+            ':classOfDegree' => $classOfDegree,
+            ':institution' => $institution,
+            ':course' => $course,
+            ':highGraduationYear' => $highGraduationYear,
+            ':nyscCertificateNumber' => $nyscCertificateNumber,
+            ':yearOfService' => $yearOfService,
         ]);
 
-        //Add client side alert for better interface for form successful submission 
-        //Add client side alert for better interface for form successful submission 
-        //Add client side alert for better interface for form successful submission 
+        // Client-side alert for successful form submission
+        // echo "<script>alert('Education details saved successfully!');</script>";
     } catch (PDOException $e) {
-        //Add client side alert for better interface for form error submission
-        //Add client side alert for better interface for form error submission
-        //Add client side alert for better interface for form error submission
+        // Client-side alert for error during form submission
+        // echo "<script>alert('Error saving education details: " . $e->getMessage() . "');</script>";
     }
 }
 // Fetch user Education Detials for display in the form after saving
@@ -220,6 +228,73 @@ $fetchUserEducationData = $pdo->prepare("SELECT * FROM user_education_details WH
 $fetchUserEducationData->execute(['user_id' => $user_id]);
 $user_edu_data = $fetchUserEducationData->fetch(PDO::FETCH_ASSOC);
 
+
+
+if (isset($_POST['saveWork'])) {
+    // Retrieve POST data with empty string fallback for empty values
+    $organizationName = !empty($_POST['organizationName']) ? $_POST['organizationName'] : '';
+    $role = !empty($_POST['role']) ? $_POST['role'] : '';
+    $responsibilities = !empty($_POST['responsibilities']) ? $_POST['responsibilities'] : '';
+    $startDate = !empty($_POST['startDate']) ? $_POST['startDate'] : null;
+    $endDate = !empty($_POST['endDate']) ? $_POST['endDate'] : null;
+
+    try {
+        // Check if user work history already exists
+        $checkUserWorkHistory = $pdo->prepare("SELECT id FROM user_work_details WHERE user_id = :user_id");
+        $checkUserWorkHistory->execute(['user_id' => $user_id]);
+
+        if ($checkUserWorkHistory->rowCount() === 0) {
+            // Insert new record
+            $sql = "INSERT INTO user_work_details (
+                        user_id, organizationName, role, 
+                        responsibilities, startDate, 
+                        endDate
+                    ) VALUES (
+                        :user_id, :organizationName, :role, 
+                        :responsibilities, :startDate, 
+                        :endDate
+                    )";
+        } else {
+            // Update existing record
+            $sql = "UPDATE user_work_details SET
+                        organizationName = :organizationName,
+                        role = :role,
+                        responsibilities = :responsibilities,
+                        startDate = :startDate,
+                        endDate = :endDate
+                    WHERE user_id = :user_id";
+        }
+
+        // Prepare and execute the query
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':user_id' => $user_id,
+            ':organizationName' => $organizationName,
+            ':role' => $role,
+            ':responsibilities' => $responsibilities,
+            ':startDate' => $startDate,
+            ':endDate' => $endDate,
+        ]);
+
+        // Client-side alert for successful form submission
+        // echo "<script>alert('Education details saved successfully!');</script>";
+    } catch (PDOException $e) {
+        // Client-side alert for error during form submission
+        // echo "<script>alert('Error saving education details: " . $e->getMessage() . "');</script>";
+    }
+}
+// Fetch user Education Detials for display in the form after saving
+$fetchUserWorkData = $pdo->prepare("SELECT * FROM user_work_details WHERE user_id = :user_id");
+$fetchUserWorkData->execute(['user_id' => $user_id]);
+$user_work_data = $fetchUserWorkData->fetch(PDO::FETCH_ASSOC);
+
+// Prepare SQL to merge user data
+$req = $pdo->prepare("
+    SELECT * 
+    FROM user_applications as a 
+    JOIN users as u ON a.user_id = u.id 
+    WHERE u.id = :user_id
+");
 
 ?>
 

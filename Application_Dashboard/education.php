@@ -1,22 +1,22 @@
-<div id="education-screen" style="display: none;">
-                <div class="head-edu">
-                    <div class="left-edu">
+<div id="education-screen" class="screen" style="display: none;">
+                <div class="screen-head">
+                    <div class="screen-head-left">
                         <h2>Education</h2>
                     </div>
-                    <div class="right-edu">
+                    <div class="screen-head-right">
                         <p><a href="" style="color: #008f4a;"> Job Application</a> / <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" viewBox="0 0 24 24">
                                     <path fill="#000000" d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m2-8H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2" />
                                 </svg>Education</a></p>
                     </div>
                 </div>
-                <div class="body-edu">
-                    <div class="left-body-edu">
+                <div class="screen-body body-edu">
+                    <div class="left-edu">
                         <div id="pri-btn">Primary Education</div>
                         <div id="sec-btn">Secondary Education</div>
                         <div id="higher-btn">Higher Education</div>
                         <div id="nysc-btn">NYSC</div>
                     </div>
-                    <div class="right-body-edu">
+                    <div class="right-edu">
                         <div id="userEduDetails">
                             <!-- Display form input include save -->
                             <form action="" method="post">
@@ -52,7 +52,7 @@
                                                 </div>
                                             </th>
                                         </tr>
-                                        <tr data-id="1">
+                                        <tr>
                                             <td>
                                                 <div>
                                                     <input type="text" name="primary_school_name" id="priEduText" value="<?php echo htmlspecialchars($user_edu_data['primary_school_name']); ?>">
@@ -90,6 +90,11 @@
                                             </th>
                                             <th>
                                                 <div>
+                                                    <label for="">Certificate</label>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div>
                                                     <label for="">Action</label>
                                                 </div>
                                             </th>
@@ -97,12 +102,17 @@
                                         <tr data-id="2">
                                             <td>
                                                 <div>
-                                                    <input type="text" name="secondary_school_name" id="secEduText" value="<?php echo htmlspecialchars($user_edu_data['secondary_school_name']); ?>">
+                                                    <input type="text" name="secondarySchoolName" id="secondarySchoolName" value="<?php echo htmlspecialchars($user_edu_data['secondarySchoolName']); ?>">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div>
-                                                    <input type="text" name="secondary_graduation_year" id="secEduYear" value="<?php echo htmlspecialchars($user_edu_data['secondary_graduation_year']); ?>">
+                                                    <input type="text" name="secondaryGraduationYear" id="secondaryGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['secondaryGraduationYear']); ?>">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <input type="file" name="secondaryCertificate" id="secondaryCertificate" value="">
                                                 </div>
                                             </td>
                                             <td>
@@ -122,7 +132,22 @@
                                         <tr>
                                             <th>
                                                 <div>
-                                                    <label for="">School Name</label>
+                                                    <label for="">Certificate Type</label>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div>
+                                                    <label for="">Class Of Degree</label>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div>
+                                                    <label for="">Institution</label>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div>
+                                                    <label for="">Course</label>
                                                 </div>
                                             </th>
                                             <th>
@@ -132,19 +157,44 @@
                                             </th>
                                             <th>
                                                 <div>
+                                                    <label for="">Certificate</label>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div>
                                                     <label for="">Action</label>
                                                 </div>
                                             </th>
                                         </tr>
-                                        <tr data-id="3">
+                                        <tr>
                                             <td>
                                                 <div>
-                                                    <input type="text" name="higher_school_name" id="highEduText" value="<?php echo htmlspecialchars($user_edu_data['higher_school_name']); ?>">
+                                                    <input type="text" name="certificateType" id="certificateType" value="<?php echo htmlspecialchars($user_edu_data['certificateType']); ?>">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div>
-                                                    <input type="text" name="higher_graduation_year" id="highEduYear" value="<?php echo htmlspecialchars($user_edu_data['higher_graduation_year']); ?>">
+                                                    <input type="text" name="classOfDegree" id="classOfDegree" value="<?php echo htmlspecialchars($user_edu_data['classOfDegree']); ?>">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <input type="text" name="institution" id="institution" value="<?php echo htmlspecialchars($user_edu_data['institution']); ?>">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <input type="text" name="course" id="course" value="<?php echo htmlspecialchars($user_edu_data['course']); ?>">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <input type="text" name="highGraduationYear" id="highGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['highGraduationYear']); ?>">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <input type="file" name="highCertificate" id="highCertificate" value="">
                                                 </div>
                                             </td>
                                             <td>
@@ -164,12 +214,17 @@
                                         <tr>
                                             <th>
                                                 <div>
-                                                    <label for="">NYSC Camp Name</label>
+                                                    <label for="">Certificate Number</label>
                                                 </div>
                                             </th>
                                             <th>
                                                 <div>
-                                                    <label for="">Service Year</label>
+                                                    <label for="">Year Of Service</label>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div>
+                                                    <label for="">Certificate</label>
                                                 </div>
                                             </th>
                                             <th>
@@ -178,15 +233,20 @@
                                                 </div>
                                             </th>
                                         </tr>
-                                        <tr data-id="4">
+                                        <tr>
                                             <td>
                                                 <div>
-                                                    <input type="text" name="nysc_camp_name" id="nyscCampName" value="<?php echo htmlspecialchars($user_edu_data['nysc_camp_name']); ?>">
+                                                    <input type="text" name="nyscCertificateNumber" id="nyscCertificateNumber" value="<?php echo htmlspecialchars($user_edu_data['nyscCertificateNumber']); ?>">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div>
-                                                    <input type="text" name="nysc_sevice_year" id="nyscServiceYear" value="<?php echo htmlspecialchars($user_edu_data['nysc_sevice_year']); ?>">
+                                                    <input type="text" name="yearOfService" id="yearOfService" value="<?php echo htmlspecialchars($user_edu_data['yearOfService']); ?>">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <input type="file" name="nyscCertificate" id="nyscCertificate" value="">
                                                 </div>
                                             </td>
                                             <td>
@@ -260,7 +320,7 @@
                                                     <label for="">School Name</label>
                                                 </div>
                                                 <div>
-                                                    <input type="text" name="" id="secAddSchoolName" value="">
+                                                    <input type="text" name="" id="addSecondarySchoolName" value="">
                                                 </div>
                                             </td>
                                             <td>
@@ -268,7 +328,17 @@
                                                     <label for="">Graduation Year</label>
                                                 </div>
                                                 <div>
-                                                    <input type="text" name="" id="secAddGraduationYear" value="" placeholder="2000-2024">
+                                                    <input type="text" name="" id="addSecondaryGraduationYear" value="" placeholder="2000-2024">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div>
+                                                    <label for="">Certificate</label>
+                                                </div>
+                                                <div>
+                                                    <input type="file" name="" id="addSecondaryCertificate" value="">
                                                 </div>
                                             </td>
                                         </tr>
@@ -296,18 +366,70 @@
                                         <tr>
                                             <td>
                                                 <div>
-                                                    <label for="">School Name</label>
+                                                    <label for="">Certificate Type</label>
                                                 </div>
                                                 <div>
-                                                    <input type="text" name="" id="highAddSchoolName" value="">
+                                                    <select name="" id="addCertificateType" value="<?= $gender?>">
+                                                        <option value="" disabled hidden selected> --select an option--</option>
+                                                        <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
+                                                        <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
+                                                    </select>
                                                 </div>
                                             </td>
+                                            <td>
+                                                <div>
+                                                    <label for="">Class Of Degree</label>
+                                                </div>
+                                                <div>
+                                                    <select name="" id="addClassOfDegree" value="<?= $gender?>">
+                                                        <option value="" disabled hidden selected> --select an option--</option>
+                                                        <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
+                                                        <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <label for="">Institution</label>
+                                                </div>
+                                                <div>
+                                                    <select name="" id="addInstitution" value="<?= $gender?>">
+                                                        <option value="" disabled hidden selected> --select an option--</option>
+                                                        <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
+                                                        <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <label for="">Course</label>
+                                                </div>
+                                                <div>
+                                                    <select name="" id="addCourse" value="<?= $gender?>">
+                                                        <option value="" disabled hidden selected> --select an option--</option>
+                                                        <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
+                                                        <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>
                                                 <div>
                                                     <label for="">Graduation Year</label>
                                                 </div>
                                                 <div>
-                                                    <input type="text" name="" id="highAddGraduationYear" value="" placeholder="2000-2024">
+                                                    <input type="text" name="" id="addHighGraduationYear" value="">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <label for="">Certificate</label>
+                                                </div>
+                                                <div>
+                                                    <input type="file" name="" id="addHighCertificate" value="" placeholder="2000-2024">
                                                 </div>
                                             </td>
                                         </tr>
@@ -335,18 +457,28 @@
                                         <tr>
                                             <td>
                                                 <div>
-                                                    <label for="">School Name</label>
+                                                    <label for="">NYSC Certificate Number</label>
                                                 </div>
                                                 <div>
-                                                    <input type="text" name="" id="nyscAddCampName" value="">
+                                                    <input type="text" name="" id="addNyscCertificateNumber" value="">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div>
-                                                    <label for="">Graduation Year</label>
+                                                    <label for="">Year Of Service</label>
                                                 </div>
                                                 <div>
-                                                    <input type="text" name="" id="nyscAddServiceYear" value="" placeholder="2000-2024">
+                                                    <input type="text" name="" id="addYearOfService" value="" placeholder="2000-2024">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div>
+                                                    <label for="">NYSC/Exemption Certificate</label>
+                                                </div>
+                                                <div>
+                                                    <input type="file" name="" id="addNyscCertificate" value="">
                                                 </div>
                                             </td>
                                         </tr>
@@ -367,6 +499,279 @@
                 </div>
             </div>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Primary School Form Logic
+        const priAddformSubmit = document.getElementById('priAddformSubmit');
+        const priInputTableBody = document.getElementById('pri-input-table-body');
+        const addPriText = document.getElementById('addPriText');
+        const addPriYear = document.getElementById('addPriYear');
+
+        priAddformSubmit.addEventListener("submit", (e) => {
+            e.preventDefault(); // Prevent page reload
+
+            if (addPriText.value === "" || addPriYear.value === "") {
+                alert("Please fill out both the school name and graduation year.");
+                return;
+            }
+
+            // Check if the table has any rows
+            const rows = priInputTableBody.getElementsByTagName('tr');
+            if (rows.length === 1) {
+                // Add a new row
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div>
+                            <input type="text" name="primary_school_name[]" value="${addPriText.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="primary_graduation_year[]" value="${addPriYear.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button type="button" onclick="removeRow(this)">Remove</button>
+                        </div>
+                    </td>
+                `;
+                priInputTableBody.appendChild(row);
+                // Display value input
+                const priEduText = document.getElementById('priEduText');
+                const priEduYear = document.getElementById('priEduYear');
+
+                // Directly update the display input fields with the entered data (use .value)
+                priEduText.value = addPriText.value;
+                priEduYear.value = addPriYear.value;
+            } else {
+                // Directly update the display input fields with the entered data (use .value)
+                priEduText.value = addPriText.value;
+                priEduYear.value = addPriYear.value;
+            }
+            // Clear input fields after submission
+            addPriText.value = "";
+            addPriYear.value = "";
+        });
+
+        // Secondary School Form Logic
+        const secAddformSubmit = document.getElementById('secAddformSubmit');
+        const secInputTableBody = document.getElementById('sec-input-table-body');
+        const addSecondarySchoolName = document.getElementById('addSecondarySchoolName');
+        const addSecondaryGraduationYear = document.getElementById('addSecondaryGraduationYear');
+        const addSecondaryCertificate = document.getElementById('addSecondaryCertificate');
+
+        secAddformSubmit.addEventListener("submit", (e) => {
+            e.preventDefault(); // Prevent page reload
+
+            if (addSecondarySchoolName.value === "" || addSecondaryGraduationYear.value === "") {
+                alert("Please fill out both the school name and graduation year.");
+                return;
+            }
+
+            // Check if the table has any rows
+            const rows = secInputTableBody.getElementsByTagName('tr');
+            if (rows.length === 1) {
+                // Add a new row
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div>
+                            <input type="text" name="secondary_school_name[]" value="${addSecondarySchoolName.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="secondary_graduation_year[]" value="${addSecondaryGraduationYear.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="file" name="secondary_certificate[]" value="">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button type="button" onclick="removeRow(this)">Remove</button>
+                        </div>
+                    </td>
+                `;
+                secInputTableBody.appendChild(row);
+                // Display value input
+                const secondarySchoolName = document.getElementById('secondarySchoolName');
+                const secondaryGraduationYear = document.getElementById('secondaryGraduationYear');
+
+                // Directly update the display input fields with the entered data (use .value)
+                secondarySchoolName.value = addSecondarySchoolName.value;
+                secondaryGraduationYear.value = addSecondaryGraduationYear.value;
+            } else {
+                // Directly update the display input fields with the entered data (use .value)
+                secondarySchoolName.value = addSecondarySchoolName.value;
+                secondaryGraduationYear.value = addSecondaryGraduationYear.value;
+            }
+            // Clear input fields after submission
+            addSecondarySchoolName.value = "";
+            addSecondaryGraduationYear.value = "";
+        });
+
+        // Higher Education Form Logic
+        const highAddForm = document.getElementById('highAddformSubmit');
+        const highInputTableBody = document.getElementById('high-input-table-body');
+        const addCertificateType = document.getElementById('addCertificateType');
+        const addClassOfDegree = document.getElementById('addClassOfDegree');
+        const addInstitution = document.getElementById('addInstitution');
+        const addCourse = document.getElementById('addCourse');
+        const addHighGraduationYear = document.getElementById('addHighGraduationYear');
+
+        highAddForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Prevent page reload
+
+            if (addCertificateType.value === "" || addClassOfDegree.value === "" || addInstitution.value === "" || addCourse.value === "" || addHighGraduationYear.value === "") {
+                alert("Please fill out all the fields.");
+                return;
+            }
+
+            // Check if the table has any rows
+            const rows = highInputTableBody.getElementsByTagName('tr');
+            if (rows.length === 1) {
+                // Add a new row
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div>
+                            <input type="text" name="certificate_type[]" value="${addCertificateType.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="class_of_degree[]" value="${addClassOfDegree.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="institution[]" value="${addInstitution.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="course[]" value="${addCourse.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="graduation_year[]" value="${addHighGraduationYear.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="file" name="highCertificate" id="highCertificate" value="">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button type="button" onclick="removeRow(this)">Remove</button>
+                        </div>
+                    </td>
+                `;
+                highInputTableBody.appendChild(row);
+                // Display value input
+                const certificateType = document.getElementById('certificateType');
+                const classOfDegree = document.getElementById('classOfDegree');
+                const institution = document.getElementById('institution');
+                const course = document.getElementById('course');
+                const highGraduationYear = document.getElementById('highGraduationYear');
+
+                // Directly update the display input fields with the entered data (use .value)
+                certificateType.value = addCertificateType.value;
+                classOfDegree.value = addClassOfDegree.value;
+                institution.value = addInstitution.value;
+                course.value = addCourse.value;
+                highGraduationYear.value = addHighGraduationYear.value;
+            } else {
+                
+                // Directly update the display input fields with the entered data (use .value)
+                certificateType.value = addCertificateType.value;
+                classOfDegree.value = addClassOfDegree.value;
+                institution.value = addInstitution.value;
+                course.value = addCourse.value;
+                highGraduationYear.value = addHighGraduationYear.value;
+            }
+            // Clear input fields after submission
+            addCertificateType.value = "";
+            addClassOfDegree.value = "";
+            addInstitution.value = "";
+            addCourse.value = "";
+            addHighGraduationYear.value = "";
+        });
+
+        // NYSC Form Logic
+        const nyscAddformSubmit = document.getElementById('nyscAddformSubmit');
+        const nyscInputTableBody = document.getElementById('nysc-input-table-body');
+        const addNyscCertificateNumber = document.getElementById('addNyscCertificateNumber');
+        const addYearOfService = document.getElementById('addYearOfService');
+
+        nyscAddformSubmit.addEventListener("submit", (e) => {
+            e.preventDefault(); // Prevent page reload
+
+            if (addNyscCertificateNumber.value === "" || addYearOfService.value === "") {
+                alert("Please fill out both the certificate number and year of service.");
+                return;
+            }
+
+            // Check if the table has any rows
+            const rows = nyscInputTableBody.getElementsByTagName('tr');
+            if (rows.length === 1) {
+                // Add a new row
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div>
+                            <input type="text" name="nysc_certificate_number[]" value="${addNyscCertificateNumber.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="year_of_service[]" value="${addYearOfService.value}">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="file" name="nysc_certificate[]" value="">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button type="button" onclick="removeRow(this)">Remove</button>
+                        </div>
+                    </td>
+                `;
+                nyscInputTableBody.appendChild(row);
+                // Display value input
+                const nyscCertificateNumber = document.getElementById('nyscCertificateNumber');
+                const yearOfService = document.getElementById('yearOfService');
+
+                // Directly update the display input fields with the entered data (use .value)
+                nyscCertificateNumber.value = addNyscCertificateNumber.value;
+                yearOfService.value = addYearOfService.value;
+            } else {
+                
+                // Directly update the display input fields with the entered data (use .value)
+                nyscCertificateNumber.value = addNyscCertificateNumber.value;
+                yearOfService.value = addYearOfService.value;
+            }
+            // Clear input fields after submission
+            addNyscCertificateNumber.value = "";
+            addYearOfService.value = "";
+        });
+
+        // Function to remove a row
+        window.removeRow = function(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+    });
+</script>
+<!-- <script>
     // Function to dynamically add rows to the input table
     document.addEventListener("DOMContentLoaded", function() {
         //Primary values Btns
@@ -433,14 +838,15 @@
         const secAddformSubmit = document.getElementById('secAddformSubmit');
         const secInputTableBody = document.getElementById('sec-input-table-body');
         // Input fields for entering data
-        const secAddSchoolName = document.getElementById('secAddSchoolName');
-        const secAddGraduationYear = document.getElementById('secAddGraduationYear');
+        const addSecondarySchoolName = document.getElementById('addSecondarySchoolName');
+        const addSecondaryGraduationYear = document.getElementById('addSecondaryGraduationYear');
+        const addSecondaryCertificate = document.getElementById('addSecondaryCertificate');
 
         // For Secondary Table
         secAddformSubmit.addEventListener("submit", (e) => {
             e.preventDefault(); // Prevent page reload
 
-            if (secAddSchoolName.value === "" || secAddGraduationYear.value === "") {
+            if (addSecondarySchoolName.value === "" || addSecondaryGraduationYear.value === "") {
                 alert("Please fill out both the school name and graduation year.");
                 return;
             }
@@ -453,54 +859,67 @@
                 row.innerHTML = `
                    <td>
                         <div>
-                            <input type="text" name="secondary_school_name" id="secEduText" value="">
+                            <input type="text" name="secondarySchoolName" id="secondarySchoolName" value="<?php echo htmlspecialchars($user_edu_data['secondarySchoolName']); ?>">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="secondary_graduation_year" id="secEduYear" value="">
+                            <input type="text" name="secondaryGraduationYear" id="secondaryGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['secondaryGraduationYear']); ?>">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <button id="" onclick="removeRow(this)">Remove</button>
+                            <input type="file" name="secondaryCertificate" id="secondaryCertificate" value="">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button id="" name="delete" onclick="removeRow(this)">Remove</button>
                         </div>
                     </td>
                 `;
                 secInputTableBody.appendChild(row);
 
                 // Display value input
-                const secEduText = document.getElementById('secEduText');
-                const secEduYear = document.getElementById('secEduYear');
+                const secondarySchoolName = document.getElementById('secondarySchoolName');
+                const secondaryGraduationYear = document.getElementById('secondaryGraduationYear');
+                const secondaryCertificate = document.getElementById('secondaryCertificate');
 
                 // Directly update the display input fields with the entered data (use .value)
-                secEduText.value = secAddSchoolName.value;
-                secEduYear.value = secAddGraduationYear.value;
+                secondarySchoolName.value = addSecondarySchoolName.value;
+                secondaryGraduationYear.value = addSecondaryGraduationYear.value;
+                secondaryCertificate.value = addSecondaryCertificate.value;
             } else {
                 // Directly update the display input fields with the entered data (use .value)
-                secEduText.value = secAddSchoolName.value;
-                secEduYear.value = secAddGraduationYear.value;
+                secondarySchoolName.value = addSecondarySchoolName.value;
+                secondaryGraduationYear.value = addSecondaryGraduationYear.value;
+                secondaryCertificate.value = addSecondaryCertificate.value;
             }
 
             // Clear the input fields after updating
-            secAddSchoolName.value = "";
-            secAddGraduationYear.value = "";
+            addSecondarySchoolName.value = "";
+            addSecondaryGraduationYear.value = "";
+            addSecondaryCertificate.value = "";
         });
 
 
 
         //Higher values Btns
-        const highAddformSubmit = document.getElementById('highAddformSubmit');
+        const highAddForm = document.getElementById('highAddformSubmit');
         const highInputTableBody = document.getElementById('high-input-table-body');
         // Input fields for entering data
-        const highAddSchoolName = document.getElementById('highAddSchoolName');
-        const highAddGraduationYear = document.getElementById('highAddGraduationYear');
+        const addCertificateType = document.getElementById('addCertificateType');
+        const addClassOfDegree = document.getElementById('addClassOfDegree');
+        const addInstitution = document.getElementById('addInstitution');
+        const addCourse = document.getElementById('addCourse');
+        const addHighGraduationYear = document.getElementById('addHighGraduationYear');
+        const addHighCertificate = document.getElementById('addHighCertificate');
 
         // For Higher Table
-        highAddformSubmit.addEventListener("submit", (e) => {
+        highAddForm.addEventListener("submit", (e) => {
             e.preventDefault(); // Prevent page reload
 
-            if (highAddSchoolName.value === "" || highAddGraduationYear.value === "") {
+            if (addCertificateType.value === "" || addClassOfDegree.value === "" || addInstitution.value === "" || addCourse.value === "" || addHighGraduationYear.value === "") {
                 alert("Please fill out both the school name and graduation year.");
                 return;
             }
@@ -513,39 +932,75 @@
                 row.innerHTML = `
                    <td>
                         <div>
-                            <input type="text" name="higher_school_name" id="highEduText" value="">
+                            <input type="text" name="certificateType" id="certificateType" value="<?php echo htmlspecialchars($user_edu_data['certificateType']); ?>">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="higher_graduation_year" id="highEduYear" value="">
+                            <input type="text" name="classOfDegree" id="classOfDegree" value="<?php echo htmlspecialchars($user_edu_data['classOfDegree']); ?>">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <button id="" onclick="removeRow(this)">Remove</button>
+                            <input type="text" name="institution" id="institution" value="<?php echo htmlspecialchars($user_edu_data['institution']); ?>">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="course" id="course" value="<?php echo htmlspecialchars($user_edu_data['course']); ?>">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="graduationYear" id="graduationYear" value="<?php echo htmlspecialchars($user_edu_data['graduationYear']); ?>">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="file" name="certificate" id="certificate" value="">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button id="" name="delete" onclick="removeRow(this)">Remove</button>
                         </div>
                     </td>
                 `;
                 highInputTableBody.appendChild(row);
 
                 // Display value input
-                const highEduText = document.getElementById('highEduText');
-                const highEduYear = document.getElementById('highEduYear');
+                const certificateType = document.getElementById('certificateType');
+                const classOfDegree = document.getElementById('classOfDegree');
+                const institution = document.getElementById('institution');
+                const course = document.getElementById('course');
+                const highGraduationYear = document.getElementById('highGraduationYear');
+                const highCertificate = document.getElementById('highCertificate');
 
                 // Directly update the display input fields with the entered data (use .value)
-                highEduText.value = highAddSchoolName.value;
-                highEduYear.value = highAddGraduationYear.value;
+                certificateType.value = addCertificateType.value;
+                classOfDegree.value = addClassOfDegree.value;
+                institution.value = addInstitution.value;
+                course.value = addCourse.value;
+                highGraduationYear.value = addHighGraduationYear.value;
+                highCertificate.value = addHighCertificate.value;
             } else {
                 
                 // Directly update the display input fields with the entered data (use .value)
-                highEduText.value = highAddSchoolName.value;
-                highEduYear.value = highAddGraduationYear.value;
+                certificateType.value = addCertificateType.value;
+                classOfDegree.value = addClassOfDegree.value;
+                institution.value = addInstitution.value;
+                course.value = addCourse.value;
+                highGraduationYear.value = addHighGraduationYear.value;
+                highCertificate.value = addHighCertificate.value;
             }
 
             // Clear the input fields after updating
-            highAddSchoolName.value = "";
-            highAddGraduationYear.value = "";
+            addCertificateType.value = "";
+            addClassOfDegree.value = "";
+            addInstitution.value = "";
+            addCourse.value = "";
+            addHighGraduationYear.value = "";
+            addHighCertificate.value = "";
         });
 
 
@@ -554,14 +1009,15 @@
         const nyscAddformSubmit = document.getElementById('nyscAddformSubmit');
         const nyscInputTableBody = document.getElementById('nysc-input-table-body');
         // Input fields for entering data
-        const nyscAddCampName = document.getElementById('nyscAddCampName');
-        const nyscAddServiceYear = document.getElementById('nyscAddServiceYear');
+        const addNyscCertificateNumber = document.getElementById('addNyscCertificateNumber');
+        const addYearOfService = document.getElementById('addYearOfService');
+        const addNyscCertificate = document.getElementById('addNyscCertificate');
 
         // For NYSC Table
         nyscAddformSubmit.addEventListener("submit", (e) => {
             e.preventDefault(); // Prevent page reload
 
-            if (nyscAddCampName.value === "" || nyscAddServiceYear.value === "") {
+            if (addNyscCertificateNumber.value === "" || addYearOfService.value === "") {
                 alert("Please fill out both the school name and graduation year.");
                 return;
             }
@@ -574,39 +1030,48 @@
                 row.innerHTML = `
                    <td>
                         <div>
-                            <input type="text" name="nysc_camp_name" id="nyscCampName" value="">
+                            <input type="text" name="nyscCertificateNumber" id="nyscCertificateNumber" value="<?php echo htmlspecialchars($user_edu_data['nyscCertificateNumber']); ?>">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="nysc_sevice_year" id="nyscServiceYear" value="">
+                            <input type="text" name="yearOfService" id="yearOfService" value="<?php echo htmlspecialchars($user_edu_data['yearOfService']); ?>">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <button id="" onclick="removeRow(this)">Remove</button>
+                            <input type="file" name="nyscCertificate" id="nyscCertificate" value="">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button id="" name="delete" onclick="removeRow(this)">Remove</button>
                         </div>
                     </td>
                 `;
                 nyscInputTableBody.appendChild(row);
 
                 // Display value input
-                const nyscCampName = document.getElementById('nyscCampName');
-                const nyscServiceYear = document.getElementById('nyscServiceYear');
+                const nyscCertificateNumber = document.getElementById('nyscCertificateNumber');
+                const yearOfService = document.getElementById('yearOfService');
+                const nyscCertificate = document.getElementById('nyscCertificate');
 
                 // Directly update the display input fields with the entered data (use .value)
-                nyscCampName.value = nyscAddCampName.value;
-                nyscServiceYear.value = nyscAddServiceYear.value;
+                nyscCertificateNumber.value = addNyscCertificateNumber.value;
+                yearOfService.value = addYearOfService.value;
+                nyscCertificate.value = addNyscCertificate.value;
             } else {
                 
                 // Directly update the display input fields with the entered data (use .value)
-                nyscCampName.value = nyscAddCampName.value;
-                nyscServiceYear.value = nyscAddServiceYear.value;
+                nyscCertificateNumber.value = addNyscCertificateNumber.value;
+                yearOfService.value = addYearOfService.value;
+                nyscCertificate.value = addNyscCertificate.value;
             }
 
             // Clear the input fields after updating
-            nyscAddCampName.value = "";
-            nyscAddServiceYear.value = "";
+            addNyscCertificateNumber.value = "";
+            addYearOfService.value = "";
+            addNyscCertificate.value = "";
         });
 
 
@@ -618,6 +1083,6 @@
         }
 
     });
-</script>
+</script> -->
 
  

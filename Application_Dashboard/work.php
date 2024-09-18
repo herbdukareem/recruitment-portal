@@ -1,9 +1,9 @@
-<div id="work-screen" style="display: none;">
-                <div class="head-work">
-                    <div class="left-work">
+<div id="work-screen" class="screen" style="display: none;">
+                <div class="screen-head">
+                    <div class="screen-head-left">
                         <h2>Work History</h2>
                     </div>
-                    <div class="right-work">
+                    <div class="screen-head-right">
                         <p>
                             <a href="" style="color: #008f4a;"> Job Application</a> / <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" viewBox="0 0 24 24">
                                     <path fill="#000000" d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m2-8H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2" />
@@ -13,52 +13,85 @@
                         </p>
                     </div>
                 </div>
-                <div class="body-work">
-                    <form action="">
+                <div class="screen-body">
+                    <!-- Display Input Data -->
+                    <form action="" method="post">
                         <div class="form-head">
                             <h2>Work History</h2>
                         </div>
                         <div class="no-br">
 
-                            <table col>
+                            <table id="workInputTableBody">
                                 <tr>
                                     <td>
                                         <div>
                                             <label for="">Organization Name</label>
-                                            <input type="text" name="" id="" value="">
                                         </div>
                                     </td>
                                     <td>
                                         <div>
                                             <label for="">Role</label>
-                                            <input type="text" name="" id="" value="">
                                         </div>
                                     </td>
                                     <td>
                                         <div>
                                             <label for="">Resposibilities</label>
-                                            <input type="text" name="" id="" value="">
                                         </div>
                                     </td>
                                     <td>
                                         <div>
                                             <label for="">Start Date</label>
-                                            <input type="text" name="" id="" value="">
                                         </div>
                                     </td>
                                     <td>
                                         <div>
                                             <label for="">End Date</label>
-                                            <input type="text" name="" id="" value="">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="organizationName" id="organizationName" value="<?php echo htmlspecialchars($user_work_data['organizationName']); ?>">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="role" id="role" value="<?php echo htmlspecialchars($user_work_data['role']); ?>">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="responsibilities" id="responsibilities" value="<?php echo htmlspecialchars($user_work_data['responsibilities']); ?>">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="date" name="startDate" id="startDate" value="<?php echo htmlspecialchars($user_work_data['startDate']); ?>">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="date" name="endDate" id="endDate" value="<?php echo htmlspecialchars($user_work_data['endDate']); ?>">
                                         </div>
                                     </td>
                                 </tr>
                             </table>
                         </div>
+                        <div class="form-footer">
+                            <button type="sunmit" name="saveWork">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
+                                    <path fill="white" d="M20 7.423v10.962q0 .69-.462 1.153T18.384 20H5.616q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h10.961zm-8.004 9.115q.831 0 1.417-.582T14 14.543t-.582-1.418t-1.413-.586t-1.419.581T10 14.535t.582 1.418t1.414.587M6.769 9.77h7.423v-3H6.77z" />
+                                </svg>
+                                Save
+                            </button>
+                        </div>
                     </form>
-                    <form action="" class="mar-top">
+
+                    <!-- Add input data form -->
+                    <form action="" class="mar-top" id="workAddformSubmit">
                         <div class="form-head">
-                            <h2>Primary Education</h2>
+                            <h2>Work History</h2>
                         </div>
                         <div class="form-body">
                             <table>
@@ -68,7 +101,7 @@
                                             <label for="">Organization Name</label>
                                         </div>
                                         <div>
-                                            <input type="text" name="" id="" value="">
+                                            <input type="text" name="" id="addOrganizationName" value="">
                                         </div>
                                     </td>
                                     <td>
@@ -76,7 +109,7 @@
                                             <label for="">Role</label>
                                         </div>
                                         <div>
-                                            <input type="text" name="" id="" value="">
+                                            <input type="text" name="" id="addRole" value="">
                                         </div>
                                     </td>
                                 </tr>
@@ -86,7 +119,7 @@
                                             <label for="">Resposibilities <i>(max of 1000 words)</i></label>
                                         </div>
                                         <div>
-                                            <textarea name="" id=""></textarea>
+                                            <textarea name="" id="addResponsibilities"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -96,7 +129,7 @@
                                             <label for="">Start Date</label>
                                         </div>
                                         <div>
-                                            <input type="date" name="" id="" value="">
+                                            <input type="date" name="" id="addStartDate" value="">
                                         </div>
                                     </td>
                                     <td>
@@ -104,7 +137,7 @@
                                             <label for="">End Date</label>
                                         </div>
                                         <div>
-                                            <input type="date" name="" id="" value="">
+                                            <input type="date" name="" id="addEndDate" value="">
                                         </div>
                                         <div style="font-size: 12px;">
                                             <input type="checkbox">currently in this role
@@ -114,13 +147,207 @@
                             </table>
                         </div>
                         <div class="form-footer">
-                            <button>
+                            <button id="" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
-                                    <path fill="white" d="M20 7.423v10.962q0 .69-.462 1.153T18.384 20H5.616q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h10.961zm-8.004 9.115q.831 0 1.417-.582T14 14.543t-.582-1.418t-1.413-.586t-1.419.581T10 14.535t.582 1.418t1.414.587M6.769 9.77h7.423v-3H6.77z" />
+                                    <g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="64" stroke-dashoffset="64" d="M13 3l6 6v12h-14v-18h8"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="64;0"/></path><path stroke-dasharray="14" stroke-dashoffset="14" stroke-width="1" d="M12.5 3v5.5h6.5"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.7s" dur="0.2s" values="14;0"/></path><path stroke-dasharray="8" stroke-dashoffset="8" d="M9 14h6"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.9s" dur="0.2s" values="8;0"/></path><path stroke-dasharray="8" stroke-dashoffset="8" d="M12 11v6"><animate fill="freeze" attributeName="stroke-dashoffset" begin="1.1s" dur="0.2s" values="8;0"/></path></g>
                                 </svg>
-                                Save
+                                Add
                             </button>
                         </div>
                     </form>
                 </div>
-            </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const workAddformSubmit = document.getElementById('workAddformSubmit');
+        const workInputTableBody = document.getElementById('workInputTableBody');
+        const addOrganizationName = document.getElementById('addOrganizationName');
+        const addRole = document.getElementById('addRole');
+        const addResponsibilities = document.getElementById('addResponsibilities');
+        const addStartDate = document.getElementById('addStartDate');
+        const addEndDate = document.getElementById('addEndDate');
+
+        workAddformSubmit.addEventListener("submit", (e) => {
+            e.preventDefault(); // Prevent page reload
+
+            // Validate all fields
+            if (addOrganizationName.value === "" || addRole.value === "" || addResponsibilities.value === "" || addStartDate.value === "" || addEndDate.value === "") {
+                alert("Please fill out all the fields.");
+                return;
+            }
+
+            // Check if the table has any rows
+            const rows = workInputTableBody.getElementsByTagName('tr');
+            if (rows.length === 1) {
+                // Add new row to the table
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>
+                        <div>
+                            <input type="text" name="organizationName" id="organizationName" value="<?php echo htmlspecialchars($user_work_data['organizationName']); ?>">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="role" id="role" value="<?php echo htmlspecialchars($user_work_data['role']); ?>">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="resposibilities" id="resposibilities" value="<?php echo htmlspecialchars($user_work_data['resposibilities']); ?>">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="startDate" id="startDate" value="<?php echo htmlspecialchars($user_work_data['startDate']); ?>">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" name="endDate" id="endDate" value="<?php echo htmlspecialchars($user_work_data['endDate']); ?>">
+                        </div>
+                    </td>
+                    `;
+
+                workInputTableBody.appendChild(newRow);
+                // Display value input
+                const organizationName = document.getElementById('organizationName');
+                const role = document.getElementById('role');
+                const responsibilities = document.getElementById('responsibilities');
+                const startDate = document.getElementById('startDate');
+                const endDate = document.getElementById('endDate');
+
+                // Directly update the display input fields with the entered data (use .value)
+                organizationName.value = addOrganizationName.value;
+                role.value = addRole.value;
+                responsibilities.value = addResponsibilities.value;
+                startDate.value = addStartDate.value;
+                endDate.value = addEndDate.value;
+            } else {
+                // Directly update the display input fields with the entered data (use .value)
+                organizationName.value = addOrganizationName.value;
+                role.value = addRole.value;
+                responsibilities.value = addResponsibilities.value;
+                startDate.value = addStartDate.value;
+                endDate.value = addEndDate.value;
+            }
+
+            // Clear the input fields
+            addOrganizationName.value = "";
+            addRole.value = "";
+            addResponsibilities.value = "";
+            addStartDate.value = "";
+            addEndDate.value = "";
+        });
+
+        // Remove row function
+        window.removeRow = function (button) {
+            const row = button.closest('tr');
+            row.remove();
+        };
+    });
+</script>
+
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Primary School Form Logic
+        const workAddformSubmit = document.getElementById('workAddformSubmit');
+        const workInputTableBody = document.getElementById('work-input-table-body');
+        const addOrganizationName = document.getElementById('addOrganizationName');
+        const addRole = document.getElementById('addRole');
+        const addResposibilities = document.getElementById('addResposibilities');
+        const addStartDate = document.getElementById('addStartDate');
+        const addEndDate = document.getElementById('addEndDate');
+
+        workAddformSubmit.addEventListener("click", (e) => {
+            e.preventDefault(); // Prevent page reload
+
+            // Check if all fields are filled
+            if (addOrganizationName.value === "" || addRole.value === "" || addResposibilities.value === "" || addStartDate.value === "" || addEndDate.value === "") {
+                alert("Please fill out all the fields.");
+                return;
+            }
+
+            // Check if the table has any rows
+            const rows = workInputTableBody.getElementsByTagName('tr');
+            if (rows.length === 1) {
+                // Add a new row to the table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                     <td>
+                                        <div>
+                                            <label for="">Organization Name</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" name="organizationName" id="organizationName" value="<?php echo htmlspecialchars($user_work_data['organizationName']); ?>">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <label for="">Role</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" name="role" id="role" value="<?php echo htmlspecialchars($user_work_data['role']); ?>">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <label for="">Resposibilities</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" name="resposibilities" id="resposibilities" value="<?php echo htmlspecialchars($user_work_data['resposibilities']); ?>">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <label for="">Start Date</label>
+                                            <input type="text" name="startDate" id="startDate" value="<?php echo htmlspecialchars($user_work_data['startDate']); ?>">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <label for="">End Date</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" name="endDate" id="endDate" value="<?php echo htmlspecialchars($user_work_data['endDate']); ?>">
+                                        </div>
+                                    </td>
+                `;
+
+                workInputTableBody.appendChild(row); // Append the new row to the table
+                 // Display value input
+                const organizationName = document.getElementById('organizationName');
+                const role = document.getElementById('role');
+                const resposibilities = document.getElementById('resposibilities');
+                const startDate = document.getElementById('startDate');
+                const endDate = document.getElementById('endDate');
+
+                // Directly update the display input fields with the entered data (use .value)
+                organizationName.value = addOrganizationName.value;
+                role.value = addRole.value;
+                resposibilities.value = addResposibilities.value;
+                startDate.value = addStartDate.value;
+                endDate.value = addEndDate.value;
+            } else {
+                // Directly update the display input fields with the entered data (use .value)
+                organizationName.value = addOrganizationName.value;
+                role.value = addRole.value;
+                resposibilities.value = addResposibilities.value;
+                startDate.value = addStartDate.value;
+                endDate.value = addEndDate.value;
+            }
+            // Clear input fields after adding the row
+            addOrganizationName.value = "";
+            addRole.value = "";
+            addResposibilities.value = "";
+            addStartDate.value = "";
+            addEndDate.value = "";
+        });
+
+        // Function to remove a row
+        window.removeRow = function(button) {
+            const row = button.closest('tr');
+            row.remove();
+        };
+    });
+</script> -->

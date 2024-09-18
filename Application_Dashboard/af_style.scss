@@ -101,13 +101,13 @@ body{
                 }
             }
         };
-        #biodata-screen, #education-screen, #work-screen, #summary-screen, #pmc-screen{
+        .screen{
             padding: 0 0.5em;
-            .head-bio, .head-edu, .head-work, .head-sum, .head-pmc{
+            .screen-head{
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 height: 50px;
-                .left-bio, .left-edu, .left-work, .left-sum, .left-pmc{
+                .screen-head-left{
                     grid-column: 1/2;
                     display: flex;
                     align-items: center;
@@ -118,10 +118,10 @@ body{
                         font-weight: bolder;
                     }
                 }
-                .right-bio, .right-edu, .right-work, .right-sum, .right-pmc{
+                .screen-head-right{
                     grid-column: 2/3;
                     padding: 0 0.8em;
-                    font-size: 0.8em;
+                    font-size: 1em;
                     font-weight: lighter;
                     display: flex;
                     align-items: center;
@@ -142,7 +142,7 @@ body{
                     }
                 }
             }
-            .body-bio, .body-edu, .body-work, .body-sum, .body.pmc{
+            .screen-body{
                 margin: 20px;
                 form{
                     margin-bottom: 1em;
@@ -158,7 +158,7 @@ body{
                         text-align: left;
                         background-color: #216745;
                         color: #fff;
-                        font-size: 0.5em;
+                        font-size: 0.8em;
                         padding: 0.1em 0.5em;
                         border-radius: 0.5em 0.5em 0 0                     ;
                         -webkit-border-radius: 0.5em 0.5em 0 0                     ;
@@ -174,7 +174,7 @@ body{
                                     padding: 0.2em 0.2em;
                                     div{
                                         label{
-                                            font-size: 0.7em;
+                                            font-size: 0.5em;
                                             padding: 0.5em 0.5em 0.5em 0.3em;
                                             i{
                                                 font-size: 0.5em;
@@ -334,7 +334,7 @@ body{
                 -moz-border-radius: 0.3em                    ;
                 -ms-border-radius: 0.3em                    ;
                 -o-border-radius: 0.3em                    ;
-                .left-body-edu{
+                .left-edu{
                     grid-column: 1/2;
                     margin:0.2em 1.5em  0.2em 0;
                     div{
@@ -352,7 +352,7 @@ body{
                         -o-border-radius: 0.3em 0.3em 0 0                   ;
 }
                 }
-                .right-body-edu{
+                .right-edu{
                     grid-column: 2/3;
                     
                 }
