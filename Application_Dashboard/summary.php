@@ -15,9 +15,6 @@
     </div>
     <div class="screen-body">
         <style>
-            label{
-                text-align: left;
-            }
             tr{
                 margin-bottom: 0.8em;
                 min-height: 30px;
@@ -30,8 +27,9 @@
                 border-radius: 0 5px 5px 0;
             }
             .table_data{
-                text-align: center;
+                text-align: left;
                 border-bottom: 1px solid #216745;
+                margin: 0.8em;
             }
             .section_h4{
                 background-color: #21674559 ;
@@ -59,7 +57,7 @@
                                     <label>First Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['firstname'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -67,7 +65,7 @@
                                     <label>Middle Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['middlename'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -75,7 +73,7 @@
                                     <label>Last Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['lastname'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -85,7 +83,7 @@
                                     <label>Gender</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['gender'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -93,7 +91,7 @@
                                     <label>Date Of Birth</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['dateOfBirth'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -101,7 +99,7 @@
                                     <label>Marital Status</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['maritalStatus'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -111,7 +109,7 @@
                                     <label>Phone Number</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['phoneNumber'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -119,7 +117,7 @@
                                     <label>Emergency Number</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['emergencyNumber'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -127,7 +125,7 @@
                                     <label>NIN</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['nin'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -137,7 +135,7 @@
                                     <label>State Of Origin</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['stateOfOrigin'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -145,15 +143,15 @@
                                     <label>Local Government</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['localGovernmentArea'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
                                 <div>
-                                    <label>Address</label>
+                                    <label>Residential Address</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['address'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -163,7 +161,7 @@
                                     <label>LGA Indigene\Origin Certifiate</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['lgaCertificate'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data" colspan="1.5">
@@ -171,7 +169,7 @@
                                     <label>Birth Certifiate</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['birthCertificate'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -194,7 +192,7 @@
                                     <label for="">Organization Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['organizationName'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -202,7 +200,7 @@
                                     <label for="">Role</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['role'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -212,7 +210,7 @@
                                     <label for="">Responsibilities</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['responsibilities'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -222,7 +220,7 @@
                                     <label for="">Start Date</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['startDate'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -230,7 +228,7 @@
                                     <label for="">End Date</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['endDate'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -255,7 +253,7 @@
                                     <label for="">Primary School Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['primary_school_name'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -263,7 +261,7 @@
                                     <label for="">Graduation Year</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['primary_graduation_year'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -278,7 +276,7 @@
                                     <label for="">Secondary Education</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['secondarySchoolName'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -286,7 +284,7 @@
                                     <label for="">Secondary Education Certificate</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['secondaryCertificate'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -294,7 +292,7 @@
                                     <label for="">Graduation Year</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['secondaryGraduationYear'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -309,7 +307,7 @@
                                     <label for="">Higher Institution Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['institution'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -317,7 +315,7 @@
                                     <label for="">Certificate Type</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['certificateType'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -325,7 +323,7 @@
                                     <label for="">Class Of Degree</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['classOfDegree'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -335,7 +333,7 @@
                                     <label for="">Course</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['course'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -343,7 +341,7 @@
                                     <label for="">Higher Education Certificate</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['highCertificate'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -351,7 +349,7 @@
                                     <label for="">Graduation Year</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['highGraduationYear'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -363,10 +361,10 @@
                         <tr>
                             <td class="table_data">
                                 <div>
-                                    <label for="">Camp Name</label>
+                                    <label for="">Certificate Number</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['nyscCertificateNumber'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -374,7 +372,7 @@
                                     <label for="">Year Of Service</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['yearOfService'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -382,7 +380,7 @@
                                     <label for="">NYSC Certificate</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['nyscCertificate'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
@@ -390,7 +388,7 @@
                 </table>
             </div>
             <div class="form-footer">
-                <button id="" type="">
+                <button id="print" type="" onclick="print()">
                     Print
                 </button>
             </div>
@@ -398,3 +396,9 @@
         
     </div>
 </div>
+<script>
+    const print = document .getElementById('print');
+    print.addEventListener('click', (e)=>{
+        window.print();
+    })
+</script>

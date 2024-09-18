@@ -369,11 +369,7 @@
                                                     <label for="">Certificate Type</label>
                                                 </div>
                                                 <div>
-                                                    <select name="" id="addCertificateType" value="<?= $gender?>">
-                                                        <option value="" disabled hidden selected> --select an option--</option>
-                                                        <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
-                                                        <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
-                                                    </select>
+                                                    <input type="text" name="" id="addCertificateType" value="">
                                                 </div>
                                             </td>
                                             <td>
@@ -381,11 +377,7 @@
                                                     <label for="">Class Of Degree</label>
                                                 </div>
                                                 <div>
-                                                    <select name="" id="addClassOfDegree" value="<?= $gender?>">
-                                                        <option value="" disabled hidden selected> --select an option--</option>
-                                                        <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
-                                                        <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
-                                                    </select>
+                                                    <input type="text" name="" id="addClassOfDegree" value="">
                                                 </div>
                                             </td>
                                         </tr>
@@ -395,11 +387,7 @@
                                                     <label for="">Institution</label>
                                                 </div>
                                                 <div>
-                                                    <select name="" id="addInstitution" value="<?= $gender?>">
-                                                        <option value="" disabled hidden selected> --select an option--</option>
-                                                        <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
-                                                        <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
-                                                    </select>
+                                                    <input type="text" name="" id="addInstitution" value="">
                                                 </div>
                                             </td>
                                             <td>
@@ -407,11 +395,7 @@
                                                     <label for="">Course</label>
                                                 </div>
                                                 <div>
-                                                    <select name="" id="addCourse" value="<?= $gender?>">
-                                                        <option value="" disabled hidden selected> --select an option--</option>
-                                                        <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
-                                                        <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
-                                                    </select>
+                                                    <input type="text" name="" id="addCourse" value="">
                                                 </div>
                                             </td>
                                         </tr>

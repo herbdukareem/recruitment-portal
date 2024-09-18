@@ -288,13 +288,79 @@ $fetchUserWorkData = $pdo->prepare("SELECT * FROM user_work_details WHERE user_i
 $fetchUserWorkData->execute(['user_id' => $user_id]);
 $user_work_data = $fetchUserWorkData->fetch(PDO::FETCH_ASSOC);
 
+
+if (isset($_POST['savePMC'])) {
+    // Retrieve POST data with empty string fallback for empty values
+    $bodyName = !empty($_POST['bodyName']) ? $_POST['bodyName'] : '';
+    $membershipID = !empty($_POST['membershipID']) ? $_POST['membershipID'] : '';
+    $membershipResposibilities = !empty($_POST['membershipResposibilities']) ? $_POST['membershipResposibilities'] : '';
+    $certificateDate = !empty($_POST['certificateDate']) ? $_POST['certificateDate'] : null;
+
+    try {
+        // Check if user PMC details already exist
+        $checkUserPMCDetails = $pdo->prepare("SELECT id FROM user_pmc_details WHERE user_id = :user_id");
+        $checkUserPMCDetails->execute(['user_id' => $user_id]);
+
+        if ($checkUserPMCDetails->rowCount() === 0) {
+            // Insert new record
+            $sql = "INSERT INTO user_pmc_details (
+                        user_id, bodyName, membershipID, 
+                        membershipResposibilities, certificateDate 
+                    ) VALUES (
+                        :user_id, :bodyName, :membershipID, 
+                        :membershipResposibilities, :certificateDate 
+                    )";
+        } else {
+            // Update existing record
+            $sql = "UPDATE user_pmc_details SET
+                        bodyName = :bodyName,
+                        membershipID = :membershipID,
+                        membershipResposibilities = :membershipResposibilities,
+                        certificateDate = :certificateDate
+                    WHERE user_id = :user_id";
+        }
+
+        // Prepare and execute the query
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':user_id' => $user_id,
+            ':bodyName' => $bodyName,
+            ':membershipID' => $membershipID,
+            ':membershipResposibilities' => $membershipResposibilities,
+            ':certificateDate' => $certificateDate,
+        ]);
+
+        // Client-side alert for successful form submission
+        // echo "<script>alert('Education details saved successfully!');</script>";
+    } catch (PDOException $e) {
+        // Client-side alert for error during form submission
+        // echo "<script>alert('Error saving education details: " . $e->getMessage() . "');</script>";
+    }
+}
+// Fetch user Education Detials for display in the form after saving
+$fetchUserPMCData = $pdo->prepare("SELECT * FROM user_pmc_details WHERE user_id = :user_id");
+$fetchUserPMCData->execute(['user_id' => $user_id]);
+$user_pmc_data = $fetchUserPMCData->fetch(PDO::FETCH_ASSOC);
+
+
 // Prepare SQL to merge user data
-$req = $pdo->prepare("
+$fetchAllUserData = $pdo->prepare("
     SELECT * 
-    FROM user_applications as a 
-    JOIN users as u ON a.user_id = u.id 
+    FROM users as u
+    JOIN user_applications as b ON u.id = b.user_id 
+    JOIN (
+        SELECT *
+        FROM user_education_details
+    ) as e ON u.id = e.user_id
+    JOIN (
+    	SELECT *
+        FROM user_work_details
+    )as w ON u.id = w.user_id
     WHERE u.id = :user_id
+
 ");
+$fetchAllUserData->execute(['user_id' => $user_id]);
+$allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC); 
 
 ?>
 

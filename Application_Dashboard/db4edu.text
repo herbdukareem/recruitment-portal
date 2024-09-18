@@ -42,15 +42,27 @@ nyscCertificate//
 ----Work History db-----
 organizationName
 role
-resposibilities
+responsibilities
 startDate
 endDate
 
+----PMC-----
+bodyName
+membershipID
+membershipResposibilities
+certificateDate
+membershipCertificate//
 
+-----Database Tables-----
+users
+user_applications
+user_education_details
+user_work_details
 
-
-
-
+    var(--primary-color)
+    var(--secondary-color)
+  var(--main-bg);
+  var(--main-color);
 
 
 
