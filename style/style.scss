@@ -118,7 +118,8 @@ body{
                 background-image: url('../images/start_career.jpg');
                 background-size: cover;
                 background-position: center;
-                height: 400px;
+                min-height: 400px;
+                padding: 10px 0;
             }
             span{
                 color: var(--main-color);
@@ -134,6 +135,7 @@ body{
             .btn{
                 background-color: var(--main-bg);
                 transition: all ease 0.5s;
+                padding: 8px;
                 -webkit-transition: all ease 0.5s;
                 -moz-transition: all ease 0.5s;
                 -ms-transition: all ease 0.5s;
@@ -233,6 +235,17 @@ body{
                 .cen-flex{
                     grid-column: 1/2;
                 }
+            }
+        }
+        .container{
+            .row{
+                display: block;
+            }
+            img{
+                display: none;
+            }
+            .d-flex{
+                display: block!important;
             }
         }
         .con-bg{

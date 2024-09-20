@@ -50,7 +50,6 @@
     }
 
     .btn-custom {
-        width: fit-content;
       background-color: transparent;
       color: white;
       border: 2px solid white;
@@ -72,8 +71,8 @@
     /* Responsive Styling */
     @media (max-width: 768px) {
       .btn-custom {
+        width: 90%;
         display: block;
-        width: 100%;
         font-size: 1.25rem;
         padding: 1rem;
         margin-bottom: 1rem;
@@ -108,7 +107,7 @@
                 </div>
             </div>
     
-            <div class="container mt-5">
+            <!-- <div class="container mt-5">
                 <h2 class="text-center">Careers at University Of Ilorin</h2>
                 <div class="row">
                     <div class="col-md-5 mx-4 mt-4 rounded shadow mb-4 border-color">
@@ -138,7 +137,7 @@
                     </div>
     
                 </div>
-            </div>
+            </div> -->
         
             <!-- Positions available -->
             <div class="container">
@@ -429,9 +428,9 @@
                 </div>
             </div>
             <div class="container mb-5 rounded">
-                <div class="row">
+                <div class="row img-bg" >
                   <!-- Background image container -->
-                  <div class="col-12 position-relative text-center text-white img-bg" >
+                  <div class="col-12 position-relative text-center text-white " >
                     <!-- Overlay for buttons and text -->
                     <div class="d-flex flex-column align-items-center justify-content-center h-100">
                       <!-- Text -->
@@ -439,7 +438,7 @@
                         <span>Start</span> your career at University Of Ilorin today
                       </p>
                       <!-- Buttons -->
-                      <div class="d-flex flex-column flex-md-row align-items-center">
+                      <div class="d-flex flex-md-row align-items-center">
                         <button type="button" class="btn btn-custom   mx-4">Academic Member</button>
                         <button type="button" class="btn btn-custom   mx-4">Non-Academic Member </button>
                         <!-- <button type="button" class="btn btn-custom">Button 2</button> -->
