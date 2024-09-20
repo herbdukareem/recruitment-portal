@@ -1,3 +1,11 @@
+:root {
+  --main-bg: #00044B;
+  --main-bg-light: #111683;
+  --main-color: #bd9119;
+  --main-color-light: #e4b535;
+  --white: #fff;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -5,7 +13,7 @@ body {
   font-family: "Gruppo", sans-serif;
   font-weight: bold;
   font-style: normal;
-  background-color: #f7f7f7;
+  background-color: #fff;
 }
 
 .db-winscroll {
@@ -13,27 +21,30 @@ body {
   grid-template-columns: 15% 85%;
 }
 .db-winscroll #db-panel {
+  position: fixed;
   grid-column: 1/2;
-  background: #616161;
-  min-height: 200vh;
-  width: 100%;
+  background: var(--main-bg);
+  width: 15%;
+  height: 100vh;
+  z-index: 99;
 }
 .db-winscroll #db-panel .head-panel {
   padding: 0.25em;
   text-align: center;
   position: relative;
+  padding-top: 5px;
+  height: 70px;
+  border-bottom: 2px solid var(--main-color-light);
 }
 .db-winscroll #db-panel .head-panel img {
-  width: 3em;
+  width: 2.5em;
 }
-.db-winscroll #db-panel .head-panel::before {
-  content: "";
-  width: 100%;
-  background-color: #aaa;
-  height: 0.08em;
+.db-winscroll #db-panel .head-panel svg {
+  display: none;
+  cursor: pointer;
   position: absolute;
-  left: 0;
-  bottom: 0;
+  right: 2px;
+  top: 20px;
 }
 .db-winscroll #db-panel .body-panel ul {
   padding: 0.3em;
@@ -47,7 +58,7 @@ body {
   text-align: left;
   background: none;
   text-overflow: clip;
-  color: #ddd;
+  color: #fff;
   width: 100%;
   box-sizing: border-box;
   font-size: 0.7em;
@@ -65,7 +76,11 @@ body {
   -o-transition: all ease-in 0.5s;
 }
 .db-winscroll #db-panel .body-panel ul li button:hover {
-  background-color: rgba(255, 255, 255, 0.3137254902);
+  background-color: rgba(189, 145, 25, 0.5215686275);
+}
+.db-winscroll #db-panel .body-panel ul li svg {
+  stroke: var(--main-color-light);
+  fill: var(--main-color-light);
 }
 .db-winscroll #display-screen {
   grid-column: 2/3;
@@ -73,7 +88,8 @@ body {
 .db-winscroll #display-screen .nav-bar {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border-bottom: 0.1em solid #a4a5a5;
+  border-bottom: 0.1em solid var(--main-color);
+  height: 78px;
 }
 .db-winscroll #display-screen .nav-bar .left-nav {
   grid-column: 1/2;
@@ -83,7 +99,7 @@ body {
 }
 .db-winscroll #display-screen .nav-bar .left-nav h1 {
   font-size: 0.7em;
-  color: #9e0404;
+  color: var(--main-bg);
   font-weight: bold;
 }
 .db-winscroll #display-screen .nav-bar .left-nav svg {
@@ -96,10 +112,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: end;
-  padding-right: 0.2em;
+  padding-right: 1em;
 }
 .db-winscroll #display-screen .nav-bar .right-nav svg {
+  margin-left: 30px;
   padding-right: 5px;
+  fill: var(--main-bg);
+  stroke: var(--main-bg);
+}
+.db-winscroll #display-screen .nav-bar .right-nav p {
+  color: var(--main-color);
+  font-weight: bold;
 }
 .db-winscroll #display-screen .screen {
   padding: 0 0.5em;
@@ -149,7 +172,7 @@ body {
 .db-winscroll #display-screen .screen .screen-body form {
   margin-bottom: 1em;
   background-color: #fff;
-  box-shadow: 0 3px 4px #6e6e6e;
+  box-shadow: 0 3px 4px var(--main-bg);
   width: 100%;
   border-radius: 0.4em;
   -webkit-border-radius: 0.4em;
@@ -159,7 +182,7 @@ body {
 }
 .db-winscroll #display-screen .screen .screen-body form .form-head {
   text-align: left;
-  background-color: #216745;
+  background-color: var(--main-bg);
   color: #fff;
   font-size: 0.8em;
   padding: 0.1em 0.5em;
@@ -188,15 +211,7 @@ body {
   font-size: 0.7em;
   outline: none;
   width: 100%;
-  border: 0.1em solid #e0e0e0;
-  box-sizing: border-box;
-  border-radius: 0.5em;
-  font-family: "Gruppo", sans-serif;
-  padding: 0.4em;
-  font-size: 0.7em;
-  outline: none;
-  width: 100%;
-  border: 0.1em solid #e0e0e0;
+  border: 0.1em solid rgba(0, 4, 75, 0.5411764706);
   box-sizing: border-box;
   border-radius: 0.5em;
   -webkit-border-radius: 0.5em;
@@ -205,7 +220,7 @@ body {
   -o-border-radius: 0.5em;
 }
 .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div input:focus, .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div select:focus {
-  outline: 0.08em solid #aaa;
+  outline: 0.08em solid rgba(0, 4, 75, 0.5411764706);
 }
 .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div input[type=checkbox] {
   transform: translateY(3px);
@@ -221,7 +236,7 @@ body {
   outline: none;
   width: 100%;
   height: 200px;
-  border: 0.1em solid #e0e0e0;
+  border: 0.1em solid rgba(0, 4, 75, 0.5411764706);
   box-sizing: border-box;
   border-radius: 0.5em;
   -webkit-border-radius: 0.5em;
@@ -255,7 +270,7 @@ body {
   font-size: 0.7em;
   outline: none;
   width: 100%;
-  border: 0.1em solid #aaa;
+  border: 0.1em solid rgba(0, 4, 75, 0.5411764706);
   box-sizing: border-box;
 }
 .db-winscroll #display-screen .screen .screen-body form .form-footer {
@@ -265,7 +280,7 @@ body {
 .db-winscroll #display-screen .screen .screen-body form .form-footer button {
   cursor: pointer;
   padding: 1em 1em;
-  background: #216745;
+  background: rgba(0, 4, 75, 0.7137254902);
   border: none;
   color: #fff;
   border-radius: 0.4em;
@@ -282,7 +297,7 @@ body {
   -o-transform: translateY(4px);
 }
 .db-winscroll #display-screen .screen .screen-body form .form-footer button:hover {
-  background: #035231;
+  background: var(--main-bg);
 }
 .db-winscroll #display-screen .screen .screen-body form .no-br {
   padding: 0.5em;
@@ -316,9 +331,9 @@ body {
   display: grid;
   grid-template-columns: 30% 70%;
   background-color: #fff;
-  border-top: 0.1em solid #216745;
+  border-top: 0.1em solid var(--main-bg);
   padding: 1em;
-  box-shadow: 0 3px 4px #6e6e6e;
+  box-shadow: 0 3px 4px var(--main-bg);
   border-radius: 0.3em;
   -webkit-border-radius: 0.3em;
   -moz-border-radius: 0.3em;
@@ -358,4 +373,22 @@ body {
 .db-winscroll #display-screen #footer .right-footer {
   grid-column: 2/3;
   text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+  .db-winscroll {
+    display: block;
+    position: relative;
+  }
+  .db-winscroll #db-panel {
+    display: none;
+    width: 45%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+  }
+  .db-winscroll #display-screen .screen .screen-body {
+    margin: 20px 0;
+  }
 }/*# sourceMappingURL=af_style.css.map */

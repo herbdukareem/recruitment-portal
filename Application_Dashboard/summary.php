@@ -4,8 +4,7 @@
             <h2>Application Preview</h2>
         </div>
         <div class="screen-head-right">
-            <p>
-                <a href="" style="color: #008f4a;"> Job Application</a> / <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" viewBox="0 0 24 24">
+        <p><a href="" style="color: var(--main-bg);"> Job Application</a> / <a href="" style="color: var(--main-color);"><svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" viewBox="0 0 24 24">
                         <path fill="#000000" d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m2-8H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2" />
                     </svg>
                     Appication Summary
@@ -20,36 +19,37 @@
                 min-height: 30px;
             }
             .table_head{
-                background-color: #216745a9;
+                background-color: var(--main-color);
+                text-align: center;
                 color: #fff;
-                font-size: 0.5em;
+                font-size: 0.7em;
                 padding: 0.1em 0.5em;
-                border-radius: 0 5px 5px 0;
             }
             .table_data{
                 text-align: left;
-                border-bottom: 1px solid #216745;
-                margin: 0.8em;
+                border-bottom: 1px solid var(--main-color);
+                margin: 1.5em;
             }
             .section_h4{
-                background-color: #21674559 ;
+                background-color: var(--main-bg-light) ;
                 padding: 0.3em;
+                color: #fff
             }
         </style>
-        <form action="">
+        <form action="" id="printableArea">
             <div class="form-head">
                 <h2>Appication Summary</h2>
             </div>
             <div class="form-body">
                 <!-- Bio Data Summary -->
                 <table>
-                    <thead>
-                        <th class="table_head">
+                    <!-- <thead>
+                        <th class="table_head" colspan="3">
                             <div>
                                 <h3 >Bio Data</h3>
                             </div>
                         </th>
-                    </thead>
+                    </thead> -->
                     <tbody>
                         <tr>
                             <td class="table_data">
@@ -143,7 +143,7 @@
                                     <label>Local Government</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['localGovernmentArea'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['lga'] ?? ''); ?>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -178,13 +178,13 @@
                 </table>
                 <!-- Work History Sumary -->
                 <table>
-                    <thead>
-                        <th class="table_head">
+                    <!-- <thead>
+                        <th class="table_head" colspan="2">
                             <div>
                                 <h3>Work History</h3>
                             </div>
                         </th>
-                    </thead>
+                    </thead> -->
                     <tbody>
                         <tr>
                             <td class="table_data">
@@ -236,11 +236,11 @@
                 </table>
                 <!-- Education Summary -->
                 <table>
-                    <thead>
-                        <th class="table_head">
+                    <!-- <thead>
+                        <th class="table_head" colspan="3">
                             <h3 >Education</h3>
                         </th>
-                    </thead>
+                    </thead> -->
                     <tbody>
                         <tr>
                             <th colspan="3">
@@ -388,7 +388,7 @@
                 </table>
             </div>
             <div class="form-footer">
-                <button id="print" type="" onclick="print()">
+                <button id="print" type="" onclick="printDiv('printableArea')">
                     Print
                 </button>
             </div>
@@ -397,8 +397,73 @@
     </div>
 </div>
 <script>
-    const print = document .getElementById('print');
-    print.addEventListener('click', (e)=>{
-        window.print();
-    })
+  function printDiv(divId) {
+    // Get the content of the div
+    var content = document.getElementById(divId).innerHTML;
+
+    // Create a new window
+    var printWindow = window.open('', '', 'height=600,width=800');
+
+    // Write the content to the new window
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>Print</title>
+                <link rel="stylesheet" href="./af_style.css">
+                <style>
+                    table{
+                        width:100%;
+                        margin:20px    
+                    }
+                    tr{
+                        width:100%;
+                        margin-bottom: 0.8em;
+                        min-height: 30px;
+                        padding:10px;
+                        margin:10px;
+                    }x 
+                    .table_head{
+                        background-color: var(--main-color);
+                        text-align: center;
+                        color: #fff;
+                        font-size: 0.7em;
+                        padding: 1em;
+                    }
+                    .table_data{
+                        text-align: left;
+                        border-bottom: 1px solid var(--main-color);
+                        margin: 1.5em;
+                    }
+                    .section_h4{
+                        background-color: var(--main-bg-light) ;
+                        padding: 0.3em;
+                        margin:8px 0
+                        color: #fff
+                    }
+                    label{
+                        font-size:0.5em
+                    }
+                </style>
+            </head>
+            <body>
+                <div style="display:flex;justify-content:center;align-items:center;">
+                    <img src="../images/print.jpg" alt="Print Image">
+                </div>
+                <div>
+                    ${content}
+                </div>
+            </body>
+        </html>
+    `);
+
+    // Close the document to finish loading
+    printWindow.document.close();
+
+    // Wait for the content to fully load, then trigger the print dialog
+    printWindow.focus();
+    printWindow.onload = function() {
+      printWindow.print();
+      printWindow.close(); // Close the window after printing
+    };
+  }
 </script>

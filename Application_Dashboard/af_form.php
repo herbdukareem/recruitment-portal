@@ -50,7 +50,8 @@ if (!$user_detail) {
     $is_new_user = false;
 }
 
-
+// Initialize variables to track which section to display
+$formSection = 1; // Default form section
 
 //save biodata form to db
 if (isset($_POST['saveBio'])) {
@@ -62,7 +63,7 @@ if (isset($_POST['saveBio'])) {
     $dateOfBirth = $_POST['dateOfBirth'];
     $maritalStatus = $_POST['maritalStatus'];
     $stateOfOrigin = $_POST['stateOfOrigin'];
-    $localGovernmentArea = $_POST['localGovernmentArea'];
+    $lga = $_POST['lga'];
     $nin = $_POST['nin'];
     $phoneNumber = $_POST['phoneNumber'];
     $emergencyNumber = $_POST['emergencyNumber'];
@@ -81,11 +82,11 @@ if (isset($_POST['saveBio'])) {
                 // Insert new record
                 $sql = "INSERT INTO user_applications (
                             user_id, firstname, lastname, middlename, gender, dateOfBirth, 
-                            maritalStatus, stateOfOrigin, localGovernmentArea, nin, 
+                            maritalStatus, stateOfOrigin, lga, nin, 
                             phoneNumber, emergencyNumber, address
                         ) VALUES (
                             :user_id, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
-                            :maritalStatus, :stateOfOrigin, :localGovernmentArea, :nin, 
+                            :maritalStatus, :stateOfOrigin, :lga, :nin, 
                             :phoneNumber, :emergencyNumber, :address
                         )";
             } else {
@@ -98,7 +99,7 @@ if (isset($_POST['saveBio'])) {
                             dateOfBirth = :dateOfBirth,
                             maritalStatus = :maritalStatus,
                             stateOfOrigin = :stateOfOrigin,
-                            localGovernmentArea = :localGovernmentArea,
+                            lga = :lga,
                             nin = :nin,
                             phoneNumber = :phoneNumber,
                             emergencyNumber = :emergencyNumber,
@@ -116,14 +117,15 @@ if (isset($_POST['saveBio'])) {
                 ':dateOfBirth' => $dateOfBirth,
                 ':maritalStatus' => $maritalStatus,
                 ':stateOfOrigin' => $stateOfOrigin,
-                ':localGovernmentArea' => $localGovernmentArea,
+                ':lga' => $lga,
                 ':nin' => $nin,
                 ':phoneNumber' => $phoneNumber,
                 ':emergencyNumber' => $emergencyNumber,
                 ':address' => $address
             ]);
 
-            // Include alert box for better user Interface
+            header("Location:" . $_SERVER['PHP_SELF'] . "#education-screen");
+            exit();
             // Alert type -->  Form data saved sucessfully
             // Include alert box for better user Interface
             // Alert type -->  Form data saved sucessfully
@@ -215,6 +217,9 @@ if (isset($_POST['saveEdu'])) {
             ':nyscCertificateNumber' => $nyscCertificateNumber,
             ':yearOfService' => $yearOfService,
         ]);
+        
+        header("Location:" . $_SERVER['PHP_SELF'] . "#work-screen");
+        exit();
 
         // Client-side alert for successful form submission
         // echo "<script>alert('Education details saved successfully!');</script>";
@@ -276,6 +281,9 @@ if (isset($_POST['saveWork'])) {
             ':endDate' => $endDate,
         ]);
 
+        header("Location:" . $_SERVER['PHP_SELF'] . "#pmc-screen");
+        exit();
+
         // Client-side alert for successful form submission
         // echo "<script>alert('Education details saved successfully!');</script>";
     } catch (PDOException $e) {
@@ -329,6 +337,8 @@ if (isset($_POST['savePMC'])) {
             ':membershipResposibilities' => $membershipResposibilities,
             ':certificateDate' => $certificateDate,
         ]);
+        header("Location:" . $_SERVER['PHP_SELF'] . "#summary-screen");
+        exit();
 
         // Client-side alert for successful form submission
         // echo "<script>alert('Education details saved successfully!');</script>";
@@ -373,9 +383,8 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recruitment | NNPC Limited</title>
     <link rel="shortcut icon" href="../Account/NNPC-Logo-500x281.png" type="image/x-icon">
-    <link rel="shortcut icon" href="../nnpc.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/logo-plain.jpeg.jpg" type="image/x-icon">
     <link rel="stylesheet" href="./af_style.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
@@ -385,14 +394,15 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
     <div class="db-winscroll">
         <div id="db-panel">
             <div class="head-panel">
-                <a href="../index.html"><img src="../images/nnpc.svg" alt="NNPC Logo"></a>
+                <a href="../index.php"><img src="../images/logo-plain.jpeg.jpg" alt="NNPC Logo"></a>
+                <svg id="close_panel" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><g fill="none" stroke="var(--main-color-light)" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7l10 10"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="16;0"/></path><path d="M17 7l-10 10"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" values="16;0"/></path></g></svg>
             </div>
             <div class="body-panel">
                 <ul>
                     <li>
                         <button id="bio-btn" class="all-bt-bg">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <path fill="#ededed" fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4z" clip-rule="evenodd" />
+                                <path fill="var(--main-color-light)`" fill-rule="var(--main-color-light)" d="M12 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4z" clip-rule="evenodd" />
                             </svg>
                             Bio Data
                         </button>
@@ -400,7 +410,7 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
                     <li>
                         <button id="edu-btn" class="all-bt-bg">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                <path fill="#ededed" d="M3.33 8L10 12l10-6l-10-6L0 6h10v2zM0 8v8l2-2.22V9.2zm10 12l-5-3l-2-1.2v-6l7 4.2l7-4.2v6z" />
+                                <path fill="var(--main-color-light)" d="M3.33 8L10 12l10-6l-10-6L0 6h10v2zM0 8v8l2-2.22V9.2zm10 12l-5-3l-2-1.2v-6l7 4.2l7-4.2v6z" />
                             </svg>
                             Education
                         </button>
@@ -408,7 +418,7 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
                     <li>
                         <button id="work-btn" class="all-bt-bg">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
-                                <path fill="#ededed" fill-rule="evenodd" d="M6 1a1.75 1.75 0 0 0-1.75 1.75V4H3a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.25V2.75A1.75 1.75 0 0 0 10 1zm4.25 3V2.75A.25.25 0 0 0 10 2.5H6a.25.25 0 0 0-.25.25V4zM3 5.5h10a.5.5 0 0 1 .5.5v1h-11V6a.5.5 0 0 1 .5-.5m-.5 3V13a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8.5H9V10H7V8.5z" clip-rule="evenodd" />
+                                <path fill="" fill-rule="var()--main-color-light" d="M6 1a1.75 1.75 0 0 0-1.75 1.75V4H3a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.25V2.75A1.75 1.75 0 0 0 10 1zm4.25 3V2.75A.25.25 0 0 0 10 2.5H6a.25.25 0 0 0-.25.25V4zM3 5.5h10a.5.5 0 0 1 .5.5v1h-11V6a.5.5 0 0 1 .5-.5m-.5 3V13a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8.5H9V10H7V8.5z" clip-rule="evenodd" />
                             </svg>
                             Work History
                         </button>
@@ -416,7 +426,7 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
                     <li>
                         <button id="pmc-btn" class="all-bt-bg">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="#ededed" d="M211 7.3C205 1 196-1.4 187.6.8s-14.9 8.9-17.1 17.3l-15.8 62.5l-62-17.5c-8.4-2.4-17.4 0-23.5 6.1s-8.5 15.1-6.1 23.5l17.5 62l-62.5 15.9c-8.4 2.1-15 8.7-17.3 17.1S1 205 7.3 211l46.2 45l-46.2 45c-6.3 6-8.7 15-6.5 23.4s8.9 14.9 17.3 17.1l62.5 15.8l-17.5 62c-2.4 8.4 0 17.4 6.1 23.5s15.1 8.5 23.5 6.1l62-17.5l15.8 62.5c2.1 8.4 8.7 15 17.1 17.3s17.3-.2 23.4-6.4l45-46.2l45 46.2c6.1 6.2 15 8.7 23.4 6.4s14.9-8.9 17.1-17.3l15.8-62.5l62 17.5c8.4 2.4 17.4 0 23.5-6.1s8.5-15.1 6.1-23.5l-17.5-62l62.5-15.8c8.4-2.1 15-8.7 17.3-17.1s-.2-17.4-6.4-23.4l-46.2-45l46.2-45c6.2-6.1 8.7-15 6.4-23.4s-8.9-14.9-17.3-17.1l-62.5-15.8l17.5-62c2.4-8.4 0-17.4-6.1-23.5s-15.1-8.5-23.5-6.1l-62 17.5l-15.9-62.5c-2.1-8.4-8.7-15-17.1-17.3S307 1 301 7.3l-45 46.2z" />
+                                <path fill="var(--main-color-light)" d="M211 7.3C205 1 196-1.4 187.6.8s-14.9 8.9-17.1 17.3l-15.8 62.5l-62-17.5c-8.4-2.4-17.4 0-23.5 6.1s-8.5 15.1-6.1 23.5l17.5 62l-62.5 15.9c-8.4 2.1-15 8.7-17.3 17.1S1 205 7.3 211l46.2 45l-46.2 45c-6.3 6-8.7 15-6.5 23.4s8.9 14.9 17.3 17.1l62.5 15.8l-17.5 62c-2.4 8.4 0 17.4 6.1 23.5s15.1 8.5 23.5 6.1l62-17.5l15.8 62.5c2.1 8.4 8.7 15 17.1 17.3s17.3-.2 23.4-6.4l45-46.2l45 46.2c6.1 6.2 15 8.7 23.4 6.4s14.9-8.9 17.1-17.3l15.8-62.5l62 17.5c8.4 2.4 17.4 0 23.5-6.1s8.5-15.1 6.1-23.5l-17.5-62l62.5-15.8c8.4-2.1 15-8.7 17.3-17.1s-.2-17.4-6.4-23.4l-46.2-45l46.2-45c6.2-6.1 8.7-15 6.4-23.4s-8.9-14.9-17.3-17.1l-62.5-15.8l17.5-62c2.4-8.4 0-17.4-6.1-23.5s-15.1-8.5-23.5-6.1l-62 17.5l-15.9-62.5c-2.1-8.4-8.7-15-17.1-17.3S307 1 301 7.3l-45 46.2z" />
                             </svg>
                             Professional Members
                         </button>
@@ -424,7 +434,7 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
                     <li>
                         <button id="sum-btn" class="all-bt-bg">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <g fill="#ededed">
+                                <g fill="var(--main-color-light)">
                                     <path d="m12 2l.117.007a1 1 0 0 1 .876.876L13 3v4l.005.15a2 2 0 0 0 1.838 1.844L15 9h4l.117.007a1 1 0 0 1 .876.876L20 10v9a3 3 0 0 1-2.824 2.995L17 22H7a3 3 0 0 1-2.995-2.824L4 19V5a3 3 0 0 1 2.824-2.995L7 2z" />
                                     <path d="M19 7h-4l-.001-4.001z" />
                                 </g>
@@ -438,9 +448,8 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
         <div id="display-screen">
             <div class="nav-bar">
                 <div class="left-nav">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1em" viewBox="0 0 24 24">
-                        <path fill="#000" d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z" />
-                    </svg>
+                    <svg id="open_panel" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19"><animate fill="freeze" attributeName="d" dur="0.4s" values="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19;M5 5L12 5L19 5M5 12H19M5 19L12 19L19 19"/></path></svg>
+                    
                     <h1>GRADUATE TRAINEE</h1>
                 </div>
                 <div class="right-nav">
@@ -451,13 +460,14 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
                             <path stroke-linecap="round" d="M17.97 20c-.16-2.892-1.045-5-5.97-5s-5.81 2.108-5.97 5" opacity="0.5" />
                         </g>
                     </svg>
-                    <?php echo htmlspecialchars($_SESSION['user_firstname']) . ' ' . htmlspecialchars($_SESSION['user_lastname']); ?></p>
+                    <p>
+                        <?php echo htmlspecialchars($_SESSION['user_firstname']) . ' ' . htmlspecialchars($_SESSION['user_lastname']); ?>
+                    </p>
                 </div>
 
             </div>
-           
             <?php include_once('biodata.php') ?>
-            
+
             <?php include_once('education.php') ?>
 
             <?php include_once('work.php') ?>
@@ -478,8 +488,49 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
 
     </div>
     <script src="./af_function.js"></script>
-    
-    
+    <script>
+        // JavaScript to display the correct section based on the URL hash
+        window.onload = function () {
+            // Hide all sections by default
+            document.getElementById('biodata-screen').style.display = 'none';
+            document.getElementById('education-screen').style.display = 'none';
+            document.getElementById('work-screen').style.display = 'none';
+            document.getElementById('pmc-screen').style.display = 'none';
+            document.getElementById('summary-screen').style.display = 'none';
+
+            // Check which section to display based on the URL hash
+            if (window.location.hash === "#education-screen") {
+                document.getElementById('education-screen').style.display = 'block';
+            } else if (window.location.hash === "#work-screen") {
+                document.getElementById('work-screen').style.display = 'block';
+            } else if (window.location.hash === "#pmc-screen") {
+                document.getElementById('pmc-screen').style.display = 'block';
+            } else if (window.location.hash === "#summary-screen") {
+                document.getElementById('summary-screen').style.display = 'block';
+            } else {
+                // Default to biodata screen if no hash or an unrecognized hash is found
+                document.getElementById('biodata-screen').style.display = 'block';
+            }
+        };
+
+          //db-pannel control
+        const openPanel = document.getElementById('open_panel');
+        const closePanel = document.getElementById('close_panel');
+        const dbPanel = document.getElementById('db-panel');
+
+        
+        openPanel.addEventListener('click', (e)=>{
+            dbPanel.style.display = 'block'
+            closePanel.style.display = 'block'
+        });
+        closePanel.addEventListener('click', (e)=>{
+            dbPanel.style.display = 'none'
+            closePanel.style.display = 'none'
+
+        });
+    </script>
+
+
 </body>
 
 

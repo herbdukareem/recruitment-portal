@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function(){
         pmcScreen.style.display = "none";
         summaryScreen.style.display = "block";
     });
+
     
     //Education button IDs
     const primaryButton = document.getElementById("pri-btn");
@@ -142,6 +143,9 @@ document.addEventListener("DOMContentLoaded", function(){
         higherScreen.style.display = "none";
         nyscScreen.style.display = "block";
     })
-    
-    })
+
+
+
+  
+});
     

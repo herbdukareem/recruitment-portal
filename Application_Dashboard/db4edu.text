@@ -62,7 +62,7 @@ user_work_details
     var(--primary-color)
     var(--secondary-color)
   var(--main-bg);
-  var(--main-color);
+  var(--main-color)
 
 
 
