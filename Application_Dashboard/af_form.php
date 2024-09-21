@@ -56,6 +56,7 @@ $formSection = 1; // Default form section
 //save biodata form to db
 if (isset($_POST['saveBio'])) {
     // Extract POST data
+    $position = $_POST['position'];
     $firstname = $_POST['firstname'];
     $middlename = $_POST['middlename'];
     $lastname = $_POST['lastname'];
@@ -70,7 +71,7 @@ if (isset($_POST['saveBio'])) {
     $address = $_POST['address'];
 
     // Validate input
-    if (empty($firstname) || empty($lastname) || empty($middlename) || empty($gender)) {
+    if (empty($position) || empty($firstname) || empty($lastname) || empty($middlename) || empty($gender)) {
         echo '<script>alert("All fields are required.");</script>';
     } else {
         try {
@@ -81,17 +82,18 @@ if (isset($_POST['saveBio'])) {
             if ($checkRecordQuery->rowCount() === 0) {
                 // Insert new record
                 $sql = "INSERT INTO user_applications (
-                            user_id, firstname, lastname, middlename, gender, dateOfBirth, 
+                            user_id, position, firstname, lastname, middlename, gender, dateOfBirth, 
                             maritalStatus, stateOfOrigin, lga, nin, 
                             phoneNumber, emergencyNumber, address
                         ) VALUES (
-                            :user_id, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
+                            :user_id, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
                             :maritalStatus, :stateOfOrigin, :lga, :nin, 
                             :phoneNumber, :emergencyNumber, :address
                         )";
             } else {
                 // Update existing record
                 $sql = "UPDATE user_applications SET 
+                            position = :position,
                             firstname = :firstname,
                             lastname = :lastname,
                             middlename = :middlename,
@@ -110,6 +112,7 @@ if (isset($_POST['saveBio'])) {
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 ':user_id' => $user_id,
+                ':position' => $position,
                 ':firstname' => $firstname,
                 ':lastname' => $lastname,
                 ':middlename' => $middlename,

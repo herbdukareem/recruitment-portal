@@ -38,7 +38,7 @@
         </style>
         <form action="" id="printableArea">
             <div class="form-head">
-                <h2>Appication Summary</h2>
+                <h2>Appication Summary for the position of <span style="font-weight:bold;color:var(--main-color-light)"><?php echo htmlspecialchars($allUserData['position'] ?? ''); ?></span></h2>
             </div>
             <div class="form-body">
                 <!-- Bio Data Summary -->

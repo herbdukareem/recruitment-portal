@@ -139,7 +139,11 @@ body{
                     h2{
                         font-size: 1.5em;
                         font-weight: bolder;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        height: 1em;
                     }
+
                 }
                 .screen-head-right{
                     grid-column: 2/3;
@@ -151,6 +155,10 @@ body{
                     justify-content: end;
                     p{
                         font-size: 0.9em;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        height: 1em;
+                        width: 70%;
                         a{
                             text-decoration: none;
                             color: #000;
@@ -168,7 +176,7 @@ body{
             .screen-body{
                 margin: 20px;
                 form{
-                    margin-bottom: 1em;
+                    margin: 1em 0;
                     background-color: #fff;
                     box-shadow: 0 3px 4px var(--main-bg);
                     width: 100%;
@@ -177,18 +185,52 @@ body{
                     -moz-border-radius: 0.4em                         ;
                     -ms-border-radius: 0.4em                         ;
                     -o-border-radius: 0.4em                         ;
+                    .position{
+                        text-align: center;
+                        background-color: var(--white);
+                        color: var(--main-bg);
+                        font-size: 0.8em;
+                        padding: 0.1em 0.5em;
+                        margin-top: 10px;
+                        margin-bottom: 20px;
+                        border-top: 1px solid var(--main-bg);
+                        border-radius: 0.5em 0.5em 0 0                        ;
+                        -webkit-border-radius: 0.5em 0.5em 0 0                        ;
+                        -moz-border-radius: 0.5em 0.5em 0 0                        ;
+                        -ms-border-radius: 0.5em 0.5em 0 0                        ;
+                        -o-border-radius: 0.5em 0.5em 0 0                        ;
+                        label{
+                            padding: 5px;
+                        }
+                        select{
+                            font-family: "Gruppo", sans-serif;
+                            padding: 0.4em;
+                            font-size: 0.7em;
+                            outline: none;
+                            width: 100%;
+                            border: 0.1em solid #00044b8a;
+                            margin-top: 7px;
+                            box-sizing: border-box;
+                            border-radius: 0.5em                            ;
+                            -webkit-border-radius: 0.5em                            ;
+                            -moz-border-radius: 0.5em                            ;
+                            -ms-border-radius: 0.5em                            ;
+                            -o-border-radius: 0.5em                            ;
+                        }
+                    }
                     .form-head{
                         text-align: left;
                         background-color: var(--main-bg);;
-                        color: #fff;
+                        color: var(--white);
                         font-size: 0.8em;
                         padding: 0.1em 0.5em;
+                        margin-bottom: 20px;
                         border-radius: 0.5em 0.5em 0 0                     ;
                         -webkit-border-radius: 0.5em 0.5em 0 0                     ;
                         -moz-border-radius: 0.5em 0.5em 0 0                     ;
                         -ms-border-radius: 0.5em 0.5em 0 0                     ;
                         -o-border-radius: 0.5em 0.5em 0 0                     ;
-}
+                    }
                     .form-body{
                         table{
                             width: 100%;
