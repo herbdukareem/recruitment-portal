@@ -48,7 +48,7 @@
                     </li>
                     <li >
                         <a href="./candidate_jor.php">
-                            Candidate Journey
+                        Applicant Journey
                         </a>
                     </li>
                     <li class="relative" >
@@ -59,7 +59,7 @@
                         
                         <div class="absolute" id="absolute" style="visibility: hidden;">
                             <div class="left-absolute" id="help-link">
-                                <img src="../images/nnpc.svg" alt="" width="100px">
+                                <img src="./images/logo-plain.jpeg.jpg" alt="" width="100px">
                                 <p>
                                     <b>Help</b> <br>
                                     Get assistance and <br> support when you <br> need it...
@@ -75,7 +75,7 @@
                                 <div class="middle-right-absolute" id="hta-link">
                                     <p>
                                         <b>How to apply</b><br>
-                                        Ready to take the next step <br>in your career with NNPC?...
+                                        Ready to take the next step <br>in your career with UNILORIN?...
                                     </p>
                                 </div>
                                 <div class="botttom-right-absolute" id="cs-link">

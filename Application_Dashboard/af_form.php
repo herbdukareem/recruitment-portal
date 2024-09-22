@@ -385,7 +385,6 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Dashboard | University Of Ilorin</title>
-    <link rel="shortcut icon" href="../Account/NNPC-Logo-500x281.png" type="image/x-icon">
     <link rel="shortcut icon" href="../images/logo-plain.jpeg.jpg" type="image/x-icon">
     <link rel="stylesheet" href="./af_style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -397,7 +396,7 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
     <div class="db-winscroll">
         <div id="db-panel">
             <div class="head-panel">
-                <a href="../index.php"><img src="../images/logo-plain.jpeg.jpg" alt="NNPC Logo"></a>
+                <a href="../index.php"><img src="../images/logo-plain.jpeg.jpg" alt="unilorin Logo"></a>
                 <svg id="close_panel" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><g fill="none" stroke="var(--main-color-light)" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7l10 10"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="16;0"/></path><path d="M17 7l-10 10"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" values="16;0"/></path></g></svg>
             </div>
             <div class="body-panel">

@@ -20,7 +20,7 @@
                 <div class="con-bg">
                     <div class="row">
                         <div class="col-md-6 mt-5 ">
-                            <h1 class="text-center mt-5" style="color: var(--white);text-align:center">Online Apllication</h1>
+                            <h1 class="text-center mt-5" style="color: var(--white);text-align:center">ONLINE APPLICATION</h1>
                         </div>
                     </div>
                 </div>

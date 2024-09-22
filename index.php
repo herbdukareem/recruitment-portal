@@ -107,38 +107,6 @@
                 </div>
             </div>
     
-            <!-- <div class="container mt-5">
-                <h2 class="text-center">Careers at University Of Ilorin</h2>
-                <div class="row">
-                    <div class="col-md-5 mx-4 mt-4 rounded shadow mb-4 border-color">
-                        <img class="gcr mx-4 mt-4 rounded"
-                            src="https://careers.nnpcgroup.com/_next/image?url=%2Fcareers%2Fgraduate-career.png&w=384&q=75"
-                            alt="">
-                        <div class="mx-3">
-                            <h4>Academic</h4>
-                            <p>Gain hands-on experience, professional development, and mentorship in a dynamic environment.
-                            </p>
-                        </div>
-                        <a href="./Account/session.php#signup" class="btn btn-success mx-5 mb-3">Apply Now</a>
-    
-                    </div>
-                    <div class="col-md-5 mx-4 mt-4 rounded shadow mb-4 border-color">
-                        <img class="gcr mx-4 mt-4 rounded"
-                            src="https://careers.nnpcgroup.com/_next/image?url=%2Fcareers%2Fexperienced-career.png&w=384&q=75"
-                            alt="">
-                        <div class="mx-3">
-                            <h4>Non Academic</h4>
-                            <p>Join our team of industry leaders and innovators, and contribute your skills to impactful
-                                projects.</p>
-    
-    
-                        </div>
-                        <a href="#" class="btn btn-success mx-5 mb-3">Apply Now</a>
-                    </div>
-    
-                </div>
-            </div> -->
-        
             <!-- Positions available -->
             <section class="container">
                     <div class="about">

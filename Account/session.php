@@ -92,7 +92,7 @@
             <!-- Login Section -->
             <section  class="auth" >
                 <div class="logo">
-                    <a href="../index.html"><img src="../images/logo-plain.jpeg.jpg" alt="NNPC Logo"></a>
+                    <a href="../index.html"><img src="../images/logo-plain.jpeg.jpg" alt="UNILORIN Logo"></a>
                     <p>
                         Go to Career Page
                     </p>
@@ -175,7 +175,7 @@
             <!-- Signup section -->
             <!-- <section id="signup-section" class="auth" style="display: none;">
                 <div class="logo">
-                    <img src="../nnpc.svg" alt="NNPC Logo">
+                    <img src="../images/logo-plain.jpeg.jpg" alt="UNILORIN Logo">
                     <p>
                         Go to Career Page
                     </p>
@@ -216,7 +216,7 @@
             <!-- Forgot password section -->
             <!-- <section id="forget-password-section" class="auth" style="display: none;">
                 <div class="logo">
-                    <img src="../nnpc.svg" alt="NNPC Logo">
+                    <img src="../images/logo-plain.jpeg.jpg" alt="UNILORIN Logo">
                     <p>
                         Go to Career Page
                     </p>
