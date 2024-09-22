@@ -9,7 +9,7 @@ body{
     margin: 0;
     padding: 0;
     font-size: 20px;
-    font-family: "Gruppo", sans-serif;
+    font-family: montserrat, 'sans-serif';
     font-weight: bold;
     font-style: normal;
     background-color: #fff;
@@ -425,7 +425,16 @@ body{
             }
             .right-footer{
                 grid-column: 2/3;
-                text-align: right
+                text-align: right;
+                button{
+                    cursor: pointer;
+                    padding: 0.5em 0.8em;
+                    background: var(--main-bg);
+                    border: none;
+                    color: #fff;
+                    margin-left: 20px;
+                    border-radius: 0.4em;
+                }
             }
         }
     }

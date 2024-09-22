@@ -140,8 +140,7 @@
             </div> -->
         
             <!-- Positions available -->
-            <div class="container">
-                <div class="row mx-4 mt-5">
+            <section class="container">
                     <div class="about">
                         <h2>Positions and Career Opportunities at UNILORIN</h2>
                         <div class=" mb-3">
@@ -151,272 +150,227 @@
                         </div>
                     </div>
                     
-                    <div class="col-md-12 mt-4">
-                        <div class=" mt-3">
-                            <div class="d-flex">
-                                <div class="txt w-50 mt-3">
-                                    <h3 style="color: var(--main-bg);">Academic Positions:</h3>
-                                    <ul class="odd">
-                                        <li>Lecturers</li>
-                                        <li>Professors</li>
-                                        <li>Research Fellows</li>
-                                        <li>Assistant Professors</li>
-                                        <li>Associate Professors</li>
-                                        <li>Postdoctoral Researchers</li>
-                                    </ul>
-                                </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
-                                    viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                    <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                                </svg>
-                                <div class="img-div  w-50 h-75">
-                                    <img class="img-fluid rounded " src="./images/Wahab-Egbewole.jpg" alt="">
-                                </div>
-                            </div>
-                            
+                    <div class="con-pos">
+                        <div class="left-flex">
+                            <h3 style="color: var(--main-bg);">Academic Positions:</h3>
+                            <ul class="odd">
+                                <li>Lecturers</li>
+                                <li>Professors</li>
+                                <li>Research Fellows</li>
+                                <li>Assistant Professors</li>
+                                <li>Associate Professors</li>
+                                <li>Postdoctoral Researchers</li>
+                            </ul>
                         </div>
-                       
+                        <div class="cen-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
+                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                            </svg>
+                        </div>
+                        <div class="right-flex img-div">
+                            <img class="img-fluid rounded " src="./images/Wahab-Egbewole.jpg" alt="">
+                        </div>
                     </div>
                     
-                    <div class="col-md-12 mt-4">
-                        <div class=" mt-3">
-                            <div class="d-flex">
-                                <div class="img-div  w-50 h-75">
-                                    <img class="img-fluid rounded " src="./images/admin-assistant-not-secretary-3.webp" alt="">
-                                </div>
-                                <div data-orientation="horizontal" role="none"
-                                    class="shrink-0 invisible w-0.5 h-44 bg-dark/50 -my-4 "></div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
-                                    viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                    <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                                </svg>
-                                <div class="txt w-50 mt-3">
-                                    <h3 style="color: var(--main-color-light);">Administrative Positions</h3>
-                                    <ul class="even">
-                                        <li>Administrative Officers</li>
-                                        <li>Human Resources Managers</li>
-                                        <li>Finance Officers</li>
-                                        <li>Procurement Officers</li>
-                                        <li>Public Relations Officers</li>
-                                        <li>IT Support Staff</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
+                    <div class="con-pos">
+                        <div class="left-flex img-div">
+                            <img class="img-fluid rounded " src="./images/admin-assistant-not-secretary-3.webp" alt="">
                         </div>
-                       
+                        <div class="cen-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
+                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                            </svg>
+                        </div>
+                        <div class="right-flex">
+                            <h3 style="color: var(--main-color-light);">Administrative Positions</h3>
+                            <ul class="even">
+                                <li>Administrative Officers</li>
+                                <li>Human Resources Managers</li>
+                                <li>Finance Officers</li>
+                                <li>Procurement Officers</li>
+                                <li>Public Relations Officers</li>
+                                <li>IT Support Staff</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="col-md-12 mt-4">
-                        <div class=" mt-3">
-                            <div class="d-flex">
-                                <div class="txt w-50 mt-3">
-                                    <h3 style="color: var(--main-bg);">Support Services Positions:</h3>
-                                    <ul class="odd">
-                                        <li>Library Assistants</li>
-                                        <li>Laboratory Technicians</li>
-                                        <li>Maintenance Staff</li>
-                                        <li>Security Personnel</li>
-                                        <li>Health Services Staff</li>
-                                    </ul>
-                                </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
-                                    viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                    <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                                </svg>
-                                <div class="img-div  w-50 h-75">
-                                    <img class="img-fluid rounded " src="./images/supportive.jpeg.png" alt="">
-                                </div>
-                            </div>
-                            
+                    <div class="con-pos">
+                        <div class="left-flex">
+                            <h3 style="color: var(--main-bg);">Support Services Positions:</h3>
+                            <ul class="odd">
+                                <li>Library Assistants</li>
+                                <li>Laboratory Technicians</li>
+                                <li>Maintenance Staff</li>
+                                <li>Security Personnel</li>
+                                <li>Health Services Staff</li>
+                            </ul>
                         </div>
-                       
+                        <div class="cen-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
+                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                            </svg>
+                        </div>
+                        
+                        <div class="right-flex img-div">
+                            <img class="img-fluid rounded " src="./images/supportive.jpeg.png" alt="">
+                        </div>
                     </div>
                     <!--  -->
-                    <div class="col-md-12 mt-4">
-                        <div class=" mt-3">
-                            <div class="d-flex">
-                                <div class="img-div  w-50 h-75">
-                                    <img class="img-fluid rounded " src="./images/tehnical.jpeg.png" alt="">
-                                </div>
-                                <div data-orientation="horizontal" role="none"
-                                    class="shrink-0 invisible w-0.5 h-44 bg-dark/50 -my-4 "></div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
-                                    viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                    <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                                </svg>
-                                <div class="txt w-50 mt-3">
-                                    <h3 style="color: var(--main-color-light);">Teaching and Research Assistants:</h3>
-                                    <ul class="even">
-                                        <li>Graduate Teaching Assistants</li>
-                                        <li>Graduate Research Assistants</li>
-                                    </ul>
-                                </div>
-                            </div>
+                    <div class="con-pos">
+                        <div class="img-div left-flex">
+                            <img class="img-fluid rounded " src="./images/tehnical.jpeg.png" alt="">
+                        </div>
+                        <div class="cen-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
+                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                            </svg>
+                        </div>
                             
+                        <div class="right-flex">
+                            <h3 style="color: var(--main-color-light);">Teaching and Research Assistants:</h3>
+                            <ul class="even">
+                                <li>Graduate Teaching Assistants</li>
+                                <li>Graduate Research Assistants</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="con-pos">
+                        <div class="left-flex">
+                            <h3 style="color: var(--main-bg);">Specialist Positions:</h3>
+                            <ul class="odd">
+                                <li>Academic Advisors</li>
+                                <li>Career Counselors</li>
+                                <li>Disability Support Officers</li>
+                                <li>International Student Advisors</li>
+                            </ul>
+                        </div>
+                        <div class="cen-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
+                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                            </svg>
+                        </div>
+                        <div class="img-div right0-flex">
+                            <img class="img-fluid rounded " src="./images/specialist.jpg.png" alt="">
+                        </div>
+                    </div>
+                    
+                    <div class="con-pos">
+                        <div class="img-div left-flex">
+                            <img class="img-fluid rounded " src="./images/management.jpg.png" alt="">
+                        </div>
+                        <div class="cen-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
+                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                            </svg>
+                        </div>
+                        <div class="right-flex">
+                            <h3 style="color: var(--main-color-light);">Management Positions:</h3>
+                            <ul class="even">
+                                <li>Department Heads</li>
+                                <li>Deans</li>
+                                <li>Vice Chancellors</li>
+                                <li>irectors of Centers and Institutes</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="con-pos">
+                        <div class="left-flex">
+                            <h3 style="color: var(--main-bg);">Technical Positions:</h3>
+                            <ul class="odd">
+                                <li>Engineers (Civil, Mechanical, Electrical, etc.)</li>
+                                <li>Technicians (IT, Electronics, etc.)</li>
+                                <li>Architects</li>
+                                <li>Surveyors</li>
+                            </ul>
+                        </div>
+                        <div class="cen-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
+                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                            </svg>
+                        </div>
+                        <div class="img-div  right-flex">
+                            <img class="img-fluid rounded " src="./images/tehnical.jpeg.png" alt="">
+                        </div>
+                    </div>
+                    
+                    <div class="con-pos">
+                        <div class="img-div left-flex">
+                            <img class="img-fluid rounded " src="./images/legal.jpeg.png" alt="">
+                        </div>
+                        <div class="cen-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
+                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                            </svg>
+                        </div>
+                            
+                        <div class="right-flex">
+                            <h3 style="color: var(--main-color-light);">Legal and Compliance Positions:</h3>
+                            <ul class="even">
+                                <li>Legal Advisors</li>
+                                <li>Compliance Officers</li>
+                            </ul>
                         </div>
                        
                     </div>
 
-                    <div class="col-md-12 mt-4">
-                        <div class=" mt-3">
-                            <div class="d-flex">
-                                <div class="txt w-50 mt-3">
-                                    <h3 style="color: var(--main-bg);">Specialist Positions:</h3>
-                                    <ul class="odd">
-                                        <li>Academic Advisors</li>
-                                        <li>Career Counselors</li>
-                                        <li>Disability Support Officers</li>
-                                        <li>International Student Advisors</li>
-                                    </ul>
-                                </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
-                                    viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                    <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                                </svg>
-                                <div class="img-div  w-50` h-75">
-                                    <img class="img-fluid rounded " src="./images/specialist.jpg.png" alt="">
-                                </div>
-                            </div>
-                            
+                    <div class="con-pos">
+                        <div class="left-flex">
+                            <h3 style="color: var(--main-bg);">Health and Counseling Services Positions:</h3>
+                            <ul class="odd">
+                                <li>Nurses</li>
+                                <li>Counselors</li>
+                                <li>Psychologists</li>
+                            </ul>
                         </div>
-                       
+                        <div class="cen-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
+                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                            </svg>
+                        </div>
+                        
+                        <div class="img-div right-flex">
+                            <img class="img-fluid rounded " src="./images/health.jpeg.png" alt="">
+                        </div>
                     </div>
                     
-                    <div class="col-md-12 mt-4">
-                        <div class=" mt-3">
-                            <div class="d-flex">
-                                <div class="img-div  w-50 h-75">
-                                    <img class="img-fluid rounded " src="./images/management.jpg.png" alt="">
-                                </div>
-                                <div data-orientation="horizontal" role="none"
-                                    class="shrink-0 invisible w-0.5 h-44 bg-dark/50 -my-4 "></div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
-                                    viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                    <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                                </svg>
-                                <div class="txt w-50 mt-3">
-                                    <h3 style="color: var(--main-color-light);">Management Positions:</h3>
-                                    <ul class="even">
-                                        <li>Department Heads</li>
-                                        <li>Deans</li>
-                                        <li>Vice Chancellors</li>
-                                        <li>irectors of Centers and Institutes</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
+                    <div class="con-pos">
+                        <div class="img-div left-flex">
+                            <img class="img-fluid rounded " src="./images/health.jpeg.png" alt="">
                         </div>
-                       
-                    </div>
-
-                    <div class="col-md-12 mt-4">
-                        <div class=" mt-3">
-                            <div class="d-flex">
-                                <div class="txt w-50 mt-3">
-                                    <h3 style="color: var(--main-bg);">Technical Positions:</h3>
-                                    <ul class="odd">
-                                        <li>Engineers (Civil, Mechanical, Electrical, etc.)</li>
-                                        <li>Technicians (IT, Electronics, etc.)</li>
-                                        <li>Architects</li>
-                                        <li>Surveyors</li>
-                                    </ul>
-                                </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
-                                    viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                    <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                                </svg>
-                                <div class="img-div  w-50 h-75">
-                                    <img class="img-fluid rounded " src="./images/tehnical.jpeg.png" alt="">
-                                </div>
-                            </div>
-                            
+                        <div class="cen-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
+                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
+                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
+                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
+                            </svg> 
                         </div>
-                       
-                    </div>
-                    
-                    <div class="col-md-12 mt-4">
-                        <div class=" mt-3">
-                            <div class="d-flex">
-                                <div class="img-div  w-50 h-75">
-                                    <img class="img-fluid rounded " src="./images/legal.jpeg.png" alt="">
-                                </div>
-                                <div data-orientation="horizontal" role="none"
-                                    class="shrink-0 invisible w-0.5 h-44 bg-dark/50 -my-4 "></div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
-                                    viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                    <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                                </svg>
-                                <div class="txt w-50 mt-3">
-                                    <h3 style="color: var(--main-color-light);">Legal and Compliance Positions:</h3>
-                                    <ul class="even">
-                                        <li>Legal Advisors</li>
-                                        <li>Compliance Officers</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
+                        <div class="right-flex">
+                            <h3 style="color: var(--main-color-light);">Research and Development Positions:</h3>
+                            <ul class="even">
+                                <li>Research Scientists</li>
+                                <li>Project Managers</li>
+                            </ul>
                         </div>
-                       
-                    </div>
-
-                    <div class="col-md-12 mt-4">
-                        <div class=" mt-3">
-                            <div class="d-flex">
-                                <div class="txt w-50 mt-3">
-                                    <h3 style="color: var(--main-bg);">Health and Counseling Services Positions:</h3>
-                                    <ul class="odd">
-                                        <li>Nurses</li>
-                                        <li>Counselors</li>
-                                        <li>Psychologists</li>
-                                    </ul>
-                                </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
-                                    viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                    <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                                </svg>
-                                <div class="img-div  w-50 h-75">
-                                    <img class="img-fluid rounded " src="./images/health.jpeg.png" alt="">
-                                </div>
-                            </div>
-                            
-                        </div>
-                       
-                    </div>
-                    
-                    <div class="col-md-12 mt-4">
-                        <div class=" mt-3">
-                            <div class="d-flex">
-                                <div class="img-div  w-50 h-75">
-                                    <img class="img-fluid rounded " src="./images/health.jpeg.png" alt="">
-                                </div>
-                                <div data-orientation="horizontal" role="none"
-                                    class="shrink-0 invisible w-0.5 h-44 bg-dark/50 -my-4 "></div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
-                                    viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                    <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                    <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                                </svg>
-                                <div class="txt w-50 mt-3">
-                                    <h3 style="color: var(--main-color-light);">Research and Development Positions:</h3>
-                                    <ul class="even">
-                                        <li>Research Scientists</li>
-                                        <li>Project Managers</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                        </div>
-                       
                     </div>
 
 
@@ -425,8 +379,8 @@
                             <p>This diverse range of opportunities allows individuals with various educational backgrounds, skill sets, and career aspirations to find a role that aligns with their interests and expertise. Whether you are a seasoned academic, a driven professional, or an ambitious recent graduate, UNILORIN offers the chance to contribute to the institution’s mission and advance your career.</p>
                         </div>
                     </div>
-                </div>
-            </div>
+                </section>
+
             <div class="container mb-5 rounded">
                 <div class="row img-bg" >
                   <!-- Background image container -->
@@ -439,8 +393,8 @@
                       </p>
                       <!-- Buttons -->
                       <div class="d-flex flex-md-row align-items-center">
-                        <button type="button" class="btn btn-custom   mx-4">Academic Member</button>
-                        <button type="button" class="btn btn-custom   mx-4">Non-Academic Member </button>
+                        <button type="button" class="btn btn-custom   mx-4">Academic</button>
+                        <button type="button" class="btn btn-custom   mx-4">Non-Academic </button>
                         <!-- <button type="button" class="btn btn-custom">Button 2</button> -->
                       </div>
                     </div>

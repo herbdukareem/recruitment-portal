@@ -8,8 +8,8 @@
                 <div class="cv2">
                     <ul>
                         <li><a href=""><b>Careers</b></a></li>
-                        <li><a href="">Academic Member</a></li>
-                        <li><a href="">Non-Academic Member</a></li>
+                        <li><a href="">Academic </a></li>
+                        <li><a href="">Non-Academic </a></li>
                     </ul>
                 </div>
                 

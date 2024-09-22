@@ -384,7 +384,7 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recruitment | NNPC Limited</title>
+    <title>Application Dashboard | University Of Ilorin</title>
     <link rel="shortcut icon" href="../Account/NNPC-Logo-500x281.png" type="image/x-icon">
     <link rel="shortcut icon" href="../images/logo-plain.jpeg.jpg" type="image/x-icon">
     <link rel="stylesheet" href="./af_style.css">
@@ -453,7 +453,7 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
                 <div class="left-nav">
                     <svg id="open_panel" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19"><animate fill="freeze" attributeName="d" dur="0.4s" values="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19;M5 5L12 5L19 5M5 12H19M5 19L12 19L19 19"/></path></svg>
                     
-                    <h1>GRADUATE TRAINEE</h1>
+                    <h1>APPLICANT</h1>
                 </div>
                 <div class="right-nav">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
@@ -481,10 +481,14 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
 
             <div id="footer">
                 <div class="left-footer">
-                    <p><b>Copyright </b>&copy;<b style="color: blue"> 2024 </b><b>NNPC</b>. All right reserved</p>
+                <p>Copyright &copy; 2024 University Of Ilorin. All Rights Reserved</p>
                 </div>
                 <div class="right-footer">
-                    <p>NNPC Limited</p>
+                    <a href="./logout.php">
+                        <button>
+                            Log out
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>

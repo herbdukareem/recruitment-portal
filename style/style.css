@@ -18,85 +18,115 @@ body {
   text-align: center;
   margin: 0.3em;
 }
-.winscroll .main section .con {
+.winscroll .main section .about h2 {
+  position: relative;
+  color: var(--main-bg);
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+}
+.winscroll .main section .about h2::after {
+  content: "";
+  position: absolute;
+  background-color: var(--main-color-light);
+  height: 2px;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+}
+.winscroll .main section .about .pos-p {
+  background-color: #ddd;
+  padding: 20px;
+  text-align: center;
+}
+.winscroll .main section .con-pos {
   display: grid;
   grid-template-columns: 45% 10% 45%;
   padding: 2em;
-  margin: 2em 0;
+  margin: 0.5em 0;
 }
-.winscroll .main section .con .left-flex, .winscroll .main section .con .right-flex {
+.winscroll .main section .con-pos .left-flex, .winscroll .main section .con-pos .right-flex {
   position: relative;
-  display: flex;
   align-items: end;
   height: 300px;
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6431372549), rgba(255, 255, 255, 0)), url(../images/image.webp);
-  background-position: center;
-  background-size: cover;
-  color: #fff;
   padding: 1em;
   border-radius: 0.5em;
-  -webkit-border-radius: 0.5em;
-  -moz-border-radius: 0.5em;
-  -ms-border-radius: 0.5em;
-  -o-border-radius: 0.5em;
 }
-.winscroll .main section .con .left-flex .back-layer, .winscroll .main section .con .right-flex .back-layer {
-  content: "Hello";
-  position: absolute;
-  background-color: #8b192c;
-  width: 50%;
-  height: 50%;
-  bottom: -20px;
-  z-index: -1;
-  border-radius: 1em;
-  -webkit-border-radius: 1em;
-  -moz-border-radius: 1em;
-  -ms-border-radius: 1em;
-  -o-border-radius: 1em;
+.winscroll .main section .con-pos .left-flex .odd li::marker, .winscroll .main section .con-pos .right-flex .odd li::marker {
+  color: var(--main-color-light);
 }
-.winscroll .main section .con .left-flex div button, .winscroll .main section .con .right-flex div button {
+.winscroll .main section .con-pos .left-flex .even li::marker, .winscroll .main section .con-pos .right-flex .even li::marker {
+  color: var(--main-bg-light);
+}
+.winscroll .main section .con-pos .left-flex div button, .winscroll .main section .con-pos .right-flex div button {
   padding: 0.6em 0.8em;
   border: none;
   font-size: 0.8em;
   color: #fff;
-  border-radius: 2em;
-  -webkit-border-radius: 2em;
-  -moz-border-radius: 2em;
-  -ms-border-radius: 2em;
-  -o-border-radius: 2em;
+  border-radius: 0.2em;
 }
-.winscroll .main section .con .left-flex div h3, .winscroll .main section .con .right-flex div h3 {
+.winscroll .main section .con-pos .left-flex div h3, .winscroll .main section .con-pos .right-flex div h3 {
   margin: 0.5em 0;
 }
-.winscroll .main section .con .left-flex div div a, .winscroll .main section .con .right-flex div div a {
+.winscroll .main section .con-pos .left-flex div div a, .winscroll .main section .con-pos .right-flex div div a {
   text-decoration: none;
   color: #fff;
   font-weight: 700;
 }
-.winscroll .main section .con .left-flex {
+.winscroll .main section .con-pos .left-flex {
   grid-column: 1/2;
 }
-.winscroll .main section .con .left-flex .back-layer {
+.winscroll .main section .con-pos .left-flex .back-layer {
   left: -20px;
 }
-.winscroll .main section .con .left-flex div button {
+.winscroll .main section .con-pos .left-flex div button {
   background-color: var(--main-color);
 }
-.winscroll .main section .con .right-flex {
+.winscroll .main section .con-pos .right-flex {
   grid-column: 3/4;
 }
-.winscroll .main section .con .right-flex .back-layer {
+.winscroll .main section .con-pos .right-flex .back-layer {
   right: -20px;
   background-color: var(--main-bg);
 }
-.winscroll .main section .con .right-flex div button {
+.winscroll .main section .con-pos .right-flex div button {
   background-color: var(--main-bg);
 }
-.winscroll .main section .con .cen-flex {
+.winscroll .main section .con-pos .cen-flex {
   grid-column: 2/3;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.winscroll .main section .progress {
+  background-color: #ddd;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 80% 20%;
+}
+.winscroll .main section .progress .left-pro {
+  grid-column: 1/2;
+  padding: 20px;
+}
+.winscroll .main section .progress .right-pro {
+  grid-column: 2/3;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.winscroll .main section .progress .right-pro button {
+  padding: 15px;
+  background-color: var(--main-color-light);
+  color: var(--main-bg);
+  font-weight: bold;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
 }
 .winscroll .main .container {
   margin-top: 15px;
@@ -162,6 +192,22 @@ body {
 .winscroll .main .container .even li::marker {
   color: var(--main-bg-light);
 }
+.winscroll .main .container .pos-con {
+  width: 100%;
+}
+.winscroll .main .container .pos-con .grid {
+  display: grid;
+  grid-template-columns: 45% 10% 45%;
+}
+.winscroll .main .container .pos-con .grid .left-grid {
+  grid-column: 1/2;
+}
+.winscroll .main .container .pos-con .grid .center-grid {
+  grid-column: 2/3;
+}
+.winscroll .main .container .pos-con .grid .right-grid {
+  grid-column: 3/4;
+}
 .winscroll .main .container img {
   min-width: 300px;
   width: 490px;
@@ -198,29 +244,36 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  .main section .con {
-    display: grid;
-    grid-template-columns: 15% 85%;
+  .winscroll .main section .con-pos {
+    display: flex; /* Change from grid to block */
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
   }
-  .main section .con .left-flex {
-    grid-column: 2/3;
+  .winscroll .main section .con-pos .left-flex, .winscroll .main section .con-pos .right-flex {
+    width: 80%;
+    margin-bottom: 1.5em;
+    height: auto; /* Adjust height for mobile */
   }
-  .main section .con .right-flex {
-    grid-column: 2/3;
+  .winscroll .main section .con-pos .cen-flex {
+    display: none; /* Hide the center flex on mobile */
   }
-  .main section .con .cen-flex {
-    grid-column: 1/2;
-  }
-  .main .container .row {
-    display: block;
-  }
-  .main .container img {
+  .winscroll .main section .con-pos .img-div {
     display: none;
   }
-  .main .container .d-flex {
+  .winscroll .main section .progress {
+    display: block;
+  }
+  .winscroll .main .container .row {
+    display: block;
+  }
+  .winscroll .main .container img {
+    display: none;
+  }
+  .winscroll .main .container .d-flex {
     display: block !important;
   }
-  .main .con-bg .left-img {
+  .winscroll .main .con-bg .left-img {
     display: none;
   }
 }/*# sourceMappingURL=style.css.map */
