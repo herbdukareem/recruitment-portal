@@ -2,36 +2,47 @@
     session_start();
     include_once('../db_connect.php');
     
-    // Check if Login form is submitted
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Check if the Login form is submitted
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
         // Prepare and execute the SQL statement
-        $sql = "SELECT id,firstname, lastname, password FROM users WHERE email = :email";
+        $sql = "SELECT id, firstname, lastname, password FROM users WHERE email = :email";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Verify the password
-        if ($user && password_verify($password, $user['password'])) {
-            // Set session variables
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_firstname'] = $user['firstname'];
-            $_SESSION['user_lastname'] = $user['lastname'];
-            $_SESSION['user_email'] = $email; // Store email in session
-            
-            header("Location: ../Application_Dashboard/af_form.php");
-            exit(); // Ensure the script stops after redirecting
+        if (!empty($user)) {
+            // Verify the password
+            if (password_verify($password, $user['password'])) {
+                // Set session variables
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_firstname'] = $user['firstname'];
+                $_SESSION['user_lastname'] = $user['lastname'];
+                $_SESSION['user_email'] = $email; // Store email in session
 
+                // Set success message in session
+                $_SESSION['alert_message'] = "Login successful!";
+                $_SESSION['alert_type'] = "success";
+
+                // Redirect to the dashboard page
+                header("Location: ../Application_Dashboard/af_form.php");
+                exit(); // Ensure the script stops after redirecting
+            } else {
+                // Set error message in session
+                $_SESSION['alert_message'] = "Invalid email or password!";
+                $_SESSION['alert_type'] = "warning";
+            }
         } else {
-            echo "Invalid email or password.";
+            // Set alert message in session
+            $_SESSION['alert_message'] = "All fields are required.";
+            $_SESSION['alert_type'] = "alert";
         }
     }
 
-    // SignUp form check 
+    // Signup form check
     if (isset($_POST['Signup'])) {
-        
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $email = $_POST['email'];
@@ -40,11 +51,17 @@
 
         // Validate input
         if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($confirm_password)) {
-            echo "All fields are required.";
+            // Set alert message in session
+            $_SESSION['alert_message'] = "All fields are required.";
+            $_SESSION['alert_type'] = "alert";
         } elseif ($password !== $confirm_password) {
-            echo "Passwords do not match.";
+            // Set alert message in session
+            $_SESSION['alert_message'] = "Password doesn't match.";
+            $_SESSION['alert_type'] = "alert";
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo "<div class='alert alert-dangegr'>Invalid email format.</div>";
+            // Set warning message in session
+            $_SESSION['alert_message'] = "Incorrect email format.";
+            $_SESSION['alert_type'] = "warning";
         } else {
             // Hash the password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -62,15 +79,20 @@
                     ':password' => $hashed_password,
                 ]);
 
-                echo "Registration successful!";
-                // Redirect to the login page or dashboard
+                // Set success message in session
+                $_SESSION['alert_message'] = "Signup successful!";
+                $_SESSION['alert_type'] = "success";
+
                 header("Location: session.php?login");
             } catch (PDOException $e) {
                 if ($e->errorInfo[1] == 1062) {
-                    // Duplicate entry error (email or username already exists)
-                    echo "Email already registered.";
+                    // Set error message in session
+                    $_SESSION['alert_message'] = "Email already exists.";
+                    $_SESSION['alert_type'] = "warning";
                 } else {
-                    echo "Error: " . $e->getMessage();
+                    // Set error message in session
+                    $_SESSION['alert_message'] = "Error signing up.";
+                    $_SESSION['alert_type'] = "alert";
                 }
             }
         }
@@ -87,6 +109,44 @@
     <link rel="shortcut icon" href="../images/logo-plain.jpeg.jpg" type="image/x-icon">
 </head>
 <body>
+    <style>
+        /* Basic CSS for the alert box */
+        .alert {
+            padding: 10px;
+            background-color: #fd21116e; /* Red */
+            color: #fd2111;
+            border: 1px solid #fd2111;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: none; /* Hidden by default */
+        }
+
+        .alert.success {
+            background-color: #4caf4f59; /* Green */
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+
+        .alert.info {
+            background-color: #2196F3; /* Blue */
+        }
+
+        .alert.warning {
+            border: 1px solid #ffa500;
+            color: #ffa500;
+            background-color: #ffa60070; /* Orange */
+        }
+
+        .close-btn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+        }
+    </style>
     <div class="winscroll">
         <div>
             <!-- Login Section -->
@@ -98,6 +158,8 @@
                     </p>
                 </div>
                 <form action="session.php?login" method='post' id="login-section" style="display: block;">
+                    <input type="hidden" name="login" value="1">
+                    <div id="alert-container-login"></div>
                     <div class="input-set">
                         <input type="email" name="email" id="lemail" value="" placeholder="Email">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="var(--main-bg)" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2M7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.5.88 4.93 1.78A7.9 7.9 0 0 1 12 20c-1.86 0-3.57-.64-4.93-1.72m11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33A7.93 7.93 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.5-1.64 4.83M12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6m0 5a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 12 8a1.5 1.5 0 0 1 1.5 1.5A1.5 1.5 0 0 1 12 11"/></svg>
@@ -121,6 +183,8 @@
                 </form>
                 <!-- sign up  -->
                 <form action="" method="post" id="signup-section" style="display: none;">
+                    <input type="hidden" name="Signup" value="1">
+                    <div id="alert-container-signup"></div>
                     <div class="input-set">
                         <input type="text"  name="firstname" id="sfname" placeholder="Firstname">
                     </div>
@@ -243,5 +307,38 @@
         </div>
     </div>
     <script src="./sesstion_action.js"></script>
+    <script>
+        // Check for the alert message and type from the PHP session
+        <?php if (isset($_SESSION['alert_message'])): ?>
+            var alertMessage = "<?php echo $_SESSION['alert_message']; ?>";
+            var alertType = "<?php echo $_SESSION['alert_type']; ?>";
+
+            // Display alert for login form
+            document.getElementById('alert-container-login').innerHTML =
+                `<div class='alert ${alertType}'>
+                    ${alertMessage}
+                    <span class='close-btn' onclick='this.parentElement.style.display="none";'>&times;</span>
+                </div>`;
+
+            // Display alert for signup form
+            document.getElementById('alert-container-signup').innerHTML =
+                `<div class='alert ${alertType}'>
+                    ${alertMessage}
+                    <span class='close-btn' onclick='this.parentElement.style.display="none";'>&times;</span>
+                </div>`;
+
+            document.querySelector('.alert').style.display = 'block';
+
+            // Automatically hide the alert after 5 seconds
+            setTimeout(function() {
+                document.querySelector('.alert').style.display = 'none';
+            }, 5000);
+
+            // Clear the session message after displaying it
+            <?php unset($_SESSION['alert_message']); ?>
+            <?php unset($_SESSION['alert_type']); ?>
+        <?php endif; ?>
+    </script>
+
 </body>
 </html>

@@ -62,6 +62,7 @@ if (isset($_POST['saveBio'])) {
     $lastname = $_POST['lastname'];
     $gender = $_POST['gender'];
     $dateOfBirth = $_POST['dateOfBirth'];
+    $birthCertificate = $_POST['birthCertificate'];
     $maritalStatus = $_POST['maritalStatus'];
     $stateOfOrigin = $_POST['stateOfOrigin'];
     $lga = $_POST['lga'];
@@ -83,11 +84,11 @@ if (isset($_POST['saveBio'])) {
                 // Insert new record
                 $sql = "INSERT INTO user_applications (
                             user_id, position, firstname, lastname, middlename, gender, dateOfBirth, 
-                            maritalStatus, stateOfOrigin, lga, nin, 
+                            birthCertificate, maritalStatus, stateOfOrigin, lga, nin, 
                             phoneNumber, emergencyNumber, address
                         ) VALUES (
                             :user_id, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
-                            :maritalStatus, :stateOfOrigin, :lga, :nin, 
+                            :birthCertificate, :maritalStatus, :stateOfOrigin, :lga, :nin, 
                             :phoneNumber, :emergencyNumber, :address
                         )";
             } else {
@@ -99,6 +100,7 @@ if (isset($_POST['saveBio'])) {
                             middlename = :middlename,
                             gender = :gender,
                             dateOfBirth = :dateOfBirth,
+                            birthCertificate = :birthCertificate,
                             maritalStatus = :maritalStatus,
                             stateOfOrigin = :stateOfOrigin,
                             lga = :lga,
@@ -118,6 +120,7 @@ if (isset($_POST['saveBio'])) {
                 ':middlename' => $middlename,
                 ':gender' => $gender,
                 ':dateOfBirth' => $dateOfBirth,
+                ':birthCertificate' => $birthCertificate,
                 ':maritalStatus' => $maritalStatus,
                 ':stateOfOrigin' => $stateOfOrigin,
                 ':lga' => $lga,
@@ -456,7 +459,7 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
                 </div>
                 <div class="right-nav">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
-                        <g fill="none" stroke="#290dfd" stroke-width="1.5">
+                        <g fill="none" stroke="" stroke-width="1.5">
                             <circle cx="12" cy="9" r="3" opacity="0.5" />
                             <circle cx="12" cy="12" r="10" />
                             <path stroke-linecap="round" d="M17.97 20c-.16-2.892-1.045-5-5.97-5s-5.81 2.108-5.97 5" opacity="0.5" />
@@ -480,7 +483,7 @@ $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
 
             <div id="footer">
                 <div class="left-footer">
-                <p>Copyright &copy; 2024 University Of Ilorin. All Rights Reserved</p>
+                    <p>Copyright &copy; 2024 University Of Ilorin. All Rights Reserved</p>
                 </div>
                 <div class="right-footer">
                     <a href="./logout.php">

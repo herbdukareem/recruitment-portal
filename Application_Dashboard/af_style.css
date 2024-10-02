@@ -11,7 +11,6 @@ body {
   padding: 0;
   font-size: 20px;
   font-family: montserrat, "sans-serif";
-  font-weight: bold;
   font-style: normal;
   background-color: #fff;
 }
@@ -98,16 +97,18 @@ body {
   justify-content: start;
 }
 .db-winscroll #display-screen .nav-bar .left-nav h1 {
-  font-size: 0.7em;
+  font-size: 1.5em;
   color: var(--main-bg);
   font-weight: bold;
+  margin-left: 20px;
 }
 .db-winscroll #display-screen .nav-bar .left-nav svg {
+  display: none;
   cursor: pointer;
 }
 .db-winscroll #display-screen .nav-bar .right-nav {
   grid-column: 2/3;
-  font-size: 0.8em;
+  font-size: 1.2em;
   font-weight: lighter;
   display: flex;
   align-items: center;
@@ -208,7 +209,7 @@ body {
 .db-winscroll #display-screen .screen .screen-body form .position select {
   font-family: "Gruppo", sans-serif;
   padding: 0.4em;
-  font-size: 0.7em;
+  font-size: 1em;
   outline: none;
   width: 100%;
   border: 0.1em solid rgba(0, 4, 75, 0.5411764706);
@@ -234,13 +235,27 @@ body {
   -o-border-radius: 0.5em 0.5em 0 0;
 }
 .db-winscroll #display-screen .screen .screen-body form .form-body table {
+  table-layout: fixed;
+  border-collapse: collapse;
   width: 100%;
 }
+.db-winscroll #display-screen .screen .screen-body form .form-body table tr {
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: normal;
+}
 .db-winscroll #display-screen .screen .screen-body form .form-body table tr td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   padding: 0.2em 0.2em;
 }
 .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div label {
-  font-size: 0.5em;
+  font-size: 0.6em;
+  height: 0.4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   padding: 0.5em 0.5em 0.5em 0.3em;
 }
 .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div label i {
@@ -249,7 +264,7 @@ body {
 .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div input[type=text], .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div input[type=email], .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div input[type=date], .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div input[type=file], .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div select {
   font-family: "Gruppo", sans-serif;
   padding: 0.4em;
-  font-size: 0.7em;
+  font-size: 1em;
   outline: none;
   width: 100%;
   border: 0.1em solid rgba(0, 4, 75, 0.5411764706);
@@ -273,7 +288,7 @@ body {
 .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div textarea {
   font-family: "Gruppo", sans-serif;
   padding: 0.4em;
-  font-size: 0.7em;
+  font-size: 1em;
   outline: none;
   width: 100%;
   height: 200px;
@@ -308,7 +323,7 @@ body {
 .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div #Emergency input[type=text], .db-winscroll #display-screen .screen .screen-body form .form-body table tr td div #Emergency select {
   font-family: "Gruppo", sans-serif;
   padding: 0.4em;
-  font-size: 0.7em;
+  font-size: 1em;
   outline: none;
   width: 100%;
   border: 0.1em solid rgba(0, 4, 75, 0.5411764706);
@@ -440,5 +455,11 @@ body {
   }
   .db-winscroll #display-screen .screen .screen-body {
     margin: 20px 0;
+  }
+  .db-winscroll #display-screen .screen .body-edu {
+    display: block;
+  }
+  .db-winscroll #display-screen .footer {
+    font-size: 0.5em;
   }
 }/*# sourceMappingURL=af_style.css.map */

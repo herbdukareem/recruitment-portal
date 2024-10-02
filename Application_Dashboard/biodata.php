@@ -845,65 +845,156 @@
         ]
     ];
     $positions = [
-        "Academic Positions" => [
-            "Lecturers",
-            "Professors",
-            "Research Fellows",
-            "Assistant Professors",
-            "Associate Professors",
-            "Postdoctoral Researchers"
+            "Administrative Cadre" => [
+            "Administrative Cadre",
+            "Executive Officer Cadre",
+            "Clerical Officer Cadre",
+            "Secretarial Cadre",
+            "Secretarial Assistant Cadre",
+            "Porter",
+            "Office Assistant Cadre"
         ],
-        "Administrative Positions" => [
-            "Administrative Officers",
-            "Human Resources Managers",
-            "Finance Officers",
-            "Procurement Officers",
-            "Public Relations Officers",
-            "IT Support Staff"
+
+        "Bursary" => [
+            "Accountant Cadre",
+            "Executive Officer (Accounts) Cadre",
+            "Stores Officers' Cadre",
+            "Store Attendant"
         ],
-        "Support Services Positions" => [
-            "Library Assistants",
-            "Laboratory Technicians",
-            "Maintenance Staff",
-            "Security Personnel",
-            "Health Services Staff"
+
+        "Internal Audit Unit" => [
+            "Internal Auditors' Cadre",
+            "Executive Officer (Audit) Cadre"
         ],
-        "Teaching and Research Assistants" => [
-            "Graduate Teaching Assistants",
-            "Graduate Research Assistants"
+
+        "Directorate of Corporate Affairs" => [
+            "Information Officer Cadre",
+            "Protocol Officer Cadre",
+            "Photographer Cadre",
+            "Video Camera Operator Cadre",
+            "Information Assistant Cadre",
+            "Executive Officer (Information) Cadre"
         ],
-        "Specialist Positions" => [
-            "Academic Advisors",
-            "Career Counselors",
-            "Disability Support Officers",
-            "International Student Advisors"
+
+        "Health Services" => [
+            "Doctors Cadre",
+            "Pharmacists Cadre",
+            "Nursing Officer Cadre",
+            "Pharmacy Technician Cadre",
+            "Medical Laboratory Technologist Cadre",
+            "Medical Laboratory Technician Cadre",
+            "Medical Laboratory Assistant Cadre",
+            "Health Records Officer",
+            "Environmental Health Officer Cadre",
+            "Veterinary Officer Cadre"
         ],
-        "Management Positions" => [
-            "Department Heads",
-            "Deans",
-            "Vice Chancellors",
-            "Directors of Centers and Institutes"
+
+        "Legal Unit" => [
+            "Legal Officer Cadre"
         ],
-        "Technical Positions" => [
-            "Engineers (Civil, Mechanical, Electrical, etc.)",
-            "Technicians (IT, Electronics, etc.)",
-            "Architects",
-            "Surveyors"
+
+        "University Library" => [
+            "Library Officer Cadre",
+            "Library Assistant Cadre",
+            "Bindery Officers' Cadre",
+            "Bindery Assistant Cadre"
         ],
-        "Legal and Compliance Positions" => [
-            "Legal Advisors",
-            "Compliance Officers"
+
+        "Directorate of COMSIT" => [
+            "Data Operator/I.T. Operator Cadre",
+            "Data Analyst Cadre",
+            "Computer Electronics Engineer Cadre",
+            "Systems Programmer/Analyst Cadre",
+            "Director, COMSIT"
         ],
-        "Health and Counseling Services Positions" => [
-            "Nurses",
-            "Counselors",
-            "Psychologists"
+
+        "Works Unit" => [
+            "Engineer Cadre",
+            "Architect Cadre",
+            "Quantity Surveyor Cadre",
+            "Physical Planning Unit",
+            "Maintenance Officer",
+            "Workshop Attendant/Assistant/Superintendent Cadre",
+            "Driver Cadre",
+            "Driver/Mechanic Cadre",
+            "Craftsman (Carpentry & Mason, Welding, Plumbing, Electrical, R&G, Mechanical, etc.)",
+            "Technical Officer Cadre",
+            "Artisan/Craftsman",
+            "Power Station Operator Cadre",
+            "Horticulturist Cadre (Parks & Gardens)",
+            "Estate Officers' Cadre",
+            "Gardening Staff (Biological and Parks & Gardens Units)"
         ],
-        "Research and Development Positions" => [
-            "Research Scientists",
-            "Project Managers"
+
+        "Zoo/Biological Garden" => [
+            "Turnstile Keeper Cadre",
+            "Zoo Keeper Cadre",
+            "Curator Cadre"
+        ],
+
+        "University Farm" => [
+            "Farm Officer/Manager",
+            "Agricultural/Animal Health/Forestry Superintendent Cadre",
+            "Farm/Livestock Supervisor"
+        ],
+
+        "Laboratory" => [
+            "Technologist Cadre",
+            "Laboratory Supervisor"
+        ],
+
+        "University School" => [
+            "Staff School Cadre I (Lower Basic)",
+            "Staff School Cadre II (Upper Basic)"
+        ],
+
+        "Directorate of Security" => [
+            "Security Cadre"
+        ],
+
+        "Academic Planning Unit" => [
+            "Planning Officer Cadre"
+        ],
+
+        "Sport" => [
+            "Coach Cadre"
+        ],
+
+        "SIWES" => [
+            "Coordinator Cadre (SIWES)"
+        ],
+
+        "Counselling Center" => [
+            "Counsellor Cadre"
+        ],
+
+        "Centre for Supportive Services" => [
+            "Signer (Interpreter) Cadre"
+        ],
+
+        "Archives Centre" => [
+            "Archives Assistant Cadre",
+            "Archives' Officer Cadre",
+            "Archivist Cadre"
+        ],
+
+        "Educational Technology" => [
+            "Graphic Arts Assistant Cadre",
+            "Graphic Arts Officers' Cadre"
+        ],
+
+        "Guest Houses" => [
+            "Cook/Steward/Catering Officer Cadre",
+            "Laundry Cadre"
+        ],
+
+        "Fire Services" => [
+            "Fireman Cadre",
+            "Fire Superintendent Cadre - 120",
+            "Fire Officer Cadre - 122"
         ]
-    ];
+
+    ]
     
 ?>
 <div id="biodata-screen" class="screen" style="display: block;">
@@ -912,7 +1003,7 @@
                         <h2>Bio Data</h2>
                     </div>
                     <div class="screen-head-right">
-                        <p><a href="" style="color: var(--main-bg);"> Job Application</a> / <a href="" style="color: var(--main-color);"><svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" viewBox="0 0 24 24">
+                        <p><a href="" style="color: #00044B"> Job Application</a> / <a href="" style="color: #bd9119;"><svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" viewBox="0 0 24 24">
                                     <path fill="#000000" d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m2-8H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2" />
                                 </svg>Bio Data</a></p>
                     </div>
