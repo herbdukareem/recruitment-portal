@@ -14,7 +14,7 @@
                 </div>
                 <div class="screen-body">
                     <!-- Display Input Data -->
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-head">
                             <h2>Professional Memberships and Certifications</h2>
                         </div>
@@ -51,27 +51,27 @@
                                 <tr>
                                     <td>
                                         <div>
-                                            <input type="text" name="bodyName" id="bodyName" value="<?php echo htmlspecialchars($user_pmc_data['bodyName']); ?>">
+                                            <input type="text" name="bodyName" id="bodyName" value="<?php echo htmlspecialchars($user_pmc_data['bodyName']); ?>" >
                                         </div>
                                     </td>
                                     <td>
                                         <div>
-                                            <input type="text" name="membershipID" id="membershipID" value="<?php echo htmlspecialchars($user_pmc_data['membershipID']); ?>">
+                                            <input type="text" name="membershipID" id="membershipID" value="<?php echo htmlspecialchars($user_pmc_data['membershipID']); ?>" >
                                         </div>
                                     </td>
                                     <td>
                                         <div>
-                                            <input type="text" name="membershipResposibilities" id="membershipResposibilities" value="<?php echo htmlspecialchars($user_pmc_data['membershipResposibilities']); ?>">
+                                            <input type="text" name="membershipResposibilities" id="membershipResposibilities" value="<?php echo htmlspecialchars($user_pmc_data['membershipResposibilities']); ?>" >
                                         </div>
                                     </td>
                                     <td>
                                         <div>
-                                            <input type="date" name="certificateDate" id="certificateDate" value="<?php echo htmlspecialchars($user_pmc_data['certificateDate']); ?>">
+                                            <input type="date" name="certificateDate" id="certificateDate" value="<?php echo htmlspecialchars($user_pmc_data['certificateDate']); ?>" >
                                         </div>
                                     </td>
                                     <td>
                                         <div>
-                                            <input type="file" name="membershipCertificate" id="membershipCertificate" value="<?php echo htmlspecialchars($user_pmc_data['membershipCertificate']); ?>">
+                                            <input type="file" name="membershipCertificate" id="membershipCertificate" value="<?php echo htmlspecialchars($user_pmc_data['membershipCertificate']); ?>"  accept="application/pdf,image/jpeg,image/png,image/jpg">
                                         </div>
                                     </td>
                                 </tr>
@@ -136,7 +136,7 @@
                                             <label for="">Certificate</label>
                                         </div>
                                         <div>
-                                            <input type="file" name="" id="addMembershipCertificate" value="">
+                                            <input type="txet" name=""  value="" placeholder="Upload file directly in Work History" >
                                         </div>
                                         <div style="font-size: 12px;">
                                             <input type="checkbox">currently in this role

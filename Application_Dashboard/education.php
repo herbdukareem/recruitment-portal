@@ -19,7 +19,7 @@
                 <div class="right-edu">
                     <div id="userEduDetails">
                         <!-- Display form input include save -->
-                        <form action="" method="post">
+                        <form action="" method="post" enctype="multipart/form-data">
                             <style>
                                 th{
                                     text-align: left;
@@ -55,12 +55,12 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <input type="text" name="primary_school_name" id="priEduText" value="<?php echo htmlspecialchars($user_edu_data['primary_school_name']); ?>">
+                                                <input type="text" name="primary_school_name" id="priEduText" value="<?php echo htmlspecialchars($user_edu_data['primary_school_name']); ?>" >
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="text" name="primary_graduation_year" id="priEduYear" value="<?php echo htmlspecialchars($user_edu_data['primary_graduation_year']); ?>">
+                                                <input type="text" name="primary_graduation_year" id="priEduYear" value="<?php echo htmlspecialchars($user_edu_data['primary_graduation_year']); ?>" >
                                             </div>
                                         </td>
                                         <td>
@@ -102,17 +102,17 @@
                                     <tr data-id="2">
                                         <td>
                                             <div>
-                                                <input type="text" name="secondarySchoolName" id="secondarySchoolName" value="<?php echo htmlspecialchars($user_edu_data['secondarySchoolName']); ?>">
+                                                <input type="text" name="secondarySchoolName" id="secondarySchoolName" value="<?php echo htmlspecialchars($user_edu_data['secondarySchoolName']); ?>" >
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="text" name="secondaryGraduationYear" id="secondaryGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['secondaryGraduationYear']); ?>">
+                                                <input type="text" name="secondaryGraduationYear" id="secondaryGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['secondaryGraduationYear']); ?>" >
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="file" name="secondaryCertificate" id="secondaryCertificate" value="">
+                                                <input type="file" name="secondaryCertificate" id="secondaryCertificate" value="<?php echo htmlspecialchars($user_edu_data['secondaryCertificate']); ?>"  accept="application/pdf,image/jpeg,image/png,image/jpg">
                                             </div>
                                         </td>
                                         <td>
@@ -169,32 +169,32 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <input type="text" name="certificateType" id="certificateType" value="<?php echo htmlspecialchars($user_edu_data['certificateType']); ?>">
+                                                <input type="text" name="certificateType" id="certificateType" value="<?php echo htmlspecialchars($user_edu_data['certificateType']); ?>" >
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="text" name="classOfDegree" id="classOfDegree" value="<?php echo htmlspecialchars($user_edu_data['classOfDegree']); ?>">
+                                                <input type="text" name="classOfDegree" id="classOfDegree" value="<?php echo htmlspecialchars($user_edu_data['classOfDegree']); ?>" >
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="text" name="institution" id="institution" value="<?php echo htmlspecialchars($user_edu_data['institution']); ?>">
+                                                <input type="text" name="institution" id="institution" value="<?php echo htmlspecialchars($user_edu_data['institution']); ?>" >
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="text" name="course" id="course" value="<?php echo htmlspecialchars($user_edu_data['course']); ?>">
+                                                <input type="text" name="course" id="course" value="<?php echo htmlspecialchars($user_edu_data['course']); ?>" >
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="text" name="highGraduationYear" id="highGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['highGraduationYear']); ?>">
+                                                <input type="text" name="highGraduationYear" id="highGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['highGraduationYear']); ?>" >
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="file" name="highCertificate" id="highCertificate" value="">
+                                                <input type="file" name="highCertificate" id="highCertificate" value="<?php echo htmlspecialchars($user_edu_data['highCertificate']); ?>"  accept="application/pdf,image/jpeg,image/png,image/jpg">
                                             </div>
                                         </td>
                                         <td>
@@ -236,17 +236,17 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <input type="text" name="nyscCertificateNumber" id="nyscCertificateNumber" value="<?php echo htmlspecialchars($user_edu_data['nyscCertificateNumber']); ?>">
+                                                <input type="text" name="nyscCertificateNumber" id="nyscCertificateNumber" value="<?php echo htmlspecialchars($user_edu_data['nyscCertificateNumber']); ?>" >
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="text" name="yearOfService" id="yearOfService" value="<?php echo htmlspecialchars($user_edu_data['yearOfService']); ?>">
+                                                <input type="text" name="yearOfService" id="yearOfService" value="<?php echo htmlspecialchars($user_edu_data['yearOfService']); ?>" >
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="file" name="nyscCertificate" id="nyscCertificate" value="">
+                                                <input type="file" name="nyscCertificate" id="nyscCertificate" value="<?php echo htmlspecialchars($user_edu_data['yearOfService']); ?>"  accept="application/pdf,image/jpeg,image/png,image/jpg">
                                             </div>
                                         </td>
                                         <td>
@@ -308,7 +308,7 @@
                     </div>
                     <div id="secondary" style="display: none;">
                                 <!-- Add form iincludes add up -->
-                        <form action="" method="post" id="secAddformSubmit" class="mar-top">
+                        <form action="" method="post" id="secAddformSubmit" class="mar-top" enctype="multipart/form-data">
                             <div class="form-head">
                                 <h2>Secondary Education</h2>
                             </div>
@@ -328,7 +328,7 @@
                                                 <label for="">Graduation Year</label>
                                             </div>
                                             <div>
-                                                <input type="text" name="" id="addSecondaryGraduationYear" value="" placeholder="2000-2024">
+                                                <input type="text" name="" id="addSecondaryGraduationYear" value="" placeholder="">
                                             </div>
                                         </td>
                                     </tr>
@@ -338,7 +338,7 @@
                                                 <label for="">Certificate</label>
                                             </div>
                                             <div>
-                                                <input type="file" name="" id="addSecondaryCertificate" value="">
+                                                <input type="txet" name=""  value="" placeholder="Upload file directly in Work History" >
                                             </div>
                                         </td>
                                     </tr>
@@ -413,7 +413,7 @@
                                                 <label for="">Certificate</label>
                                             </div>
                                             <div>
-                                                <input type="file" name="" id="addHighCertificate" value="" placeholder="2000-2024">
+                                                <input type="txet" name=""  value="" placeholder="Upload file directly in Work History" >
                                             </div>
                                         </td>
                                     </tr>
@@ -462,7 +462,7 @@
                                                 <label for="">NYSC/Exemption Certificate</label>
                                             </div>
                                             <div>
-                                                <input type="file" name="" id="addNyscCertificate" value="">
+                                                <input type="txet" name=""  value="" placeholder="Upload file directly in Work History" >
                                             </div>
                                         </td>
                                     </tr>
@@ -506,12 +506,12 @@
                 row.innerHTML = `
                     <td>
                         <div>
-                            <input type="text" name="primary_school_name[]" value="${addPriText.value}">
+                            <input type="text" name="primary_school_name[]" value="${addPriText.value}" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="primary_graduation_year[]" value="${addPriYear.value}">
+                            <input type="text" name="primary_graduation_year[]" value="${addPriYear.value}" >
                         </div>
                     </td>
                     <td>
@@ -543,8 +543,6 @@
         const secInputTableBody = document.getElementById('sec-input-table-body');
         const addSecondarySchoolName = document.getElementById('addSecondarySchoolName');
         const addSecondaryGraduationYear = document.getElementById('addSecondaryGraduationYear');
-        const addSecondaryCertificate = document.getElementById('addSecondaryCertificate');
-
         secAddformSubmit.addEventListener("submit", (e) => {
             e.preventDefault(); // Prevent page reload
 
@@ -561,17 +559,17 @@
                 row.innerHTML = `
                     <td>
                         <div>
-                            <input type="text" name="secondary_school_name[]" value="${addSecondarySchoolName.value}">
+                            <input type="text" name="secondary_school_name[]" value="${addSecondarySchoolName.value}" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="secondary_graduation_year[]" value="${addSecondaryGraduationYear.value}">
+                            <input type="text" name="secondary_graduation_year[]" value="${addSecondaryGraduationYear.value}" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="file" name="secondary_certificate[]" value="">
+                            <input type="file" name="secondary_certificate[]" value="${addSecondaryCertificate.value}"  accept="application/pdf,image/jpeg,image/png,image/jpg">
                         </div>
                     </td>
                     <td>
@@ -623,32 +621,32 @@
                 row.innerHTML = `
                     <td>
                         <div>
-                            <input type="text" name="certificate_type[]" value="${addCertificateType.value}">
+                            <input type="text" name="certificate_type[]" value="${addCertificateType.value}" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="class_of_degree[]" value="${addClassOfDegree.value}">
+                            <input type="text" name="class_of_degree[]" value="${addClassOfDegree.value}" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="institution[]" value="${addInstitution.value}">
+                            <input type="text" name="institution[]" value="${addInstitution.value}" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="course[]" value="${addCourse.value}">
+                            <input type="text" name="course[]" value="${addCourse.value}" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="graduation_year[]" value="${addHighGraduationYear.value}">
+                            <input type="text" name="graduation_year[]" value="${addHighGraduationYear.value}" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="file" name="highCertificate" id="highCertificate" value="">
+                            <input type="file" name="highCertificate" id="highCertificate" value="" >
                         </div>
                     </td>
                     <td>
@@ -710,17 +708,17 @@
                 row.innerHTML = `
                     <td>
                         <div>
-                            <input type="text" name="nysc_certificate_number[]" value="${addNyscCertificateNumber.value}">
+                            <input type="text" name="nysc_certificate_number[]" value="${addNyscCertificateNumber.value}" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="year_of_service[]" value="${addYearOfService.value}">
+                            <input type="text" name="year_of_service[]" value="${addYearOfService.value}" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="file" name="nysc_certificate[]" value="">
+                            <input type="file" name="nysc_certificate[]" value="" >
                         </div>
                     </td>
                     <td>

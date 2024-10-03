@@ -62,7 +62,6 @@ if (isset($_POST['saveBio'])) {
     $lastname = $_POST['lastname'];
     $gender = $_POST['gender'];
     $dateOfBirth = $_POST['dateOfBirth'];
-    $birthCertificate = $_POST['birthCertificate'];
     $maritalStatus = $_POST['maritalStatus'];
     $stateOfOrigin = $_POST['stateOfOrigin'];
     $lga = $_POST['lga'];
@@ -84,11 +83,11 @@ if (isset($_POST['saveBio'])) {
                 // Insert new record
                 $sql = "INSERT INTO user_applications (
                             user_id, position, firstname, lastname, middlename, gender, dateOfBirth, 
-                            birthCertificate, maritalStatus, stateOfOrigin, lga, nin, 
+                            maritalStatus, stateOfOrigin, lga, nin, 
                             phoneNumber, emergencyNumber, address
                         ) VALUES (
                             :user_id, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
-                            :birthCertificate, :maritalStatus, :stateOfOrigin, :lga, :nin, 
+                            :maritalStatus, :stateOfOrigin, :lga, :nin, 
                             :phoneNumber, :emergencyNumber, :address
                         )";
             } else {
@@ -100,7 +99,6 @@ if (isset($_POST['saveBio'])) {
                             middlename = :middlename,
                             gender = :gender,
                             dateOfBirth = :dateOfBirth,
-                            birthCertificate = :birthCertificate,
                             maritalStatus = :maritalStatus,
                             stateOfOrigin = :stateOfOrigin,
                             lga = :lga,
@@ -120,7 +118,6 @@ if (isset($_POST['saveBio'])) {
                 ':middlename' => $middlename,
                 ':gender' => $gender,
                 ':dateOfBirth' => $dateOfBirth,
-                ':birthCertificate' => $birthCertificate,
                 ':maritalStatus' => $maritalStatus,
                 ':stateOfOrigin' => $stateOfOrigin,
                 ':lga' => $lga,
@@ -130,22 +127,56 @@ if (isset($_POST['saveBio'])) {
                 ':address' => $address
             ]);
 
+            // File upload handling
+            $uploadDirectory = "./uploads/";
+            $allowedFileTypes = ['pdf', 'jpg', 'jpeg', 'png']; // Allowed file types
+            
+            // List of file input names to handle
+            $fileInputs = ['lgaCertificate', 'birthCertificate', 'passport']; // Add more input names if needed
+
+            foreach ($fileInputs as $inputName) {
+                if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
+                    $fileName = $_FILES[$inputName]["name"];
+                    $fileTmpPath = $_FILES[$inputName]["tmp_name"];
+                    $fileSize = $_FILES[$inputName]["size"];
+                    $fileType = $_FILES[$inputName]["type"];
+                    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+                    // Verify the file extension
+                    if (in_array($fileExt, $allowedFileTypes)) {
+                        // Check if the directory exists, if not create it
+                        if (!is_dir($uploadDirectory)) {
+                            mkdir($uploadDirectory, 0777, true);
+                        }
+
+                        // Set the destination path
+                        $uploadPath = $uploadDirectory . basename($fileName);
+
+                        // Move the uploaded file to the destination path
+                        if (move_uploaded_file($fileTmpPath, $uploadPath)) {
+                            echo "The file " . htmlspecialchars(basename($fileName)) . " has been uploaded successfully.<br>";
+                            
+                        } else {
+                            echo "Error: There was an error moving the file " . htmlspecialchars($fileName) . ".<br>";
+                        }
+                    } else {
+                        echo "Error: Invalid file type for " . htmlspecialchars($fileName) . ".<br>";
+                    }
+                } else {
+                    echo "Error: No file uploaded or there was an issue with the upload for " . htmlspecialchars($inputName) . ".<br>";
+                }
+            }
+            // Redirect after upload
             header("Location:" . $_SERVER['PHP_SELF'] . "#education-screen");
             exit();
-            // Alert type -->  Form data saved sucessfully
-            // Include alert box for better user Interface
-            // Alert type -->  Form data saved sucessfully
-            // Include alert box for better user Interface
-            // Alert type -->  Form data saved sucessfully
-
+            
+    
         } catch (PDOException $e) {
-            // Handle errors
-             // echo 'Error: ' . $e->getMessage();
-             // echo 'Error: ' . $e->getMessage();
-             // echo 'Error: ' . $e->getMessage();
+            echo 'Error: ' . $e->getMessage();
         }
     }
 }
+
 
 // Fetch user data for display in the form after saving
 $fetchUserData = $pdo->prepare("SELECT * FROM user_applications WHERE user_id = :user_id");
@@ -223,6 +254,46 @@ if (isset($_POST['saveEdu'])) {
             ':nyscCertificateNumber' => $nyscCertificateNumber,
             ':yearOfService' => $yearOfService,
         ]);
+
+         // File upload handling
+         $uploadDirectory = "./uploads/";
+         $allowedFileTypes = ['pdf', 'jpg', 'jpeg', 'png']; // Allowed file types
+         
+         // List of file input names to handle
+         $fileInputs = ['secondaryCertificate', 'highCertificate', 'nyscCertificate']; // Add more input names if needed
+
+         foreach ($fileInputs as $inputName) {
+             if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
+                 $fileName = $_FILES[$inputName]["name"];
+                 $fileTmpPath = $_FILES[$inputName]["tmp_name"];
+                 $fileSize = $_FILES[$inputName]["size"];
+                 $fileType = $_FILES[$inputName]["type"];
+                 $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+                 // Verify the file extension
+                 if (in_array($fileExt, $allowedFileTypes)) {
+                     // Check if the directory exists, if not create it
+                     if (!is_dir($uploadDirectory)) {
+                         mkdir($uploadDirectory, 0777, true);
+                     }
+
+                     // Set the destination path
+                     $uploadPath = $uploadDirectory . basename($fileName);
+
+                     // Move the uploaded file to the destination path
+                     if (move_uploaded_file($fileTmpPath, $uploadPath)) {
+                         echo "The file " . htmlspecialchars(basename($fileName)) . " has been uploaded successfully.<br>";
+                         
+                     } else {
+                         echo "Error: There was an error moving the file " . htmlspecialchars($fileName) . ".<br>";
+                     }
+                 } else {
+                     echo "Error: Invalid file type for " . htmlspecialchars($fileName) . ".<br>";
+                 }
+             } else {
+                 echo "Error: No file uploaded or there was an issue with the upload for " . htmlspecialchars($inputName) . ".<br>";
+             }
+         }
         
         header("Location:" . $_SERVER['PHP_SELF'] . "#work-screen");
         exit();
@@ -244,7 +315,7 @@ $user_edu_data = $fetchUserEducationData->fetch(PDO::FETCH_ASSOC);
 if (isset($_POST['saveWork'])) {
     // Retrieve POST data with empty string fallback for empty values
     $organizationName = !empty($_POST['organizationName']) ? $_POST['organizationName'] : '';
-    $role = !empty($_POST['role']) ? $_POST['role'] : '';
+    $rank = !empty($_POST['rank']) ? $_POST['rank'] : '';
     $responsibilities = !empty($_POST['responsibilities']) ? $_POST['responsibilities'] : '';
     $startDate = !empty($_POST['startDate']) ? $_POST['startDate'] : null;
     $endDate = !empty($_POST['endDate']) ? $_POST['endDate'] : null;
@@ -257,11 +328,11 @@ if (isset($_POST['saveWork'])) {
         if ($checkUserWorkHistory->rowCount() === 0) {
             // Insert new record
             $sql = "INSERT INTO user_work_details (
-                        user_id, organizationName, role, 
+                        user_id, organizationName, rank, 
                         responsibilities, startDate, 
                         endDate
                     ) VALUES (
-                        :user_id, :organizationName, :role, 
+                        :user_id, :organizationName, :rank, 
                         :responsibilities, :startDate, 
                         :endDate
                     )";
@@ -269,7 +340,7 @@ if (isset($_POST['saveWork'])) {
             // Update existing record
             $sql = "UPDATE user_work_details SET
                         organizationName = :organizationName,
-                        role = :role,
+                        rank = :rank,
                         responsibilities = :responsibilities,
                         startDate = :startDate,
                         endDate = :endDate
@@ -281,7 +352,7 @@ if (isset($_POST['saveWork'])) {
         $stmt->execute([
             ':user_id' => $user_id,
             ':organizationName' => $organizationName,
-            ':role' => $role,
+            ':rank' => $rank,
             ':responsibilities' => $responsibilities,
             ':startDate' => $startDate,
             ':endDate' => $endDate,
@@ -343,6 +414,47 @@ if (isset($_POST['savePMC'])) {
             ':membershipResposibilities' => $membershipResposibilities,
             ':certificateDate' => $certificateDate,
         ]);
+
+        // File upload handling
+        $uploadDirectory = "./uploads/";
+        $allowedFileTypes = ['pdf', 'jpg', 'jpeg', 'png']; // Allowed file types
+        
+        // List of file input names to handle
+        $fileInputs = ['membershipCertificate']; // Add more input names if needed
+
+        foreach ($fileInputs as $inputName) {
+            if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
+                $fileName = $_FILES[$inputName]["name"];
+                $fileTmpPath = $_FILES[$inputName]["tmp_name"];
+                $fileSize = $_FILES[$inputName]["size"];
+                $fileType = $_FILES[$inputName]["type"];
+                $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+                // Verify the file extension
+                if (in_array($fileExt, $allowedFileTypes)) {
+                    // Check if the directory exists, if not create it
+                    if (!is_dir($uploadDirectory)) {
+                        mkdir($uploadDirectory, 0777, true);
+                    }
+
+                    // Set the destination path
+                    $uploadPath = $uploadDirectory . basename($fileName);
+
+                    // Move the uploaded file to the destination path
+                    if (move_uploaded_file($fileTmpPath, $uploadPath)) {
+                        echo "The file " . htmlspecialchars(basename($fileName)) . " has been uploaded successfully.<br>";
+                        
+                    } else {
+                        echo "Error: There was an error moving the file " . htmlspecialchars($fileName) . ".<br>";
+                    }
+                } else {
+                    echo "Error: Invalid file type for " . htmlspecialchars($fileName) . ".<br>";
+                }
+            } else {
+                echo "Error: No file uploaded or there was an issue with the upload for " . htmlspecialchars($inputName) . ".<br>";
+            }
+        };
+
         header("Location:" . $_SERVER['PHP_SELF'] . "#summary-screen");
         exit();
 

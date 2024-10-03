@@ -994,8 +994,8 @@
             "Fire Officer Cadre - 122"
         ]
 
-    ]
-    
+    ];
+
 ?>
 <div id="biodata-screen" class="screen" style="display: block;">
                 <div class="screen-head">
@@ -1009,7 +1009,7 @@
                     </div>
                 </div>
                 <div class="screen-body">
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         <div class="position">
                             <div>
                                 <label for="">Position</label>
@@ -1046,14 +1046,22 @@
                                     </td>
                                     <td>
                                         <div>
+                                            <label for="passport">Passport<i>(file types, jpeg, png, jpg, size limit 2MB)</i></label>
+                                        </div>
+                                        <div>
+                                            <input type="file" name="passport" id=""  value="<?php echo htmlspecialchars($user_data['passpassportort'] ?? ''); ?>"  accept="image/jpeg,image/png,image/jpg">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>
                                             <label for="mname">Middlename</label>
                                         </div>
                                         <div>
                                             <input type="text" name="middlename" id=""  value="<?php echo htmlspecialchars($user_data['middlename'] ?? ''); ?>">
                                         </div>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <div>
                                             <label for="lname">Lastname</label>
@@ -1062,6 +1070,8 @@
                                             <input type="text" name="lastname" id=""  value=" <?php echo htmlspecialchars($_SESSION['user_lastname'])?>">
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <div>
                                             <label for="gender">Gender</label>
@@ -1074,8 +1084,6 @@
                                             </select>
                                         </div>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <div>
                                             <label for="DoF">Date of Birth</label>
@@ -1084,16 +1092,16 @@
                                             <input type="date" name="dateOfBirth" id="" value="<?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>" placeholder="mm/dd/yy">
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <div>
                                             <label for="">Birth Certifiate <i>(file types, jpeg, png, pdf, size limit 2MB)</i></label>
                                         </div>
                                         <div>
-                                            <input type="file" name="birthCertificate" id="" value="" placeholder="No file chosen">
+                                            <input type="file" name="birthCertificate" id="" value="" placeholder="No file chosen" accept="application/pdf,image/jpeg,image/png,image/jpg">
                                         </div>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <div>
                                             <label for="">Marital status</label>
@@ -1107,6 +1115,8 @@
                                             </select>
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <div>
                                             <label for="">State of Origin</label>
@@ -1154,8 +1164,6 @@
                                             </select>
                                         </div>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <div>
                                             <label for="lga">LGA</label>
@@ -1175,16 +1183,16 @@
                                             </select>
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <div>
                                             <label for="lga-cert">LGA Indigene\Origin Certifiate <i>(file types, jpeg, png, pdf, size limit 2MB)</i></label>
                                         </div>
                                         <div>
-                                            <input type="file" name="lgaCertificate" id="" value="" placeholder="No file chosen">
+                                            <input type="file" name="lgaCertificate" id="" value="" placeholder="No file chosen" accept="application/pdf,image/jpeg,image/png,image/jpg">
                                         </div>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <div>
                                             <label for="nin">NIN</label>
@@ -1193,6 +1201,8 @@
                                             <input type="text" name="nin" id="" value="<?php echo htmlspecialchars($user_data['nin'] ?? ''); ?>">
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <div>
                                             <label for="number">Phone Number</label>
@@ -1201,8 +1211,6 @@
                                             <input type="text" name="phoneNumber" id=""  value="<?php echo htmlspecialchars($user_data['phoneNumber'] ?? ''); ?>">
                                         </div>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <div>
                                             <label for="">Emergency Number</label>
@@ -1211,7 +1219,9 @@
                                             <input type="text" name="emergencyNumber" id="" value="<?php echo htmlspecialchars($user_data['emergencyNumber'] ?? ''); ?>">
                                         </div>
                                     </td>
-                                    <td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
                                         <div>
                                             <label for="">Residetial Address</label>
                                         </div>

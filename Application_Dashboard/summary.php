@@ -197,10 +197,10 @@
                             </td>
                             <td class="table_data">
                                 <div>
-                                    <label for="">Role</label>
+                                    <label for="">Rank</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['role'] ?? ''); ?>
+                                    <?php echo htmlspecialchars($allUserData['rank'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
