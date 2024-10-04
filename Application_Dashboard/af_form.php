@@ -484,6 +484,10 @@ $fetchAllUserData = $pdo->prepare("
     	SELECT *
         FROM user_work_details
     )as w ON u.id = w.user_id
+    JOIn (
+        SELECT *
+        FROM user_pmc_details
+    )as p ON u.id = p.user_id
     WHERE u.id = :user_id
 
 ");

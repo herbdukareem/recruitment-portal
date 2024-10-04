@@ -37,19 +37,24 @@
             }
         </style>
         <form action="" id="printableArea">
-            <div class="form-head">
-                <h2>Appication Summary for the position of <span style="font-weight:bold;color:var(--main-color-light)"><?php echo htmlspecialchars($allUserData['position'] ?? ''); ?></span></h2>
+            <div class="form-head" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h2>Appication Summary for the position of <span style="font-weight:bold;color:var(--main-color-light)"><?php echo htmlspecialchars($allUserData['position'] ?? ''); ?></span></h2>
+                </div>
+                <div style="padding: 8px 5px 5px 5px;">
+                    <img src="./uploads/download.png" alt="" width="200px">
+                </div>
             </div>
             <div class="form-body">
                 <!-- Bio Data Summary -->
                 <table>
-                    <!-- <thead>
+                    <thead>
                         <th class="table_head" colspan="3">
                             <div>
                                 <h3 >Bio Data</h3>
                             </div>
                         </th>
-                    </thead> -->
+                    </thead>
                     <tbody>
                         <tr>
                             <td class="table_data">
@@ -178,13 +183,13 @@
                 </table>
                 <!-- Work History Sumary -->
                 <table>
-                    <!-- <thead>
+                    <thead>
                         <th class="table_head" colspan="2">
                             <div>
                                 <h3>Work History</h3>
                             </div>
                         </th>
-                    </thead> -->
+                    </thead>
                     <tbody>
                         <tr>
                             <td class="table_data">
@@ -236,17 +241,17 @@
                 </table>
                 <!-- Education Summary -->
                 <table>
-                    <!-- <thead>
+                    <thead>
                         <th class="table_head" colspan="3">
                             <h3 >Education</h3>
                         </th>
-                    </thead> -->
+                    </thead>
                     <tbody>
-                        <tr>
+                        <!-- <tr>
                             <th colspan="3">
                                 <h4 class="section_h4">Primary Education</h4>
                             </th>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td colspan="2" class="table_data">
                                 <div>
@@ -265,11 +270,11 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th colspan="3">
                                 <h4 class="section_h4">Secondary Education</h4>
                             </th>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td class="table_data">
                                 <div>
@@ -296,11 +301,11 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th colspan="3">
                                 <h4 class="section_h4">Higher Education</h4>
                             </th>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td class="table_data">
                                 <div>
@@ -353,11 +358,11 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th colspan="3">
                                 <h4 class="section_h4">NYSC</h4>
                             </th>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td class="table_data">
                                 <div>
@@ -381,6 +386,64 @@
                                 </div>
                                 <div>
                                     <?php echo htmlspecialchars($allUserData['nyscCertificate'] ?? ''); ?>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                 <!-- Work Professional Membership -->
+                 <table>
+                    <thead>
+                        <th class="table_head" colspan="2">
+                            <div>
+                                <h3>Professional Membership</h3>
+                            </div>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="table_data">
+                                <div>
+                                    <label for="">Body Name</label>
+                                </div>
+                                <div>
+                                    <?php echo htmlspecialchars($allUserData['bodyName'] ?? ''); ?>
+                                </div>
+                            </td>
+                            <td class="table_data">
+                                <div>
+                                    <label for="">Membership ID</label>
+                                </div>
+                                <div>
+                                    <?php echo htmlspecialchars($allUserData['membershipID'] ?? ''); ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="table_data">
+                                <div>
+                                    <label for="">Responsibilities</label>
+                                </div>
+                                <div>
+                                    <?php echo htmlspecialchars($allUserData['membershipResposibilities'] ?? ''); ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_data">
+                                <div>
+                                    <label for="">Certificate Date</label>
+                                </div>
+                                <div>
+                                    <?php echo htmlspecialchars($allUserData['certificateDate'] ?? ''); ?>
+                                </div>
+                            </td>
+                            <td class="table_data">
+                                <div>
+                                    <label for="">Certificate</label>
+                                </div>
+                                <div>
+                                   
                                 </div>
                             </td>
                         </tr>
