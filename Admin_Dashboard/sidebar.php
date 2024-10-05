@@ -10,7 +10,7 @@
 
 				<ul class="side-menu">
 					<li>
-						<a onclick="showDiv('button')" class="active">
+						<a onclick="showDiv('dashboard')" class="active">
 							<i class='bx bxs-dashboard icon'></i> Dashboard
 						</a>
 					</li>

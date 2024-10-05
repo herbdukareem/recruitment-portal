@@ -131,7 +131,7 @@
 				e.nyscCertificateNumber, 
 				e.yearOfService,
 				w.organizationName, 
-				w.role, 
+				w.rank, 
 				w.responsibilities, 
 				w.startDate, 
 				w.endDate, 
@@ -236,7 +236,15 @@
 	$totalSingupUsers = $countSignupUsersQuery->fetchColumn(); // Get the total count
 
 
+	// Initialize an empty array for JavaScript
+	$jsArray = [];
+	foreach ($positions as $position) {
+		// Echoing out the total applications for each position
+		$jsArray[] = $totalApplications[$position]; // Assuming $totalApplications is an associative array
+	}
 
+	// Convert PHP array to JavaScript array
+	$jsArrayOutput = json_encode($jsArray);
 
 
 ?>
@@ -417,7 +425,7 @@
 				
 
 				<div class="col-md-8 mx-auto"> <!-- Adjust the column size as needed -->
-					<canvas id="myChart"></canvas>
+					<canvas id="myChart" style="width: 100%;"></canvas>
 				</div>
 
 				
@@ -426,136 +434,137 @@
 			<div id="content"></div>
 			<?php include_once('botAI.php') ?>
 			<?php
-			// Example of calling the function for different positions
-			//  Administrative Cadre
-			renderPositionSection('Administrative_Cadre', 'Administrative Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Executive_Officer_Cadre', 'Executive Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Clerical_Officer_Cadre', 'Clerical Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Secretarial_Cadre', 'Secretarial Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Secretarial_Assistant_Cadre', 'Secretarial Assistant Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Porter', 'Porter', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Office_Assistant_Cadre', 'Office Assistant Cadre', $totalApplications, $totalGenderCount, $positionData);
+				$index = 0;
+				// Example of calling the function for different positions
+				//  Administrative Cadre
+				renderPositionSection('Administrative_Cadre', 'Administrative Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Executive_Officer_Cadre', 'Executive Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Clerical_Officer_Cadre', 'Clerical Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Secretarial_Cadre', 'Secretarial Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Secretarial_Assistant_Cadre', 'Secretarial Assistant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Porter', 'Porter', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Office_Assistant_Cadre', 'Office Assistant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Bursary
-			renderPositionSection('Accountant_Cadre', 'Accountant Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Executive_Officer_(Accounts)_Cadre', 'Executive Officer (Accounts) Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Stores_Officers_Cadre', 'Stores Officers\' Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Store_Attendant', 'Store Attendant', $totalApplications, $totalGenderCount, $positionData);
+				// Bursary
+				renderPositionSection('Accountant_Cadre', 'Accountant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Executive_Officer_(Accounts)_Cadre', 'Executive Officer (Accounts) Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Stores_Officers_Cadre', 'Stores Officers\' Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Store_Attendant', 'Store Attendant', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Internal Audit Unit
-			renderPositionSection('Internal_Auditors_Cadre', 'Internal Auditors\' Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Executive_Officer_(Audit)_Cadre', 'Executive Officer (Audit) Cadre', $totalApplications, $totalGenderCount, $positionData);
-			
-			
-			// Internal Audit Unit
-			renderPositionSection('Information_Officer_Cadre', 'Information Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Protocol_Officer_Cadre', 'Protocol Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Photographer_Cadre', 'Photographer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Video_Camera_Operator_Cadre', 'Video Camera Operator Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Information_Assistant_Cadre', 'Information Assistant Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Executive_Officer_(Information)_Cadre', 'Executive Officer (Information) Cadre', $totalApplications, $totalGenderCount, $positionData);
+				// Internal Audit Unit
+				renderPositionSection('Internal_Auditors_Cadre', 'Internal Auditors\' Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Executive_Officer_(Audit)_Cadre', 'Executive Officer (Audit) Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				
+				
+				// Internal Audit Unit
+				renderPositionSection('Information_Officer_Cadre', 'Information Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Protocol_Officer_Cadre', 'Protocol Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Photographer_Cadre', 'Photographer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Video_Camera_Operator_Cadre', 'Video Camera Operator Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Information_Assistant_Cadre', 'Information Assistant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Executive_Officer_(Information)_Cadre', 'Executive Officer (Information) Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Health Services
-			renderPositionSection('Doctors_Cadre', 'Doctors Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Pharmacists_Cadre', 'Pharmacists Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Nursing_Officer_Cadre', 'Nursing Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Pharmacy_Technician_Cadre', 'Pharmacy Technician Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Medical_Laboratory_Technologist_Cadre', 'Medical Laboratory Technologist Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Medical_Laboratory_Technician_Cadre', 'Medical Laboratory Technician Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Medical_Laboratory_Assistant_Cadre', 'Medical Laboratory Assistant Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Health_Records_Office', 'Health Records Officer', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Environmental_Health_Officer_Cadre', 'Environmental Health Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Veterinary_Officer_Cadre', 'Veterinary Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
+				// Health Services
+				renderPositionSection('Doctors_Cadre', 'Doctors Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Pharmacists_Cadre', 'Pharmacists Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Nursing_Officer_Cadre', 'Nursing Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Pharmacy_Technician_Cadre', 'Pharmacy Technician Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Medical_Laboratory_Technologist_Cadre', 'Medical Laboratory Technologist Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Medical_Laboratory_Technician_Cadre', 'Medical Laboratory Technician Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Medical_Laboratory_Assistant_Cadre', 'Medical Laboratory Assistant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Health_Records_Office', 'Health Records Officer', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Environmental_Health_Officer_Cadre', 'Environmental Health Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Veterinary_Officer_Cadre', 'Veterinary Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Legal Unit
-			renderPositionSection('Legal_Officer_Cadre', 'Legal Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
+				// Legal Unit
+				renderPositionSection('Legal_Officer_Cadre', 'Legal Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// University Library
-			renderPositionSection('Library_Officer_Cadre', 'Library Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Library_Assistant_Cadre', 'Library Assistant Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Bindery_Officers_Cadre', 'Bindery Officers\' Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Bindery_Assistant_Cadre', 'Bindery Assistant Cadre', $totalApplications, $totalGenderCount, $positionData);
-
-
-			// Directorate of COMSIT
-			renderPositionSection('Data_Operator_IT_Operator_Cadre', 'Data Operator/I.T. Operator Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Data_Analyst_Cadre', 'Data Analyst Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Computer_Electronics_Engineer_Cadre', 'Computer Electronics Engineer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Systems_Programmer/Analyst_Cadre', 'Systems Programmer/Analyst Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Director_COMSIT', 'Director, COMSIT', $totalApplications, $totalGenderCount, $positionData);
-
-			// Works Unit
-			renderPositionSection('Engineer_Cadre', 'Engineer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Architect_Cadre', 'Architect Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Quantity_Surveyor_Cadre', 'Quantity Surveyor Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Physical_Planning_Unit', 'Physical Planning Unit', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Maintenance_Officer', 'Maintenance Officer', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Workshop_Attendant/Assistant/Superintendent_Cadre', 'Workshop Attendant/Assistant/Superintendent Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Driver_Cadre', 'Driver Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Driver/Mechanic_Cadre', 'Driver/Mechanic Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Craftsman', 'Craftsman (Carpentry & Mason, Welding, Plumbing, Electrical, R&G, Mechanical, etc.)', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Technical_Officer_Cadre', 'Technical Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Artisan/Craftsman', 'Artisan/Craftsman', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Power_Station_Operator_Cadre', 'Power Station Operator Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Horticulturist_Cadre', 'Horticulturist Cadre (Parks & Gardens)', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Estate_Officers_Cadre', 'Estate Officers\' Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Gardening_Staff', 'Gardening Staff (Biological and Parks & Gardens Units)', $totalApplications, $totalGenderCount, $positionData);
-
-			//  Zoo/Biological Garden
-			renderPositionSection('Turnstile_Keeper_Cadre', 'Turnstile Keeper Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Zoo_Keeper_Cadre', 'Zoo Keeper Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Curator_Cadre', 'Curator Cadre', $totalApplications, $totalGenderCount, $positionData);
+				// University Library
+				renderPositionSection('Library_Officer_Cadre', 'Library Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Library_Assistant_Cadre', 'Library Assistant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Bindery_Officers_Cadre', 'Bindery Officers\' Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Bindery_Assistant_Cadre', 'Bindery Assistant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 
 
-			// University Farm
-			renderPositionSection('Farm_Officer', 'Farm Officer/Manager', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Agricultural_Animal_Health_Forestry_Superintendent_Cadre', 'Agricultural/Animal Health/Forestry Superintendent Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Livestock_Supervisor', 'Farm/Livestock Supervisor', $totalApplications, $totalGenderCount, $positionData);
+				// Directorate of COMSIT
+				renderPositionSection('Data_Operator_IT_Operator_Cadre', 'Data Operator/I.T. Operator Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Data_Analyst_Cadre', 'Data Analyst Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Computer_Electronics_Engineer_Cadre', 'Computer Electronics Engineer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Systems_Programmer/Analyst_Cadre', 'Systems Programmer/Analyst Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Director_COMSIT', 'Director, COMSIT', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Laboratory
-			renderPositionSection('Technologist_Cadre', 'Technologist Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Laboratory_Supervisor', 'Laboratory Supervisor', $totalApplications, $totalGenderCount, $positionData);
+				// Works Unit
+				renderPositionSection('Engineer_Cadre', 'Engineer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Architect_Cadre', 'Architect Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Quantity_Surveyor_Cadre', 'Quantity Surveyor Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Physical_Planning_Unit', 'Physical Planning Unit', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Maintenance_Officer', 'Maintenance Officer', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Workshop_Attendant/Assistant/Superintendent_Cadre', 'Workshop Attendant/Assistant/Superintendent Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Driver_Cadre', 'Driver Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Driver/Mechanic_Cadre', 'Driver/Mechanic Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Craftsman', 'Craftsman (Carpentry & Mason, Welding, Plumbing, Electrical, R&G, Mechanical, etc.)', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Technical_Officer_Cadre', 'Technical Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Artisan/Craftsman', 'Artisan/Craftsman', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Power_Station_Operator_Cadre', 'Power Station Operator Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Horticulturist_Cadre', 'Horticulturist Cadre (Parks & Gardens)', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Estate_Officers_Cadre', 'Estate Officers\' Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Gardening_Staff', 'Gardening Staff (Biological and Parks & Gardens Units)', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// University School
-			renderPositionSection('Staff_School_Cadre_I', 'Staff School Cadre I (Lower Basic)', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Staff_School_Cadre_II', 'Staff School Cadre II (Upper Basic)', $totalApplications, $totalGenderCount, $positionData);
+				//  Zoo/Biological Garden
+				renderPositionSection('Turnstile_Keeper_Cadre', 'Turnstile Keeper Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Zoo_Keeper_Cadre', 'Zoo Keeper Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Curator_Cadre', 'Curator Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Directorate of Security
-			renderPositionSection('Security_Cadre', 'Security Cadre', $totalApplications, $totalGenderCount, $positionData);
 
-			// Academic Planning Unit
-			renderPositionSection('Planning_Officer_Cadre', 'Planning Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
+				// University Farm
+				renderPositionSection('Farm_Officer', 'Farm Officer/Manager', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Agricultural_Animal_Health_Forestry_Superintendent_Cadre', 'Agricultural/Animal Health/Forestry Superintendent Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Livestock_Supervisor', 'Farm/Livestock Supervisor', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Sport
-			renderPositionSection('Coach_Cadre', 'Coach Cadre', $totalApplications, $totalGenderCount, $positionData);
+				// Laboratory
+				renderPositionSection('Technologist_Cadre', 'Technologist Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Laboratory_Supervisor', 'Laboratory Supervisor', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// SIWES
-			renderPositionSection('Coordinator_Cadre', 'Coordinator Cadre (SIWES)', $totalApplications, $totalGenderCount, $positionData);
+				// University School
+				renderPositionSection('Staff_School_Cadre_I', 'Staff School Cadre I (Lower Basic)', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Staff_School_Cadre_II', 'Staff School Cadre II (Upper Basic)', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Counselling Center
-			renderPositionSection('Counsellor_Cadre', 'Counsellor Cadre', $totalApplications, $totalGenderCount, $positionData);
+				// Directorate of Security
+				renderPositionSection('Security_Cadre', 'Security Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Centre for Supportive Services
-			renderPositionSection('Signer_Cadre', 'Signer (Interpreter) Cadre', $totalApplications, $totalGenderCount, $positionData);
+				// Academic Planning Unit
+				renderPositionSection('Planning_Officer_Cadre', 'Planning Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Archives Centre
-			renderPositionSection('Archives_Assistant_Cadre', 'Archives Assistant Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Archives_Officer_Cadre', 'Archives\' Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Archivist_Cadre', 'Archivist Cadre', $totalApplications, $totalGenderCount, $positionData);
+				// Sport
+				renderPositionSection('Coach_Cadre', 'Coach Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Educational Technology
-			renderPositionSection('Graphic_Arts_Assistant_Cadre', 'Graphic Arts Assistant Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Graphic_Arts_Officers_Cadre', 'Graphic Arts Officers\' Cadre', $totalApplications, $totalGenderCount, $positionData);
-			
-			// Guest Houses
-			renderPositionSection('Cook_Steward_Catering_Officer_Cadre', 'Cook/Steward/Catering Officer Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Laundry_Cadre', 'Laundry Cadre', $totalApplications, $totalGenderCount, $positionData);
+				// SIWES
+				renderPositionSection('Coordinator_Cadre', 'Coordinator Cadre (SIWES)', $totalApplications, $totalGenderCount, $positionData, $index);
 
-			// Fire Services
-			renderPositionSection('Fireman_Cadre', 'Fireman Cadre', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Fire_Superintendent_Cadre', 'Fire Superintendent Cadre - 120', $totalApplications, $totalGenderCount, $positionData);
-			renderPositionSection('Fire_Officer_Cadre', 'Fire Officer Cadre - 122', $totalApplications, $totalGenderCount, $positionData);
-			// Add more calls as needed
+				// Counselling Center
+				renderPositionSection('Counsellor_Cadre', 'Counsellor Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+
+				// Centre for Supportive Services
+				renderPositionSection('Signer_Cadre', 'Signer (Interpreter) Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+
+				// Archives Centre
+				renderPositionSection('Archives_Assistant_Cadre', 'Archives Assistant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Archives_Officer_Cadre', 'Archives\' Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Archivist_Cadre', 'Archivist Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+
+				// Educational Technology
+				renderPositionSection('Graphic_Arts_Assistant_Cadre', 'Graphic Arts Assistant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Graphic_Arts_Officers_Cadre', 'Graphic Arts Officers\' Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				
+				// Guest Houses
+				renderPositionSection('Cook_Steward_Catering_Officer_Cadre', 'Cook/Steward/Catering Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Laundry_Cadre', 'Laundry Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+
+				// Fire Services
+				renderPositionSection('Fireman_Cadre', 'Fireman Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Fire_Superintendent_Cadre', 'Fire Superintendent Cadre - 120', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Fire_Officer_Cadre', 'Fire Officer Cadre - 122', $totalApplications, $totalGenderCount, $positionData, $index);
+				// Add more calls as needed
 			?>
 
 			
@@ -590,7 +599,144 @@
 
 	<!-- Template JS File -->
 	<script src="assets/js/script.js"></script>
-	<script src="assets/js/custom.js"></script>
+
+	<!-- Dashboard chart JS script -->
+	<script>
+		const ctx = document.getElementById('myChart').getContext('2d');
+		const totalApplications = <?php echo $jsArrayOutput; ?>; // PHP-generated data
+
+		const myChart = new Chart(ctx, {
+			type: 'bar', // Change this to 'line', 'bar', etc. if needed
+			data: {
+				labels: [
+					"Administrative Cadre",
+					"Executive Officer Cadre",
+					"Clerical Officer Cadre",
+					"Secretarial Cadre",
+					"Secretarial Assistant Cadre",
+					"Porter",
+					"Office Assistant Cadre",
+					"Accountant Cadre",
+					"Executive Officer (Accounts) Cadre",
+					"Stores Officers' Cadre",
+					"Store Attendant",
+					"Internal Auditors' Cadre",
+					"Executive Officer (Audit) Cadre",
+					"Information Officer Cadre",
+					"Protocol Officer Cadre",
+					"Photographer Cadre",
+					"Video Camera Operator Cadre",
+					"Information Assistant Cadre",
+					"Executive Officer (Information) Cadre",
+					"Doctors Cadre",
+					"Pharmacists Cadre",
+					"Nursing Officer Cadre",
+					"Pharmacy Technician Cadre",
+					"Medical Laboratory Technologist Cadre",
+					"Medical Laboratory Technician Cadre",
+					"Medical Laboratory Assistant Cadre",
+					"Health Records Officer",
+					"Environmental Health Officer Cadre",
+					"Veterinary Officer Cadre",
+					"Legal Officer Cadre",
+					"Library Officer Cadre",
+					"Library Assistant Cadre",
+					"Bindery Officers' Cadre",
+					"Bindery Assistant Cadre",
+					"Data Operator/I.T. Operator Cadre",
+					"Data Analyst Cadre",
+					"Computer Electronics Engineer Cadre",
+					"Systems Programmer/Analyst Cadre",
+					"Director, COMSIT",
+					"Engineer Cadre",
+					"Architect Cadre",
+					"Quantity Surveyor Cadre",
+					"Physical Planning Unit",
+					"Maintenance Officer",
+					"Workshop Attendant/Assistant/Superintendent Cadre",
+					"Driver Cadre",
+					"Driver/Mechanic Cadre",
+					"Craftsman (Carpentry & Mason, Welding, Plumbing, Electrical, R&G, Mechanical, etc.)",
+					"Technical Officer Cadre",
+					"Artisan/Craftsman",
+					"Power Station Operator Cadre",
+					"Horticulturist Cadre (Parks & Gardens)",
+					"Estate Officers' Cadre",
+					"Gardening Staff (Biological and Parks & Gardens Units)",
+					"Turnstile Keeper Cadre",
+					"Zoo Keeper Cadre",
+					"Curator Cadre",
+					"Farm Officer/Manager",
+					"Agricultural/Animal Health/Forestry Superintendent Cadre",
+					"Farm/Livestock Supervisor",
+					"Technologist Cadre",
+					"Laboratory Supervisor",
+					"Staff School Cadre I (Lower Basic)",
+					"Staff School Cadre II (Upper Basic)",
+					"Security Cadre",
+					"Planning Officer Cadre",
+					"Coach Cadre",
+					"Coordinator Cadre (SIWES)",
+					"Counsellor Cadre",
+					"Signer (Interpreter) Cadre",
+					"Archives Assistant Cadre",
+					"Archives' Officer Cadre",
+					"Archivist Cadre",
+					"Graphic Arts Assistant Cadre",
+					"Graphic Arts Officers' Cadre",
+					"Cook/Steward/Catering Officer Cadre",
+					"Laundry Cadre",
+					"Fireman Cadre",
+					"Fire Superintendent Cadre - 120",
+					"Fire Officer Cadre - 122"
+				],
+				datasets: [{
+					label: 'Count',
+					data: totalApplications, // Use the dynamic PHP data
+					backgroundColor: [
+						'#2BC155', '#FF9B52', '#3F9AE0', '#FFC107', '#8E44AD', '#E74C3C', '#3498DB',
+						'#1ABC9C', '#F39C12', '#9B59B6', '#34495E', '#2ECC71', '#16A085', '#F1C40F',
+						'#E67E22', '#E74C3C', '#7D3C98', '#A569BD', '#EC7063', '#5DADE2', '#48C9B0',
+						'#F5B041', '#58D68D', '#DC7633', '#F1948A', '#AAB7B8', '#2874A6', '#1F618D',
+						'#17A589', '#B7950B', '#CB4335', '#5B2C6F', '#F8C471', '#52BE80', '#AF7AC5',
+						'#76448A', '#C0392B', '#1A5276', '#1ABC9C', '#D4AC0D', '#C0392B', '#F1C40F',
+						'#E59866', '#7FB3D5', '#73C6B6', '#F7DC6F', '#5499C7', '#45B39D', '#F0B27A',
+						'#E74C3C', '#2980B9', '#27AE60', '#D35400', '#F7F9F9', '#BDC3C7', '#95A5A6',
+						'#2C3E50', '#8E44AD', '#F4D03F', '#C0392B', '#BDC3C7', '#7D6608', '#7B7D7D',
+						'#D35400', '#2ECC71', '#1ABC9C', '#3498DB', '#16A085', '#F39C12', '#9B59B6',
+						'#34495E', '#2BC155', '#FF9B52', '#3F9AE0', '#FFC107', '#8E44AD', '#E74C3C',
+						'#3498DB', '#1ABC9C', '#F39C12'
+					],
+					borderColor: [
+						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
+						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
+						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
+						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
+						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
+						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
+						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
+						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
+						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
+						'#fff', '#fff', '#fff'
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {
+				responsive: true, // Make the chart responsive
+				plugins: {
+					legend: {
+						position: 'top', // Position of the legend
+					},
+					title: {
+						display: true,
+						text: 'Application Statistics' // Title of the chart
+					}
+				}
+			}
+		});
+
+	</script>
 </body>
 
 </html>

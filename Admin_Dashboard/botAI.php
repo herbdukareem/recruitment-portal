@@ -1,5 +1,5 @@
 <?php
-    function renderPositionSection($positionId, $positionName, $totalApplications, $totalGenderCount, $positionData) {
+    function renderPositionSection($positionId, $positionName, $totalApplications, $totalGenderCount, $positionData, $index) {
         ?>
 
         <div id="<?php echo $positionId ?>" class="position row">
@@ -99,7 +99,7 @@
                             <?php if (!empty($positionData[$positionName])): ?>
                                 <?php foreach ($positionData[$positionName] as $index => $user): // Adding $index here to track iteration ?>
                                     <tr>
-                                        <td><?php echo $user['user_id']; ?></td>
+                                        <td><?php echo $index + 1; ?></td>
                                         <td><?php echo $user['firstname']; ?> <?php echo $user['middlename']; ?> <?php echo $user['lastname']; ?></td>
                                         <td><?php echo $user['email']; ?></td>
                                         <td><?php echo $user['created_at']; ?></td>
@@ -152,7 +152,7 @@
                                                     <tr>
                                                         <td><strong>Org Name:</strong><?php echo $user['organizationName']; ?></td>
                                                         <td></td> <!-- Placeholder for the empty cell -->
-                                                        <td><strong>Role:</strong><?php echo $user['role']; ?></td>
+                                                        <td><strong>Rank:</strong><?php echo $user['rank']; ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="3"><strong>Res:</strong><?php echo $user['responsibilities']; ?></td>
