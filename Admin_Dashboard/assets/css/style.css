@@ -1466,7 +1466,7 @@ ul.timeline > li:before {
 }
 #auth #auth-left{
 	background: linear-gradient(90deg,#081A51,#3f5491) ;
-	height:100%;
+/* 	height:100%; */
 }
 #auth #auth-right{
 	padding:5rem 8rem;
