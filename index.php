@@ -7,13 +7,16 @@
     <title>Recruitment Portal | University Of Ilorin</title>
     <link rel="shortcut icon" href="../images/logo-plain.jpeg.jpg" type="image/x-icon">
 
-    <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./menu-styles/nav-footer.css">
     <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 </head>
 <style>
     /* .gradient-text {
@@ -50,41 +53,40 @@
     }
 
     .btn-custom {
-      background-color: transparent;
-      color: white;
-      border: 2px solid white;
-      font-size: 1rem;
-      padding: 0.75rem 1.5rem;
-      transition: all 0.3s ease;
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.3s ease;
     }
 
     .btn-custom:hover {
-      background-color: yellow;
-      color: black;
-      border-color: yellow;
+        background-color: yellow;
+        color: black;
+        border-color: yellow;
     }
-    h4{
+
+    h4 {
         font-weight: bold;
         color: var(--main-bg)
     }
 
     /* Responsive Styling */
     @media (max-width: 768px) {
-      .btn-custom {
-        width: 90%;
-        display: block;
-        font-size: 1.25rem;
-        padding: 1rem;
-        margin-bottom: 1rem;
-      }
+        .btn-custom {
+            width: 90%;
+            display: block;
+            font-size: 1.25rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
     }
-
-
 </style>
 
 <body>
     <main class="winscroll">
-        <?php include_once('header.php');?>
+        <?php include_once('header.php'); ?>
 
         <div class="main">
             <div class="con-bg">
@@ -92,36 +94,38 @@
                     <div class="col-md-6 mt-5 ">
                         <h1 class="text-center mt-5" style="color: var(--white);">Power Your Future With </h1>
                         <h1 class="text-cr">University Of Ilorin</h1>
-                        <h5 class="text-center mt-5">To be an international centre of excellence in learning, research, probity and service to humanity.
-                        To provide world-class environment for learning, research and community service.</h5>
+                        <h5 class="text-center mt-5">To be an international centre of excellence in learning, research,
+                            probity and service to humanity.
+                            To provide world-class environment for learning, research and community service.</h5>
                         <div class="d-flex justify-content-center mt-5">
                             <a href="#about_us" class="btn btn-success ">About Us</a>
                         </div>
                     </div>
                     <div class="left-img col-md-6 mt-5">
                         <div class="d-flex align-items-center justify-content-center">
-                            <img class="image-container rounded img-fluid"
-                                src="./images/wahab.png" alt="Mr. Wahab" >
+                            <img class="image-container rounded img-fluid" src="./images/wahab.png" alt="Mr. Wahab">
                         </div>
                     </div>
                 </div>
             </div>
-    
-            <!-- Positions available -->
-            <section class="container">
-                    <div class="about">
-                        <h2>Positions and Career Opportunities at UNILORIN</h2>
-                        <div class=" mb-3">
-                            <div class="pos-p">
-                                <p>The University of Ilorin offers a wide array of career opportunities, catering to both academic and non-academic roles. These positions provide individuals with the chance to contribute to the institution’s mission of academic excellence, research advancement, and community engagement. The available positions at UNILORIN include, but are not limited to:</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="con-pos">
-                        <div class="left-flex">
-                            <h3 style="color: var(--main-bg);">Academic Positions:</h3>
-                            <ul class="odd">
+
+
+
+
+            <section class="container mx-auto py-12 px-6">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-blue-700">Positions and Career Opportunities at UNILORIN</h2>
+                    <p class="mt-4 text-lg text-gray-700">The University of Ilorin offers a wide array of career
+                        opportunities, catering to both academic and non-academic roles...</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Academic Positions -->
+                    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
+                        <img src="./images/Wahab-Egbewole.jpg" alt="Academic Positions" class="rounded-lg mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-blue-600">Academic Positions</h3>
+                            <ul class="mt-4 list-disc list-inside text-gray-700">
                                 <li>Lecturers</li>
                                 <li>Professors</li>
                                 <li>Research Fellows</li>
@@ -130,32 +134,17 @@
                                 <li>Postdoctoral Researchers</li>
                             </ul>
                         </div>
-                        <div class="cen-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
-                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                            </svg>
-                        </div>
-                        <div class="right-flex img-div">
-                            <img class="img-fluid rounded " src="./images/Wahab-Egbewole.jpg" alt="">
-                        </div>
+                        <button
+                            class="mt-6 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">Apply
+                            Now</button>
                     </div>
-                    
-                    <div class="con-pos">
-                        <div class="left-flex img-div">
-                            <img class="img-fluid rounded " src="./images/admin-assistant-not-secretary-3.webp" alt="">
-                        </div>
-                        <div class="cen-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
-                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                            </svg>
-                        </div>
-                        <div class="right-flex">
-                            <h3 style="color: var(--main-color-light);">Administrative Positions</h3>
-                            <ul class="even">
+
+                    <!-- Administrative Positions -->
+                    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
+                        <img src="./images/admin-assistant-not-secretary-3.webp" alt="Administrative Positions" class="rounded-lg mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-green-600">Administrative Positions</h3>
+                            <ul class="mt-4 list-disc list-inside text-gray-700">
                                 <li>Administrative Officers</li>
                                 <li>Human Resources Managers</li>
                                 <li>Finance Officers</li>
@@ -164,12 +153,17 @@
                                 <li>IT Support Staff</li>
                             </ul>
                         </div>
+                        <button
+                            class="mt-6 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition">Apply
+                            Now</button>
                     </div>
 
-                    <div class="con-pos">
-                        <div class="left-flex">
-                            <h3 style="color: var(--main-bg);">Support Services Positions:</h3>
-                            <ul class="odd">
+                    <!-- Support Services Positions -->
+                    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
+                        <img src="./images/supportive.jpeg.png" alt="Support Services Positions" class="rounded-lg mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-purple-600">Support Services Positions</h3>
+                            <ul class="mt-4 list-disc list-inside text-gray-700">
                                 <li>Library Assistants</li>
                                 <li>Laboratory Technicians</li>
                                 <li>Maintenance Staff</li>
@@ -177,196 +171,107 @@
                                 <li>Health Services Staff</li>
                             </ul>
                         </div>
-                        <div class="cen-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
-                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                            </svg>
-                        </div>
-                        
-                        <div class="right-flex img-div">
-                            <img class="img-fluid rounded " src="./images/supportive.jpeg.png" alt="">
-                        </div>
-                    </div>
-                    <!--  -->
-                    <div class="con-pos">
-                        <div class="img-div left-flex">
-                            <img class="img-fluid rounded " src="./images/tehnical.jpeg.png" alt="">
-                        </div>
-                        <div class="cen-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
-                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                            </svg>
-                        </div>
-                            
-                        <div class="right-flex">
-                            <h3 style="color: var(--main-color-light);">Teaching and Research Assistants:</h3>
-                            <ul class="even">
-                                <li>Graduate Teaching Assistants</li>
-                                <li>Graduate Research Assistants</li>
-                            </ul>
-                        </div>
+                        <button
+                            class="mt-6 bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition">Apply
+                            Now</button>
                     </div>
 
-                    <div class="con-pos">
-                        <div class="left-flex">
-                            <h3 style="color: var(--main-bg);">Specialist Positions:</h3>
-                            <ul class="odd">
+                    <!-- Specialist Positions -->
+                    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
+                        <img src="./images/specialist.jpg.png" alt="Specialist Positions" class="rounded-lg mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-orange-600">Specialist Positions</h3>
+                            <ul class="mt-4 list-disc list-inside text-gray-700">
                                 <li>Academic Advisors</li>
                                 <li>Career Counselors</li>
                                 <li>Disability Support Officers</li>
                                 <li>International Student Advisors</li>
                             </ul>
                         </div>
-                        <div class="cen-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
-                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                            </svg>
-                        </div>
-                        <div class="img-div right0-flex">
-                            <img class="img-fluid rounded " src="./images/specialist.jpg.png" alt="">
-                        </div>
+                        <button
+                            class="mt-6 bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition">Apply
+                            Now</button>
                     </div>
-                    
-                    <div class="con-pos">
-                        <div class="img-div left-flex">
-                            <img class="img-fluid rounded " src="./images/management.jpg.png" alt="">
-                        </div>
-                        <div class="cen-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
-                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                            </svg>
-                        </div>
-                        <div class="right-flex">
-                            <h3 style="color: var(--main-color-light);">Management Positions:</h3>
-                            <ul class="even">
+
+                    <!-- Management Positions -->
+                    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
+                        <img src="./images/tehnical.jpeg.png" alt="Management Positions" class="rounded-lg mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-red-600">Management Positions</h3>
+                            <ul class="mt-4 list-disc list-inside text-gray-700">
                                 <li>Department Heads</li>
                                 <li>Deans</li>
                                 <li>Vice Chancellors</li>
-                                <li>irectors of Centers and Institutes</li>
+                                <li>Directors of Centers and Institutes</li>
                             </ul>
                         </div>
+                        <button
+                            class="mt-6 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition">Apply
+                            Now</button>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+            <section class="container mx-auto py-12 px-6">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-blue-700">Features of the UNILORIN Career Portal</h2>
+                    <p class="mt-4 text-lg text-gray-700">Explore the key features that make our career portal
+                        efficient, user-friendly, and tailored to your job search needs.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Easy Job Application -->
+                    <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+                        <i class="fas fa-file-alt text-blue-600 text-4xl"></i>
+                        <h3 class="text-xl font-semibold text-blue-600 mt-4">Easy Job Application</h3>
+                        <p class="mt-2 text-gray-700">Apply for multiple positions with a simple and user-friendly
+                            application process.</p>
                     </div>
 
-                    <div class="con-pos">
-                        <div class="left-flex">
-                            <h3 style="color: var(--main-bg);">Technical Positions:</h3>
-                            <ul class="odd">
-                                <li>Engineers (Civil, Mechanical, Electrical, etc.)</li>
-                                <li>Technicians (IT, Electronics, etc.)</li>
-                                <li>Architects</li>
-                                <li>Surveyors</li>
-                            </ul>
-                        </div>
-                        <div class="cen-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
-                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                            </svg>
-                        </div>
-                        <div class="img-div  right-flex">
-                            <img class="img-fluid rounded " src="./images/tehnical.jpeg.png" alt="">
-                        </div>
-                    </div>
-                    
-                    <div class="con-pos">
-                        <div class="img-div left-flex">
-                            <img class="img-fluid rounded " src="./images/legal.jpeg.png" alt="">
-                        </div>
-                        <div class="cen-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
-                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                            </svg>
-                        </div>
-                            
-                        <div class="right-flex">
-                            <h3 style="color: var(--main-color-light);">Legal and Compliance Positions:</h3>
-                            <ul class="even">
-                                <li>Legal Advisors</li>
-                                <li>Compliance Officers</li>
-                            </ul>
-                        </div>
-                       
+                    <!-- Real-Time Updates -->
+                    <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+                        <i class="fas fa-bell text-green-600 text-4xl"></i>
+                        <h3 class="text-xl font-semibold text-green-600 mt-4">Real-Time Updates</h3>
+                        <p class="mt-2 text-gray-700">Stay informed with real-time notifications on job postings,
+                            application status, and deadlines.</p>
                     </div>
 
-                    <div class="con-pos">
-                        <div class="left-flex">
-                            <h3 style="color: var(--main-bg);">Health and Counseling Services Positions:</h3>
-                            <ul class="odd">
-                                <li>Nurses</li>
-                                <li>Counselors</li>
-                                <li>Psychologists</li>
-                            </ul>
-                        </div>
-                        <div class="cen-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-color-light)"
-                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                            </svg>
-                        </div>
-                        
-                        <div class="img-div right-flex">
-                            <img class="img-fluid rounded " src="./images/health.jpeg.png" alt="">
-                        </div>
-                    </div>
-                    
-                    <div class="con-pos">
-                        <div class="img-div left-flex">
-                            <img class="img-fluid rounded " src="./images/health.jpeg.png" alt="">
-                        </div>
-                        <div class="cen-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="var(--main-bg-light)"
-                                viewBox="0 0 256 256" class="shrink-0 text-dark" style="opacity: 1; will-change: auto;">
-                                <path d="M176,128a48,48,0,1,1-48-48A48,48,0,0,1,176,128Z" opacity="0.2" ></path>
-                                <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z" ></path>
-                            </svg> 
-                        </div>
-                        <div class="right-flex">
-                            <h3 style="color: var(--main-color-light);">Research and Development Positions:</h3>
-                            <ul class="even">
-                                <li>Research Scientists</li>
-                                <li>Project Managers</li>
-                            </ul>
-                        </div>
+                    <!-- Secure Profile Management -->
+                    <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+                        <i class="fas fa-user-shield text-purple-600 text-4xl"></i>
+                        <h3 class="text-xl font-semibold text-purple-600 mt-4">Secure Profile Management</h3>
+                        <p class="mt-2 text-gray-700">Manage and update your profile securely with encrypted data
+                            protection.</p>
                     </div>
 
 
-                    <div class="about" style="margin-top: 8px;">
-                        <div class="pos-p">
-                            <p>This diverse range of opportunities allows individuals with various educational backgrounds, skill sets, and career aspirations to find a role that aligns with their interests and expertise. Whether you are a seasoned academic, a driven professional, or an ambitious recent graduate, UNILORIN offers the chance to contribute to the institution’s mission and advance your career.</p>
-                        </div>
-                    </div>
-                </section>
+                </div>
+            </section>
+
+
+
 
             <div class="container mb-5 rounded">
-                <div class="row img-bg" >
-                  <!-- Background image container -->
-                  <div class="col-12 position-relative text-center text-white " >
-                    <!-- Overlay for buttons and text -->
-                    <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                      <!-- Text -->
-                      <p class="mb-3 " style="font-size: 4rem;font-weight:bold;">
-                        <span>Start</span> your career at University Of Ilorin today
-                      </p>
-                      <!-- Buttons -->
-                      <div class="d-flex flex-md-row align-items-center">
-                        <button type="button" class="btn btn-custom   mx-4">Academic</button>
-                        <button type="button" class="btn btn-custom   mx-4">Non-Academic </button>
-                        <!-- <button type="button" class="btn btn-custom">Button 2</button> -->
-                      </div>
+                <div class="row img-bg">
+                    <!-- Background image container -->
+                    <div class="col-12 position-relative text-center text-white ">
+                        <!-- Overlay for buttons and text -->
+                        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                            <!-- Text -->
+                            <p class="mb-3 " style="font-size: 4rem;font-weight:bold;">
+                                <span>Start</span> your career at University Of Ilorin today
+                            </p>
+                            <!-- Buttons -->
+                            <div class="d-flex flex-md-row align-items-center">
+                                <button type="button" class="btn btn-custom   mx-4">Academic</button>
+                                <button type="button" class="btn btn-custom   mx-4">Non-Academic </button>
+                                <!-- <button type="button" class="btn btn-custom">Button 2</button> -->
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
 
@@ -374,19 +279,33 @@
                 <div class="about">
                     <h2>About UNILORIN</h2>
                     <div class="pos-p">
-                        <p>The University of Ilorin, established in 1975, has firmly established itself as a premier institution of higher learning in Nigeria. With a reputation for academic rigor, cutting-edge research, and a vibrant campus community, UNILORIN has consistently ranked among the top universities in the country.</p>
-                        <p>As a comprehensive university, UNILORIN offers a diverse range of undergraduate and postgraduate programs across various disciplines, including the sciences, humanities, social sciences, engineering, and more. The university’s commitment to excellence is reflected in its highly qualified faculty, state-of-the-art facilities, and a robust research ecosystem that fosters innovation and knowledge advancement.As a comprehensive university, UNILORIN offers a diverse range of undergraduate and postgraduate programs across various disciplines, including the sciences, humanities, social sciences, engineering, and more. The university’s commitment to excellence is reflected in its highly qualified faculty, state-of-the-art facilities, and a robust research ecosystem that fosters innovation and knowledge advancement.</p>
-                        <p>By attracting and nurturing exceptional individuals, UNILORIN aims to maintain its position as a leading center of academic excellence, contributing significantly to the intellectual and socioeconomic development of Nigeria and the broader African continent.</p>
+                        <p>The University of Ilorin, established in 1975, has firmly established itself as a premier
+                            institution of higher learning in Nigeria. With a reputation for academic rigor,
+                            cutting-edge research, and a vibrant campus community, UNILORIN has consistently ranked
+                            among the top universities in the country.</p>
+                        <p>As a comprehensive university, UNILORIN offers a diverse range of undergraduate and
+                            postgraduate programs across various disciplines, including the sciences, humanities, social
+                            sciences, engineering, and more. The university’s commitment to excellence is reflected in
+                            its highly qualified faculty, state-of-the-art facilities, and a robust research ecosystem
+                            that fosters innovation and knowledge advancement.As a comprehensive university, UNILORIN
+                            offers a diverse range of undergraduate and postgraduate programs across various
+                            disciplines, including the sciences, humanities, social sciences, engineering, and more. The
+                            university’s commitment to excellence is reflected in its highly qualified faculty,
+                            state-of-the-art facilities, and a robust research ecosystem that fosters innovation and
+                            knowledge advancement.</p>
+                        <p>By attracting and nurturing exceptional individuals, UNILORIN aims to maintain its position
+                            as a leading center of academic excellence, contributing significantly to the intellectual
+                            and socioeconomic development of Nigeria and the broader African continent.</p>
                     </div>
                 </div>
             </div>
 
         </div>
-        
-    <?php include_once('footer.php');?>
-          
 
-        
+        <?php include_once('footer.php'); ?>
+
+
+
 
 
     </main>
@@ -397,4 +316,5 @@
     </script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
 </html>

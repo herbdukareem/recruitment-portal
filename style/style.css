@@ -13,6 +13,29 @@ body {
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.center-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 20px; /* Adjust spacing between links */
+}
+
+.center-nav ul li {
+  display: flex;
+  align-items: center;
+}
+
+.center-nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px; /* Ensure uniform font size */
+  font-weight: bold;
+  padding: 10px 15px; /* Add padding for better alignment */
+}
+
 .winscroll .main header h2 {
   color: var(--main-color);
   text-align: center;
