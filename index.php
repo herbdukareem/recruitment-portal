@@ -141,7 +141,8 @@
 
                     <!-- Administrative Positions -->
                     <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/admin-assistant-not-secretary-3.webp" alt="Administrative Positions" class="rounded-lg mb-4">
+                        <img src="./images/admin-assistant-not-secretary-3.webp" alt="Administrative Positions"
+                            class="rounded-lg mb-4">
                         <div>
                             <h3 class="text-xl font-semibold text-green-600">Administrative Positions</h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
@@ -160,7 +161,8 @@
 
                     <!-- Support Services Positions -->
                     <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/supportive.jpeg.png" alt="Support Services Positions" class="rounded-lg mb-4">
+                        <img src="./images/supportive.jpeg.png" alt="Support Services Positions"
+                            class="rounded-lg mb-4">
                         <div>
                             <h3 class="text-xl font-semibold text-purple-600">Support Services Positions</h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
@@ -275,6 +277,57 @@
                 </div>
             </div>
 
+
+
+            <section class="bg-gray-100 py-12 px-4 md:px-16">
+                <div class="max-w-7xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">How to Apply</h2>
+                    <p class="text-lg text-gray-600 mb-12">Follow these simple steps to apply for your desired position
+                        at UNILORIN.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                            <i class="fas fa-file-alt text-4xl text-blue-500 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Step 1: Fill the Application Form</h3>
+                            <p class="text-gray-600">Download the application form from the portal and fill in your
+                                personal details, education, and experience.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                            <i class="fas fa-upload text-4xl text-blue-500 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Step 2: Upload Required Documents</h3>
+                            <p class="text-gray-600">Upload your CV, academic qualifications, and other necessary
+                                documents for review by the recruitment team.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                            <i class="fas fa-check-circle text-4xl text-blue-500 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Step 3: Submit Your Application</h3>
+                            <p class="text-gray-600">Double-check all the details and submit your application. You'll
+                                receive a confirmation email once submitted.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <section class="bg-gray-800 text-white py-20 px-4">
+                <div class="max-w-7xl mx-auto text-center">
+                    <h2 class="text-4xl font-bold">Welcome to the UNILORIN Recruitment Portal</h2>
+                    <p class="text-lg mt-4">Take the Computer-Based Test (CBT) to proceed with your application.</p>
+
+                    <!-- Button to Direct to CBT Test -->
+                    <div class="mt-8">
+                        <a href="./cbt-test.html"
+                            class="bg-blue-600 text-white py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none text-lg">
+                            Start CBT Test
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+
             <div class="container" id="about_us">
                 <div class="about">
                     <h2>About UNILORIN</h2>
@@ -299,6 +352,8 @@
                     </div>
                 </div>
             </div>
+
+
 
         </div>
 

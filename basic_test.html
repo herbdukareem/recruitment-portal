@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Computer-Based Test (CBT)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+
+    <!-- Header Section -->
+    <header class="bg-blue-700 text-white p-4">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-semibold text-center">UNILORIN Basic Computer-Based Test (CBT)</h1>
+            <p class="text-center text-lg mt-2">Answer the following questions to test your computer proficiency.</p>
+        </div>
+    </header>
+
+    <!-- Preparation Section -->
+    <div id="preparation-section" class="container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-700 mb-4">Test Instructions</h2>
+        <p class="text-lg text-gray-700 mb-4">Please read the instructions carefully before starting the test:</p>
+        <ul class="list-disc pl-5 mb-6">
+            <li>Each question has one correct answer. Choose the correct option to proceed.</li>
+            <li>The test is timed. You will have 60 seconds to complete all questions (approximately 6 seconds per question).</li>
+            <li>Click the "Start Exam" button when you're ready to begin.</li>
+        </ul>
+        <button id="start-btn" class="bg-blue-700 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-800" onclick="startTest()">Start Exam</button>
+    </div>
+
+    <!-- Test Section -->
+    <div id="test-section" class="hidden container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
+        <div id="timer" class="timer text-center mb-6">Time Remaining: 1:00</div>
+
+        <section class="mb-8">
+            <div id="question-container">
+                <h2 class="text-2xl font-bold text-gray-700" id="question-title">Question 1</h2>
+                <p class="mt-4 text-gray-600" id="question-text">What does the "Ctrl+C" shortcut do?</p>
+
+                <!-- Answer Choices as Radio Buttons -->
+                <div class="mt-4">
+                    <label class="block">
+                        <input type="radio" name="answer" value="0" class="mr-2" id="answer0"> Copy
+                    </label>
+                    <label class="block">
+                        <input type="radio" name="answer" value="1" class="mr-2" id="answer1"> Paste
+                    </label>
+                    <label class="block">
+                        <input type="radio" name="answer" value="2" class="mr-2" id="answer2"> Cut
+                    </label>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-container" class="hidden mt-8 text-center">
+                <h3 id="result-title" class="text-2xl font-bold"></h3>
+                <p id="result-message" class="text-gray-600 mt-4"></p>
+                <p id="result-percentage" class="text-lg font-semibold mt-2"></p>
+                <button id="go-home-btn" class="bg-blue-700 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-800 hidden" onclick="goHome()">Go to Homepage</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Test questions and answers
+        const questions = [
+            { question: "What does the 'Ctrl+C' shortcut do?", correctAnswer: 0, options: ['Copy', 'Paste', 'Cut'] },
+            { question: "Which of the following is an input device?", correctAnswer: 0, options: ['Keyboard', 'Monitor', 'Printer'] },
+            { question: "What does the 'Ctrl+V' shortcut do?", correctAnswer: 1, options: ['Copy', 'Paste', 'Cut'] },
+            { question: "Which software is used for word processing?", correctAnswer: 0, options: ['Microsoft Word', 'Microsoft Excel', 'Google Chrome'] },
+            { question: "What is the main function of the CPU?", correctAnswer: 0, options: ['Process data', 'Store data', 'Display graphics'] },
+            { question: "Which of these is a web browser?", correctAnswer: 0, options: ['Google Chrome', 'Microsoft Word', 'Excel'] },
+            { question: "What is the full form of RAM?", correctAnswer: 1, options: ['Read Access Memory', 'Random Access Memory', 'Remote Access Memory'] },
+            { question: "What is the purpose of an antivirus program?", correctAnswer: 2, options: ['Create files', 'Edit images', 'Protect against malicious software'] },
+            { question: "Which one of these is a programming language?", correctAnswer: 0, options: ['Python', 'Microsoft Excel', 'Adobe Photoshop'] },
+            { question: "Which of the following is not an operating system?", correctAnswer: 2, options: ['Windows', 'Linux', 'Microsoft Word'] }
+        ];
+
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+        let totalQuestions = questions.length;
+        let timer;
+        let timeRemaining = 60; // 60 seconds for the entire test
+
+        // Start the exam timer and hide preparation section
+        function startTest() {
+            document.getElementById('preparation-section').classList.add('hidden');
+            document.getElementById('test-section').classList.remove('hidden');
+            startTimer();
+            showNextQuestion();
+        }
+
+        // Start timer
+        function startTimer() {
+            timer = setInterval(() => {
+                timeRemaining--;
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                document.getElementById('timer').innerText = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timer);
+                    showResults('time-up');
+                }
+            }, 1000);
+        }
+
+        // Check selected answer
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            if (selectedAnswer) {
+                const selectedValue = parseInt(selectedAnswer.value);
+                if (selectedValue === questions[currentQuestion].correctAnswer) {
+                    correctAnswers++;
+                }
+                currentQuestion++;
+                if (currentQuestion < totalQuestions) {
+                    showNextQuestion();
+                } else {
+                    clearInterval(timer); // Stop the timer when all questions are answered
+                    showResults();
+                }
+            } else {
+                alert("Please select an answer.");
+            }
+        }
+
+        // Show next question
+        function showNextQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('question-title').innerText = `Question ${currentQuestion + 1}`;
+            document.getElementById('question-text').innerText = question.question;
+
+            const options = document.querySelectorAll('input[name="answer"]');
+            options.forEach(option => option.checked = false);
+
+            // Dynamically generate radio button options
+            const labels = document.querySelectorAll('label');
+            labels.forEach((label, index) => {
+                label.querySelector('input').nextSibling.textContent = question.options[index];
+            });
+
+            const nextButton = document.createElement('button');
+            nextButton.classList.add('bg-blue-700', 'text-white', 'py-2', 'px-4', 'rounded-md', 'shadow-md', 'hover:bg-blue-800');
+            nextButton.innerText = 'Next Question';
+            nextButton.onclick = checkAnswer;
+            document.getElementById('question-container').appendChild(nextButton);
+        }
+
+        // Show results (time-up or after answering all questions)
+        function showResults(status = '') {
+            const percentage = (correctAnswers / totalQuestions) * 100;
+            document.getElementById('question-container').classList.add('hidden');
+            document.getElementById('results-container').classList.remove('hidden');
+
+            const resultTitle = document.getElementById('result-title');
+            const resultMessage = document.getElementById('result-message');
+            const resultPercentage = document.getElementById('result-percentage');
+            const goHomeBtn = document.getElementById('go-home-btn');
+
+            if (status === 'time-up') {
+                resultTitle.innerText = "Time's Up!";
+                resultMessage.innerText = "You ran out of time.";
+            } else if (percentage >= 50) {
+                resultTitle.innerText = "Congratulations!";
+                resultMessage.innerText = "You passed the test!";
+            } else {
+                resultTitle.innerText = "Sorry!";
+                resultMessage.innerText = "You did not pass the test.";
+                goHomeBtn.classList.remove('hidden'); // Show the Go to Homepage button if failed
+            }
+
+            resultPercentage.innerText = `Your score: ${correctAnswers} / ${totalQuestions} (${percentage.toFixed(2)}%)`;
+        }
+
+        // Go to Homepage
+        function goHome() {
+            window.location.href = "/"; // Replace with your homepage URL
+        }
+    </script>
+
+</body>
+
+</html>
