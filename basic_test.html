@@ -4,194 +4,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Computer-Based Test (CBT)</title>
+    <title>Basic CBT Quiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .hidden {
-            display: none;
+        .selected {
+            background-color: #3b82f6;
+            color: white;
         }
 
-        .timer {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: red;
+        .disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     </style>
 </head>
 
 <body class="bg-gray-50">
-
-    <!-- Header Section -->
-    <header class="bg-blue-700 text-white p-4">
-        <div class="container mx-auto">
-            <h1 class="text-3xl font-semibold text-center">UNILORIN Basic Computer-Based Test (CBT)</h1>
-            <p class="text-center text-lg mt-2">Answer the following questions to test your computer proficiency.</p>
-        </div>
-    </header>
-
-    <!-- Preparation Section -->
-    <div id="preparation-section" class="container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold text-gray-700 mb-4">Test Instructions</h2>
-        <p class="text-lg text-gray-700 mb-4">Please read the instructions carefully before starting the test:</p>
-        <ul class="list-disc pl-5 mb-6">
-            <li>Each question has one correct answer. Choose the correct option to proceed.</li>
-            <li>The test is timed. You will have 60 seconds to complete all questions (approximately 6 seconds per question).</li>
-            <li>Click the "Start Exam" button when you're ready to begin.</li>
-        </ul>
-        <button id="start-btn" class="bg-blue-700 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-800" onclick="startTest()">Start Exam</button>
+    <div id="preparation" class="container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg text-center">
+        <img src="unilorin_logo.png" alt="UNILORIN Logo" class="mx-auto w-32">
+        <h1 class="text-2xl font-bold text-gray-700 mt-4">Welcome to the UNILORIN Basic Computer-Based Test (CBT)</h1>
+        <p class="text-gray-600 mt-4">This test consists of 10 basic computer-related questions. You have <strong>60 seconds</strong> to answer all questions. Make sure to select your answers carefully.</p>
+        <button onclick="startQuiz()" class="mt-6 bg-blue-700 text-white py-2 px-4 rounded shadow hover:bg-blue-800">Start Exam</button>
     </div>
 
-    <!-- Test Section -->
-    <div id="test-section" class="hidden container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
-        <div id="timer" class="timer text-center mb-6">Time Remaining: 1:00</div>
+    <div id="quiz-container" class="hidden container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
+        <div id="timer" class="text-right font-bold text-red-600">Time Left: 60s</div>
+        <h2 id="question" class="text-lg font-semibold text-gray-700"></h2>
+        <div id="options" class="mt-4 space-y-2"></div>
+        <div class="flex justify-between mt-6">
+            <button onclick="prevQuestion()" class="bg-gray-500 text-white py-2 px-4 rounded shadow hover:bg-gray-600">Previous</button>
+            <button onclick="nextQuestion()" class="bg-blue-700 text-white py-2 px-4 rounded shadow hover:bg-blue-800">Next</button>
+        </div>
+        <div class="flex justify-center space-x-2 mt-6" id="pagination"></div>
+        <button onclick="submitQuiz()" id="submit-btn" class="mt-6 bg-green-700 text-white py-2 px-4 rounded shadow hover:bg-green-800 disabled" disabled>Submit Quiz</button>
+    </div>
 
-        <section class="mb-8">
-            <div id="question-container">
-                <h2 class="text-2xl font-bold text-gray-700" id="question-title">Question 1</h2>
-                <p class="mt-4 text-gray-600" id="question-text">What does the "Ctrl+C" shortcut do?</p>
-
-                <!-- Answer Choices as Radio Buttons -->
-                <div class="mt-4">
-                    <label class="block">
-                        <input type="radio" name="answer" value="0" class="mr-2" id="answer0"> Copy
-                    </label>
-                    <label class="block">
-                        <input type="radio" name="answer" value="1" class="mr-2" id="answer1"> Paste
-                    </label>
-                    <label class="block">
-                        <input type="radio" name="answer" value="2" class="mr-2" id="answer2"> Cut
-                    </label>
-                </div>
-            </div>
-
-            <!-- Results Section -->
-            <div id="results-container" class="hidden mt-8 text-center">
-                <h3 id="result-title" class="text-2xl font-bold"></h3>
-                <p id="result-message" class="text-gray-600 mt-4"></p>
-                <p id="result-percentage" class="text-lg font-semibold mt-2"></p>
-                <button id="go-home-btn" class="bg-blue-700 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-800 hidden" onclick="goHome()">Go to Homepage</button>
-            </div>
-        </section>
+    <div id="result-container" class="hidden container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg text-center">
+        <h2 class="text-2xl font-bold text-gray-700">Your Result</h2>
+        <p id="score" class="text-lg font-semibold text-gray-600"></p>
+        <button onclick="location.reload()" class="mt-4 bg-blue-700 text-white py-2 px-4 rounded shadow hover:bg-blue-800">Go to Homepage</button>
     </div>
 
     <script>
-        // Test questions and answers
-        const questions = [
-            { question: "What does the 'Ctrl+C' shortcut do?", correctAnswer: 0, options: ['Copy', 'Paste', 'Cut'] },
-            { question: "Which of the following is an input device?", correctAnswer: 0, options: ['Keyboard', 'Monitor', 'Printer'] },
-            { question: "What does the 'Ctrl+V' shortcut do?", correctAnswer: 1, options: ['Copy', 'Paste', 'Cut'] },
-            { question: "Which software is used for word processing?", correctAnswer: 0, options: ['Microsoft Word', 'Microsoft Excel', 'Google Chrome'] },
-            { question: "What is the main function of the CPU?", correctAnswer: 0, options: ['Process data', 'Store data', 'Display graphics'] },
-            { question: "Which of these is a web browser?", correctAnswer: 0, options: ['Google Chrome', 'Microsoft Word', 'Excel'] },
-            { question: "What is the full form of RAM?", correctAnswer: 1, options: ['Read Access Memory', 'Random Access Memory', 'Remote Access Memory'] },
-            { question: "What is the purpose of an antivirus program?", correctAnswer: 2, options: ['Create files', 'Edit images', 'Protect against malicious software'] },
-            { question: "Which one of these is a programming language?", correctAnswer: 0, options: ['Python', 'Microsoft Excel', 'Adobe Photoshop'] },
-            { question: "Which of the following is not an operating system?", correctAnswer: 2, options: ['Windows', 'Linux', 'Microsoft Word'] }
+        let questions = [
+            { q: "What does CPU stand for?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Personal Unit", "None"], answer: 0 },
+            { q: "Which device is used to input text?", options: ["Monitor", "Keyboard", "Mouse", "Printer"], answer: 1 },
+            { q: "What is the full meaning of RAM?", options: ["Random Access Memory", "Read-Only Memory", "Run Access Memory", "None"], answer: 0 },
+            { q: "Which software is used for browsing the internet?", options: ["MS Word", "Google Chrome", "Excel", "PowerPoint"], answer: 1 },
+            { q: "Which key is used to delete text to the left of the cursor?", options: ["Enter", "Backspace", "Shift", "Spacebar"], answer: 1 },
+            { q: "Which of these is an output device?", options: ["Keyboard", "Mouse", "Monitor", "Microphone"], answer: 2 },
+            { q: "What does HTML stand for?", options: ["Hyper Text Markup Language", "Hyper Transfer Markup Language", "Hyperlink and Text Markup Language", "None"], answer: 0 },
+            { q: "Which file extension is used for Microsoft Word documents?", options: [".txt", ".docx", ".pdf", ".xls"], answer: 1 },
+            { q: "What is used to store data permanently?", options: ["RAM", "Hard Drive", "Processor", "Cache"], answer: 1 },
+            { q: "What does an operating system do?", options: ["Manages computer hardware and software", "Creates documents", "Plays music", "Prints documents"], answer: 0 }
         ];
 
         let currentQuestion = 0;
-        let correctAnswers = 0;
-        let totalQuestions = questions.length;
+        let score = 0;
+        let selectedAnswers = new Array(questions.length).fill(null);
+        let timeLeft = 60;
         let timer;
-        let timeRemaining = 60; // 60 seconds for the entire test
 
-        // Start the exam timer and hide preparation section
-        function startTest() {
-            document.getElementById('preparation-section').classList.add('hidden');
-            document.getElementById('test-section').classList.remove('hidden');
-            startTimer();
-            showNextQuestion();
+        function startQuiz() {
+            document.getElementById("preparation").classList.add("hidden");
+            document.getElementById("quiz-container").classList.remove("hidden");
+            loadQuestion();
+            timer = setInterval(updateTimer, 1000);
         }
 
-        // Start timer
-        function startTimer() {
-            timer = setInterval(() => {
-                timeRemaining--;
-                const minutes = Math.floor(timeRemaining / 60);
-                const seconds = timeRemaining % 60;
-                document.getElementById('timer').innerText = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-                if (timeRemaining <= 0) {
-                    clearInterval(timer);
-                    showResults('time-up');
-                }
-            }, 1000);
-        }
-
-        // Check selected answer
-        function checkAnswer() {
-            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
-            if (selectedAnswer) {
-                const selectedValue = parseInt(selectedAnswer.value);
-                if (selectedValue === questions[currentQuestion].correctAnswer) {
-                    correctAnswers++;
-                }
-                currentQuestion++;
-                if (currentQuestion < totalQuestions) {
-                    showNextQuestion();
-                } else {
-                    clearInterval(timer); // Stop the timer when all questions are answered
-                    showResults();
-                }
-            } else {
-                alert("Please select an answer.");
-            }
-        }
-
-        // Show next question
-        function showNextQuestion() {
-            const question = questions[currentQuestion];
-            document.getElementById('question-title').innerText = `Question ${currentQuestion + 1}`;
-            document.getElementById('question-text').innerText = question.question;
-
-            const options = document.querySelectorAll('input[name="answer"]');
-            options.forEach(option => option.checked = false);
-
-            // Dynamically generate radio button options
-            const labels = document.querySelectorAll('label');
-            labels.forEach((label, index) => {
-                label.querySelector('input').nextSibling.textContent = question.options[index];
+        function loadQuestion() {
+            let question = questions[currentQuestion];
+            document.getElementById("question").textContent = question.q;
+            let optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+            question.options.forEach((option, index) => {
+                let button = document.createElement("button");
+                button.textContent = option;
+                button.className = `w-full py-2 px-4 border rounded-md hover:bg-gray-200 ${selectedAnswers[currentQuestion] === index ? 'selected' : ''}`;
+                button.onclick = () => selectAnswer(index, button);
+                optionsContainer.appendChild(button);
             });
-
-            const nextButton = document.createElement('button');
-            nextButton.classList.add('bg-blue-700', 'text-white', 'py-2', 'px-4', 'rounded-md', 'shadow-md', 'hover:bg-blue-800');
-            nextButton.innerText = 'Next Question';
-            nextButton.onclick = checkAnswer;
-            document.getElementById('question-container').appendChild(nextButton);
+            updatePagination();
+            updateSubmitButton();
         }
 
-        // Show results (time-up or after answering all questions)
-        function showResults(status = '') {
-            const percentage = (correctAnswers / totalQuestions) * 100;
-            document.getElementById('question-container').classList.add('hidden');
-            document.getElementById('results-container').classList.remove('hidden');
+        function selectAnswer(index, button) {
+            selectedAnswers[currentQuestion] = index;
+            document.querySelectorAll("#options button").forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+            updateSubmitButton();
+        }
 
-            const resultTitle = document.getElementById('result-title');
-            const resultMessage = document.getElementById('result-message');
-            const resultPercentage = document.getElementById('result-percentage');
-            const goHomeBtn = document.getElementById('go-home-btn');
-
-            if (status === 'time-up') {
-                resultTitle.innerText = "Time's Up!";
-                resultMessage.innerText = "You ran out of time.";
-            } else if (percentage >= 50) {
-                resultTitle.innerText = "Congratulations!";
-                resultMessage.innerText = "You passed the test!";
-            } else {
-                resultTitle.innerText = "Sorry!";
-                resultMessage.innerText = "You did not pass the test.";
-                goHomeBtn.classList.remove('hidden'); // Show the Go to Homepage button if failed
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
             }
-
-            resultPercentage.innerText = `Your score: ${correctAnswers} / ${totalQuestions} (${percentage.toFixed(2)}%)`;
         }
 
-        // Go to Homepage
-        function goHome() {
-            window.location.href = "/"; // Replace with your homepage URL
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            }
+        }
+
+        function updatePagination() {
+            let paginationContainer = document.getElementById("pagination");
+            paginationContainer.innerHTML = "";
+            questions.forEach((_, index) => {
+                let button = document.createElement("button");
+                button.textContent = index + 1;
+                button.className = `py-1 px-3 border rounded ${currentQuestion === index ? 'bg-blue-700 text-white' : 'bg-gray-200'}`;
+                button.onclick = () => { currentQuestion = index; loadQuestion(); };
+                paginationContainer.appendChild(button);
+            });
+        }
+
+        function updateTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                document.getElementById("timer").textContent = `Time Left: ${timeLeft}s`;
+            } else {
+                clearInterval(timer);
+                submitQuiz();
+            }
+        }
+
+        function updateSubmitButton() {
+            const submitButton = document.getElementById("submit-btn");
+            if (selectedAnswers.includes(null)) {
+                submitButton.classList.add("disabled");
+                submitButton.disabled = true;
+            } else {
+                submitButton.classList.remove("disabled");
+                submitButton.disabled = false;
+            }
+        }
+
+        function submitQuiz() {
+            clearInterval(timer);
+            score = selectedAnswers.filter((ans, i) => ans === questions[i].answer).length;
+            let percentage = (score / questions.length) * 100;
+
+            document.getElementById("quiz-container").classList.add("hidden");
+            document.getElementById("result-container").classList.remove("hidden");
+            document.getElementById("score").textContent = `You scored ${score} out of 10 (${percentage.toFixed(2)}%)`;
         }
     </script>
-
 </body>
 
 </html>
