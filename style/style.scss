@@ -14,150 +14,67 @@ body{
 .winscroll{
     
     .main{
-        header{
-            h2{
-                color: var(--main-color);
-                text-align: center;
-                margin: 0.3em;
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+            .left-nav {
+                flex: 1;
             }
-        }
-        section {
-            .about{
-                h2{
-                    position: relative;
-                    color: var(--main-bg);
-                    font-weight: bold;
-                    padding: 10px;
-                    text-align: center;
-                }
-                h2::after{
-                    content: "";
-                    position: absolute;
-                    background-color: var(--main-color-light);
-                    height: 2px;
-                    width: 100%;
-                    bottom: 0;
-                    right: 0;
-                }
-                .pos-p{
-                    background-color: #ddd;
-                    padding: 20px;
-                    text-align: center;
-                }
-            }
-            .con-pos{
-                display: grid;
-                grid-template-columns: 45% 10% 45%;
-                padding: 2em;
-                margin: 0.5em 0;
         
-                .left-flex, .right-flex {
-                    position: relative;
-                    align-items: end;
-                    height: 300px;
-                    padding: 1em;
-                    border-radius: 0.5em;
-                    .odd{
-                        li::marker {
-                            color: var(--main-color-light);
-                        }
-                    }
-                    .even{
-                        li::marker {
-                            color: var(--main-bg-light);
-                        }
-                    }
+            .center-nav {
+                flex: 2;
+                display: flex;
+                justify-content: center;
         
-                    div {
-                        button {
-                            padding: 0.6em 0.8em;
-                            border: none;
-                            font-size: 0.8em;
-                            color: #fff;
-                            border-radius: 0.2em;
-                        }
+                ul {
+                    display: flex;
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
         
-                        h3 {
-                            margin: 0.5em 0;
-                        }
+                    li {
+                        margin: 0 1rem;
         
-                        div {
-                            a {
-                                text-decoration: none;
-                                color: #fff;
-                                font-weight: 700;
+                        a {
+                            text-decoration: none;
+                            color: #333;
+                            font-weight: bold;
+        
+                            &:hover {
+                                color: #007bff;
+                            }
+        
+                            &.active {
+                                color: #007bff;
                             }
                         }
                     }
                 }
-        
-                .left-flex {
-                    grid-column: 1/2;
-        
-                    .back-layer {
-                        left: -20px;
-                    }
-        
-                    div {
-                        button {
-                            background-color: var(--main-color);
-                        }
-                    }
-                }
-        
-                .right-flex {
-                    grid-column: 3/4;
-        
-                    .back-layer {
-                        right: -20px;
-                        background-color: var(--main-bg);
-                    }
-        
-                    div {
-                        button {
-                            background-color: var(--main-bg);
-                        }
-                    }
-                }
-        
-                .cen-flex {
-                    grid-column: 2/3;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
             }
-            .progress{
-                background-color: #ddd;
-                padding: 20px;
-                display: grid;
-                grid-template-columns: 80% 20%;
-                .left-pro{
-                    grid-column: 1/2;
-                    padding: 20px;
+        
+            .right-nav {
+                flex: 1;
+                display: flex;
+                justify-content: flex-end;
+        
+                a {
+                    text-decoration: none;
+                    color: #333;
+                    font-weight: bold;
+        
+                    &:hover {
+                        color: #007bff;
+                    }
+        
+                    &.active {
+                        color: #007bff;
+                    }
                 }
-                .right-pro{
-                    grid-column: 2/3;
-                    padding: 20px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    button{
-                        padding: 15px;
-                        background-color: var(--main-color-light);
-                        color: var(--main-bg);
-                        font-weight: bold;
-                        outline: none;
-                        border: none;
-                        border-radius: 8px;
-                        -webkit-border-radius: 8px;
-                        -moz-border-radius: 8px;
-                        -ms-border-radius: 8px;
-                        -o-border-radius: 8px;
-}
-                }
-
-                
             }
         }
         .container{

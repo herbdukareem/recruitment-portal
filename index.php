@@ -114,7 +114,7 @@
 
             <section class="container mx-auto py-12 px-6">
                 <div class="text-center mb-8">
-                    <h2 class="text-3xl font-bold text-blue-700">Positions and Career Opportunities at UNILORIN</h2>
+                    <h2 class="text-3xl font-bold text-[#00044B]">Positions and Career Opportunities at UNILORIN</h2>
                     <p class="mt-4 text-lg text-gray-700">The University of Ilorin offers a wide array of career
                         opportunities, catering to both academic and non-academic roles...</p>
                 </div>
@@ -124,7 +124,7 @@
                     <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
                         <img src="./images/Wahab-Egbewole.jpg" alt="Academic Positions" class="rounded-lg mb-4">
                         <div>
-                            <h3 class="text-xl font-semibold text-blue-600">Academic Positions</h3>
+                            <h3 class="text-xl font-semibold text-[#00044B]">Academic Positions</h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
                                 <li>Lecturers</li>
                                 <li>Professors</li>
@@ -135,7 +135,7 @@
                             </ul>
                         </div>
                         <button
-                            class="mt-6 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">Apply
+                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Apply
                             Now</button>
                     </div>
 
@@ -144,7 +144,7 @@
                         <img src="./images/admin-assistant-not-secretary-3.webp" alt="Administrative Positions"
                             class="rounded-lg mb-4">
                         <div>
-                            <h3 class="text-xl font-semibold text-green-600">Administrative Positions</h3>
+                            <h3 class="text-xl font-semibold text-[#00044B]">Administrative Positions</h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
                                 <li>Administrative Officers</li>
                                 <li>Human Resources Managers</li>
@@ -155,7 +155,7 @@
                             </ul>
                         </div>
                         <button
-                            class="mt-6 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition">Apply
+                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Apply
                             Now</button>
                     </div>
 
@@ -164,7 +164,7 @@
                         <img src="./images/supportive.jpeg.png" alt="Support Services Positions"
                             class="rounded-lg mb-4">
                         <div>
-                            <h3 class="text-xl font-semibold text-purple-600">Support Services Positions</h3>
+                            <h3 class="text-xl font-semibold text-[#00044B]">Support Services Positions</h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
                                 <li>Library Assistants</li>
                                 <li>Laboratory Technicians</li>
@@ -174,7 +174,7 @@
                             </ul>
                         </div>
                         <button
-                            class="mt-6 bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition">Apply
+                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Apply
                             Now</button>
                     </div>
 
@@ -182,7 +182,7 @@
                     <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
                         <img src="./images/specialist.jpg.png" alt="Specialist Positions" class="rounded-lg mb-4">
                         <div>
-                            <h3 class="text-xl font-semibold text-orange-600">Specialist Positions</h3>
+                            <h3 class="text-xl font-semibold text-[#00044B]">Specialist Positions</h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
                                 <li>Academic Advisors</li>
                                 <li>Career Counselors</li>
@@ -191,7 +191,7 @@
                             </ul>
                         </div>
                         <button
-                            class="mt-6 bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition">Apply
+                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Apply
                             Now</button>
                     </div>
 
@@ -199,7 +199,7 @@
                     <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
                         <img src="./images/tehnical.jpeg.png" alt="Management Positions" class="rounded-lg mb-4">
                         <div>
-                            <h3 class="text-xl font-semibold text-red-600">Management Positions</h3>
+                            <h3 class="text-xl font-semibold text-[#00044B]">Management Positions</h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
                                 <li>Department Heads</li>
                                 <li>Deans</li>
@@ -208,7 +208,7 @@
                             </ul>
                         </div>
                         <button
-                            class="mt-6 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition">Apply
+                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Apply
                             Now</button>
                     </div>
                 </div>
@@ -218,40 +218,43 @@
 
 
             <section class="container mx-auto py-12 px-6">
-                <div class="text-center mb-8">
-                    <h2 class="text-3xl font-bold text-blue-700">Features of the UNILORIN Career Portal</h2>
-                    <p class="mt-4 text-lg text-gray-700">Explore the key features that make our career portal
-                        efficient, user-friendly, and tailored to your job search needs.</p>
-                </div>
+    <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-[#bd9119]">Features of the UNILORIN Career Portal</h2>
+        <p class="mt-4 text-lg text-[#111683]">
+            Explore the key features that make our career portal efficient, user-friendly, and tailored to your job search needs.
+        </p>
+    </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Easy Job Application -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-                        <i class="fas fa-file-alt text-blue-600 text-4xl"></i>
-                        <h3 class="text-xl font-semibold text-blue-600 mt-4">Easy Job Application</h3>
-                        <p class="mt-2 text-gray-700">Apply for multiple positions with a simple and user-friendly
-                            application process.</p>
-                    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Easy Job Application -->
+        <div class="bg-[#00044B] shadow-lg rounded-lg p-6 text-center text-white">
+            <i class="fas fa-file-alt text-[#e4b535] text-4xl"></i>
+            <h3 class="text-xl font-semibold text-[#e4b535] mt-4">Easy Job Application</h3>
+            <p class="mt-2">
+                Apply for multiple positions with a simple and user-friendly application process.
+            </p>
+        </div>
 
-                    <!-- Real-Time Updates -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-                        <i class="fas fa-bell text-green-600 text-4xl"></i>
-                        <h3 class="text-xl font-semibold text-green-600 mt-4">Real-Time Updates</h3>
-                        <p class="mt-2 text-gray-700">Stay informed with real-time notifications on job postings,
-                            application status, and deadlines.</p>
-                    </div>
+        <!-- Real-Time Updates -->
+        <div class="bg-[#00044B] shadow-lg rounded-lg p-6 text-center text-white">
+            <i class="fas fa-bell text-[#e4b535] text-4xl"></i>
+            <h3 class="text-xl font-semibold text-[#e4b535] mt-4">Real-Time Updates</h3>
+            <p class="mt-2">
+                Stay informed with real-time notifications on job postings, application status, and deadlines.
+            </p>
+        </div>
 
-                    <!-- Secure Profile Management -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-                        <i class="fas fa-user-shield text-purple-600 text-4xl"></i>
-                        <h3 class="text-xl font-semibold text-purple-600 mt-4">Secure Profile Management</h3>
-                        <p class="mt-2 text-gray-700">Manage and update your profile securely with encrypted data
-                            protection.</p>
-                    </div>
+        <!-- Secure Profile Management -->
+        <div class="bg-[#00044B] shadow-lg rounded-lg p-6 text-center text-white">
+            <i class="fas fa-user-shield text-[#e4b535] text-4xl"></i>
+            <h3 class="text-xl font-semibold text-[#e4b535] mt-4">Secure Profile Management</h3>
+            <p class="mt-2">
+                Manage and update your profile securely with encrypted data protection.
+            </p>
+        </div>
+    </div>
+</section>
 
-
-                </div>
-            </section>
 
 
 
