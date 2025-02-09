@@ -1,0 +1,125 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--main-bg);
+  color: var(--main-color);
+  font-size: 20px;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.winscroll .main header h2 {
+  color: var(--main-color);
+  text-align: center;
+  margin: 0.3em;
+}
+.winscroll .main section .con {
+  display: grid;
+  grid-template-columns: 45% 10% 45%;
+  padding: 2em;
+  margin: 2em 0;
+}
+.winscroll .main section .con .left-flex, 
+.winscroll .main section .con .right-flex {
+  position: relative;
+  display: flex;
+  align-items: end;
+  height: 300px;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6431372549), rgba(255, 255, 255, 0)), url(../images/image.webp);
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+  padding: 1em;
+  border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -ms-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+}
+.winscroll .main section .con .left-flex .back-layer, 
+.winscroll .main section .con .right-flex .back-layer {
+  content: "Hello";
+  position: absolute;
+  background-color: #8b192c;
+  width: 50%;
+  height: 50%;
+  bottom: -20px;
+  z-index: -1;
+  border-radius: 1em;
+  -webkit-border-radius: 1em;
+  -moz-border-radius: 1em;
+  -ms-border-radius: 1em;
+  -o-border-radius: 1em;
+}
+.winscroll .main section .con .left-flex div button, 
+.winscroll .main section .con .right-flex div button {
+  padding: 0.6em 0.8em;
+  border: none;
+  font-size: 0.8em;
+  color: #fff;
+  border-radius: 2em;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  -ms-border-radius: 2em;
+  -o-border-radius: 2em;
+}
+.winscroll .main section .con .left-flex div h3, 
+.winscroll .main section .con .right-flex div h3 {
+  margin: 0.5em 0;
+}
+.winscroll .main section .con .left-flex div div a, 
+.winscroll .main section .con .right-flex div div a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+}
+.winscroll .main section .con .left-flex {
+  grid-column: 1/2;
+}
+.winscroll .main section .con .left-flex .back-layer {
+  left: -20px;
+}
+.winscroll .main section .con .left-flex div button {
+  background-color: #8b192c;
+}
+.winscroll .main section .con .right-flex {
+  grid-column: 3/4;
+}
+.winscroll .main section .con .right-flex .back-layer {
+  right: -20px;
+  background-color: #01871c;
+}
+.winscroll .main section .con .right-flex div button {
+  background-color: #01871c;
+}
+.winscroll .main section .con .cen-flex {
+  grid-column: 2/3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.progress{
+  display: grid;
+  grid-template-columns: 80% 20%;
+  padding: 20px;
+}
+.progress .left-pro{
+  grid-column: 1/2; 
+}
+.progress .right-pro{
+  grid-column: 2/3;
+}
+@media screen and (max-width: 768px) {
+  .winscroll .main section .con {
+    display: grid;
+    grid-template-columns: 15% 85%;
+  }
+  .winscroll .main section .con .left-flex {
+    grid-column: 2/3;
+  }
+  .winscroll .main section .con .right-flex {
+    grid-column: 2/3;
+  }
+  .winscroll .main section .con .cen-flex {
+    grid-column: 1/2;
+  }
+}/*# sourceMappingURL=cj_style.css.map */
