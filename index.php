@@ -135,7 +135,7 @@
 
                     <!-- Administrative Positions -->
                     <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/admin-assistant-not-secretary-3.webp" alt="Administrative Positions"
+                        <img src="./images/Administrative_Positions.jpg" alt="Administrative Positions"
                             class="rounded-lg mb-4">
                         <div>
                             <h3 class="text-xl font-semibold text-[#00044B]">Administrative Positions</h3>
@@ -155,7 +155,7 @@
 
                     <!-- Support Services Positions -->
                     <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/supportive.jpeg.png" alt="Support Services Positions"
+                        <img src="./images/Support_Services_Positions.jpg" alt="Support Services Positions"
                             class="rounded-lg mb-4">
                         <div>
                             <h3 class="text-xl font-semibold text-[#00044B]">Support Services Positions</h3>
@@ -174,7 +174,7 @@
 
                     <!-- Specialist Positions -->
                     <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/specialist.jpg.png" alt="Specialist Positions" class="rounded-lg mb-4">
+                        <img src="./images/Specialist_Positions.jpg" alt="Specialist Positions" class="rounded-lg mb-4">
                         <div>
                             <h3 class="text-xl font-semibold text-[#00044B]">Specialist Positions</h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
@@ -191,7 +191,7 @@
 
                     <!-- Management Positions -->
                     <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/tehnical.jpeg.png" alt="Management Positions" class="rounded-lg mb-4">
+                        <img src="./images/Management_Positions.jpg" alt="Management Positions" class="rounded-lg mb-4">
                         <div>
                             <h3 class="text-xl font-semibold text-[#00044B]">Management Positions</h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
