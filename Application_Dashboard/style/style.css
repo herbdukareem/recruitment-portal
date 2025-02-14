@@ -568,7 +568,7 @@ button:hover {
   }
   #db-panel {
     width: 180px;
-    position: absolute;
+    position: fixed;
     top: 0;
     transform: translateX(-180px);
     z-index: 10;

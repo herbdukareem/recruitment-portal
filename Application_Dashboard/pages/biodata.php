@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="screen-body">
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="" method="post" enctype="multipart/form-data" id="bioForm">
             <div class="position">
                 <div>
                     <label for="">Position</label>
@@ -56,7 +56,7 @@
                 
             </div>
             <div class="form-head">
-                <h2>Candidate Bio Data</h2>
+                <h4>Candidate Bio Data</h4>
             </div>
             <div class="form-body">
                 <table>

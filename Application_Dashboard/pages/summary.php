@@ -42,7 +42,11 @@
                     <h2>Appication Summary for the position of <span style="font-weight:bold;color:var(--main-color-light)"><?php echo htmlspecialchars($allUserData['position'] ?? ''); ?></span></h2>
                 </div>
                 <div style="padding: 8px 5px 5px 5px;">
-                    <img src="./uploads/download.png" alt="" width="200px">
+                    <?php if (!empty($userFiles['passport_file_path'])): ?>
+                        <img src="<?php echo htmlspecialchars($userFiles['passport_file_path']); ?>" alt="My Profile" width="200px">
+                    <?php else: ?>
+                        <p>No passport uploaded.</p>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="form-body">
@@ -468,6 +472,7 @@
     </div>
 </div>
 <script>
+
   function printDiv(divId) {
     // Get the content of the div
     var content = document.getElementById(divId).innerHTML;

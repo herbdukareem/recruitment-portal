@@ -16,7 +16,7 @@
                     <!-- Display Input Data -->
                     <form action="" method="post">
                         <div class="form-head">
-                            <h2>Work History</h2>
+                            <h4>Work History</h4>
                         </div>
                         <div class="no-br">
 
@@ -90,7 +90,7 @@
                     <!-- Add input data form -->
                     <form action="" class="mar-top" id="workAddformSubmit">
                         <div class="form-head">
-                            <h2>Work History</h2>
+                            <h4>Work History</h4>
                         </div>
                         <div class="form-body">
                             <table>

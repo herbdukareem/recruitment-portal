@@ -2,14 +2,13 @@
     session_start();
     include_once('../db_connect.php');
 
-    error_reporting(E_ERROR | E_PARSE); // Only show critical errors
-    ini_set('display_errors', 0);
+    // error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+    // ini_set('display_errors', 0);
 
     $user_id = $_SESSION['user_id'];
 
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) {
-        // Redirect to login page if not logged in
         header("Location: ./Auth/auth.php?display=login");
         exit();
     }
@@ -119,50 +118,70 @@
                     ':address' => $address
                 ]);
 
-                // File upload handling
+               // File upload handling
                 $uploadDirectory = "./uploads/";
-                $allowedFileTypes = ['pdf', 'jpg', 'jpeg', 'png']; // Allowed file types
-                
-                // List of file input names to handle
-                $fileInputs = ['lgaCertificate', 'birthCertificate', 'passport']; // Add more input names if needed
+                $allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png']; 
+
+                // Ensure the upload directory exists
+                if (!is_dir($uploadDirectory)) {
+                    mkdir($uploadDirectory, 0777, true);
+                }
+
+                // Initialize variables to store file paths
+                $lgaPath = null;
+                $birthCertPath = null;
+                $passportPath = null;
+
+                $fileInputs = ['lgaCertificate', 'birthCertificate', 'passport'];
 
                 foreach ($fileInputs as $inputName) {
                     if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
-                        $fileName = $_FILES[$inputName]["name"];
                         $fileTmpPath = $_FILES[$inputName]["tmp_name"];
-                        $fileSize = $_FILES[$inputName]["size"];
-                        $fileType = $_FILES[$inputName]["type"];
-                        $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                        $fileExt = strtolower(pathinfo($_FILES[$inputName]["name"], PATHINFO_EXTENSION));
 
                         // Verify the file extension
                         if (in_array($fileExt, $allowedFileTypes)) {
-                            // Check if the directory exists, if not create it
-                            if (!is_dir($uploadDirectory)) {
-                                mkdir($uploadDirectory, 0777, true);
-                            }
+                            // Create a unique file name
+                            $newFileName = $user_id . "_" . $inputName . "." . $fileExt;
+                            $uploadPath = $uploadDirectory . $newFileName;
 
-                            // Set the destination path
-                            $uploadPath = $uploadDirectory . basename($fileName);
-
-                            // Move the uploaded file to the destination path
                             if (move_uploaded_file($fileTmpPath, $uploadPath)) {
-                                echo "The file " . htmlspecialchars(basename($fileName)) . " has been uploaded successfully.<br>";
-                                
+                                echo "The file " . htmlspecialchars($newFileName) . " has been uploaded successfully.<br>";
+                                if ($inputName === 'lgaCertificate') {
+                                    $lgaPath = $uploadPath;
+                                } elseif ($inputName === 'birthCertificate') {
+                                    $birthCertPath = $uploadPath;
+                                } else {
+                                    $passportPath = $uploadPath;
+                                }
                             } else {
-                                echo "Error: There was an error moving the file " . htmlspecialchars($fileName) . ".<br>";
+                                echo "<p style='color: red;'>Error moving file: " . htmlspecialchars($_FILES[$inputName]['name']) . ".</p><br>";
                             }
                         } else {
-                            echo "Error: Invalid file type for " . htmlspecialchars($fileName) . ".<br>";
+                            echo "<p style='color: red;'>Invalid file type for " . htmlspecialchars($_FILES[$inputName]['name']) . ".</p><br>";
                         }
                     } else {
-                        echo "Error: No file uploaded or there was an issue with the upload for " . htmlspecialchars($inputName) . ".<br>";
+                        echo "<p style='color: red;'>No file uploaded or an error occurred for " . htmlspecialchars($inputName) . ".</p><br>";
                     }
                 }
-                // Redirect after upload
-                header("Location:" . $_SERVER['PHP_SELF'] . "#education-screen");
-                exit();
-                
-        
+
+                if ($lgaPath || $birthCertPath || $passportPath) {
+                    try {
+                        $sql = "INSERT INTO user_files (user_id, lga_file_path, birth_certificate_file_path, passport_file_path) 
+                                VALUES (:user_id, :lga_file_path, :birth_certificate_file_path, :passport_file_path)";
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute([
+                            ':user_id' => $user_id,
+                            ':lga_file_path' => $lgaPath,
+                            ':birth_certificate_file_path' => $birthCertPath,
+                            ':passport_file_path' => $passportPath
+                        ]);
+
+                        echo "File path saved to database successfully.<br>";
+                    } catch (PDOException $e) {
+                        echo "Error saving file path to database: " . $e->getMessage() . "<br>";
+                    }
+                }
             } catch (PDOException $e) {
                 echo 'Error: ' . $e->getMessage();
             }
@@ -175,6 +194,10 @@
     $fetchUserData->execute(['user_id' => $user_id]);
     $user_data = $fetchUserData->fetch(PDO::FETCH_ASSOC);
 
+    //Fetching user profile passport
+    $fetchUserFile = $pdo->prepare("SELECT * FROM user_files WHERE user_id = :user_id");
+    $fetchUserFile->execute([':user_id' => $user_id]);
+    $userFiles = $fetchUserFile->fetch(PDO::FETCH_ASSOC);
 
 
     //Submission of Education data to db
@@ -249,43 +272,78 @@
 
             // File upload handling
             $uploadDirectory = "./uploads/";
-            $allowedFileTypes = ['pdf', 'jpg', 'jpeg', 'png']; // Allowed file types
-            
-            // List of file input names to handle
+            $allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png'];
+
+            // Ensure the upload directory exists
+            if (!is_dir($uploadDirectory)) {
+                mkdir($uploadDirectory, 0777, true);
+            }
+
+            // Initialize variables to store file paths
+            $secPath = null;
+            $highCertPath = null;
+            $nyscPath = null;
+
             $fileInputs = ['secondaryCertificate', 'highCertificate', 'nyscCertificate'];
 
             foreach ($fileInputs as $inputName) {
                 if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
-                    $fileName = $_FILES[$inputName]["name"];
                     $fileTmpPath = $_FILES[$inputName]["tmp_name"];
-                    $fileSize = $_FILES[$inputName]["size"];
-                    $fileType = $_FILES[$inputName]["type"];
-                    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                    $fileExt = strtolower(pathinfo($_FILES[$inputName]["name"], PATHINFO_EXTENSION));
 
                     // Verify the file extension
                     if (in_array($fileExt, $allowedFileTypes)) {
-                        // Check if the directory exists, if not create it
-                        if (!is_dir($uploadDirectory)) {
-                            mkdir($uploadDirectory, 0777, true);
-                        }
+                        // Create a unique file name
+                        $newFileName = $user_id . "_" . $inputName . "." . $fileExt;
+                        $uploadPath = $uploadDirectory . $newFileName;
 
-                        // Set the destination path
-                        $uploadPath = $uploadDirectory . basename($fileName);
-
-                        // Move the uploaded file to the destination path
                         if (move_uploaded_file($fileTmpPath, $uploadPath)) {
-                            echo "The file " . htmlspecialchars(basename($fileName)) . " has been uploaded successfully.<br>";
-                            
+                            echo "The file " . htmlspecialchars($newFileName) . " has been uploaded successfully.<br>";
+                            if ($inputName === 'secondaryCertificate') {
+                                $secPath = $uploadPath;
+                            } elseif ($inputName === 'highCertificate') {
+                                $highCertPath = $uploadPath;
+                            } else {
+                                $nyscPath = $uploadPath;
+                            }
                         } else {
-                            echo "Error: There was an error moving the file " . htmlspecialchars($fileName) . ".<br>";
+                            echo "<script>alert('Error moving file: $newFileName')</script>";
                         }
                     } else {
-                        echo "Error: Invalid file type for " . htmlspecialchars($fileName) . ".<br>";
+                        echo "<script>alert('Invalid file type for $inputName')</script>";
                     }
                 } else {
-                    echo "Error: No file uploaded or there was an issue with the upload for " . htmlspecialchars($inputName) . ".<br>";
+                    echo "<script>alert('No file uploaded or an error occurred for $inputName')</script>";
                 }
             }
+
+            // Check if a record already exists for the user
+            $checkFileRecord = $pdo->prepare("SELECT id FROM user_files WHERE user_id = :user_id");
+            $checkFileRecord->execute([':user_id' => $user_id]);
+
+            if ($checkFileRecord->rowCount() > 0) {
+                // Update existing record
+                $sql = "UPDATE user_files SET 
+                            sec_file_path = COALESCE(:sec_file_path, sec_file_path),
+                            high_certificate_file_path = COALESCE(:high_certificate_file_path, high_certificate_file_path),
+                            nysc_file_path = COALESCE(:nysc_file_path, nysc_file_path)
+                        WHERE user_id = :user_id";
+            } else {
+                // Insert a new record if none exists
+                $sql = "INSERT INTO user_files (user_id, sec_file_path, high_certificate_file_path, nysc_file_path) 
+                        VALUES (:user_id, :sec_file_path, :high_certificate_file_path, :nysc_file_path)";
+            }
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':user_id' => $user_id,
+                ':sec_file_path' => $secPath,
+                ':high_certificate_file_path' => $highCertPath,
+                ':nysc_file_path' => $nyscPath
+            ]);
+
+            echo "File path saved to database successfully.<br>";
+
             
             header("Location:" . $_SERVER['PHP_SELF'] . "#work-screen");
             exit();
@@ -412,51 +470,65 @@
 
             // File upload handling
             $uploadDirectory = "./uploads/";
-            $allowedFileTypes = ['pdf', 'jpg', 'jpeg', 'png']; // Allowed file types
+            $allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png'];
             
             // List of file input names to handle
             $fileInputs = ['membershipCertificate']; // Add more input names if needed
 
             foreach ($fileInputs as $inputName) {
                 if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
-                    $fileName = $_FILES[$inputName]["name"];
                     $fileTmpPath = $_FILES[$inputName]["tmp_name"];
-                    $fileSize = $_FILES[$inputName]["size"];
-                    $fileType = $_FILES[$inputName]["type"];
-                    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                    $fileExt = strtolower(pathinfo($_FILES[$inputName]["name"], PATHINFO_EXTENSION));
 
                     // Verify the file extension
                     if (in_array($fileExt, $allowedFileTypes)) {
-                        // Check if the directory exists, if not create it
-                        if (!is_dir($uploadDirectory)) {
-                            mkdir($uploadDirectory, 0777, true);
-                        }
-
-                        // Set the destination path
-                        $uploadPath = $uploadDirectory . basename($fileName);
+                        // Create a unique file name
+                        $newFileName = $user_id . "_" . $inputName . "." . $fileExt;
+                        $pmcPath = $uploadDirectory . $newFileName;
 
                         // Move the uploaded file to the destination path
-                        if (move_uploaded_file($fileTmpPath, $uploadPath)) {
-                            echo "The file " . htmlspecialchars(basename($fileName)) . " has been uploaded successfully.<br>";
+                        if (move_uploaded_file($fileTmpPath, $pmcPath)) {
+                            echo "<script>alert('The file $inputName has been uploaded successfully.')</script>";
                             
                         } else {
-                            echo "Error: There was an error moving the file " . htmlspecialchars($fileName) . ".<br>";
+                            echo "<script>alert('Error: There was an error moving the file $inputName')</script>";
                         }
                     } else {
-                        echo "Error: Invalid file type for " . htmlspecialchars($fileName) . ".<br>";
+                        echo "<script>alert('Error: Invalid file type for $inputName')</script>";
                     }
                 } else {
-                    echo "Error: No file uploaded or there was an issue with the upload for " . htmlspecialchars($inputName) . ".<br>";
+                    echo "<script>alert('Error: No file uploaded or there was an issue with the upload for $inputName')</script>";
                 }
             };
 
+            // checking if user USER ID exist
+            $checkPMCPath = $pdo->prepare("SELECT id FROM user_files WHERE user_id=:user_id");
+            $checkPMCPath -> execute([':user_id' => $user_id]);
+
+            if($checkPMCPath->rowCount() > 0){
+                $sql = "UPDATE user_files SET 
+                            pmc_file_path = :pmc_file_path
+                        WHERE user_id = :user_id";
+            } else {
+                $sql = "INSERT INTO (
+                            user_id,
+                            pmc_file_path
+                        ) VALUES (
+                            user_id = :user_id,
+                            pmc_file_path = :pmc_file_path
+                        )";
+            };
+
+            $stmt=$pdo->prepare($sql);
+            $stmt->execute([
+                ':user_id' => $user_id,
+                'pmc_file_path' => $pmcPath
+            ]);
+            echo "File path saved to database successfully.<br>";
             header("Location:" . $_SERVER['PHP_SELF'] . "#summary-screen");
             exit();
 
-            // Client-side alert for successful form submission
-            // echo "<script>alert('Education details saved successfully!');</script>";
         } catch (PDOException $e) {
-            // Client-side alert for error during form submission
             echo "<script>alert('Error saving education details: " . $e->getMessage() . "');</script>";
         }
     }
@@ -541,7 +613,6 @@
     $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
    
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -754,6 +825,7 @@
     
 
     </script>
+
 
 </body>
 

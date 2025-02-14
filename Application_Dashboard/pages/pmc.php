@@ -16,7 +16,7 @@
                     <!-- Display Input Data -->
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-head">
-                            <h2>Professional Memberships and Certifications</h2>
+                            <h4>Professional Memberships and Certifications</h4>
                         </div>
                         <div class="no-br">
 
@@ -102,7 +102,7 @@
                     <!-- Add input data form -->
                     <form action="" class="mar-top" id="pmcAddformSubmit">
                         <div class="form-head">
-                            <h2>Professional Memberships and Certifications</h2>
+                            <h4>Add PMC</h4>
                         </div>
                         <div class="form-body">
                             <table>
@@ -157,10 +157,7 @@
                                             <label for="">Certificate</label>
                                         </div>
                                         <div>
-                                            <input type="txet" name=""  value="" placeholder="Upload file directly in Work History" >
-                                        </div>
-                                        <div style="font-size: 12px;">
-                                            <input type="checkbox">currently in this role
+                                            <button type="button" style="background-color: #fff; border:2px solid red; color:red; padding:3px; cursor:none;" disabled> Click on <span>Choose File</span> to upload your file</button>
                                         </div>
                                     </td>
                                 </tr>

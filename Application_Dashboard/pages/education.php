@@ -112,7 +112,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="file" name="secondaryCertificate" id="secondaryCertificate" value="<?php echo htmlspecialchars($user_edu_data['secondaryCertificate']); ?>"  accept="application/pdf,image/jpeg,image/png,image/jpg">
+                                                <input type="file" name="secondaryCertificate" id="secondaryCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg">
                                             </div>
                                         </td>
                                         <td>
@@ -194,7 +194,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="file" name="highCertificate" id="highCertificate" value="<?php echo htmlspecialchars($user_edu_data['highCertificate']); ?>"  accept="application/pdf,image/jpeg,image/png,image/jpg">
+                                                <input type="file" name="highCertificate" id="highCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg">
                                             </div>
                                         </td>
                                         <td>
@@ -246,7 +246,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="file" name="nyscCertificate" id="nyscCertificate" value="<?php echo htmlspecialchars($user_edu_data['yearOfService']); ?>"  accept="application/pdf,image/jpeg,image/png,image/jpg">
+                                                <input type="file" name="nyscCertificate" id="nyscCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg">
                                             </div>
                                         </td>
                                         <td>
@@ -331,18 +331,15 @@
                                                 <input type="text" name="" id="addSecondaryGraduationYear" value="" placeholder="">
                                             </div>
                                         </td>
+                                        
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td>
                                             <div>
-                                                <label for="">Certificate</label>
-                                            </div>
-                                            <div>
-                                                <input type="txet" name=""  value="" placeholder="Upload file directly in Work History" >
+                                                <button type="button" style="background-color: #fff; border:2px solid red; color:red; padding:3px; cursor:none;" disabled> Click on <span>Choose File</span> to upload your file</button>
                                             </div>
                                         </td>
                                     </tr>
-
                                 </table>
                             </div>
                             <div class="form-footer">
@@ -410,10 +407,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <label for="">Certificate</label>
-                                            </div>
-                                            <div>
-                                                <input type="txet" name=""  value="" placeholder="Upload file directly in Work History" >
+                                             <button type="button" style="background-color: #fff; border:2px solid red; color:red; padding:3px; cursor:none;" disabled> Click on <span>Choose File</span> to upload your file</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -459,10 +453,7 @@
                                     <tr>
                                         <td colspan="2">
                                             <div>
-                                                <label for="">NYSC/Exemption Certificate</label>
-                                            </div>
-                                            <div>
-                                                <input type="txet" name=""  value="" placeholder="Upload file directly in Work History" >
+                                             <button type="button" style="background-color: #fff; border:2px solid red; color:red; padding:3px; cursor:none;" disabled> Click on <span>Choose File</span> to upload your file</button>
                                             </div>
                                         </td>
                                     </tr>
