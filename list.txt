@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Names
 firstname
 middlename
@@ -22,3 +23,29 @@ candidate jorney ----- progress
 member
 apply here
 nnpc change
+=======
+Names
+firstname
+middlename
+lastname
+gender
+dateOfBirth
+birthCertificate
+maritalStatus
+stateOfOrigin
+localGovernmentArea
+lgaCertificate
+nin
+phoneNumber
+emergencyNumber
+address
+save
+
+
+
+
+candidate jorney ----- progress
+member
+apply here
+nnpc change
+>>>>>>> ca0affc (latest)

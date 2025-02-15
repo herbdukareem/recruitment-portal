@@ -712,7 +712,7 @@
 					"Clerical Officer Cadre",
 					"Secretarial Cadre",
 					"Secretarial Assistant Cadre",
-					"Portel",
+					"Porter",
 					"Office Assistant Cadre",
 					"Accountant Cadre",
 					"Executive Officer (Accounts) Cadre",

@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: Feb 16, 2025 at 01:48 AM
+=======
+-- Generation Time: Feb 09, 2025 at 02:53 PM
+>>>>>>> ca0affc (latest)
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -72,13 +76,20 @@ CREATE TABLE `users` (
 CREATE TABLE `user_applications` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+<<<<<<< HEAD
   `supPosition` varchar(250) NOT NULL,
+=======
+>>>>>>> ca0affc (latest)
   `position` text NOT NULL,
   `firstname` varchar(100) NOT NULL,
   `middlename` varchar(100) NOT NULL,
   `lastname` varchar(100) NOT NULL,
   `gender` char(20) NOT NULL,
   `dateOfBirth` varchar(20) NOT NULL,
+<<<<<<< HEAD
+=======
+  `birthCertificate` blob NOT NULL,
+>>>>>>> ca0affc (latest)
   `maritalStatus` varchar(20) NOT NULL,
   `stateOfOrigin` varchar(50) NOT NULL,
   `lga` varchar(100) NOT NULL,
@@ -86,7 +97,11 @@ CREATE TABLE `user_applications` (
   `phoneNumber` varchar(11) NOT NULL,
   `emergencyNumber` varchar(11) NOT NULL,
   `address` varchar(250) NOT NULL,
+<<<<<<< HEAD
   `status` varchar(100) NOT NULL
+=======
+  `lgaCertificate` blob NOT NULL
+>>>>>>> ca0affc (latest)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -114,6 +129,7 @@ CREATE TABLE `user_education_details` (
 -- --------------------------------------------------------
 
 --
+<<<<<<< HEAD
 -- Table structure for table `user_files`
 --
 
@@ -132,6 +148,8 @@ CREATE TABLE `user_files` (
 -- --------------------------------------------------------
 
 --
+=======
+>>>>>>> ca0affc (latest)
 -- Table structure for table `user_pmc_details`
 --
 
@@ -200,12 +218,15 @@ ALTER TABLE `user_education_details`
   ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
+<<<<<<< HEAD
 -- Indexes for table `user_files`
 --
 ALTER TABLE `user_files`
   ADD PRIMARY KEY (`id`);
 
 --
+=======
+>>>>>>> ca0affc (latest)
 -- Indexes for table `user_pmc_details`
 --
 ALTER TABLE `user_pmc_details`
@@ -252,12 +273,15 @@ ALTER TABLE `user_education_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+<<<<<<< HEAD
 -- AUTO_INCREMENT for table `user_files`
 --
 ALTER TABLE `user_files`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+=======
+>>>>>>> ca0affc (latest)
 -- AUTO_INCREMENT for table `user_pmc_details`
 --
 ALTER TABLE `user_pmc_details`
