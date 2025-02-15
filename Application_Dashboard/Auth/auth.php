@@ -73,7 +73,7 @@
             }
         } else {
             // Set alert message in session
-            $_SESSION['alert_message'] = "All fields are required.";
+            $_SESSION['alert_message'] = "User does not exist, create an account.";
             $_SESSION['alert_type'] = "alert";
         }
     }
@@ -143,56 +143,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Authentication | UNILORIN</title>
     <link rel="stylesheet" href="./session_style.css">
+    <link rel="stylesheet" href="../style/alert.css">
     <link rel="shortcut icon" href="../../images/logo-plain.jpeg.jpg" type="image/x-icon">
 </head>
 <body>
-    <style>
-        /* Basic CSS for the alert box */
-        .alert {
-            padding: 10px;
-            background-color: #fd21116e; /* Red */
-            color: #fd2111;
-            border: 1px solid #fd2111;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            display: none; /* Hidden by default */
-        }
-
-        .alert.success {
-            background-color: #4caf4f59; /* Green */
-            color: #4CAF50;
-            border: 1px solid #4CAF50;
-        }
-
-        .alert.info {
-            background-color: #2196F3; /* Blue */
-        }
-
-        .alert.warning {
-            border: 1px solid #ffa500;
-            color: #ffa500;
-            background-color: #ffa60070; /* Orange */
-        }
-
-        .close-btn {
-            margin-left: 15px;
-            color: white;
-            font-weight: bold;
-            float: right;
-            font-size: 22px;
-            line-height: 20px;
-            cursor: pointer;
-        }
-        .invalidURI{
-            color: #fd2111;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        b{
-            cursor: pointer;
-        }
-    </style>
     <div class="winscroll">
         <div>
             <section  class="auth" >

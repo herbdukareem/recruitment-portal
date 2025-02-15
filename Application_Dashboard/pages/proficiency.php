@@ -34,7 +34,6 @@
         <div class="quiz-subcon">
             <button id="close_quiz" onclick="closeQuiz()" style="text-align: right;">Close</button>
             <div id="preparation" class="quiz_header">
-                <img src="../../images/logo-plain.jpg" alt="UNILORIN Logo" class="mx-auto w-24 mb-4">
                 <h1 class="text-3xl font-bold text-blue-700">UNILORIN Computer-Based Test (CBT) - <span class="level-text"></span></h1>
                 <p class="mt-4 text-gray-600">Welcome to the <span class="level-text"></span> CBT. This test consists of 50 questions, and you
                     need to answer at least 10 questions within 2 minutes.</p>
@@ -194,7 +193,6 @@
     submitBtn.addEventListener('submit', (e)=>{
         e.preventDefault();
         showResults()
-        console.log(document.getElementById('score').value, document.getElementById('scorePercentage').value);
         setTimeout(()=>{
             document.getElementById('saveQuizScore').click()
         },2000)
@@ -250,16 +248,14 @@
 
     function startTimer() {
         let timerElement = document.getElementById('timer');
+        
         timer = setInterval(() => {
             if (timeLeft <= 0) {
                 clearInterval(timer);
-                submitBtn.addEventListener('submit', (e)=>{
-                    e.preventDefault();
-                    showResults()
-                    setTimeout(()=>{
-                        document.getElementById('saveQuizScore').click()
-                    },2000)
-                })
+                showResults(); // Calculate and display results
+                setTimeout(() => {
+                    document.getElementById('saveQuizScore').click(); // Trigger form submission
+                }, 2000); 
             } else {
                 timeLeft--;
                 timerElement.textContent = `Time: ${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}`;

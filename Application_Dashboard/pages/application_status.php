@@ -9,7 +9,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Position</th>
-                        <th>CPS%</th>
+                        <th>CPL%</th>
                         <th>Date</th>
                         <th>Status</th>
                     </tr>

@@ -2,8 +2,8 @@
     session_start();
     include_once('../db_connect.php');
 
-    // error_reporting(E_ERROR | E_PARSE); // Only show critical errors
-    // ini_set('display_errors', 0);
+    error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+    ini_set('display_errors', 0);
 
     $user_id = $_SESSION['user_id'];
 
@@ -48,6 +48,7 @@
 
     //save biodata form to db
     if (isset($_POST['saveBio'])) {
+        $supPosition = $_POST['supPosition'];
         $position = $_POST['position'];
         $firstname = $_POST['firstname'];
         $middlename = $_POST['middlename'];
@@ -62,8 +63,9 @@
         $emergencyNumber = $_POST['emergencyNumber'];
         $address = $_POST['address'];
 
-        if (empty($position) || empty($firstname) || empty($lastname) || empty($middlename) || empty($gender)) {
-            echo '<script>alert("All fields are required, fill data and try agian.");</script>';
+        if (empty($supPosition) || empty($position) || empty($firstname) || empty($lastname) || empty($middlename) || empty($gender)) {
+            $_SESSION['alert_message'] = "All fields are required.";
+            $_SESSION['alert_type'] = "warning";
             header("Location:" . $_SERVER['PHP_SELF'] . "#bio-screen");
             return;
         } else {
@@ -73,17 +75,18 @@
 
                 if ($checkRecordQuery->rowCount() === 0) {
                     $sql = "INSERT INTO user_applications (
-                                user_id, position, firstname, lastname, middlename, gender, dateOfBirth, 
+                                user_id,supPosition, position, firstname, lastname, middlename, gender, dateOfBirth, 
                                 maritalStatus, stateOfOrigin, lga, nin, 
                                 phoneNumber, emergencyNumber, address
                             ) VALUES (
-                                :user_id, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
+                                :user_id, :supPosition, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
                                 :maritalStatus, :stateOfOrigin, :lga, :nin, 
                                 :phoneNumber, :emergencyNumber, :address
                             )";
                 } else {
                     // Update existing record
                     $sql = "UPDATE user_applications SET 
+                                supPosition = :supPosition,
                                 position = :position,
                                 firstname = :firstname,
                                 lastname = :lastname,
@@ -103,6 +106,7 @@
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     ':user_id' => $user_id,
+                    ':supPosition' => $supPosition,
                     ':position' => $position,
                     ':firstname' => $firstname,
                     ':lastname' => $lastname,
@@ -146,7 +150,8 @@
                             $uploadPath = $uploadDirectory . $newFileName;
 
                             if (move_uploaded_file($fileTmpPath, $uploadPath)) {
-                                echo "The file " . htmlspecialchars($newFileName) . " has been uploaded successfully.<br>";
+                                $_SESSION['alert_message'] = "$newFileName has been uploaded successfully";
+                                $_SESSION['alert_type'] = "success";
                                 if ($inputName === 'lgaCertificate') {
                                     $lgaPath = $uploadPath;
                                 } elseif ($inputName === 'birthCertificate') {
@@ -155,20 +160,34 @@
                                     $passportPath = $uploadPath;
                                 }
                             } else {
-                                echo "<p style='color: red;'>Error moving file: " . htmlspecialchars($_FILES[$inputName]['name']) . ".</p><br>";
+                                $_SESSION['alert_message'] = "Error moving file: $_FILES[$inputName]['name']";
+                                $_SESSION['alert_type'] = "warning";
                             }
                         } else {
-                            echo "<p style='color: red;'>Invalid file type for " . htmlspecialchars($_FILES[$inputName]['name']) . ".</p><br>";
+                            $_SESSION['alert_message'] = "Invalid file type for: $_FILES[$inputName]['name'] ";
+                            $_SESSION['alert_type'] = "warning";
                         }
                     } else {
-                        echo "<p style='color: red;'>No file uploaded or an error occurred for " . htmlspecialchars($inputName) . ".</p><br>";
+                        $_SESSION['alert_message'] = "No file uploaded or an error occurred for $inputName";
+                        $_SESSION['alert_type'] = "warning";
                     }
                 }
 
                 if ($lgaPath || $birthCertPath || $passportPath) {
+
+                    $checkFilePath=$pdo->prepare("SELECT id FROM user_files WHERE user_id = :user_id");
+                    $checkFilePath->execute([':user_id'=> $user_id]);
                     try {
-                        $sql = "INSERT INTO user_files (user_id, lga_file_path, birth_certificate_file_path, passport_file_path) 
-                                VALUES (:user_id, :lga_file_path, :birth_certificate_file_path, :passport_file_path)";
+                        if($checkFilePath->rowCount() === 0){
+                            $sql = "INSERT INTO user_files (user_id, lga_file_path, birth_certificate_file_path, passport_file_path) 
+                                    VALUES (:user_id, :lga_file_path, :birth_certificate_file_path, :passport_file_path)";
+                        } else {
+                            $sql = "UPDATE user_files SET
+                                        lga_file_path = :lga_file_path,
+                                        birth_certificate_file_path = :birth_certificate_file_path,
+                                        passport_file_path = :passport_file_path
+                                    WHERE user_id = :user_id";
+                        }
                         $stmt = $pdo->prepare($sql);
                         $stmt->execute([
                             ':user_id' => $user_id,
@@ -176,10 +195,13 @@
                             ':birth_certificate_file_path' => $birthCertPath,
                             ':passport_file_path' => $passportPath
                         ]);
+                        $_SESSION['alert_message'] = "File saved successfully";
+                        $_SESSION['alert_type'] = "success";
+                        header("Location:" . $_SERVER['PHP_SELF'] . "#education-screen");
 
-                        echo "File path saved to database successfully.<br>";
                     } catch (PDOException $e) {
-                        echo "Error saving file path to database: " . $e->getMessage() . "<br>";
+                        $_SESSION['alert_message'] = "Error saving file";
+                        $_SESSION['alert_type'] = "warning";
                     }
                 }
             } catch (PDOException $e) {
@@ -298,7 +320,8 @@
                         $uploadPath = $uploadDirectory . $newFileName;
 
                         if (move_uploaded_file($fileTmpPath, $uploadPath)) {
-                            echo "The file " . htmlspecialchars($newFileName) . " has been uploaded successfully.<br>";
+                            $_SESSION['alert_message'] = "Files uploaded successfully";
+                            $_SESSION['alert_type'] = "success";
                             if ($inputName === 'secondaryCertificate') {
                                 $secPath = $uploadPath;
                             } elseif ($inputName === 'highCertificate') {
@@ -307,13 +330,16 @@
                                 $nyscPath = $uploadPath;
                             }
                         } else {
-                            echo "<script>alert('Error moving file: $newFileName')</script>";
+                            $_SESSION['alert_message'] = "Error moving file: $newFileName";
+                            $_SESSION['alert_type'] = "danger";
                         }
                     } else {
-                        echo "<script>alert('Invalid file type for $inputName')</script>";
+                        $_SESSION['alert_message'] = "Invalid file type for $inputName";
+                        $_SESSION['alert_type'] = "warning";
                     }
                 } else {
-                    echo "<script>alert('No file uploaded or an error occurred for $inputName')</script>";
+                    $_SESSION['alert_message'] = "No file uploaded";
+                    $_SESSION['alert_type'] = "warning";
                 }
             }
 
@@ -341,18 +367,16 @@
                 ':high_certificate_file_path' => $highCertPath,
                 ':nysc_file_path' => $nyscPath
             ]);
-
-            echo "File path saved to database successfully.<br>";
-
+            $_SESSION['alert_message'] = "File saved successfully";
+            $_SESSION['alert_type'] = "success";
             
             header("Location:" . $_SERVER['PHP_SELF'] . "#work-screen");
             exit();
-
-            // Client-side alert for successful form submission
-            // echo "<script>alert('Education details saved successfully!');</script>";
+                $_SESSION['alert_message'] = "Education details saved successfully";
+                $_SESSION['alert_type'] = "success";
         } catch (PDOException $e) {
-            // Client-side alert for error during form submission
-            // echo "<script>alert('Error saving education details: " . $e->getMessage() . "');</script>";
+            $_SESSION['alert_message'] = "Error saving education details";
+            $_SESSION['alert_type'] = "danger";
         }
     }
     // Fetch user Education Detials for display in the form after saving
@@ -407,15 +431,13 @@
                 ':startDate' => $startDate,
                 ':endDate' => $endDate,
             ]);
-
+            $_SESSION['alert_message'] = "Error saving Work History details";
+            $_SESSION['alert_type'] = "success";
             header("Location:" . $_SERVER['PHP_SELF'] . "#pmc-screen");
             exit();
-
-            // Client-side alert for successful form submission
-            // echo "<script>alert('Education details saved successfully!');</script>";
         } catch (PDOException $e) {
-            // Client-side alert for error during form submission
-            // echo "<script>alert('Error saving education details: " . $e->getMessage() . "');</script>";
+            $_SESSION['alert_message'] = "Work History details saved successfully!";
+            $_SESSION['alert_type'] = "danger";
         }
     }
     // Fetch user Education Detials for display in the form after saving
@@ -488,16 +510,19 @@
 
                         // Move the uploaded file to the destination path
                         if (move_uploaded_file($fileTmpPath, $pmcPath)) {
-                            echo "<script>alert('The file $inputName has been uploaded successfully.')</script>";
-                            
+                            $_SESSION['alert_message'] = "The file $inputName has been uploaded successfully!";
+                            $_SESSION['alert_type'] = "success";
                         } else {
-                            echo "<script>alert('Error: There was an error moving the file $inputName')</script>";
+                            $_SESSION['alert_message'] = "Error: There was an error moving the file $inputName";
+                            $_SESSION['alert_type'] = "warning";
                         }
                     } else {
-                        echo "<script>alert('Error: Invalid file type for $inputName')</script>";
+                        $_SESSION['alert_message'] = "Error: Invalid file type for $inputName";
+                        $_SESSION['alert_type'] = "warning";
                     }
                 } else {
-                    echo "<script>alert('Error: No file uploaded or there was an issue with the upload for $inputName')</script>";
+                    $_SESSION['alert_message'] = "Error: No file uploaded or there was an issue with the upload for $inputName'";
+                    $_SESSION['alert_type'] = "danger";
                 }
             };
 
@@ -524,12 +549,14 @@
                 ':user_id' => $user_id,
                 'pmc_file_path' => $pmcPath
             ]);
-            echo "File path saved to database successfully.<br>";
+            $_SESSION['alert_message'] = "Files saved successfully!";
+            $_SESSION['alert_type'] = "success";
             header("Location:" . $_SERVER['PHP_SELF'] . "#summary-screen");
             exit();
 
         } catch (PDOException $e) {
-            echo "<script>alert('Error saving education details: " . $e->getMessage() . "');</script>";
+            $_SESSION['alert_message'] = "Error saving files!";
+            $_SESSION['alert_type'] = "danger";
         }
     }
     // Fetch user Education Detials for display in the form after saving
@@ -572,13 +599,12 @@
                         window.location.href = '#biodata-screen';
                     }, 5000); // Redirects after 5 seconds
                   </script>";
-            
-            // If using PHP-based delay
-            // sleep(5);
-            // header("Location: #biodata-screen");
-            // exit;
+                  $_SESSION['alert_message'] = "Test Submitted successfuly";
+                  $_SESSION['alert_type'] = "success";
     
         } catch (PDOException $e) {
+            $_SESSION['alert_message'] = "Error saving files!";
+            $_SESSION['alert_type'] = "danger";
             echo "<script>alert('Error saving Quiz Score: " . $e->getMessage() . "');</script>";
         }
     }
@@ -625,12 +651,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="../style/alert.css">
+    <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
 </head>
 
 <body>
     <div class="db-winscroll">
-
         <div class="nav-bar">
             <div class="left-nav">
                 <svg id="open_panel" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19"><animate fill="freeze" attributeName="d" dur="0.4s" values="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19;M5 5L12 5L19 5M5 12H19M5 19L12 19L19 19"/></path></svg>
@@ -667,7 +693,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
                                             <path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M38.5 5.5h-29c-2.2 0-4 1.8-4 4v29c0 2.2 1.8 4 4 4h29c2.2 0 4-1.8 4-4v-29c0-2.2-1.8-4-4-4" stroke-width="1"/><path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M34.3 35.9L24 30.5l-10.3 5.4V19L24 12.1L34.3 19zM24 12.1v18.4z" stroke-width="1"/>
                                         </svg>
-                                        CBT Test
+                                        CPL Test
                                     </button>
                                 </li>
                             HTML;
@@ -681,6 +707,7 @@
        
         
         <div id="display-screen">
+            <div id="alert-con" class="alert"></div>
             <?php
                 if(!isset($userQuizScore['score'])){
                     include_once('./pages/proficiency.php');
@@ -700,7 +727,7 @@
 
     <div id="footer">
         <div class="left-footer">
-            <p>Copyright &copy; 2025 University Of Ilorin. All Rights Reserved</p>
+            <p>Copyright &copy; 2024 University Of Ilorin. All Rights Reserved</p>
         </div>
         <div class="right-footer">
             <a href="./pages/logout.php">
@@ -761,69 +788,92 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function(){
-            // Buttons and Screens Mapping
-            const screens = {
-                // "cbt-btn": "cbt-screen",
-                "bio-btn": "biodata-screen",
-                "edu-btn": "education-screen",
-                "work-btn": "work-screen",
-                "pmc-btn": "pmc-screen",
-                "sum-btn": "summary-screen",
-                "app-status-btn": "application-screen"
+                // Buttons and Screens Mapping
+                const screens = {
+                    // "cbt-btn": "cbt-screen",
+                    "bio-btn": "biodata-screen",
+                    "edu-btn": "education-screen",
+                    "work-btn": "work-screen",
+                    "pmc-btn": "pmc-screen",
+                    "sum-btn": "summary-screen",
+                    "app-status-btn": "application-screen"
+                };
+
+                // Get all buttons and screens
+                const buttons = Object.keys(screens).map(id => document.getElementById(id));
+                const screensElements = Object.values(screens).map(id => document.getElementById(id));
+
+                // Add event listeners to all buttons
+                buttons.forEach(button => {
+                    button.addEventListener("click", (e) => {
+                        // Reset all button backgrounds and hide all screens
+                        buttons.forEach(btn => btn.style.background = "none");
+                        screensElements.forEach(screen => screen.style.display = "none");
+
+                        // Highlight the clicked button and display the corresponding screen
+                        e.target.style.background = "#bd911985";
+                        document.getElementById(screens[e.target.id]).style.display = "block";
+                    });
+                });
+
+                
+            // Button and Screen Mapping
+            const educationSections = {
+                "pri-btn": "primary",
+                "sec-btn": "secondary",
+                "higher-btn": "higher",
+                "nysc-btn": "nysc"
             };
 
             // Get all buttons and screens
-            const buttons = Object.keys(screens).map(id => document.getElementById(id));
-            const screensElements = Object.values(screens).map(id => document.getElementById(id));
+            const eduButtons = Object.keys(educationSections).map(id => document.getElementById(id));
+            const eduScreens = Object.values(educationSections).map(id => document.getElementById(id));
 
             // Add event listeners to all buttons
-            buttons.forEach(button => {
+            eduButtons.forEach(button => {
                 button.addEventListener("click", (e) => {
-                    // Reset all button backgrounds and hide all screens
-                    buttons.forEach(btn => btn.style.background = "none");
-                    screensElements.forEach(screen => screen.style.display = "none");
+                    // Reset all buttons' styles
+                    eduButtons.forEach(btn => {
+                        btn.style.color = "blue"; 
+                        btn.style.borderStyle = "none";
+                    });
 
-                    // Highlight the clicked button and display the corresponding screen
-                    e.target.style.background = "#bd911985";
-                    document.getElementById(screens[e.target.id]).style.display = "block";
+                    // Hide all screens
+                    eduScreens.forEach(screen => screen.style.display = "none");
+
+                    // Apply styles to the active button and show the corresponding screen
+                    e.target.style.color = "black";
+                    e.target.style.borderStyle = "solid";
+                    document.getElementById(educationSections[e.target.id]).style.display = "block";
                 });
             });
-
-            
-        // Button and Screen Mapping
-        const educationSections = {
-            "pri-btn": "primary",
-            "sec-btn": "secondary",
-            "higher-btn": "higher",
-            "nysc-btn": "nysc"
-        };
-
-        // Get all buttons and screens
-        const eduButtons = Object.keys(educationSections).map(id => document.getElementById(id));
-        const eduScreens = Object.values(educationSections).map(id => document.getElementById(id));
-
-        // Add event listeners to all buttons
-        eduButtons.forEach(button => {
-            button.addEventListener("click", (e) => {
-                // Reset all buttons' styles
-                eduButtons.forEach(btn => {
-                    btn.style.color = "blue"; 
-                    btn.style.borderStyle = "none";
-                });
-
-                // Hide all screens
-                eduScreens.forEach(screen => screen.style.display = "none");
-
-                // Apply styles to the active button and show the corresponding screen
-                e.target.style.color = "black";
-                e.target.style.borderStyle = "solid";
-                document.getElementById(educationSections[e.target.id]).style.display = "block";
-            });
         });
-        
-        });
-    
+    </script>
 
+    <script>
+        // Check for the alert message and type from the PHP session
+        <?php if (isset($_SESSION['alert_message'])): ?>
+            var alertMessage = "<?php echo $_SESSION['alert_message']; ?>";
+            var alertType = "<?php echo $_SESSION['alert_type']; ?>";
+
+            // Display alert for login form
+            document.getElementById('alert-con').innerHTML =
+                `<div class='alert ${alertType}'>
+                    ${alertMessage}
+                    <span class='close-btn' onclick='this.parentElement.style.display="none";'>&times;</span>
+                </div>`;
+
+            document.querySelector('.alert').style.display = 'block';
+
+            // Automatically hide the alert after 5 seconds
+            setTimeout(function() {
+                document.querySelector('.alert').style.display = 'none';
+            }, 5000);
+
+            // Clear the session message after displaying it
+            <?php unset($_SESSION['alert_message']); ?>
+            <?php unset($_SESSION['alert_type']); ?>
+        <?php endif; ?>
     </script>
 
 
