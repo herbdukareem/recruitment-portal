@@ -90,7 +90,7 @@
             <li>First Name, Last Name and email and password.</li>
             <li>Accept terms & conditions and privacy policy.</li>
             <div class="inline link-full" style="margin-top: 20px;text-align:center;">
-              <a href="./cbt_screening.php">APLLY HERE</a>
+              <a href="./screening.php">APLLY HERE</a>
           </div>
           </ul>
         </div>
