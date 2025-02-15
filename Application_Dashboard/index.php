@@ -700,7 +700,7 @@
 
     <div id="footer">
         <div class="left-footer">
-            <p>Copyright &copy; 2024 University Of Ilorin. All Rights Reserved</p>
+            <p>Copyright &copy; 2025 University Of Ilorin. All Rights Reserved</p>
         </div>
         <div class="right-footer">
             <a href="./pages/logout.php">

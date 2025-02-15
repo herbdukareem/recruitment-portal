@@ -166,4 +166,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['admin_login'])){
 
 	<!-- JS Libraies -->
 	<!-- <script src="assets/modules/jquery/jquery.min.js"></script>
-	<script 
+	<script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/modules/popper/popper.min.js"></script> -->
+
+
+	<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap Bundle (includes Popper.js) CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Popper.js CDN (if needed separately) -->
+<script src="https://unpkg.com/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+
+
+	<!-- Template JS File -->
+	<script src="assets/js/script.js"></script>
+	<script src="assets/js/custom.js"></script>
+</body>
+
+</html>
