@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css">
+
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./style/nav-footer.css">
@@ -128,8 +133,8 @@
                                 <li>Graduate Assistant</li>
                             </ul>
                         </div>
-                        <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
+                        <button class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition"
+                            onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
 
@@ -147,8 +152,8 @@
                                 <li>Public Relations Officers</li>
                             </ul>
                         </div>
-                        <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
+                        <button class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition"
+                            onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
 
@@ -167,8 +172,8 @@
                                 <li>COMSIT Directorate</li>
                             </ul>
                         </div>
-                        <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
+                        <button class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition"
+                            onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
 
@@ -184,8 +189,8 @@
                                 <li>International Student Advisors</li>
                             </ul>
                         </div>
-                        <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
+                        <button class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition"
+                            onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
 
@@ -201,8 +206,8 @@
                                 <li>Directors of Centers and Institutes</li>
                             </ul>
                         </div>
-                        <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
+                        <button class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition"
+                            onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
                 </div>
@@ -212,14 +217,15 @@
                 <div class="text-center mb-8">
                     <h2 class="text-3xl font-bold text-[#bd9119]">Features of the UNILORIN Career Portal</h2>
                     <p class="mt-4 text-lg text-[#111683]">
-                        Explore the key features that make our career portal efficient, user-friendly, and tailored to your job search needs.
+                        Explore the key features that make our career portal efficient, user-friendly, and tailored to
+                        your job search needs.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Easy Job Application -->
                     <div class="bg-[#00044B] shadow-lg rounded-lg p-6 text-center text-white">
-                        <i class="fas fa-file-alt text-[#e4b535] text-4xl"></i>
+                        <i class="fas fa-file-alt text-[#e4b535] text-6xl"></i>
                         <h3 class="text-xl font-semibold text-[#e4b535] mt-4">Easy Job Application</h3>
                         <p class="mt-2">
                             Apply for multiple positions with a simple and user-friendly application process.
@@ -228,16 +234,17 @@
 
                     <!-- Real-Time Updates -->
                     <div class="bg-[#00044B] shadow-lg rounded-lg p-6 text-center text-white">
-                        <i class="fas fa-bell text-[#e4b535] text-4xl"></i>
+                        <i class="fas fa-bell text-[#e4b535] text-6xl"></i>
                         <h3 class="text-xl font-semibold text-[#e4b535] mt-4">Real-Time Updates</h3>
                         <p class="mt-2">
-                            Stay informed with real-time notifications on job postings, application status, and deadlines.
+                            Stay informed with real-time notifications on job postings, application status, and
+                            deadlines.
                         </p>
                     </div>
 
                     <!-- Secure Profile Management -->
                     <div class="bg-[#00044B] shadow-lg rounded-lg p-6 text-center text-white">
-                        <i class="fas fa-user-shield text-[#e4b535] text-4xl"></i>
+                        <i class="fas fa-user-shield text-[#e4b535] text-6xl"></i>
                         <h3 class="text-xl font-semibold text-[#e4b535] mt-4">Secure Profile Management</h3>
                         <p class="mt-2">
                             Manage and update your profile securely with encrypted data protection.
@@ -296,12 +303,12 @@
 
         </div>
 
-        <?php include_once('footer.php'); ?> 
+        <?php include_once('footer.php'); ?>
     </main>
 
 </body>
 <script>
-    function applyhereHandler(){
+    function applyhereHandler() {
         window.location.href = './screening.php'
     }
 </script>
