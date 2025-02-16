@@ -190,7 +190,7 @@
 
             // Check if the table has any rows
             const rows = pmcInputTableBody.getElementsByTagName('tr');
-            if (rows.length === 1) {
+            if (rows.length === 2) {
                 // Add new row to the table
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
@@ -221,7 +221,7 @@
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="membershipCertificate" id="membershipCertificate" value="<?php echo htmlspecialchars($user_pmc_data['membershipCertificate']); ?>">
+                            <input type="file" name="membershipCertificate" id="membershipCertificate" value="<?php echo htmlspecialchars($user_pmc_data['membershipCertificate']) ?>"  accept="application/pdf,image/jpeg,image/png,image/jpg" >
                         </div>
                     </td>
                     `;

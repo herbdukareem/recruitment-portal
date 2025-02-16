@@ -361,9 +361,7 @@ button:hover {
 .screen-body form .no-br table tr td select:focus {
   outline: 0.08em solid #aaa;
 }
-.db-winscroll #display-screen .screen .body-edu {
-  display: grid;
-  grid-template-columns: 30% 70%;
+/* .db-winscroll #display-screen .screen .body-edu {
   background-color: #fff;
   border-top: 0.1em solid var(--main-bg);
   padding: 1em;
@@ -373,12 +371,11 @@ button:hover {
   -moz-border-radius: 0.3em;
   -ms-border-radius: 0.3em;
   -o-border-radius: 0.3em;
-}
-.db-winscroll #display-screen .screen .body-edu .left-edu {
-  grid-column: 1/2;
+} */
+/* .db-winscroll #display-screen .screen .body-edu .left-edu {
   margin: 0.2em 1.5em 0.2em 0;
-}
-.db-winscroll #display-screen .screen .body-edu .left-edu div {
+} */
+.db-winscroll #display-screen .screen .body-edu div {
   cursor: pointer;
   padding: 0.3em;
   color: #00f;
@@ -391,9 +388,6 @@ button:hover {
   -moz-border-radius: 0.3em 0.3em 0 0;
   -ms-border-radius: 0.3em 0.3em 0 0;
   -o-border-radius: 0.3em 0.3em 0 0;
-}
-.db-winscroll #display-screen .screen .body-edu .right-edu {
-  grid-column: 2/3;
 }
 #footer {
   background-color: var(--main-bg);

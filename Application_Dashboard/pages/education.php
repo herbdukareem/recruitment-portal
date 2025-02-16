@@ -10,257 +10,214 @@
                 </div>
             </div>
             <div class="screen-body body-edu">
-                <div class="right-edu">
-                    <div id="userEduDetails">
-                        <!-- Display form input include save -->
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <style>
-                                th{
-                                    text-align: left;
-                                    font-size: 0.7em;
-                                }
-                            </style>
+                <div id="userEduDetails">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <style>
+                            th{
+                                text-align: left;
+                                font-size: 0.7em;
+                            }
+                        </style>
+                        <div class="form-head">
+                            <h4>Education History</h4>
+                        </div>
+                        <!-- Primary -->
+                        <div class="no-br">
                             <div class="form-head">
-                                <h4>Education History</h4>
+                                <h5>Primary Education</h5>
                             </div>
-                            <!-- Primary -->
-                            <div class="no-br">
-                                <div class="form-head">
-                                    <h5>Primary Education</h5>
-                                </div>
-                                <table id="pri-input-table-body">
-                                    <tr>
-                                        <th>
-                                            <div>
-                                                <label for="">School Name</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Graduation Year</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Action</label>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                <input type="text" name="primary_school_name" id="priEduText" value="<?php echo htmlspecialchars($user_edu_data['primary_school_name']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input type="text" name="primary_graduation_year" id="priEduYear" value="<?php echo htmlspecialchars($user_edu_data['primary_graduation_year']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <button id="" name="delete" value="delete_id" onclick="removeRow(this)">Remove</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                            <table id="pri-input-table-body">
+                                <tr>
+                                    <th>
+                                        <div>
+                                            <label for="">School Name</label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div>
+                                            <label for="">Graduation Year</label>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="primary_school_name" id="priEduText" value="<?php echo htmlspecialchars($user_edu_data['primary_school_name']); ?>" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="primary_graduation_year" id="priEduYear" value="<?php echo htmlspecialchars($user_edu_data['primary_graduation_year']); ?>" >
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- Secondary -->
+                        <div class="no-br">
+                            <div class="form-head">
+                                <h5>Secondary Education</h5>
                             </div>
-                            <!-- Secondary -->
-                            <div class="no-br">
-                                <div class="form-head">
-                                    <h5>Secondary Education</h5>
-                                </div>
-                                <table id="sec-input-table-body">
-                                    <tr>
-                                        <th>
-                                            <div>
-                                                <label for="">School Name</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Graduation Year</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Exam Type</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Action</label>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                    <tr data-id="2">
-                                        <td>
-                                            <div>
-                                                <input type="text" name="secondarySchoolName" id="secondarySchoolName" value="<?php echo htmlspecialchars($user_edu_data['secondarySchoolName']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input type="text" name="secondaryGraduationYear" id="secondaryGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['secondaryGraduationYear']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input type="file" name="secondaryCertificate" id="secondaryCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <button id="" name="delete" onclick="removeRow(this)">Remove</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                            <table id="sec-input-table-body">
+                                <tr>
+                                    <th>
+                                        <div>
+                                            <label for="">School Name</label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div>
+                                            <label for="">Graduation Year</label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div>
+                                            <label for="">Exam Type</label>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr data-id="2">
+                                    <td>
+                                        <div>
+                                            <input type="text" name="secondarySchoolName" id="secondarySchoolName" value="<?php echo htmlspecialchars($user_edu_data['secondarySchoolName']); ?>" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="secondaryGraduationYear" id="secondaryGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['secondaryGraduationYear']); ?>" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="file" name="secondaryCertificate" id="secondaryCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- Higher -->
+                        <div class="no-br">
+                            <div class="form-head">
+                                <h5>Higher Education</h5>
                             </div>
-                            <!-- Higher -->
-                            <div class="no-br">
-                                <div class="form-head">
-                                    <h5>Higher Education</h5>
-                                </div>
-                                <table id="high-input-table-body">
-                                    <tr>
-                                        <th>
-                                            <div>
-                                                <label for="">Certificate Type</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Class Of Degree</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Institution</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Course</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Graduation Year</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Certificate</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Action</label>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                <input type="text" name="certificateType" id="certificateType" value="<?php echo htmlspecialchars($user_edu_data['certificateType']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input type="text" name="classOfDegree" id="classOfDegree" value="<?php echo htmlspecialchars($user_edu_data['classOfDegree']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input type="text" name="institution" id="institution" value="<?php echo htmlspecialchars($user_edu_data['institution']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input type="text" name="course" id="course" value="<?php echo htmlspecialchars($user_edu_data['course']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input type="text" name="highGraduationYear" id="highGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['highGraduationYear']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input type="file" name="highCertificate" id="highCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <button id="" name="delete" onclick="removeRow(this)">Remove</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                            <table id="high-input-table-body">
+                                <tr>
+                                    <th>
+                                        <div>
+                                            <label for="">Certificate Type</label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div>
+                                            <label for="">Class Of Degree</label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div>
+                                            <label for="">Institution</label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div>
+                                            <label for="">Course</label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div>
+                                            <label for="">Graduation Year</label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div>
+                                            <label for="">Certificate</label>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="certificateType" id="certificateType" value="<?php echo htmlspecialchars($user_edu_data['certificateType']); ?>" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="classOfDegree" id="classOfDegree" value="<?php echo htmlspecialchars($user_edu_data['classOfDegree']); ?>" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="institution" id="institution" value="<?php echo htmlspecialchars($user_edu_data['institution']); ?>" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="course" id="course" value="<?php echo htmlspecialchars($user_edu_data['course']); ?>" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="highGraduationYear" id="highGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['highGraduationYear']); ?>" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="file" name="highCertificate" id="highCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- NYSC -->
+                        <div class="no-br">
+                            <div class="form-head">
+                                <h5>NYSC</h5>
                             </div>
-                            <!-- NYSC -->
-                            <div class="no-br">
-                                <div class="form-head">
-                                    <h5>NYSC</h5>
-                                </div>
-                                <table id="nysc-input-table-body">
-                                    <tr>
-                                        <th>
-                                            <div>
-                                                <label for="">Certificate Number</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Year of Completion of Service</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Certificate</label>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div>
-                                                <label for="">Action</label>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                <input type="text" name="nyscCertificateNumber" id="nyscCertificateNumber" value="<?php echo htmlspecialchars($user_edu_data['nyscCertificateNumber']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input type="text" name="yearOfService" id="yearOfService" value="<?php echo htmlspecialchars($user_edu_data['yearOfService']); ?>" >
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input type="file" name="nyscCertificate" id="nyscCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <button id="" name="delete" onclick="removeRow(this)">Remove</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="form-footer">
-                                <button type="submit" name="saveEdu">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
-                                        <path fill="white" d="M20 7.423v10.962q0 .69-.462 1.153T18.384 20H5.616q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h10.961zm-8.004 9.115q.831 0 1.417-.582T14 14.543t-.582-1.418t-1.413-.586t-1.419.581T10 14.535t.582 1.418t1.414.587M6.769 9.77h7.423v-3H6.77z" />
-                                    </svg>
-                                    Save
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                            <table id="nysc-input-table-body">
+                                <tr>
+                                    <th>
+                                        <div>
+                                            <label for="">Certificate Number</label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div>
+                                            <label for="">Year of Completion of Service</label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div>
+                                            <label for="">Certificate</label>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="nyscCertificateNumber" id="nyscCertificateNumber" value="<?php echo htmlspecialchars($user_edu_data['nyscCertificateNumber']); ?>" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="text" name="yearOfService" id="yearOfService" value="<?php echo htmlspecialchars($user_edu_data['yearOfService']); ?>" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input type="file" name="nyscCertificate" id="nyscCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" name="saveEdu">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
+                                    <path fill="white" d="M20 7.423v10.962q0 .69-.462 1.153T18.384 20H5.616q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h10.961zm-8.004 9.115q.831 0 1.417-.582T14 14.543t-.582-1.418t-1.413-.586t-1.419.581T10 14.535t.582 1.418t1.414.587M6.769 9.77h7.423v-3H6.77z" />
+                                </svg>
+                                Save
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
