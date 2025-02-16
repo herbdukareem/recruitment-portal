@@ -33,7 +33,7 @@
 							<li><button onclick="showDiv('Clerical_Officer_Cadre')">Clerical Officer Cadre</button></li>
 							<li><button onclick="showDiv('Secretarial_Cadre')">Secretarial Cadre</button></li>
 							<li><button onclick="showDiv('Secretarial_Assistant_Cadre')">Secretarial Assistant Cadre</button></li>
-							<li><button onclick="showDiv('Porter')">Porter</button></li>
+							<li><button onclick="showDiv('Portel')">Portel</button></li>
 							<li><button onclick="showDiv('Office_Assistant_Cadre')">Office Assistant Cadre</button></li>
 						</ul>
 					</li>

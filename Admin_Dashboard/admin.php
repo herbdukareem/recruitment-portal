@@ -20,7 +20,7 @@
 		"Clerical Officer Cadre",
 		"Secretarial Cadre",
 		"Secretarial Assistant Cadre",
-		"Porter",
+		"Portel",
 		"Office Assistant Cadre",
 		"Accountant Cadre",
 		"Executive Officer (Accounts) Cadre",
@@ -138,12 +138,22 @@
 				p.bodyName,
 				p.membershipID, 
 				p.membershipResposibilities, 
-				p.certificateDate
+				p.certificateDate,
+				q.score_percentage,
+				f.lga_file_path,
+				f.birth_certificate_file_path,
+				f.passport_file_path,
+				f.sec_file_path,
+				f.high_certificate_file_path,
+				f.nysc_file_path,
+				f.pmc_file_path
 			FROM user_applications AS b
 			JOIN users AS u ON b.user_id = u.id
 			JOIN user_education_details AS e ON u.id = e.user_id
 			JOIN user_pmc_details AS p ON u.id = p.user_id
 			JOIN user_work_details AS w ON u.id = w.user_id
+			JOIN quiz_scores AS q ON u.id = q.user_id
+			JOIN user_files AS f ON u.id = f.user_id
 			WHERE b.position = :position
 		');
 
@@ -165,6 +175,8 @@
 				JOIN user_education_details AS e ON u.id = e.user_id
 				JOIN user_pmc_details AS p ON u.id = p.user_id
 				JOIN user_work_details AS w ON u.id = w.user_id
+				JOIN quiz_scores AS q ON u.id = q.user_id
+				JOIN user_files AS f ON u.id = f.user_id
 				WHERE b.position = :position
 		');
 		// Execute the query with the current position
@@ -239,13 +251,31 @@
 	// Initialize an empty array for JavaScript
 	$jsArray = [];
 	foreach ($positions as $position) {
-		// Echoing out the total applications for each position
-		$jsArray[] = $totalApplications[$position]; // Assuming $totalApplications is an associative array
+		$jsArray[] = $totalApplications[$position];
 	}
 
 	// Convert PHP array to JavaScript array
 	$jsArrayOutput = json_encode($jsArray);
 
+
+	try {
+		if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['saveStatus'])) {
+			$user_id = $_POST['user_id'];
+			$status = $_POST['status'];
+	
+			// Validate the user_id and status
+			if (empty($user_id) || empty($status)) {
+				echo "User ID or Status is missing!";
+			} else {
+				$sql = "UPDATE user_applications SET status = :status WHERE user_id = :user_id";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute([':status' => $status, ':user_id' => $user_id]);
+			}
+		}
+	} catch (PDOException $e) {
+		echo "Error: " . $e->getMessage();
+	}
+	
 
 ?>
 <!doctype html>
@@ -256,7 +286,7 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Dashboard - UNILORIN</title>
+	<title>Admin Dashboard | UNILORIN</title>
 	<!-- Bootstrap CSS-->
 	<!-- <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css"> -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -268,7 +298,7 @@
 	<link rel="stylesheet" href="assets/modules/boxicons/css/boxicons.min.css">
 	<!-- Apexcharts  CSS -->
 	<link rel="stylesheet" href="assets/modules/apexcharts/apexcharts.css">
-    <link rel="shortcut icon" href="../images/logo-plain.jpeg.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
 
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -288,6 +318,70 @@
     .details-row {
         display: none;
     }
+	.status_con {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+}
+
+	.modal {
+		position: absolute;
+		top: 40%;
+		left: 40%;
+		width: 300px;
+		background-color: #fff;
+		color: black;
+		padding: 15px;
+		height: 180px;
+		border-radius: 8px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.modal_text {
+		font-size: 20px;
+		text-align: center;
+		margin-bottom: 10px;
+	}
+
+	.modal_btn {
+		display: flex;
+		justify-content: space-between;
+		padding: 10px;
+	}
+
+	.c_btn {
+		padding: 7px 15px;
+		border-radius: 5px;
+		cursor: pointer;
+		font-size: 14px;
+	}
+
+	.c_btn.danger {
+		color: #bd0303;
+		background-color: rgba(255, 0, 0, 0.5);
+		border: 1px solid #bd0303;
+	}
+
+	.c_btn.success {
+		color: green;
+		background-color: rgba(0, 128, 0, 0.5);
+		border: 1px solid green;
+	}
+
+	.c_btn.close {
+		background-color: #ccc;
+		border: 1px solid #999;
+		color: #333;
+	}
+
 </style>
 	<!--Topbar -->
 	<div class="topbar transition admin_top_nav">
@@ -432,6 +526,7 @@
 				
 
 			</div>
+
 			<div id="content"></div>
 			<?php include_once('botAI.php') ?>
 			<?php
@@ -443,7 +538,7 @@
 				renderPositionSection('Clerical_Officer_Cadre', 'Clerical Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 				renderPositionSection('Secretarial_Cadre', 'Secretarial Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 				renderPositionSection('Secretarial_Assistant_Cadre', 'Secretarial Assistant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
-				renderPositionSection('Porter', 'Porter', $totalApplications, $totalGenderCount, $positionData, $index);
+				renderPositionSection('Portel', 'Portel', $totalApplications, $totalGenderCount, $positionData, $index);
 				renderPositionSection('Office_Assistant_Cadre', 'Office Assistant Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 
 				// Bursary
@@ -573,7 +668,7 @@
 		</div>
 	</div>
 
-
+	
 	<!-- Footer -->
 	<div id="footer">
 		<div class="left-footer">
@@ -595,12 +690,13 @@
 	<script src="assets/modules/jquery/jquery.min.js"></script>
 	<!-- <script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-	<script src="assets/modules/popper/popper.min.js"></script>
+	<!-- <script src="assets/modules/popper/popper.min.js"></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 	<!-- Template JS File -->
 	<script src="assets/js/script.js"></script>
+
 
 	<!-- Dashboard chart JS script -->
 	<script>
@@ -616,7 +712,7 @@
 					"Clerical Officer Cadre",
 					"Secretarial Cadre",
 					"Secretarial Assistant Cadre",
-					"Porter",
+					"Portel",
 					"Office Assistant Cadre",
 					"Accountant Cadre",
 					"Executive Officer (Accounts) Cadre",

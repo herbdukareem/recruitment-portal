@@ -83,16 +83,18 @@
 
             <div class="col-md-12">
                 <div class="table-responsive">
+                    <div id="status_confirmation" class="status_con"></div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th scope="col"> Id</th>
+                                <th scope="col"> Profile</th>
                                 <th scope="col">Full Name</th>
                                 <th scope="col">Email</th>
-                                
+                                <th scope="col">CPL%</th>
                                 <th scope="col">Reg Date/Time </th>
-                                
                                 <th scope="col">View Details</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,13 +102,37 @@
                                 <?php foreach ($positionData[$positionName] as $index => $user): // Adding $index here to track iteration ?>
                                     <tr>
                                         <td><?php echo $index + 1; ?></td>
+                                        <td>
+                                            <a href="../Application_Dashboard/<?php echo htmlspecialchars($user['passport_file_path']); ?>" target="_blank">
+                                                <img src="../Application_Dashboard/<?php echo htmlspecialchars($user['passport_file_path']); ?>" 
+                                                    alt="<?php echo htmlspecialchars($user['lastname']); ?>" 
+                                                    width="50" height="50">
+                                            </a>
+                                        </td>
                                         <td><?php echo $user['firstname']; ?> <?php echo $user['middlename']; ?> <?php echo $user['lastname']; ?></td>
                                         <td><?php echo $user['email']; ?></td>
+                                        <td><?php echo $user['score_percentage']; ?></td>
                                         <td><?php echo $user['created_at']; ?></td>
                                         <td><button id="btn_<?php echo $positionId; ?>-<?php echo $index; ?>" class="btn btn-primary" onclick="toggleDetails('<?php echo $positionId; ?>', <?php echo $index; ?>)">View Details</button> </td>
+                                        <td>
+                                            <div>
+                                                <!-- Form for approving the user -->
+                                                <form action="" method="POST" class="statusForm">
+                                                    <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                                                    <input type="hidden" name="status" value="approved">
+                                                    <button type="submit" name="saveStatus" class="btn btn-success">Approve</button>
+                                                </form>
+                                                <!-- Form for declining the user -->
+                                                <form action="" method="POST" class="statusForm">
+                                                    <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                                                    <input type="hidden" name="status" value="declined">
+                                                    <button type="submit" name="saveStatus" class="btn btn-danger">Decline</button>
+                                                </form>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr class="details-row" id="details_<?php echo $positionId; ?>-<?php echo $index; ?>" style="display:none;">
-                                        <td colspan="5"> <!-- Ensure this spans the correct number of columns -->
+                                        <td colspan="8"> <!-- Ensure this spans the correct number of columns -->
                                             <table style="width: 100%;" class="table">
                                                 <tbody>
                                                     <tr>
@@ -126,18 +152,19 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Pri Name:</strong><?php echo $user['primary_school_name']; ?></td>
-                                                        <td></td> <!-- Placeholder for the empty cell -->
+                                                        <td></td>
                                                         <td><strong>Year: </strong><?php echo $user['primary_graduation_year']; ?></td>
 
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sec Name:</strong><?php echo $user['secondarySchoolName']; ?></td>
-                                                        <td></td> <!-- Placeholder for the empty cell -->
                                                         <td> <strong>Year</strong><?php echo $user['secondaryGraduationYear']; ?></td>
+                                                        <td><a href="../Application_Dashboard/<?php echo $user['sec_file_path'] ?>" target="_blank">Sec Cert</a></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="2"><strong>Insti Name</strong><?php echo $user['institution']; ?></td>
+                                                        <td><strong>Insti Name</strong><?php echo $user['institution']; ?></td>
                                                         <td><strong>Cert:</strong><?php echo $user['certificateType']; ?></td>
+                                                        <td><a href="../Application_Dashboard/<?php echo $user['high_certificate_file_path'] ?>" target="_blank">High Inst Cert:</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Degree:</strong><?php echo $user['classOfDegree']; ?></td>
@@ -146,8 +173,8 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>NYSC Cert No.:</strong><?php echo $user['nyscCertificateNumber']; ?></td>
-                                                        <td></td> <!-- Placeholder for the empty cell -->
                                                         <td><strong>Year:</strong><?php echo $user['yearOfService']; ?></td>
+                                                        <td><a href="../Application_Dashboard/<?php echo $user['nysc_file_path'] ?>" target="_blank">NYSC Cert:</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Org Name:</strong><?php echo $user['organizationName']; ?></td>
@@ -163,13 +190,20 @@
                                                         <td><strong>E-Date:</strong><?php echo $user['endDate']; ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Bodey Name:</strong><?php echo $user['bodyName']; ?></td>
+                                                        <td><strong>Body Name:</strong><?php echo $user['bodyName']; ?></td>
                                                         <td><strong>Memb ID:</strong><?php echo $user['membershipID']; ?></td>
                                                         <td><strong>Cert Date:</strong><?php echo $user['certificateDate']; ?></td>
                                                     </tr>
                                                     <tr>
+                                                        <td><a href="../Application_Dashboard/<?php echo $user['pmc_file_path'] ?>" target="_blank">PMC Cert:</a></td>
+                                                    </tr>
+                                                    <tr>
                                                         <td colspan="3"><strong>Res:</strong><?php echo $user['membershipResposibilities']; ?></td>
                                                     </tr>
+                                                    <form id="saveStatus" action="" method="POST">
+                                                        <input type="hidden" id="status" name="status" value="">
+                                                        <button type="submit" name="saveStatus"></button>
+                                                    </form>
                                                 </tbody>
                                             </table>
                                         </td>
@@ -177,7 +211,7 @@
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="5">No Applicant data found</td> <!-- Adjust colspan to match -->
+                                    <td colspan="8">No Applicant data found</td> <!-- Adjust colspan to match -->
                                 </tr>
                             <?php endif; ?>
                         </tbody>
@@ -212,20 +246,78 @@
 
 <script>
 
-function toggleDetails(positionId, index) {
-    // Get the details row by index
-    var detailsRow = document.getElementById("details_" + positionId + "-" + index);
+    function toggleDetails(positionId, index) {
+        // Get the details row by index
+        var detailsRow = document.getElementById("details_" + positionId + "-" + index);
 
-    // Get the button
-    var button = document.getElementById("btn_" + positionId + "-" + index);
+        // Get the button
+        var button = document.getElementById("btn_" + positionId + "-" + index);
 
-    // Toggle the display of the details row and the button text
-    if (detailsRow.style.display === "none" || detailsRow.style.display === "") {
-        detailsRow.style.display = "table-row";
-        button.textContent = "Hide Details";
-    } else {
-        detailsRow.style.display = "none";
-        button.textContent = "View Details";
+        // Toggle the display of the details row and the button text
+        if (detailsRow.style.display === "none" || detailsRow.style.display === "") {
+            detailsRow.style.display = "table-row";
+            button.textContent = "Hide Details";
+        } else {
+            detailsRow.style.display = "none";
+            button.textContent = "View Details";
+        }
+    };
+
+    function actionStatusHandler() {
+        let statusContainer = document.getElementById('status_confirmation');
+
+        // If modal already exists, don't create another
+        if (document.querySelector('.modal')) return;
+
+        let modal = document.createElement('div');
+        modal.classList.add('modal');
+        modal.innerHTML = `
+            <div class='modal_text'>Confirm User Application Status</div>
+            <div class='modal_btn'>
+                <button class='c_btn danger' onclick="declineHandler()">Decline</button>
+                <button class='c_btn success' onclick="approvedHandler()">Approve</button>
+                <button class='c_btn close' onclick="closeModal()">Cancel</button>
+            </div>
+        `;
+
+        statusContainer.appendChild(modal);
+        statusContainer.style.display = "flex"; // Show modal
     }
-}
+
+    function closeModal() {
+        let statusContainer = document.getElementById('status_confirmation');
+        statusContainer.innerHTML = ''; // Clear modal content
+        statusContainer.style.display = "none"; // Hide modal
+    }
+
+    function declineHandler() {
+        updateUserStatus(false);
+    }
+
+    function approvedHandler() {
+        updateUserStatus(true);
+    }
+
+    function updateUserStatus(status) {
+        const statusInput = document.getElementById("status");
+        const saveForm = document.getElementById("saveStatus");
+
+        if (!statusInput || !saveForm) {
+            alert("Error: Form or input field is missing!");
+            return;
+        }
+
+        statusInput.value = status ? "Approved" : "Declined";
+
+        // Ensure it's a form before calling submit
+        if (saveForm.tagName.toLowerCase() === "form") {
+            saveForm.submit((e)=>{e.preventDefault()});
+        } else {
+            console.error("Error: saveStatus is not a form element.");
+        }
+    }
+
+
+
+
 </script>
