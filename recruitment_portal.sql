@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2025 at 02:53 PM
+-- Generation Time: Feb 16, 2025 at 01:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -72,13 +72,13 @@ CREATE TABLE `users` (
 CREATE TABLE `user_applications` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `supPosition` varchar(250) NOT NULL,
   `position` text NOT NULL,
   `firstname` varchar(100) NOT NULL,
   `middlename` varchar(100) NOT NULL,
   `lastname` varchar(100) NOT NULL,
   `gender` char(20) NOT NULL,
   `dateOfBirth` varchar(20) NOT NULL,
-  `birthCertificate` blob NOT NULL,
   `maritalStatus` varchar(20) NOT NULL,
   `stateOfOrigin` varchar(50) NOT NULL,
   `lga` varchar(100) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE `user_applications` (
   `phoneNumber` varchar(11) NOT NULL,
   `emergencyNumber` varchar(11) NOT NULL,
   `address` varchar(250) NOT NULL,
-  `lgaCertificate` blob NOT NULL
+  `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -110,6 +110,24 @@ CREATE TABLE `user_education_details` (
   `nyscCertificateNumber` int(11) NOT NULL,
   `yearOfService` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_files`
+--
+
+CREATE TABLE `user_files` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `lga_file_path` varchar(250) NOT NULL,
+  `birth_certificate_file_path` varchar(250) NOT NULL,
+  `passport_file_path` varchar(250) NOT NULL,
+  `sec_file_path` varchar(250) NOT NULL,
+  `high_certificate_file_path` varchar(250) NOT NULL,
+  `nysc_file_path` varchar(250) NOT NULL,
+  `pmc_file_path` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -182,6 +200,12 @@ ALTER TABLE `user_education_details`
   ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `user_files`
+--
+ALTER TABLE `user_files`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user_pmc_details`
 --
 ALTER TABLE `user_pmc_details`
@@ -225,6 +249,12 @@ ALTER TABLE `user_applications`
 -- AUTO_INCREMENT for table `user_education_details`
 --
 ALTER TABLE `user_education_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_files`
+--
+ALTER TABLE `user_files`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
