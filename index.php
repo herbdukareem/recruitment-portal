@@ -90,7 +90,7 @@
                 <div class="row">
                     <div class="col-md-6 mt-5 ">
                         <h1 class="text-center mt-5" style="color: var(--white);">Power Your Future With </h1>
-                        <h1 class="text-cr">University Of Ilorin</h1>
+                        <h1 class="text-cr" style="color: #fff;">University Of Ilorin</h1>
                         <h5 class="text-center mt-5">To be an international centre of excellence in learning, research,
                             probity and service to humanity.
                             To provide world-class environment for learning, research and community service.</h5>
@@ -120,16 +120,17 @@
                         <div>
                             <h3 class="text-xl font-semibold text-[#00044B]">Academic Positions</h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
-                                <li>Lecturers</li>
-                                <li>Professors</li>
-                                <li>Research Fellows</li>
-                                <li>Assistant Professors</li>
-                                <li>Associate Professors</li>
-                                <li>Postdoctoral Researchers</li>
+                                <li>Professor</li>
+                                <li>Associate Professor</li>
+                                <li>Senior Lecturer</li>
+                                <li>Lecturer I</li>
+                                <li>Lecturer II</li>
+                                <li>Assistant Lecturer</li>
+                                <li>Graduate Assistant</li>
                             </ul>
                         </div>
                         <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Apply
+                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
 
@@ -145,11 +146,10 @@
                                 <li>Finance Officers</li>
                                 <li>Procurement Officers</li>
                                 <li>Public Relations Officers</li>
-                                <li>IT Support Staff</li>
                             </ul>
                         </div>
                         <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Apply
+                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
 
@@ -165,10 +165,11 @@
                                 <li>Maintenance Staff</li>
                                 <li>Security Personnel</li>
                                 <li>Health Services Staff</li>
+                                <li>COMSIT Directorate</li>
                             </ul>
                         </div>
                         <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Apply
+                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
 
@@ -185,7 +186,7 @@
                             </ul>
                         </div>
                         <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Apply
+                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
 
@@ -202,7 +203,7 @@
                             </ul>
                         </div>
                         <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Apply
+                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
                 </div>
@@ -296,7 +297,7 @@
 
         </div>
 
-        <?php include_once('footer.php'); ?>
+        <?php include_once('footer.php'); ?> onclick="applyhereHandler()
 
 
 
@@ -305,6 +306,11 @@
     </main>
 
 </body>
+<script>
+    function applyhereHandler(){
+        window.location.href = './screening.php'
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
