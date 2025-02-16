@@ -1117,7 +1117,7 @@
                     "Clerical Officer Cadre",
                     "Secretarial Cadre",
                     "Secretarial Assistant Cadre",
-                    "Porter",
+                    "Portel",
                     "Office Assistant Cadre"
                 ],
                 "Academic Staff": [
