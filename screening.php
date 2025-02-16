@@ -332,7 +332,7 @@
                 </div>
             </div>
             <div class="flex justify-center space-x-6 mt-6">
-                <h3 class="text-lg text-gray-700 mb-4">Sign up to</h3>
+                <!-- <h3 class="text-lg text-gray-700 mb-4">Sign up to</h3> -->
                 <div class=" link-full">
                     <a href="./Application_Dashboard/Auth/auth.php?display=signup">GET STARTED</a>
                 </div>

@@ -245,7 +245,10 @@
     
 </head>
 <style>
-
+  .hta{
+    padding: 10px;
+    margin-bottom: 5px;
+  }
 </style>
 
 <body>
@@ -258,26 +261,27 @@
           <p class="text-lg text-gray-600 mb-12">Follow these simple steps to apply for your desired position
               at UNILORIN.</p>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                  <i class="fas fa-file-alt text-4xl text-blue-500 mb-4"></i>
-                  <h3 class="text-xl font-semibold text-gray-800 mb-3">Step 1: Take A Computer Proficiency Level Test</h3>
-                  <p class="text-gray-600">Click on <a href="./screening.php">Apply Here</a> to read the Instructions on how to take computer proficiency level test, then sign up to take the test.</p>
-              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="hta bg-white p-14 rounded-lg shadow-lg text-center">
+                    <i class="fas fa-file-alt text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Step 1: Take A Computer Proficiency Level Test</h3>
+                    <p class="text-gray-600">Click on <a href="./screening.php">Apply Here</a> to read the Instructions on how to take computer proficiency level test, then sign up to take the test.</p>
+                </div>
 
-              <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                  <i class="fas fa-upload text-4xl text-blue-500 mb-4"></i>
-                  <h3 class="text-xl font-semibold text-gray-800 mb-3">Step 2:Fill the Application Form And Upload Required Documents</h3>
-                  <p class="text-gray-600">Upload your CV, academic qualifications, and other necessary
-                      documents for review by the recruitment team.</p>
-              </div>
+                <div class="hta bg-white p-14 rounded-lg shadow-lg text-center">
+                    <i class="fas fa-upload text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Step 2: Fill the Application Form And Upload Required Documents</h3>
+                    <p class="text-gray-600">Upload your CV, academic qualifications, and other necessary
+                        documents for review by the recruitment team.</p>
+                </div>
 
-              <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                  <i class="fas fa-check-circle text-4xl text-blue-500 mb-4"></i>
-                  <h3 class="text-xl font-semibold text-gray-800 mb-3">Step 3: Submit Your Application</h3>
-                  <p class="text-gray-600">Double-check all the details and submit your application. You'll
-                      receive a confirmation email once submitted.</p>
-              </div>
+                <div class="hta bg-white p-14 rounded-lg shadow-lg text-center">
+                    <i class="fas fa-check-circle text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Step 3: Submit Your Application</h3>
+                    <p class="text-gray-600">Double-check all the details and submit your application. You'll
+                        receive a confirmation email once submitted.</p>
+                </div>
+            </div>
           </div>
       </div>
     </section>

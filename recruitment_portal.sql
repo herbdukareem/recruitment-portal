@@ -4,10 +4,14 @@
 --
 -- Host: 127.0.0.1
 <<<<<<< HEAD
+<<<<<<< HEAD
 -- Generation Time: Feb 16, 2025 at 01:48 AM
 =======
 -- Generation Time: Feb 09, 2025 at 02:53 PM
 >>>>>>> ca0affc (latest)
+=======
+-- Generation Time: Feb 16, 2025 at 01:48 AM
+>>>>>>> 5a50f72 (lastest)
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,9 +81,13 @@ CREATE TABLE `user_applications` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
   `supPosition` varchar(250) NOT NULL,
 =======
 >>>>>>> ca0affc (latest)
+=======
+  `supPosition` varchar(250) NOT NULL,
+>>>>>>> 5a50f72 (lastest)
   `position` text NOT NULL,
   `firstname` varchar(100) NOT NULL,
   `middlename` varchar(100) NOT NULL,
@@ -87,9 +95,12 @@ CREATE TABLE `user_applications` (
   `gender` char(20) NOT NULL,
   `dateOfBirth` varchar(20) NOT NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   `birthCertificate` blob NOT NULL,
 >>>>>>> ca0affc (latest)
+=======
+>>>>>>> 5a50f72 (lastest)
   `maritalStatus` varchar(20) NOT NULL,
   `stateOfOrigin` varchar(50) NOT NULL,
   `lga` varchar(100) NOT NULL,
@@ -98,10 +109,14 @@ CREATE TABLE `user_applications` (
   `emergencyNumber` varchar(11) NOT NULL,
   `address` varchar(250) NOT NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
   `status` varchar(100) NOT NULL
 =======
   `lgaCertificate` blob NOT NULL
 >>>>>>> ca0affc (latest)
+=======
+  `status` varchar(100) NOT NULL
+>>>>>>> 5a50f72 (lastest)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -130,6 +145,9 @@ CREATE TABLE `user_education_details` (
 
 --
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5a50f72 (lastest)
 -- Table structure for table `user_files`
 --
 
@@ -148,8 +166,11 @@ CREATE TABLE `user_files` (
 -- --------------------------------------------------------
 
 --
+<<<<<<< HEAD
 =======
 >>>>>>> ca0affc (latest)
+=======
+>>>>>>> 5a50f72 (lastest)
 -- Table structure for table `user_pmc_details`
 --
 
@@ -219,14 +240,20 @@ ALTER TABLE `user_education_details`
 
 --
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5a50f72 (lastest)
 -- Indexes for table `user_files`
 --
 ALTER TABLE `user_files`
   ADD PRIMARY KEY (`id`);
 
 --
+<<<<<<< HEAD
 =======
 >>>>>>> ca0affc (latest)
+=======
+>>>>>>> 5a50f72 (lastest)
 -- Indexes for table `user_pmc_details`
 --
 ALTER TABLE `user_pmc_details`
@@ -274,14 +301,20 @@ ALTER TABLE `user_education_details`
 
 --
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5a50f72 (lastest)
 -- AUTO_INCREMENT for table `user_files`
 --
 ALTER TABLE `user_files`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+<<<<<<< HEAD
 =======
 >>>>>>> ca0affc (latest)
+=======
+>>>>>>> 5a50f72 (lastest)
 -- AUTO_INCREMENT for table `user_pmc_details`
 --
 ALTER TABLE `user_pmc_details`
