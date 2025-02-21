@@ -46,6 +46,11 @@
 
     $formSection = 1;
 
+    // checkin if user Nin exist
+    $checkNIN = $pdo->prepare("SELECT nin FROM user_applications WHERE user_id=:user_id");
+    $checkNIN->execute([":user_id"=>$user_id]);
+    $existingNIN = $checkNIN->fetch(PDO::FETCH_ASSOC);
+
     //save biodata form to db
     if (isset($_POST['saveBio'])) {
         $supPosition = $_POST['supPosition'];
@@ -69,143 +74,150 @@
             header("Location:" . $_SERVER['PHP_SELF'] . "#bio-screen");
             return;
         } else {
-            try {
-                $checkRecordQuery = $pdo->prepare("SELECT id FROM user_applications WHERE user_id = :user_id");
-                $checkRecordQuery->execute(['user_id' => $user_id]);
+            if(isset($existingNIN) || $existingNIN !== $nin){
+                try {
+                    $checkRecordQuery = $pdo->prepare("SELECT id FROM user_applications WHERE user_id = :user_id");
+                    $checkRecordQuery->execute(['user_id' => $user_id]);
 
-                if ($checkRecordQuery->rowCount() === 0) {
-                    $sql = "INSERT INTO user_applications (
-                                user_id,supPosition, position, firstname, lastname, middlename, gender, dateOfBirth, 
-                                maritalStatus, stateOfOrigin, lga, nin, 
-                                phoneNumber, emergencyNumber, address
-                            ) VALUES (
-                                :user_id, :supPosition, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
-                                :maritalStatus, :stateOfOrigin, :lga, :nin, 
-                                :phoneNumber, :emergencyNumber, :address
-                            )";
-                } else {
-                    // Update existing record
-                    $sql = "UPDATE user_applications SET 
-                                supPosition = :supPosition,
-                                position = :position,
-                                firstname = :firstname,
-                                lastname = :lastname,
-                                middlename = :middlename,
-                                gender = :gender,
-                                dateOfBirth = :dateOfBirth,
-                                maritalStatus = :maritalStatus,
-                                stateOfOrigin = :stateOfOrigin,
-                                lga = :lga,
-                                nin = :nin,
-                                phoneNumber = :phoneNumber,
-                                emergencyNumber = :emergencyNumber,
-                                address = :address
-                            WHERE user_id = :user_id";
-                }
+                    if ($checkRecordQuery->rowCount() === 0) {
+                        $sql = "INSERT INTO user_applications (
+                                    user_id,supPosition, position, firstname, lastname, middlename, gender, dateOfBirth, 
+                                    maritalStatus, stateOfOrigin, lga, nin, 
+                                    phoneNumber, emergencyNumber, address
+                                ) VALUES (
+                                    :user_id, :supPosition, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
+                                    :maritalStatus, :stateOfOrigin, :lga, :nin, 
+                                    :phoneNumber, :emergencyNumber, :address
+                                )";
+                    } else {
+                        // Update existing record
+                        $sql = "UPDATE user_applications SET 
+                                    supPosition = :supPosition,
+                                    position = :position,
+                                    firstname = :firstname,
+                                    lastname = :lastname,
+                                    middlename = :middlename,
+                                    gender = :gender,
+                                    dateOfBirth = :dateOfBirth,
+                                    maritalStatus = :maritalStatus,
+                                    stateOfOrigin = :stateOfOrigin,
+                                    lga = :lga,
+                                    nin = :nin,
+                                    phoneNumber = :phoneNumber,
+                                    emergencyNumber = :emergencyNumber,
+                                    address = :address
+                                WHERE user_id = :user_id";
+                    }
 
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([
-                    ':user_id' => $user_id,
-                    ':supPosition' => $supPosition,
-                    ':position' => $position,
-                    ':firstname' => $firstname,
-                    ':lastname' => $lastname,
-                    ':middlename' => $middlename,
-                    ':gender' => $gender,
-                    ':dateOfBirth' => $dateOfBirth,
-                    ':maritalStatus' => $maritalStatus,
-                    ':stateOfOrigin' => $stateOfOrigin,
-                    ':lga' => $lga,
-                    ':nin' => $nin,
-                    ':phoneNumber' => $phoneNumber,
-                    ':emergencyNumber' => $emergencyNumber,
-                    ':address' => $address
-                ]);
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([
+                        ':user_id' => $user_id,
+                        ':supPosition' => $supPosition,
+                        ':position' => $position,
+                        ':firstname' => $firstname,
+                        ':lastname' => $lastname,
+                        ':middlename' => $middlename,
+                        ':gender' => $gender,
+                        ':dateOfBirth' => $dateOfBirth,
+                        ':maritalStatus' => $maritalStatus,
+                        ':stateOfOrigin' => $stateOfOrigin,
+                        ':lga' => $lga,
+                        ':nin' => $nin,
+                        ':phoneNumber' => $phoneNumber,
+                        ':emergencyNumber' => $emergencyNumber,
+                        ':address' => $address
+                    ]);
 
-               // File upload handling
-                $uploadDirectory = "./uploads/";
-                $allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png']; 
+                // File upload handling
+                    $uploadDirectory = "./uploads/";
+                    $allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png']; 
 
-                // Ensure the upload directory exists
-                if (!is_dir($uploadDirectory)) {
-                    mkdir($uploadDirectory, 0777, true);
-                }
+                    // Ensure the upload directory exists
+                    if (!is_dir($uploadDirectory)) {
+                        mkdir($uploadDirectory, 0777, true);
+                    }
 
-                // Initialize variables to store file paths
-                $lgaPath = null;
-                $birthCertPath = null;
-                $passportPath = null;
+                    // Initialize variables to store file paths
+                    $lgaPath = null;
+                    $birthCertPath = null;
+                    $passportPath = null;
 
-                $fileInputs = ['lgaCertificate', 'birthCertificate', 'passport'];
+                    $fileInputs = ['lgaCertificate', 'birthCertificate', 'passport'];
 
-                foreach ($fileInputs as $inputName) {
-                    if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
-                        $fileTmpPath = $_FILES[$inputName]["tmp_name"];
-                        $fileExt = strtolower(pathinfo($_FILES[$inputName]["name"], PATHINFO_EXTENSION));
+                    foreach ($fileInputs as $inputName) {
+                        if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
+                            $fileTmpPath = $_FILES[$inputName]["tmp_name"];
+                            $fileExt = strtolower(pathinfo($_FILES[$inputName]["name"], PATHINFO_EXTENSION));
 
-                        // Verify the file extension
-                        if (in_array($fileExt, $allowedFileTypes)) {
-                            // Create a unique file name
-                            $newFileName = $user_id . "_" . $inputName . "." . $fileExt;
-                            $uploadPath = $uploadDirectory . $newFileName;
+                            // Verify the file extension
+                            if (in_array($fileExt, $allowedFileTypes)) {
+                                // Create a unique file name
+                                $newFileName = $user_id . "_" . $inputName . "." . $fileExt;
+                                $uploadPath = $uploadDirectory . $newFileName;
 
-                            if (move_uploaded_file($fileTmpPath, $uploadPath)) {
-                                $_SESSION['alert_message'] = "$newFileName has been uploaded successfully";
-                                $_SESSION['alert_type'] = "success";
-                                if ($inputName === 'lgaCertificate') {
-                                    $lgaPath = $uploadPath;
-                                } elseif ($inputName === 'birthCertificate') {
-                                    $birthCertPath = $uploadPath;
+                                if (move_uploaded_file($fileTmpPath, $uploadPath)) {
+                                    $_SESSION['alert_message'] = "$newFileName has been uploaded successfully";
+                                    $_SESSION['alert_type'] = "success";
+                                    if ($inputName === 'lgaCertificate') {
+                                        $lgaPath = $uploadPath;
+                                    } elseif ($inputName === 'birthCertificate') {
+                                        $birthCertPath = $uploadPath;
+                                    } else {
+                                        $passportPath = $uploadPath;
+                                    }
                                 } else {
-                                    $passportPath = $uploadPath;
+                                    $_SESSION['alert_message'] = "Error moving file: $_FILES[$inputName]['name']";
+                                    $_SESSION['alert_type'] = "warning";
                                 }
                             } else {
-                                $_SESSION['alert_message'] = "Error moving file: $_FILES[$inputName]['name']";
+                                $_SESSION['alert_message'] = "Invalid file type for: $_FILES[$inputName]['name'] ";
                                 $_SESSION['alert_type'] = "warning";
                             }
                         } else {
-                            $_SESSION['alert_message'] = "Invalid file type for: $_FILES[$inputName]['name'] ";
+                            $_SESSION['alert_message'] = "No file uploaded or an error occurred for $inputName";
                             $_SESSION['alert_type'] = "warning";
                         }
-                    } else {
-                        $_SESSION['alert_message'] = "No file uploaded or an error occurred for $inputName";
-                        $_SESSION['alert_type'] = "warning";
                     }
-                }
 
-                if ($lgaPath || $birthCertPath || $passportPath) {
+                    if ($lgaPath || $birthCertPath || $passportPath) {
 
-                    $checkFilePath=$pdo->prepare("SELECT id FROM user_files WHERE user_id = :user_id");
-                    $checkFilePath->execute([':user_id'=> $user_id]);
-                    try {
-                        if($checkFilePath->rowCount() === 0){
-                            $sql = "INSERT INTO user_files (user_id, lga_file_path, birth_certificate_file_path, passport_file_path) 
-                                    VALUES (:user_id, :lga_file_path, :birth_certificate_file_path, :passport_file_path)";
-                        } else {
-                            $sql = "UPDATE user_files SET
-                                        lga_file_path = :lga_file_path,
-                                        birth_certificate_file_path = :birth_certificate_file_path,
-                                        passport_file_path = :passport_file_path
-                                    WHERE user_id = :user_id";
+                        $checkFilePath=$pdo->prepare("SELECT id FROM user_files WHERE user_id = :user_id");
+                        $checkFilePath->execute([':user_id'=> $user_id]);
+                        try {
+                            if($checkFilePath->rowCount() === 0){
+                                $sql = "INSERT INTO user_files (user_id, lga_file_path, birth_certificate_file_path, passport_file_path) 
+                                        VALUES (:user_id, :lga_file_path, :birth_certificate_file_path, :passport_file_path)";
+                            } else {
+                                $sql = "UPDATE user_files SET
+                                            lga_file_path = :lga_file_path,
+                                            birth_certificate_file_path = :birth_certificate_file_path,
+                                            passport_file_path = :passport_file_path
+                                        WHERE user_id = :user_id";
+                            }
+                            $stmt = $pdo->prepare($sql);
+                            $stmt->execute([
+                                ':user_id' => $user_id,
+                                ':lga_file_path' => $lgaPath,
+                                ':birth_certificate_file_path' => $birthCertPath,
+                                ':passport_file_path' => $passportPath
+                            ]);
+                            $_SESSION['alert_message'] = "File saved successfully";
+                            $_SESSION['alert_type'] = "success";
+                            header("Location:" . $_SERVER['PHP_SELF'] . "#education-screen");
+
+                        } catch (PDOException $e) {
+                            $_SESSION['alert_message'] = "Error saving file";
+                            $_SESSION['alert_type'] = "warning";
                         }
-                        $stmt = $pdo->prepare($sql);
-                        $stmt->execute([
-                            ':user_id' => $user_id,
-                            ':lga_file_path' => $lgaPath,
-                            ':birth_certificate_file_path' => $birthCertPath,
-                            ':passport_file_path' => $passportPath
-                        ]);
-                        $_SESSION['alert_message'] = "File saved successfully";
-                        $_SESSION['alert_type'] = "success";
-                        header("Location:" . $_SERVER['PHP_SELF'] . "#education-screen");
-
-                    } catch (PDOException $e) {
-                        $_SESSION['alert_message'] = "Error saving file";
-                        $_SESSION['alert_type'] = "warning";
                     }
+                } catch (PDOException $e) {
+                    echo 'Error: ' . $e->getMessage();
                 }
-            } catch (PDOException $e) {
-                echo 'Error: ' . $e->getMessage();
+            } else {
+                $_SESSION['alert_message'] = "Apllication Failed, look like user already exist, try logging in with your previous account.";
+                $_SESSION['alert_type'] = "danger";
+                header("Location: ./Auth/auth.php?display=login");
+                exit();
             }
         }
     }
@@ -601,6 +613,9 @@
                   </script>";
                   $_SESSION['alert_message'] = "Test Submitted successfuly";
                   $_SESSION['alert_type'] = "success";
+            
+                  header("Location:" . $_SERVER['PHP_SELF'] . "#cpl-screen");
+            
     
         } catch (PDOException $e) {
             $_SESSION['alert_message'] = "Error saving files!";
@@ -686,10 +701,12 @@
             <div class="body-panel">
                 <ul>
                     <?php 
+                        include_once('./pages/nav_lists.php');
+
                         if (!isset($userQuizScore['score'])) {
                             echo <<<HTML
                                 <li>
-                                    <button id="cbt-btn" class="all-bt-bg">
+                                    <button id="cpl-btn" class="all-bt-bg">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
                                             <path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M38.5 5.5h-29c-2.2 0-4 1.8-4 4v29c0 2.2 1.8 4 4 4h29c2.2 0 4-1.8 4-4v-29c0-2.2-1.8-4-4-4" stroke-width="1"/><path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M34.3 35.9L24 30.5l-10.3 5.4V19L24 12.1L34.3 19zM24 12.1v18.4z" stroke-width="1"/>
                                         </svg>
@@ -697,8 +714,6 @@
                                     </button>
                                 </li>
                             HTML;
-                        } else {
-                            include_once('./pages/nav_lists.php');
                         }
                     ?>
                 </ul>
@@ -709,17 +724,16 @@
         <div id="display-screen">
             <div id="alert-con" class="alert"></div>
             <?php
+                include_once('./pages/biodata.php');
+                include_once('./pages/education.php');
+                include_once('./pages/work.php');
+                include_once('./pages/pmc.php');
+                include_once('./pages/summary.php');
+                include_once('./pages/application_status.php');
+
                 if(!isset($userQuizScore['score'])){
                     include_once('./pages/proficiency.php');
-                } else {
-                    include_once('./pages/biodata.php');
-                    include_once('./pages/education.php');
-                    include_once('./pages/work.php');
-                    include_once('./pages/pmc.php');
-                    include_once('./pages/summary.php');
-                    include_once('./pages/application_status.php');
-                    include_once('./pages/biodata.php');
-                }
+                };
             ?>
         </div>
 
@@ -742,16 +756,16 @@
         // JavaScript to display the correct section based on the URL hash
         window.onload = function () {
             // Hide all sections by default
-            // document.getElementById('cbt-screen').style.display = 'none';
             document.getElementById('biodata-screen').style.display = 'none';
             document.getElementById('education-screen').style.display = 'none';
             document.getElementById('work-screen').style.display = 'none';
             document.getElementById('pmc-screen').style.display = 'none';
             document.getElementById('summary-screen').style.display = 'none';
+            document.getElementById('cpl-screen').style.display = 'none';
 
             // Check which section to display based on the URL hash
-            if (window.location.hash === "#biodata-screen") {
-                document.getElementById('biodata-screen').style.display = 'block';
+            if (window.location.hash === "#application-status_screen") {
+                document.getElementById('application-status_screen').style.display = 'block';
             } else if (window.location.hash === "#education-screen") {
                 document.getElementById('education-screen').style.display = 'block';
             } else if (window.location.hash === "#work-screen") {
@@ -760,8 +774,10 @@
                 document.getElementById('pmc-screen').style.display = 'block';
             } else if (window.location.hash === "#summary-screen") {
                 document.getElementById('summary-screen').style.display = 'block';
+            } else if (window.location.hash === "#cpl-screen") {
+                document.getElementById('cpl-screen').style.display = 'block';
             } else {
-                document.getElementById('application-screen').style.display = 'block';
+                document.getElementById('biodata-screen').style.display = 'block';
             }
             //  else {
             //     // Default to cbt screen if no hash or an unrecognized hash is found
@@ -790,13 +806,13 @@
         document.addEventListener("DOMContentLoaded", function(){
                 // Buttons and Screens Mapping
                 const screens = {
-                    // "cbt-btn": "cbt-screen",
+                    // "cpl-btn": "cpl-screen",
                     "bio-btn": "biodata-screen",
                     "edu-btn": "education-screen",
                     "work-btn": "work-screen",
                     "pmc-btn": "pmc-screen",
                     "sum-btn": "summary-screen",
-                    "app-status-btn": "application-screen"
+                    "app-status-btn": "application-status_screen",
                 };
 
                 // Get all buttons and screens
@@ -868,7 +884,7 @@
             // Automatically hide the alert after 5 seconds
             setTimeout(function() {
                 document.querySelector('.alert').style.display = 'none';
-            }, 5000);
+            }, 3000);
 
             // Clear the session message after displaying it
             <?php unset($_SESSION['alert_message']); ?>

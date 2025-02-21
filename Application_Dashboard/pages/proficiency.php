@@ -1,4 +1,4 @@
-<div id="cbt-screen" >
+<div id="cpl-screen" style="display: none;" >
     <div class="proficiency">
         <div class="con">
             <h3>Choose Your Level of Proficiency:</h3>

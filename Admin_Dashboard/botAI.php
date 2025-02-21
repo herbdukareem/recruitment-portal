@@ -73,17 +73,12 @@
                 </div>
 
             </div>
-
-
-            
-
             <div class="col-md-8 mx-auto"> <!-- Adjust the column size as needed -->
                 <canvas id="myChart"></canvas>
             </div>
 
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <div id="status_confirmation" class="status_con"></div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -119,14 +114,27 @@
                                                 <!-- Form for approving the user -->
                                                 <form action="" method="POST" class="statusForm">
                                                     <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                                                    <input type="hidden" name="status" value="approved">
-                                                    <button type="submit" name="saveStatus" class="btn btn-success">Approve</button>
-                                                </form>
-                                                <!-- Form for declining the user -->
-                                                <form action="" method="POST" class="statusForm">
-                                                    <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                                                    <input type="hidden" name="status" value="declined">
-                                                    <button type="submit" name="saveStatus" class="btn btn-danger">Decline</button>
+                                                    <input type="hidden" name="status" id="statusInput_<?php echo $user['user_id'] ?>">
+
+                                                    <button type="button" class="btn btn-success" 
+                                                        onclick="confirmHandler('<?php echo $user['user_id'] ?>', 'approved')">
+                                                        Approve
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger" 
+                                                        onclick="confirmHandler('<?php echo $user['user_id'] ?>', 'declined')">
+                                                        Decline
+                                                    </button>
+
+                                                     <!-- Single Reusable Modal -->
+                                                    <div class="status_con modal-container" id="statusModal_<?php echo $user['user_id'] ?>" style="display:none;">
+                                                        <div class="modal">
+                                                            <div class="modal_text" id="modalMessage">Are you sure?</div>
+                                                            <div class="modal_btn">
+                                                                <button type="submit" name="saveStatus" class="btn btn-success" id="confirmButton">Confirm</button>
+                                                                <button type="button" class="btn btn-inverse" onclick="closeModal('<?php echo $user['user_id'] ?>')">Cancel</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </td>
@@ -200,10 +208,6 @@
                                                     <tr>
                                                         <td colspan="3"><strong>Res:</strong><?php echo $user['membershipResposibilities']; ?></td>
                                                     </tr>
-                                                    <form id="saveStatus" action="" method="POST">
-                                                        <input type="hidden" id="status" name="status" value="">
-                                                        <button type="submit" name="saveStatus"></button>
-                                                    </form>
                                                 </tbody>
                                             </table>
                                         </td>
@@ -263,60 +267,40 @@
         }
     };
 
-    function actionStatusHandler() {
-        let statusContainer = document.getElementById('status_confirmation');
+    function confirmHandler(index, status) {
+        // Close any open modals before opening a new one
+        closeModal(index);
 
-        // If modal already exists, don't create another
-        if (document.querySelector('.modal')) return;
+        // Get modal elements
+        let modal = document.getElementById('statusModal_'+ index);
+        let modalMessage = document.getElementById('modalMessage');
+        let confirmButton = document.getElementById('confirmButton');
+        let statusInput = document.getElementById('statusInput_' + index);
 
-        let modal = document.createElement('div');
-        modal.classList.add('modal');
-        modal.innerHTML = `
-            <div class='modal_text'>Confirm User Application Status</div>
-            <div class='modal_btn'>
-                <button class='c_btn danger' onclick="declineHandler()">Decline</button>
-                <button class='c_btn success' onclick="approvedHandler()">Approve</button>
-                <button class='c_btn close' onclick="closeModal()">Cancel</button>
-            </div>
-        `;
-
-        statusContainer.appendChild(modal);
-        statusContainer.style.display = "flex"; // Show modal
-    }
-
-    function closeModal() {
-        let statusContainer = document.getElementById('status_confirmation');
-        statusContainer.innerHTML = ''; // Clear modal content
-        statusContainer.style.display = "none"; // Hide modal
-    }
-
-    function declineHandler() {
-        updateUserStatus(false);
-    }
-
-    function approvedHandler() {
-        updateUserStatus(true);
-    }
-
-    function updateUserStatus(status) {
-        const statusInput = document.getElementById("status");
-        const saveForm = document.getElementById("saveStatus");
-
-        if (!statusInput || !saveForm) {
-            alert("Error: Form or input field is missing!");
-            return;
-        }
-
-        statusInput.value = status ? "Approved" : "Declined";
-
-        // Ensure it's a form before calling submit
-        if (saveForm.tagName.toLowerCase() === "form") {
-            saveForm.submit((e)=>{e.preventDefault()});
+        // Set modal message and button color dynamically
+        if (status === 'approved') {
+            modalMessage.textContent = `Are you sure you want to approve this applicant?`;
+            confirmButton.className = "btn btn-success";
         } else {
-            console.error("Error: saveStatus is not a form element.");
+            modalMessage.textContent = `Are you sure you want to decline this applicant?`;
+            confirmButton.className = "btn btn-danger";
         }
+
+        // Update hidden input field with status
+        statusInput.value = status;
+
+        // Set form action dynamically
+        confirmButton.onclick = function () {
+            statusInput.closest('form').submit();
+        };
+
+        // Show modal
+        modal.style.display = "block";
     }
 
+    function closeModal(index) {
+        document.getElementById('statusModal_' + index).style.display = "none";
+    }
 
 
 

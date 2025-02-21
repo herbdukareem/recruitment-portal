@@ -361,7 +361,7 @@ button:hover {
 .screen-body form .no-br table tr td select:focus {
   outline: 0.08em solid #aaa;
 }
-/* .db-winscroll #display-screen .screen .body-edu {
+.db-winscroll #display-screen .screen .body-edu {
   background-color: #fff;
   border-top: 0.1em solid var(--main-bg);
   padding: 1em;
@@ -372,10 +372,10 @@ button:hover {
   -ms-border-radius: 0.3em;
   -o-border-radius: 0.3em;
 } */
-/* .db-winscroll #display-screen .screen .body-edu .left-edu {
+.db-winscroll #display-screen .screen .body-edu .left-edu {
   margin: 0.2em 1.5em 0.2em 0;
-} */
-.db-winscroll #display-screen .screen .body-edu div {
+}
+/* .db-winscroll #display-screen .screen .body-edu div {
   cursor: pointer;
   padding: 0.3em;
   color: #00f;
@@ -388,7 +388,7 @@ button:hover {
   -moz-border-radius: 0.3em 0.3em 0 0;
   -ms-border-radius: 0.3em 0.3em 0 0;
   -o-border-radius: 0.3em 0.3em 0 0;
-}
+} */
 #footer {
   background-color: var(--main-bg);
   color: var(--main-color-light);

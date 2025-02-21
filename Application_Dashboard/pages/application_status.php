@@ -1,4 +1,4 @@
-<div id="application-screen" style="display: none;">
+<div id="application-status_screen" style="display: none;">
     <div class="app-status">
         <div class="app-head">
             <h3>Application Review</h3>
