@@ -166,7 +166,7 @@ body {
   margin: 20px;
 }
 form {
-  margin: 1em 0;
+  /* margin: 1em 0; */
   background-color: #fff;
   box-shadow: 0 3px 4px var(--main-bg);
   width: 100%;
@@ -364,17 +364,9 @@ button:hover {
 .db-winscroll #display-screen .screen .body-edu {
   background-color: #fff;
   border-top: 0.1em solid var(--main-bg);
-  padding: 1em;
   box-shadow: 0 3px 4px var(--main-bg);
   border-radius: 0.3em;
-  -webkit-border-radius: 0.3em;
-  -moz-border-radius: 0.3em;
-  -ms-border-radius: 0.3em;
-  -o-border-radius: 0.3em;
 } */
-.db-winscroll #display-screen .screen .body-edu .left-edu {
-  margin: 0.2em 1.5em 0.2em 0;
-}
 /* .db-winscroll #display-screen .screen .body-edu div {
   cursor: pointer;
   padding: 0.3em;

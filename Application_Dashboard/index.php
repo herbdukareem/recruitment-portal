@@ -46,11 +46,6 @@
 
     $formSection = 1;
 
-    // checkin if user Nin exist
-    $checkNIN = $pdo->prepare("SELECT nin FROM user_applications WHERE user_id=:user_id");
-    $checkNIN->execute([":user_id"=>$user_id]);
-    $existingNIN = $checkNIN->fetch(PDO::FETCH_ASSOC);
-
     //save biodata form to db
     if (isset($_POST['saveBio'])) {
         $supPosition = $_POST['supPosition'];
@@ -68,13 +63,18 @@
         $emergencyNumber = $_POST['emergencyNumber'];
         $address = $_POST['address'];
 
+        // checkin if user Nin exist
+        $checkNIN = $pdo->prepare("SELECT nin FROM user_applications WHERE nin=:nin");
+        $checkNIN->execute([":nin"=>$nin]);
+        $existingNIN = $checkNIN->fetch(PDO::FETCH_ASSOC);
+
         if (empty($supPosition) || empty($position) || empty($firstname) || empty($lastname) || empty($middlename) || empty($gender)) {
             $_SESSION['alert_message'] = "All fields are required.";
             $_SESSION['alert_type'] = "warning";
             header("Location:" . $_SERVER['PHP_SELF'] . "#bio-screen");
             return;
         } else {
-            if(isset($existingNIN) || $existingNIN !== $nin){
+            if(!isset($existingNIN) || empty($existingNIN)){
                 try {
                     $checkRecordQuery = $pdo->prepare("SELECT id FROM user_applications WHERE user_id = :user_id");
                     $checkRecordQuery->execute(['user_id' => $user_id]);
@@ -217,6 +217,8 @@
                 $_SESSION['alert_message'] = "Apllication Failed, look like user already exist, try logging in with your previous account.";
                 $_SESSION['alert_type'] = "danger";
                 header("Location: ./Auth/auth.php?display=login");
+                // $deleteUser = $pdo->prepare("DELETE FROM users WHERE user_id=:user_id");
+                // $deleteUser->execute([':user_id'=> $user_id]);
                 exit();
             }
         }
@@ -666,7 +668,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style/alert.css">
+    <link rel="stylesheet" href="./style/alert.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
 </head>
 
@@ -779,10 +781,6 @@
             } else {
                 document.getElementById('biodata-screen').style.display = 'block';
             }
-            //  else {
-            //     // Default to cbt screen if no hash or an unrecognized hash is found
-            //     document.getElementById('cbt-screen').style.display = 'block';
-            // }
         };
 
           //db-pannel control

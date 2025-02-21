@@ -75,13 +75,13 @@
 		<div class="row h-100">
 			<div id="auth-left" class="col-lg-7 d-none d-lg-block">
 				<div class="lg">
-					<img class="img-fluid" src="./assets/images/logo.jpg" alt="">
+					<img class="img-fluid" src="../images/logo.png" alt="">
 				</div>
 			</div>
 			<div id="auth-right" class="col-lg-5 col-12">
 				<div class="auth-logo ">
 					<a href="index.html" class="d-flex">
-						<img src="./assets/images/logo.jpg"   alt="Logo">
+						<img src="../images/logo-plain.jpg"   alt="Logo">
 						<h5 class="px-4 mt-1 fs-4">University of Ilorin Nigeria</h5>
 					</a>
 				</div>
