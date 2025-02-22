@@ -663,12 +663,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Dashboard | University Of Ilorin</title>
-    <link rel="shortcut icon" href="./images/logo-plain.jpeg.jpg" type="image/x-icon">
-    <link rel="stylesheet" href="./style/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style/alert.css">
+    <link rel="stylesheet" href="./style/style.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
 </head>
 
@@ -741,7 +740,7 @@
 
     </div>
 
-    <div id="footer">
+    <div id="footer" class="footer">
         <div class="left-footer">
             <p>Copyright &copy; 2024 University Of Ilorin. All Rights Reserved</p>
         </div>
@@ -801,10 +800,11 @@
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function(){
+        document.addEventListener("DOMContentLoaded", function () {
+            function initializeNavigation() {
                 // Buttons and Screens Mapping
                 const screens = {
-                    // "cpl-btn": "cpl-screen",
+                    "cpl-btn": "cpl-screen",
                     "bio-btn": "biodata-screen",
                     "edu-btn": "education-screen",
                     "work-btn": "work-screen",
@@ -813,55 +813,52 @@
                     "app-status-btn": "application-status_screen",
                 };
 
-                // Get all buttons and screens
-                const buttons = Object.keys(screens).map(id => document.getElementById(id));
-                const screensElements = Object.values(screens).map(id => document.getElementById(id));
+                function getVisibleButtons() {
+                    return Object.keys(screens)
+                        .map(id => document.getElementById(id))
+                        .filter(btn => btn && getComputedStyle(btn).display !== "none"); // Only visible buttons
+                }
 
-                // Add event listeners to all buttons
-                buttons.forEach(button => {
-                    button.addEventListener("click", (e) => {
-                        // Reset all button backgrounds and hide all screens
-                        buttons.forEach(btn => btn.style.background = "none");
-                        screensElements.forEach(screen => screen.style.display = "none");
+                function getExistingScreens() {
+                    return Object.values(screens)
+                        .map(id => document.getElementById(id))
+                        .filter(screen => screen); // Ignore missing screens
+                }
 
-                        // Highlight the clicked button and display the corresponding screen
-                        e.target.style.background = "#bd911985";
-                        document.getElementById(screens[e.target.id]).style.display = "block";
+                function attachEventListeners() {
+                    const buttons = getVisibleButtons();
+                    const screensElements = getExistingScreens();
+
+                    buttons.forEach(button => {
+                        button.addEventListener("click", (e) => {
+                            // Reset all button backgrounds and hide all screens
+                            buttons.forEach(btn => btn.style.background = "none");
+                            screensElements.forEach(screen => screen.style.display = "none");
+
+                            // Highlight the clicked button and display the corresponding screen
+                            e.target.style.background = "#bd911985";
+                            const targetScreen = screens[e.target.id];
+                            if (targetScreen) {
+                                document.getElementById(targetScreen).style.display = "block";
+                            }
+                        });
                     });
+                }
+
+                // Run function to attach listeners only to visible buttons
+                attachEventListeners();
+
+                // Observe DOM changes (like hiding "cpl-btn") and reinitialize
+                const observer = new MutationObserver(() => {
+                    attachEventListeners();
                 });
 
-                
-            // Button and Screen Mapping
-            const educationSections = {
-                "pri-btn": "primary",
-                "sec-btn": "secondary",
-                "higher-btn": "higher",
-                "nysc-btn": "nysc"
-            };
+                observer.observe(document.body, { subtree: true, attributes: true, attributeFilter: ["style"] });
+            }
 
-            // Get all buttons and screens
-            const eduButtons = Object.keys(educationSections).map(id => document.getElementById(id));
-            const eduScreens = Object.values(educationSections).map(id => document.getElementById(id));
-
-            // Add event listeners to all buttons
-            eduButtons.forEach(button => {
-                button.addEventListener("click", (e) => {
-                    // Reset all buttons' styles
-                    eduButtons.forEach(btn => {
-                        btn.style.color = "blue"; 
-                        btn.style.borderStyle = "none";
-                    });
-
-                    // Hide all screens
-                    eduScreens.forEach(screen => screen.style.display = "none");
-
-                    // Apply styles to the active button and show the corresponding screen
-                    e.target.style.color = "black";
-                    e.target.style.borderStyle = "solid";
-                    document.getElementById(educationSections[e.target.id]).style.display = "block";
-                });
-            });
+            initializeNavigation();
         });
+
     </script>
 
     <script>
