@@ -209,51 +209,7 @@
 
 
 <script>
-        // function populateLGAs() {
-        //     const stateSelect = document.getElementById("state");
-        //     const lgaSelect = document.getElementById("lga");
-        //     const selectedState = stateSelect.value;
-
-        //     // Retrieve the pre-selected LGA from PHP (if available)
-        //     const preSelectedLGA = "<?php echo isset($user_data['lga']) ? $user_data['lga'] : ''; ?>";
-
-        //     // Clear existing LGAs
-        //     lgaSelect.innerHTML = '<option value="">--Select LGA--</option>';
-
-        //     // If a valid state is selected, populate the LGA dropdown
-        //     if (statesAndLGAs[selectedState]) {
-        //         statesAndLGAs[selectedState].forEach(lga => {
-        //             let option = document.createElement("option");
-        //             option.value = lga;
-        //             option.textContent = lga;
-
-        //             // Mark as selected if it matches the user's LGA
-        //             if (lga === preSelectedLGA) {
-        //                 option.selected = true;
-        //             }
-
-        //             lgaSelect.appendChild(option);
-        //         });
-        //     }
-        // }
-        // function populateSubPositions() {
-        //     const positionSelect = document.getElementById("allPosition");
-        //     const subPositionSelect = document.getElementById("position");
-        //     const selectedPosition = positionSelect.value;
-
-        //     // Clear existing LGAs
-        //     subPositionSelect.innerHTML = "<option value='' disabled hidden selected>--select sub-position--</option>";
-
-        //     // If a valid state is selected, populate the LGA dropdown
-        //     if (positionAndSubPosition[selectedPosition]) {
-        //         positionAndSubPosition[selectedPosition].forEach(sub => {
-        //             let option = document.createElement("option");
-        //             option.value = sub;
-        //             option.textContent = sub;
-        //             subPositionSelect.appendChild(option);
-        //         });
-        //     }
-        // }
+       
         const statesAndLGAs = {
             "Abia": [
                     "Aba North",

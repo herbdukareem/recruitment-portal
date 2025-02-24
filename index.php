@@ -1,3 +1,147 @@
+<!-- <?php 
+
+	error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+	ini_set('display_errors', 0);
+
+    $positions = [
+        "Administrative Cadre" => [
+            "Administrative Cadre",
+            "Executive Officer Cadre",
+            "Clerical Officer Cadre",
+            "Secretarial Cadre",
+            "Secretarial Assistant Cadre",
+            "Portel",
+            "Office Assistant Cadre"
+        ],
+        "Academic Staff" => [
+            "Professor",
+            "Associate Professor/Reader",
+            "Lecturer I",
+            "Lecturer II",
+            "Assistant Lecturer",
+            "Graduate Assistant"
+        ],
+        "Bursary" => [
+            "Accountant Cadre",
+            "Executive Officer (Accounts) Cadre",
+            "Stores Officers' Cadre",
+            "Store Attendant"
+        ],
+        "Internal Audit Unit" => [
+            "Internal Auditors' Cadre",
+            "Executive Officer (Audit) Cadre"
+        ],
+        "Directorate of Corporate Affairs" => [
+            "Information Officer Cadre",
+            "Protocol Officer Cadre",
+            "Photographer Cadre",
+            "Video Camera Operator Cadre",
+            "Information Assistant Cadre",
+            "Executive Officer (Information) Cadre"
+        ],
+        "Health Services" => [
+            "Doctors Cadre",
+            "Pharmacists Cadre",
+            "Nursing Officer Cadre",
+            "Pharmacy Technician Cadre",
+            "Medical Laboratory Technologist Cadre",
+            "Medical Laboratory Technician Cadre",
+            "Medical Laboratory Assistant Cadre",
+            "Health Records Officer",
+            "Environmental Health Officer Cadre",
+            "Veterinary Officer Cadre"
+        ],
+        "Legal Unit" => [
+            "Legal Officer Cadre"
+        ],
+        "University Library" => [
+            "Library Officer Cadre",
+            "Library Assistant Cadre",
+            "Bindery Officers' Cadre",
+            "Bindery Assistant Cadre"
+        ],
+        "Directorate of COMSIT" => [
+            "Data Operator/I.T. Operator Cadre",
+            "Data Analyst Cadre",
+            "Computer Electronics Engineer Cadre",
+            "Systems Programmer/Analyst Cadre",
+            "Director, COMSIT"
+        ],
+        "Works Unit" => [
+            "Engineer Cadre",
+            "Architect Cadre",
+            "Quantity Surveyor Cadre",
+            "Physical Planning Unit",
+            "Maintenance Officer",
+            "Workshop Attendant/Assistant/Superintendent Cadre",
+            "Driver Cadre",
+            "Driver/Mechanic Cadre",
+            "Craftsman (Carpentry & Mason, Welding, Plumbing, Electrical, R&G, Mechanical, etc.)",
+            "Technical Officer Cadre",
+            "Artisan/Craftsman",
+            "Power Station Operator Cadre",
+            "Horticulturist Cadre (Parks & Gardens)",
+            "Estate Officers' Cadre",
+            "Gardening Staff (Biological and Parks & Gardens Units)"
+        ],
+        "Zoo/Biological Garden" => [
+            "Turnstile Keeper Cadre",
+            "Zoo Keeper Cadre",
+            "Curator Cadre"
+        ],
+        "University Farm" => [
+            "Farm Officer/Manager",
+            "Agricultural/Animal Health/Forestry Superintendent Cadre",
+            "Farm/Livestock Supervisor"
+        ],
+        "Laboratory" => [
+            "Technologist Cadre",
+            "Laboratory Supervisor"
+        ],
+        "University School" => [
+            "Staff School Cadre I (Lower Basic)",
+            "Staff School Cadre II (Upper Basic)"
+        ],
+        "Directorate of Security" => [
+            "Security Cadre"
+        ],
+        "Academic Planning Unit" => [
+            "Planning Officer Cadre"
+        ],
+        "Sport" => [
+            "Coach Cadre"
+        ],
+        "SIWES" => [
+            "Coordinator Cadre (SIWES)"
+        ],
+        "Counselling Center" => [
+            "Counsellor Cadre"
+        ],
+        "Centre for Special Needs" => [
+            "Signer (Interpreter) Cadre"
+        ],
+        "Archives Centre" => [
+            "Archives Assistant Cadre",
+            "Archives' Officer Cadre",
+            "Archivist Cadre"
+        ],
+        "Educational Technology" => [
+            "Graphic Arts Assistant Cadre",
+            "Graphic Arts Officers' Cadre"
+        ],
+        "Guest Houses" => [
+            "Cook/Steward/Catering Officer Cadre",
+            "Laundry Cadre"
+        ],
+        "Fire Services" => [
+            "Fireman Cadre",
+            "Fire Superintendent Cadre - 120",
+            "Fire Officer Cadre - 122"
+        ]
+
+    ];
+?> -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,7 +226,7 @@
 
 <body>
     <main class="winscroll">
-        <?php include_once('header.php'); ?>
+       <?php include_once('header.php'); ?>
 
         <div class="main">
             <div class="con-bg">
@@ -113,98 +257,23 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <?php foreach( $positions as $position){ ?>
                     <!-- Academic Positions -->
                     <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
                         <img src="./images/Wahab-Egbewole.jpg" alt="Academic Positions" class="rounded-lg mb-4">
                         <div>
-                            <h3 class="text-xl font-semibold text-[#00044B]">Academic Positions</h3>
+                            <h3 class="text-xl font-semibold text-[#00044B]"><?php echo $position ?> </h3>
                             <ul class="mt-4 list-disc list-inside text-gray-700">
-                                <li>Professor</li>
-                                <li>Associate Professor</li>
-                                <li>Senior Lecturer</li>
-                                <li>Lecturer I</li>
-                                <li>Lecturer II</li>
-                                <li>Assistant Lecturer</li>
-                                <li>Graduate Assistant</li>
+                                <?php foreach($position as $listPosition){ ?>
+                                    <li><?php echo $listPosition ?></li>
+                                <?php } ?>
                             </ul>
                         </div>
                         <button
                             class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
                             Now</button>
                     </div>
-
-                    <!-- Administrative Positions -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/Administrative_Positions.jpg" alt="Administrative Positions"
-                            class="rounded-lg mb-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-[#00044B]">Administrative Positions</h3>
-                            <ul class="mt-4 list-disc list-inside text-gray-700">
-                                <li>Administrative Officers</li>
-                                <li>Human Resources Managers</li>
-                                <li>Finance Officers</li>
-                                <li>Procurement Officers</li>
-                                <li>Public Relations Officers</li>
-                            </ul>
-                        </div>
-                        <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
-                            Now</button>
-                    </div>
-
-                    <!-- Support Services Positions -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/Support_Services_Positions.jpg" alt="Support Services Positions"
-                            class="rounded-lg mb-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-[#00044B]">Support Services Positions</h3>
-                            <ul class="mt-4 list-disc list-inside text-gray-700">
-                                <li>Library Assistants</li>
-                                <li>Laboratory Technicians</li>
-                                <li>Maintenance Staff</li>
-                                <li>Security Personnel</li>
-                                <li>Health Services Staff</li>
-                                <li>COMSIT Directorate</li>
-                            </ul>
-                        </div>
-                        <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
-                            Now</button>
-                    </div>
-
-                    <!-- Specialist Positions -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/Specialist_Positions.jpg" alt="Specialist Positions" class="rounded-lg mb-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-[#00044B]">Specialist Positions</h3>
-                            <ul class="mt-4 list-disc list-inside text-gray-700">
-                                <li>Academic Advisors</li>
-                                <li>Career Counselors</li>
-                                <li>Disability Support Officers</li>
-                                <li>International Student Advisors</li>
-                            </ul>
-                        </div>
-                        <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
-                            Now</button>
-                    </div>
-
-                    <!-- Management Positions -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/Management_Positions.jpg" alt="Management Positions" class="rounded-lg mb-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-[#00044B]">Management Positions</h3>
-                            <ul class="mt-4 list-disc list-inside text-gray-700">
-                                <li>Department Heads</li>
-                                <li>Deans</li>
-                                <li>Vice Chancellors</li>
-                                <li>Directors of Centers and Institutes</li>
-                            </ul>
-                        </div>
-                        <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
-                            Now</button>
-                    </div>
+                    <?php } ?>
                 </div>
             </section>
 

@@ -2,8 +2,8 @@
 	session_start();
 	include_once('../db_connect.php');
 
-	// error_reporting(E_ERROR | E_PARSE); // Only show critical errors
-	// ini_set('display_errors', 0);
+	error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+	ini_set('display_errors', 0);
 
 	$admin_unid = $_SESSION['admin_unid'];
 
@@ -319,15 +319,15 @@
         display: none;
     }
 	.status_con {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: none;
-}
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 9999;
+		background-color: rgba(0, 0, 0, 0.6);
+		display: none;
+	}
 
 	.modal {
 		position: absolute;
