@@ -666,8 +666,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style/alert.css">
-    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="style/alert.css">
+    <link rel="stylesheet" href="style/style.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
 </head>
 
@@ -740,7 +740,7 @@
 
     </div>
 
-    <div id="footer" class="footer">
+    <div id="footer">
         <div class="left-footer">
             <p>Copyright &copy; 2024 University Of Ilorin. All Rights Reserved</p>
         </div>

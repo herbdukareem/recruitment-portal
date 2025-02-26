@@ -366,22 +366,8 @@ button:hover {
   border-top: 0.1em solid var(--main-bg);
   box-shadow: 0 3px 4px var(--main-bg);
   border-radius: 0.3em;
-} */
-/* .db-winscroll #display-screen .screen .body-edu div {
-  cursor: pointer;
-  padding: 0.3em;
-  color: #00f;
-  font-size: 0.7em;
-  margin-bottom: 1em;
-  border-color: #b4b4b4;
-  border-width: 0.08em 0.08em 0 0.08em;
-  border-radius: 0.3em 0.3em 0 0;
-  -webkit-border-radius: 0.3em 0.3em 0 0;
-  -moz-border-radius: 0.3em 0.3em 0 0;
-  -ms-border-radius: 0.3em 0.3em 0 0;
-  -o-border-radius: 0.3em 0.3em 0 0;
-} */
-.footer{
+}
+#footer{
   background-color: var(--main-bg);
   color: var(--main-color-light);
   position: fixed;
@@ -395,10 +381,10 @@ button:hover {
   font-size: 0.7em;
   padding: 0 0.5em;
 }
-.footer .left-footer {
+#footer .left-footer {
   grid-column: 1/2;
 }
-.footer .right-footer {
+#footer .right-footer {
   grid-column: 2/3;
   display: flex;
   justify-content: flex-end;
@@ -406,7 +392,7 @@ button:hover {
   padding-right: 10px;
 
 }
-.footer .right-footer button {
+#footer .right-footer button {
   cursor: pointer;
   padding: 0.7em 0.8em;
   background: var(--main-color-light);

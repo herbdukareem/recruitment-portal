@@ -1,7 +1,7 @@
-<!-- <?php 
+<?php 
 
-	error_reporting(E_ERROR | E_PARSE); // Only show critical errors
-	ini_set('display_errors', 0);
+	// error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+	// ini_set('display_errors', 0);
 
     $positions = [
         "Administrative Cadre" => [
@@ -140,7 +140,7 @@
         ]
 
     ];
-?> -->
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -257,24 +257,44 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <?php foreach( $positions as $position){ ?>
-                    <!-- Academic Positions -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                        <img src="./images/Wahab-Egbewole.jpg" alt="Academic Positions" class="rounded-lg mb-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-[#00044B]"><?php echo $position ?> </h3>
-                            <ul class="mt-4 list-disc list-inside text-gray-700">
-                                <?php foreach($position as $listPosition){ ?>
-                                    <li><?php echo $listPosition ?></li>
+                    <?php foreach ($positions as $positionName => $listPositions) { ?>
+                        <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
+                            <img src="./images/Wahab-Egbewole.jpg" alt="Academic Positions" class="rounded-lg mb-4">
+                            <div>
+                                <h3 class="text-xl font-semibold text-[#00044B]"><?php echo $positionName; ?></h3>
+                                <ul class="mt-4 list-disc list-inside text-gray-700">
+                                    <?php 
+                                    $totalItems = count($listPositions);
+                                    foreach ($listPositions as $index => $listPosition) { 
+                                        // Hide items after the 5th one
+                                        $hiddenClass = ($index >= 5) ? 'hidden' : ''; 
+                                    ?>
+                                        <li class="list-item <?php echo $hiddenClass; ?>" data-position="<?php echo $positionName; ?>">
+                                            <?php echo htmlspecialchars($listPosition); ?>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                                <?php if ($totalItems > 5) { ?>
+                                    <button class="see-more-btn mt-2 text-blue-500 " 
+                                        onclick="toggleList('<?php echo $positionName; ?>')">
+                                        See More...
+                                    </button>
+                                    <button class="see-less-btn mt-2 text-blue-500 hidden" 
+                                        onclick="toggleList('<?php echo $positionName; ?>')">
+                                        See Less
+                                    </button>
                                 <?php } ?>
-                            </ul>
+                            </div>
+                            <button class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">
+                                Apply Now
+                            </button>
                         </div>
-                        <button
-                            class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onclick="applyhereHandler()">Apply
-                            Now</button>
-                    </div>
                     <?php } ?>
                 </div>
+
+               
+
+
             </section>
 
             <section class="container mx-auto py-12 px-6">
@@ -372,6 +392,20 @@
 <script>
     function applyhereHandler(){
         window.location.href = './screening.php'
+    }
+    function toggleList(positionName) {
+        const listItems = document.querySelectorAll(`.list-item[data-position='${positionName}']`);
+        const seeMoreBtn = document.querySelector(`.see-more-btn[onclick="toggleList('${positionName}')"]`);
+        const seeLessBtn = document.querySelector(`.see-less-btn[onclick="toggleList('${positionName}')"]`);
+
+        listItems.forEach((item, index) => {
+            if (index >= 5) {
+                item.classList.toggle('hidden');
+            }
+        });
+
+        seeMoreBtn.classList.toggle('hidden');
+        seeLessBtn.classList.toggle('hidden');
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
