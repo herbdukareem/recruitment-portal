@@ -730,11 +730,10 @@
                 include_once('./pages/work.php');
                 include_once('./pages/pmc.php');
                 include_once('./pages/summary.php');
-                include_once('./pages/application_status.php');
-
                 if(!isset($userQuizScore['score'])){
                     include_once('./pages/proficiency.php');
                 };
+                include_once('./pages/application_status.php');
             ?>
         </div>
 
