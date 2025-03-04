@@ -299,6 +299,7 @@
 	<!-- Apexcharts  CSS -->
 	<link rel="stylesheet" href="assets/modules/apexcharts/apexcharts.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
+	<link rel="stylesheet" href="../style/style.css">
 
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -313,7 +314,7 @@
 			top: 0;
 			right: 0;
 			bottom: 0;
-			z-index: 999;
+			z-index: 9;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -394,20 +395,13 @@
 
 	<!--Topbar -->
 	<div class="transition admin_top_nav">
-
-		<div class="bars">
-			<button type="button" class="btn transition" id="sidebar-toggle">
-				<i class="fa fa-bars"></i>
-			</button>
-		</div>
-
 		<div class="bars">
 			<div class="hdd-text mx-4 mt-3 fs-2">
 				<h4 class="">University of Ilorin Admin Dashbaord</h4>
 			</div>
 		</div>
 
-		<div class="bars">
+		<div class="bars flex-bar">
 			<div class="menu mx-5 ">
 				<ul class="mx-5">
 					<li class="nav-item dropdown">
@@ -419,25 +413,27 @@
 					</li>
 				</ul>
 			</div>
+			<button type="button" class="btn transition" id="admin_sidebar_toggle" style="background-color: #00044B;">
+				<i class="fa fa-bars"></i>
+			</button>
+			<!-- Admin side bar -->
+			<div id="admin_sidebar">
+				<ul>
+					<li><a href="" id="btn-all">All Applicant</a></li>
+					<li><a href="" id="btn-add">Add Applicant</a></li>
+					<li><a href="" id="btn-create">Create Admin</a></li>
+				</ul>
+			</div>
 		</div>
 
 	</div>
 	
 	<div class="main">
-		<!-- Admin side bar -->
-		<div id="admin_sidebar">
-			<ul>
-				<li><a href="" id="btn-all">All Applicant</a></li>
-				<li><a href="" id="btn-add">Add Applicant</a></li>
-				<li><a href="" id="btn-create">Create Admin</a></li>
-			</ul>
-		</div>
-
 		<!-- Sorted Applicant -->
 		<div id="sort_applicant" style="display:block">
 			<!--Sidebar-->
 			<div id="sidebar">
-				<?php include_once('sidebar.php') ?>
+				<?php include_once('./include/sidebar.php') ?>
 				<div class="sidebar-overlay"></div>
 			</div>
 
@@ -446,6 +442,11 @@
 				<div class="container-fluid dashboard">
 					<!-- dashboard -->
 					<div id="dashboard" class="position row" style="display: flex;">
+						<div class="bars">
+							<button type="button" class="btn transition" id="sidebar-toggle" style="background-color: black;">
+								<i class="fa fa-bars"></i>
+							</button>
+						</div>
 						<div class="card-header">
 							<h1>Dashboard</h1>
 							<p></p>
@@ -552,7 +553,7 @@
 
 					</div>
 					<div id="content"></div>
-					<?php include_once('botAI.php') ?>
+					<?php include_once('./include/botAI.php') ?>
 					<?php
 						$index = 0;
 						// Example of calling the function for different positions
@@ -692,11 +693,12 @@
 
 		<!-- Add Applicant -->
 		 <div id="add_applicant" style="display: none;">
-			<h1>Hello world</h1>
+			<?php include_once('./include/biodata.php') ?>
 		 </div>
+
 		<!-- Create admin -->
 		 <div id="create_admin" style="display: none;">
-			<h1>Welcome to admin</h1>
+			<?php include_once('./include/createAdmin.php') ?>
 		 </div>
 	
 	</div>
@@ -731,8 +733,31 @@
 
 	<!-- Dashboard chart JS script -->
 	<script>
+		const adminSidebarToggle = document.getElementById('admin_sidebar_toggle');
+		const adminSidebar = document.getElementById('admin_sidebar');
 		const ctx = document.getElementById('myChart').getContext('2d');
 		const totalApplications = <?php echo $jsArrayOutput; ?>; // PHP-generated data
+		const toggleButton = document.getElementById('sidebar-toggle');
+		const applicantSidebar = document.getElementById('all_applicant_sidebar');
+		let sidebarOpen = false
+
+		toggleButton.addEventListener('click', ()=>{
+			if(!sidebarOpen){
+				applicantSidebar.style.left = '0';
+				toggleButton.style.zIndex = 9999;
+				toggleButton.style.transform = 'translateX(200px)';
+				toggleButton.style.color = '#fff';
+				sidebarOpen = true
+				console.log('list Clicked');
+			} else {
+				applicantSidebar.style.left = '-275px';
+				toggleButton.style.zIndex = 9999;
+				toggleButton.style.transform = 'translateX(0)';
+				toggleButton.style.color = '#000';
+				sidebarOpen = false
+				console.log('list Clicked');
+			}
+		})
 
 		const myChart = new Chart(ctx, {
 			type: 'bar', // Change this to 'line', 'bar', etc. if needed
@@ -865,6 +890,11 @@
 			}
 		});
 
+		adminSidebarToggle.addEventListener('click', ()=>{
+			adminSidebar.style.right = "0px"
+			console.log('Clicked')
+		});
+
 		function initializeNavigation() {
 			// Buttons and Screens Mapping
 			const screens = {
@@ -897,11 +927,13 @@
 						screensElements.forEach(screen => screen.style.display = "none");
 
 						// Highlight the clicked button and display the corresponding screen
-						e.target.style.background = "#bd911985";
+						e.target.style.background = "#ffffff5f";
+						e.target.style.borderRadius = "8px";
 						const targetScreen = screens[e.target.id];
 						if (targetScreen) {
 							document.getElementById(targetScreen).style.display = "block";
 						}
+						adminSidebar.style.right = "-350px"
 					});
 				});
 			}
