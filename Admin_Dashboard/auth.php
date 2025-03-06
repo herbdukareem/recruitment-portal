@@ -15,6 +15,7 @@
 			if(password_verify($admin_password, $admin['admin_password'])){
 				$_SESSION["admin_unid"] = $admin["id"];
 				$_SESSION["admin_id"] = $admin["admin_id"];
+				$_SESSION["admin_role"] = $admin["admin_role"];
 
 				// Set success message in session
 				// $_SESSION['alert_message'] = "Login successful!";

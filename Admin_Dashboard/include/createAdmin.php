@@ -5,7 +5,6 @@
             <div class="mb-3">
                 <label for="admin_role" class="form-label">Admin Role</label>
                 <select class="form-select" name="admin_role" id="admin_role">
-                    <option value="inspector">Inspector</option>
                     <option value="admin">Admin</option>
                     <option value="sup_admin">Super Admin</option>
                 </select>

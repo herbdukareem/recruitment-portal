@@ -291,15 +291,14 @@
 	<!-- <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css"> -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<!-- Style CSS -->
-	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="./assets/css/style.css">
 	<!-- FontAwesome CSS-->
-	<link rel="stylesheet" href="assets/modules/fontawesome6.1.1/css/all.css">
+	<link rel="stylesheet" href="./assets/modules/fontawesome6.1.1/css/all.css">
 	<!-- Boxicons CSS-->
-	<link rel="stylesheet" href="assets/modules/boxicons/css/boxicons.min.css">
+	<link rel="stylesheet" href="./assets/modules/boxicons/css/boxicons.min.css">
 	<!-- Apexcharts  CSS -->
-	<link rel="stylesheet" href="assets/modules/apexcharts/apexcharts.css">
+	<link rel="stylesheet" href="./assets/modules/apexcharts/apexcharts.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
-	<link rel="stylesheet" href="../style/style.css">
 
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -314,7 +313,7 @@
 			top: 0;
 			right: 0;
 			bottom: 0;
-			z-index: 9;
+			z-index: 99;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -407,17 +406,17 @@
 					<li class="nav-item dropdown">
 						<a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
 							aria-expanded="false">
-							<img src="assets/images/avatar/avatar-1.png" alt="">
+							<img src="./assets/images/avatar/avatar-1.png" alt="">
 							<b><?php echo htmlspecialchars($_SESSION['admin_id']) ?></b>
 						</a>
 					</li>
 				</ul>
 			</div>
-			<button type="button" class="btn transition" id="admin_sidebar_toggle" style="background-color: #00044B;">
+			<button type="button" class="btn transition" id="admin_sidebar_toggle">
 				<i class="fa fa-bars"></i>
 			</button>
 			<!-- Admin side bar -->
-			<div id="admin_sidebar">
+			<div id="admin_sidebar" class="admin_sidebar">
 				<ul>
 					<li><a href="" id="btn-all">All Applicant</a></li>
 					<li><a href="" id="btn-add">Add Applicant</a></li>
@@ -443,7 +442,7 @@
 					<!-- dashboard -->
 					<div id="dashboard" class="position row" style="display: flex;">
 						<div class="bars">
-							<button type="button" class="btn transition" id="sidebar-toggle" style="background-color: black;">
+							<button type="button" class="btn transition" id="sidebar-toggle">
 								<i class="fa fa-bars"></i>
 							</button>
 						</div>
@@ -744,16 +743,14 @@
 		toggleButton.addEventListener('click', ()=>{
 			if(!sidebarOpen){
 				applicantSidebar.style.left = '0';
-				toggleButton.style.zIndex = 9999;
-				toggleButton.style.transform = 'translateX(200px)';
-				toggleButton.style.color = '#fff';
+				toggleButton.style.zIndex = 98;
+				toggleButton.style.transform = 'translateX(250px)';
 				sidebarOpen = true
 				console.log('list Clicked');
 			} else {
 				applicantSidebar.style.left = '-275px';
-				toggleButton.style.zIndex = 9999;
+				toggleButton.style.zIndex = 0;
 				toggleButton.style.transform = 'translateX(0)';
-				toggleButton.style.color = '#000';
 				sidebarOpen = false
 				console.log('list Clicked');
 			}
@@ -891,7 +888,7 @@
 		});
 
 		adminSidebarToggle.addEventListener('click', ()=>{
-			adminSidebar.style.right = "0px"
+			adminSidebar.style.right = "0"
 			console.log('Clicked')
 		});
 
