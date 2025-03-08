@@ -84,16 +84,6 @@
             "Estate Officers' Cadre",
             "Gardening Staff (Biological and Parks & Gardens Units)"
         ],
-        "Zoo/Biological Garden" => [
-            "Turnstile Keeper Cadre",
-            "Zoo Keeper Cadre",
-            "Curator Cadre"
-        ],
-        "University Farm" => [
-            "Farm Officer/Manager",
-            "Agricultural/Animal Health/Forestry Superintendent Cadre",
-            "Farm/Livestock Supervisor"
-        ],
         "Laboratory" => [
             "Technologist Cadre",
             "Laboratory Supervisor"
@@ -128,10 +118,6 @@
         "Educational Technology" => [
             "Graphic Arts Assistant Cadre",
             "Graphic Arts Officers' Cadre"
-        ],
-        "Guest Houses" => [
-            "Cook/Steward/Catering Officer Cadre",
-            "Laundry Cadre"
         ],
         "Fire Services" => [
             "Fireman Cadre",

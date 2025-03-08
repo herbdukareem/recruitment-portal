@@ -69,6 +69,12 @@ body {
   stroke: var(--main-color-light);
   fill: var(--main-color-light);
 }
+.error-400{
+  color: red;
+  text-align: center;
+  padding: 50px;
+  line-height: 10px;
+}
 .db-winscroll #display-screen {
   position: relative;
   grid-column: 2/3;
@@ -250,20 +256,36 @@ form .form-body table tr td div label i {
 input[type=text], 
 input[type=email], 
 input[type=date], 
-input[type=file], 
 select {
-  font-family: "Gruppo", sans-serif;
-  padding: 0.4em;
-  font-size: 1em;
-  outline: none;
-  width: 100%;
-  border: 0.1em solid rgba(0, 4, 75, 0.5411764706);
-  box-sizing: border-box;
-  border-radius: 0.3em;
+    font-family: "Gruppo", sans-serif;
+    padding: 0.5rem;
+    font-size: 1rem;
+    outline: none;
+    width: 100%;
+    border: 1px solid rgba(0, 4, 75, 0.54);
+    box-sizing: border-box;
+    border-radius: 0.3rem;
+    background-color: #f8f9fa;
+    transition: border 0.3s ease-in-out;
 }
-input:focus, 
+input:focus,
 select:focus {
-  outline: 0.08em solid rgba(0, 4, 75, 0.5411764706);
+    border-color: rgba(0, 4, 75, 0.8);
+    box-shadow: 0 0 5px rgba(0, 4, 75, 0.5);
+}
+input[type=file]{
+  cursor: pointer;
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    appearance: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 4, 75, 0.54);
+    border-radius: 0.3em;
+    /* transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out; */
 }
 input[type=checkbox] {
   transform: translateY(3px);
@@ -346,7 +368,6 @@ button:hover {
 .screen-body form .no-br table tr td input[type=text], 
 .screen-body form .no-br table tr td input[type=email], 
 .screen-body form .no-br table tr td input[type=date], 
-.screen-body form .no-br table tr td input[type=file], 
 .screen-body form .no-br table tr td select {
   font-family: "Gruppo", sans-serif;
   padding: 0.4em;

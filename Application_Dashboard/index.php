@@ -48,6 +48,7 @@
 
     //save biodata form to db
     if (isset($_POST['saveBio'])) {
+        $positionType = $_POST['positionType'];
         $supPosition = $_POST['supPosition'];
         $position = $_POST['position'];
         $firstname = $_POST['firstname'];
@@ -68,7 +69,7 @@
         $checkNIN->execute([":nin"=>$nin]);
         $existingNIN = $checkNIN->fetch(PDO::FETCH_ASSOC);
 
-        if (empty($supPosition) || empty($position) || empty($firstname) || empty($lastname) || empty($middlename) || empty($gender)) {
+        if (empty($positionType) || empty($supPosition) || empty($position) || empty($firstname) || empty($lastname) || empty($middlename) || empty($gender)) {
             $_SESSION['alert_message'] = "All fields are required.";
             $_SESSION['alert_type'] = "warning";
             header("Location:" . $_SERVER['PHP_SELF'] . "#bio-screen");
@@ -81,17 +82,18 @@
 
                     if ($checkRecordQuery->rowCount() === 0) {
                         $sql = "INSERT INTO user_applications (
-                                    user_id,supPosition, position, firstname, lastname, middlename, gender, dateOfBirth, 
+                                    user_id, positionType, supPosition, position, firstname, lastname, middlename, gender, dateOfBirth, 
                                     maritalStatus, stateOfOrigin, lga, nin, 
                                     phoneNumber, emergencyNumber, address
                                 ) VALUES (
-                                    :user_id, :supPosition, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
+                                    :user_id, :positionType, :supPosition, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
                                     :maritalStatus, :stateOfOrigin, :lga, :nin, 
                                     :phoneNumber, :emergencyNumber, :address
                                 )";
                     } else {
                         // Update existing record
                         $sql = "UPDATE user_applications SET 
+                                    positionType = :positionType,
                                     supPosition = :supPosition,
                                     position = :position,
                                     firstname = :firstname,
@@ -112,6 +114,7 @@
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute([
                         ':user_id' => $user_id,
+                        ':positionType' => $positionType,
                         ':supPosition' => $supPosition,
                         ':position' => $position,
                         ':firstname' => $firstname,
@@ -654,6 +657,11 @@
     ");
     $fetchAllUserData->execute(['user_id' => $user_id]);
     $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
+
+    
+    // Check if all previous forms are completed
+    $formsCompleted = !empty($userBiodata) && !empty($userEducation) && !empty($userWork) && !empty($userPmc);
+
    
 ?>
 <!DOCTYPE html>
@@ -703,19 +711,6 @@
                 <ul>
                     <?php 
                         include_once('./pages/nav_lists.php');
-
-                        if (!isset($userQuizScore['score'])) {
-                            echo <<<HTML
-                                <li>
-                                    <button id="cpl-btn" class="all-bt-bg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
-                                            <path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M38.5 5.5h-29c-2.2 0-4 1.8-4 4v29c0 2.2 1.8 4 4 4h29c2.2 0 4-1.8 4-4v-29c0-2.2-1.8-4-4-4" stroke-width="1"/><path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M34.3 35.9L24 30.5l-10.3 5.4V19L24 12.1L34.3 19zM24 12.1v18.4z" stroke-width="1"/>
-                                        </svg>
-                                        CPL Test
-                                    </button>
-                                </li>
-                            HTML;
-                        }
                     ?>
                 </ul>
             </div>
@@ -730,11 +725,25 @@
                 include_once('./pages/work.php');
                 include_once('./pages/pmc.php');
                 include_once('./pages/summary.php');
-                if(!isset($userQuizScore['score'])){
+
+                
+                // Ensure quiz score does not exist before showing proficiency page
+                if (!empty($formsCompleted) && !isset($userQuizScore['score'])) {
                     include_once('./pages/proficiency.php');
+                } else {
+                    echo '
+                        <div id="cpl-screen" style="display:none">
+                            <div class="error-400">
+                                <h2>Page Restriction!</h2>
+                                <p>Fill all required forms to proceed.</p>   
+                            </div>
+                        </div>
+                    ';
                 };
+
                 include_once('./pages/application_status.php');
             ?>
+
         </div>
 
     </div>
@@ -885,7 +894,6 @@
             <?php unset($_SESSION['alert_type']); ?>
         <?php endif; ?>
     </script>
-
 
 </body>
 
