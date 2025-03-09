@@ -9,6 +9,7 @@
                     </svg>Bio Data</a></p>
         </div>
     </div>
+    <div id="alert-container-login"></div>
     <div class="screen-body">
         <form action="" method="post" enctype="multipart/form-data" id="bioForm">
             <div class="position">
@@ -22,7 +23,7 @@
                                 <select id="positionType" name="positionType">
                                     <option value="">--Select Position Type--</option>
                                     <option value="Academic">Academic</option>
-                                    <option value="Non-Academic">Non-Teaching</option>
+                                    <option value="Non-Teaching">Non-Teaching</option>
                                 </select>
                             </td>
                             <td>

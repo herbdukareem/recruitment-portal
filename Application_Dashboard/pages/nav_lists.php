@@ -41,8 +41,8 @@
         Summary
     </button>
 </li>
-    <?php 
-     if (!isset($userQuizScore['score']) && !empty($formsCompleted) && !isset($userQuizScore['score'])) {
+<?php 
+     if (!isset($userQuizScore['score'])) {
         echo <<<HTML
             <li>
                 <button id="cpl-btn" class="all-bt-bg">

@@ -64,9 +64,9 @@
         $emergencyNumber = $_POST['emergencyNumber'];
         $address = $_POST['address'];
 
-        // checkin if user Nin exist
-        $checkNIN = $pdo->prepare("SELECT nin FROM user_applications WHERE nin=:nin");
-        $checkNIN->execute([":nin"=>$nin]);
+       // Check if NIN exists in the database
+        $checkNIN = $pdo->prepare("SELECT user_id FROM user_applications WHERE nin = :nin");
+        $checkNIN->execute([":nin" => $nin]);
         $existingNIN = $checkNIN->fetch(PDO::FETCH_ASSOC);
 
         if (empty($positionType) || empty($supPosition) || empty($position) || empty($firstname) || empty($lastname) || empty($middlename) || empty($gender)) {
@@ -75,23 +75,32 @@
             header("Location:" . $_SERVER['PHP_SELF'] . "#bio-screen");
             return;
         } else {
-            if(!isset($existingNIN) || empty($existingNIN)){
                 try {
-                    $checkRecordQuery = $pdo->prepare("SELECT id FROM user_applications WHERE user_id = :user_id");
-                    $checkRecordQuery->execute(['user_id' => $user_id]);
+                    // Check if user already exists in user_applications
+                    $checkRecordQuery = $pdo->prepare("SELECT * FROM user_applications WHERE user_id = :user_id");
+                    $checkRecordQuery->execute([":user_id" => $user_id]);
 
-                    if ($checkRecordQuery->rowCount() === 0) {
-                        $sql = "INSERT INTO user_applications (
-                                    user_id, positionType, supPosition, position, firstname, lastname, middlename, gender, dateOfBirth, 
-                                    maritalStatus, stateOfOrigin, lga, nin, 
-                                    phoneNumber, emergencyNumber, address
-                                ) VALUES (
-                                    :user_id, :positionType, :supPosition, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
-                                    :maritalStatus, :stateOfOrigin, :lga, :nin, 
-                                    :phoneNumber, :emergencyNumber, :address
-                                )";
+                    if ($checkRecordQuery->rowCount() === 0) { // New applicant
+                        if ($existingNIN && $existingNIN !== $user_id) {
+                            // NIN belongs to another user, block insertion
+                            $_SESSION['alert_message'] = "Application Failed! This NIN is already registered with another applicant.";
+                            $_SESSION['alert_type'] = "danger";
+                            header("Location:" . $_SERVER['PHP_SELF'] . "#biodata-screen");
+                            exit();
+                        } else {
+                            // Insert new record
+                            $sql = "INSERT INTO user_applications (
+                                        user_id, positionType, supPosition, position, firstname, lastname, middlename, gender, dateOfBirth, 
+                                        maritalStatus, stateOfOrigin, lga, nin, 
+                                        phoneNumber, emergencyNumber, address
+                                    ) VALUES (
+                                        :user_id, :positionType, :supPosition, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
+                                        :maritalStatus, :stateOfOrigin, :lga, :nin, 
+                                        :phoneNumber, :emergencyNumber, :address
+                                    )";
+                        }
                     } else {
-                        // Update existing record
+                        // Allow update if user already exists
                         $sql = "UPDATE user_applications SET 
                                     positionType = :positionType,
                                     supPosition = :supPosition,
@@ -104,7 +113,6 @@
                                     maritalStatus = :maritalStatus,
                                     stateOfOrigin = :stateOfOrigin,
                                     lga = :lga,
-                                    nin = :nin,
                                     phoneNumber = :phoneNumber,
                                     emergencyNumber = :emergencyNumber,
                                     address = :address
@@ -131,7 +139,7 @@
                         ':address' => $address
                     ]);
 
-                // File upload handling
+                    // File upload handling
                     $uploadDirectory = "./uploads/";
                     $allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png']; 
 
@@ -216,14 +224,7 @@
                 } catch (PDOException $e) {
                     echo 'Error: ' . $e->getMessage();
                 }
-            } else {
-                $_SESSION['alert_message'] = "Apllication Failed, look like user already exist, try logging in with your previous account.";
-                $_SESSION['alert_type'] = "danger";
-                header("Location: ./Auth/auth.php?display=login");
-                // $deleteUser = $pdo->prepare("DELETE FROM users WHERE user_id=:user_id");
-                // $deleteUser->execute([':user_id'=> $user_id]);
-                exit();
-            }
+            
         }
     }
 
@@ -619,9 +620,7 @@
                   $_SESSION['alert_message'] = "Test Submitted successfuly";
                   $_SESSION['alert_type'] = "success";
             
-                  header("Location:" . $_SERVER['PHP_SELF'] . "#cpl-screen");
-            
-    
+            header("Location:" . $_SERVER['PHP_SELF'] . "#application-status_screen");
         } catch (PDOException $e) {
             $_SESSION['alert_message'] = "Error saving files!";
             $_SESSION['alert_type'] = "danger";
@@ -660,7 +659,7 @@
 
     
     // Check if all previous forms are completed
-    $formsCompleted = !empty($userBiodata) && !empty($userEducation) && !empty($userWork) && !empty($userPmc);
+    $formsCompleted = !empty($allUserData);
 
    
 ?>
@@ -674,8 +673,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style/alert.css">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="./style/alert.css">
+    <link rel="stylesheet" href="./style/style.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
 </head>
 
@@ -741,7 +740,20 @@
                     ';
                 };
 
-                include_once('./pages/application_status.php');
+                // Ensure quiz score exist before showing application status page
+                if (!empty($formsCompleted) && isset($userQuizScore['score'])) {
+                    include_once('./pages/application_status.php');
+                } else {
+                    echo '
+                        <div id="application-status_screen" style="display:none">
+                            <div class="error-400">
+                                <h2>Page Restriction!</h2>
+                                <p>Fill all required forms, and take <u>COMPUTER PROFICENCY TEST</u> to view application status.</p>   
+                            </div>
+                        </div>
+                    ';
+                };
+
             ?>
 
         </div>
