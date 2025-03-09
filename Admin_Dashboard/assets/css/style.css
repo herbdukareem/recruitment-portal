@@ -67,7 +67,8 @@ body {
 
 a {
 	text-decoration: none;
-	color: #00044B;
+	color: #00244b;
+	text-decoration: underline;
 }
 
 li{

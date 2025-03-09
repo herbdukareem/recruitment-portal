@@ -160,9 +160,8 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Pri Name:</strong><?php echo $user['primary_school_name']; ?></td>
-                                                        <td></td>
                                                         <td><strong>Year: </strong><?php echo $user['primary_graduation_year']; ?></td>
-
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sec Name:</strong><?php echo $user['secondarySchoolName']; ?></td>
@@ -186,16 +185,15 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Org Name:</strong><?php echo $user['organizationName']; ?></td>
-                                                        <td></td> <!-- Placeholder for the empty cell -->
                                                         <td><strong>Rank:</strong><?php echo $user['rank']; ?></td>
-                                                    </tr>
+                                                        <td></td> <!-- Placeholder for the empty cell -->
                                                     <tr>
                                                         <td colspan="3"><strong>Res:</strong><?php echo $user['responsibilities']; ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>S-Date:</strong><?php echo $user['startDate']; ?></td>
-                                                        <td></td> <!-- Placeholder for the empty cell -->
                                                         <td><strong>E-Date:</strong><?php echo $user['endDate']; ?></td>
+                                                        <td></td> <!-- Placeholder for the empty cell -->
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Body Name:</strong><?php echo $user['bodyName']; ?></td>

@@ -6,6 +6,7 @@
 	ini_set('display_errors', 0);
 
 	$admin_unid = $_SESSION['admin_unid'];
+	$adminRole = $_SESSION["admin_role"];
 
 	//Check if the user is logged in
 	if (!isset($_SESSION['admin_unid'])) {
@@ -15,6 +16,11 @@
 	}
 
 	$positions = [
+		"Professor",
+		"Associate Professor/Reader",
+		"Lecturer I",
+		"Lecturer II",
+		"Assistant Lecturer",
 		"Administrative Cadre",
 		"Executive Officer Cadre",
 		"Clerical Officer Cadre",
@@ -99,8 +105,6 @@
 
 
 	//Get position and users data that apply for the position
-	//Get position and users data that apply for the position
-	//Get position and users data that apply for the position
 	foreach ($positions as $position) {
 		$fetchData = $pdo->prepare('
 			SELECT 
@@ -161,10 +165,6 @@
 		$positionData[$position] = $fetchData->fetchAll(PDO::FETCH_ASSOC); // Store results in the array
 	};
 
-
-	//for total number of Application Submitted
-	//for total number of Application Submitted
-	//for total number of Application Submitted
 	// Prepare and execute the count query
 	$totalcount = 0;
 	foreach ($positions as $position){
@@ -189,10 +189,6 @@
 		$totalcount += $totalCountForPosition;
 	};
 
-
-
-	//Gender count for selected position 
-	//Gender count for selected position 
 	//Gender count for selected position 
 	$genders = ['Male', 'Female'];
 	$totalGenderCount = [];
@@ -218,12 +214,6 @@
 		}
 	}
 
-
-
-
-	//for total number of Gender Applicant
-	//for total number of Gender Applicant
-	//for total number of Gender Applicant
 	// Prepare and execute the count query
 	foreach ($genders as $gender){
 		$countGendertQuery = $pdo->prepare('
@@ -236,8 +226,6 @@
 		$totalgender[$gender] =$countGendertQuery->fetchColumn();  // Store count for current position
 	};
 
-	//for all user that signup
-	//for all user that signup
 	//for all user that signup N
 	// Prepare and execute the count query
 	$countSignupUsersQuery = $pdo->prepare('
@@ -275,6 +263,50 @@
 	} catch (PDOException $e) {
 		echo "Error: " . $e->getMessage();
 	}
+
+	// Create Admin
+	if (isset($_POST['createAdmin'])) {
+		$admin_role = $_POST['admin_role']; // Fixed typo
+		$admin_id = $_POST['admin_id'];
+		$password = $_POST['password'];
+		$confirmPassword = $_POST['c-password'];
+	
+		// Check if admin already exists
+		$checkAdmin = $pdo->prepare("SELECT admin_id FROM admins WHERE admin_id = :admin_id");
+		$checkAdmin->execute([':admin_id' => $admin_id]);
+		$existingAdmin = $checkAdmin->fetch(PDO::FETCH_ASSOC);
+	
+		// Check if all fields are filled
+		if (empty($admin_id) || empty($admin_role) || empty($password) || empty($confirmPassword)) {
+			$_SESSION['alert_message'] = "All fields are required.";
+			$_SESSION['alert_type'] = "warning";
+		} elseif ($existingAdmin) { 
+			// Prevent duplicate admin accounts
+			$_SESSION['alert_message'] = "Admin ID already exists. Please use a different ID.";
+			$_SESSION['alert_type'] = "danger";
+		} elseif ($password !== $confirmPassword) { 
+			// Validate password match
+			$_SESSION['alert_message'] = "Passwords do not match.";
+			$_SESSION['alert_type'] = "danger";
+		} else {
+			// Hash password before storing
+			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+	
+			// Insert new admin
+			$insertAdmin = $pdo->prepare("INSERT INTO admins (admin_id, admin_role, admin_password) VALUES (:admin_id, :admin_role, :admin_password)");
+			$insertAdmin->execute([
+				':admin_id'   => $admin_id,
+				':admin_role' => $admin_role,
+				':admin_password'   => $hashed_password
+			]);
+	
+			$_SESSION['alert_message'] = "Admin created successfully!";
+			$_SESSION['alert_type'] = "success";
+			header("Location:" . $_SERVER["PHP_SELF"] . "#create_admin" );
+			exit();
+		}
+	}
+	
 	
 
 ?>
@@ -412,17 +444,22 @@
 					</li>
 				</ul>
 			</div>
-			<button type="button" class="btn transition" id="admin_sidebar_toggle">
-				<i class="fa fa-bars"></i>
-			</button>
-			<!-- Admin side bar -->
-			<div id="admin_sidebar" class="admin_sidebar">
-				<ul>
-					<li><a href="" id="btn-all">All Applicant</a></li>
-					<li><a href="" id="btn-add">Add Applicant</a></li>
-					<li><a href="" id="btn-create">Create Admin</a></li>
-				</ul>
-			</div>
+
+			<?php 
+				if ( !empty($adminRole) && $adminRole === 'sup_admin'){
+			?>
+				<button type="button" class="btn transition" id="admin_sidebar_toggle">
+					<i class="fa fa-bars"></i>
+				</button>
+				<!-- Admin side bar -->
+				<div id="admin_sidebar" class="admin_sidebar">
+					<ul>
+						<li><a href="" id="btn-all">All Applicant</a></li>
+						<li><a href="" id="btn-add">Add Applicant</a></li>
+						<li><a href="" id="btn-create">Create Admin</a></li>
+					</ul>
+				</div>
+			<?php } ?>
 		</div>
 
 	</div>
@@ -556,6 +593,13 @@
 					<?php
 						$index = 0;
 						// Example of calling the function for different positions
+						//  Academic Staff
+						renderPositionSection('Professor', 'Professor', $totalApplications, $totalGenderCount, $positionData, $index);
+						renderPositionSection('Associate_Professor_Reader', 'Associate Professor Reader', $totalApplications, $totalGenderCount, $positionData, $index);
+						renderPositionSection('Lecturer_I', 'Lecturer I', $totalApplications, $totalGenderCount, $positionData, $index);
+						renderPositionSection('Lecturer_II', 'Lecturer II', $totalApplications, $totalGenderCount, $positionData, $index);
+						renderPositionSection('Assistant_Lecturer', 'Assistant Lecturer', $totalApplications, $totalGenderCount, $positionData, $index);
+						
 						//  Administrative Cadre
 						renderPositionSection('Administrative_Cadre', 'Administrative Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
 						renderPositionSection('Executive_Officer_Cadre', 'Executive Officer Cadre', $totalApplications, $totalGenderCount, $positionData, $index);
@@ -689,16 +733,19 @@
 				</div>
 			</div>
 		</div>
+		<?php 
+			if(!empty($adminRole) && $adminRole === 'sup_admin'){		
+		?>
+			<!-- Add Applicant -->
+			<div id="add_applicant" style="display: none;">
+				<?php include_once('./include/biodata.php') ?>
+			</div>
 
-		<!-- Add Applicant -->
-		 <div id="add_applicant" style="display: none;">
-			<?php include_once('./include/biodata.php') ?>
-		 </div>
-
-		<!-- Create admin -->
-		 <div id="create_admin" style="display: none;">
-			<?php include_once('./include/createAdmin.php') ?>
-		 </div>
+			<!-- Create admin -->
+			<div id="create_admin" style="display: none;">
+				<?php include_once('./include/createAdmin.php') ?>
+			</div>
+		 <?php } ?>
 	
 	</div>
 	

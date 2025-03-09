@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="card p-4 shadow-sm">
         <h4 class="mb-4">Create Admin</h4>
-        <form>
+        <form action="" method="post">
             <div class="mb-3">
                 <label for="admin_role" class="form-label">Admin Role</label>
                 <select class="form-select" name="admin_role" id="admin_role">
@@ -21,7 +21,7 @@
                 <label for="c-password" class="form-label">Confirm Password</label>
                 <input type="password" class="form-control" id="c-password" name="c-password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" name="createAdmin">Submit</button>
         </form>
     </div>
 </div>

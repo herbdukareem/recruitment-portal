@@ -13,12 +13,21 @@
 					<i class='bx bxs-dashboard icon'></i> Dashboard
 				</a>
 			</li>
-
-
-
-			
-
-
+			<li>
+				<a href="#">
+					<i class='bx bxs-briefcase icon'></i>
+					Academic Staff
+					<i class='bx bx-chevron-right icon-right'></i>
+				</a>
+				<ul class="side-dropdown">
+				<!-- Button to trigger botAI -->
+					<li><button onclick="showDiv('Professor')">Professor </button></li>
+					<li><button onclick="showDiv('Associate_Professor_Reader')">Associate Professor/Reader</button></li>
+					<li><button onclick="showDiv('Lecturer_I')">Lecturer I</button></li>
+					<li><button onclick="showDiv('Lecturer_II')">Lecturer II</button></li>
+					<li><button onclick="showDiv('Assistant_Lecturer')">Assistant Lecturer</button></li>
+				</ul>
+			</li>
 			<li>
 				<a href="#">
 					<i class='bx bxs-briefcase icon'></i>

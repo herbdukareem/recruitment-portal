@@ -2,44 +2,48 @@
 	session_start();
 	include_once('../db_connect.php');
 
-	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['admin_login'])){
-		$admin_id = $_POST['admin_id'];
-		$admin_password = $_POST['admin_password'];
+	error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+    ini_set('display_errors', 0);
 
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['admin_login'])) {
+
+		$admin_id = trim($_POST['admin_id']);
+		$admin_password = trim($_POST['admin_password']);
+
+		// Check for empty fields
+		if (empty($admin_id) || empty($admin_password)) {
+			$_SESSION['alert_message'] = "All fields are required.";
+			$_SESSION['alert_type'] = "warning";
+		}
+
+		// Fetch admin details from the database
 		$sql = "SELECT * FROM admins WHERE admin_id = :admin_id";
 		$stmt = $pdo->prepare($sql);
-		$stmt -> execute([":admin_id" => $admin_id]);
+		$stmt->execute([":admin_id" => $admin_id]);
 		$admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		if(!empty($admin)){
-			if(password_verify($admin_password, $admin['admin_password'])){
+		if ($admin) {
+			if (password_verify($admin_password, $admin['admin_password'])) { // Fixed column name
+				// Store admin details in session
 				$_SESSION["admin_unid"] = $admin["id"];
 				$_SESSION["admin_id"] = $admin["admin_id"];
 				$_SESSION["admin_role"] = $admin["admin_role"];
 
-				// Set success message in session
-				// $_SESSION['alert_message'] = "Login successful!";
-				// $_SESSION['alert_type'] = "success";
+				$_SESSION['alert_message'] = "Login successful!";
+				$_SESSION['alert_type'] = "success";
 
-				echo "Login Successful";
-
-				header("Location: ./admin.php");
+				header("Location: admin.php"); // Redirect to admin dashboard
 				exit();
-			}else{
-				echo"<script>
-						document.getElementById('alert-con').innerText = 'Incorrect Passowrd!'
-					</script>";
+			} else {
+				$_SESSION['alert_message'] = "Incorrect password!";
+				$_SESSION['alert_type'] = "danger";
 			}
-
-		}else{
-			echo"<script>
-						document.getElementById('alert-con').innerText = 'Admin_id doesn't exist!'
-					</script>";
-			// Set error message in session
-			// $_SESSION['alert_message'] = "ALL field are required";
-			// $_SESSION['alert_type'] = "warning";
+		} else {
+			$_SESSION['alert_message'] = "Admin ID does not exist!";
+			$_SESSION['alert_type'] = "danger";
 		}
 	}
+
 
 
 ?>
@@ -55,6 +59,7 @@
 	<title>Login to Admin Page | University Of Ilorin</title>
 
 	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="./style/alert.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
@@ -86,6 +91,7 @@
 						<h5 class="px-4 mt-1 fs-4">University of Ilorin Nigeria</h5>
 					</a>
 				</div>
+				<div id="alert-con" class="alert"></div>
 				<div id="admin_login" style="display: block;">
 					
 					<!-- <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p> -->
@@ -156,6 +162,29 @@
 			forgotBtn.style.display = "block"
 		});
 
+        // Check for the alert message and type from the PHP session
+        <?php if (isset($_SESSION['alert_message'])): ?>
+            var alertMessage = "<?php echo $_SESSION['alert_message']; ?>";
+            var alertType = "<?php echo $_SESSION['alert_type']; ?>";
+
+            // Display alert for login form
+            document.getElementById('alert-con').innerHTML =
+                `<div class='alert ${alertType}'>
+                    ${alertMessage}
+                    <span class='close-btn' onclick='this.parentElement.style.display="none";'>&times;</span>
+                </div>`;
+
+            document.querySelector('.alert').style.display = 'block';
+
+            // Automatically hide the alert after 5 seconds
+            setTimeout(function() {
+                document.querySelector('.alert').style.display = 'none';
+            }, 3000);
+
+            // Clear the session message after displaying it
+            <?php unset($_SESSION['alert_message']); ?>
+            <?php unset($_SESSION['alert_type']); ?>
+        <?php endif; ?>
 
 	</script>
 
