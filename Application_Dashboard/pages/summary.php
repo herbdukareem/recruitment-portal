@@ -42,8 +42,8 @@
                     <h2>Appication Summary for the position of <span style="font-weight:bold;color:var(--main-color-light)"><?php echo htmlspecialchars($allUserData['position'] ?? ''); ?></span></h2>
                 </div>
                 <div style="padding: 8px 5px 5px 5px;">
-                    <?php if (!empty($userFiles['passport_file_path'])): ?>
-                        <img src="<?php echo htmlspecialchars($userFiles['passport_file_path']); ?>" alt="My Profile" width="200px">
+                    <?php if (!empty($allUserData['passport_file_path'])): ?>
+                        <img src="<?php echo htmlspecialchars($allUserData['passport_file_path']); ?>" alt="My Profile" width="200px">
                     <?php else: ?>
                         <p>No passport uploaded.</p>
                     <?php endif; ?>
@@ -170,7 +170,7 @@
                                     <label>LGA Indigene\Origin Certifiate</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['lgaCertificate'] ?? ''); ?>
+                                    <a href="../Application_Dashboard/<?php echo $allUserData['lga_file_path'] ?>" target="_blank">Origin Cert</a>
                                 </div>
                             </td>
                             <td class="table_data" colspan="1.5">
@@ -178,7 +178,7 @@
                                     <label>Birth Certifiate</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['birthCertificate'] ?? ''); ?>
+                                    <a href="../Application_Dashboard/<?php echo $allUserData['birth_certificate_file_path'] ?>" target="_blank">Birth Cert</a>
                                 </div>
                             </td>
                         </tr>
@@ -301,7 +301,7 @@
                                     <label for="">Graduation Year</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['secondaryGraduationYear'] ?? ''); ?>
+                                    <a href="../Application_Dashboard/<?php echo $allUserData['sec_file_path'] ?>" target="_blank">Sec Cert</a>
                                 </div>
                             </td>
                         </tr>
@@ -350,7 +350,7 @@
                                     <label for="">Higher Education Certificate</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['highCertificate'] ?? ''); ?>
+                                    <a href="../Application_Dashboard/<?php echo $allUserData['high_certificate_file_path'] ?>" target="_blank">Higher Cert</a>
                                 </div>
                             </td>
                             <td class="table_data">
@@ -389,7 +389,7 @@
                                     <label for="">NYSC Certificate</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['nyscCertificate'] ?? ''); ?>
+                                    <a href="../Application_Dashboard/<?php echo $allUserData['nysc_file_path'] ?>" target="_blank">NYSC Cert</a>
                                 </div>
                             </td>
                         </tr>
@@ -455,7 +455,7 @@
                                     <label for="">Certificate</label>
                                 </div>
                                 <div>
-                                   
+                                    <a href="../Application_Dashboard/<?php echo $allUserData['pmc_file_path'] ?>" target="_blank">Membership Cert</a>
                                 </div>
                             </td>
                         </tr>

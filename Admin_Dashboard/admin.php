@@ -422,6 +422,25 @@
 			color: #333;
 		}
 
+		.position a{
+			text-decoration: underline;
+		}
+		.button-container {
+			display: flex;
+			justify-content: center; 
+		}
+
+		.button-container button {
+			flex: 1 1 auto; 
+			min-width: 30px;
+			max-width: 50px;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis; 
+			height: 40px; 
+			font-size: 14px;
+		}
+
 	</style>
 
 	<!--Topbar -->

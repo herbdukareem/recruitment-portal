@@ -64,13 +64,6 @@ body {
 	margin: 0;
 }
 
-
-a {
-	text-decoration: none;
-	color: #00244b;
-	text-decoration: underline;
-}
-
 li{
 	list-style: none;
 }
@@ -1716,6 +1709,7 @@ ul.timeline > li:before {
 	right: 0;
 	left: 0;
 	display: grid;
+	z-index: 9;
 	grid-template-columns: 1fr 1fr;
 	font-size: 0.7em;
 	padding: 1em 0.5em;

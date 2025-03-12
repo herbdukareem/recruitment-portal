@@ -234,12 +234,6 @@
     $fetchUserData->execute(['user_id' => $user_id]);
     $user_data = $fetchUserData->fetch(PDO::FETCH_ASSOC);
 
-    //Fetching user profile passport
-    $fetchUserFile = $pdo->prepare("SELECT * FROM user_files WHERE user_id = :user_id");
-    $fetchUserFile->execute([':user_id' => $user_id]);
-    $userFiles = $fetchUserFile->fetch(PDO::FETCH_ASSOC);
-
-
     //Submission of Education data to db
     if (isset($_POST['saveEdu'])) {
         // Retrieve POST data with null fallback for empty values
@@ -643,6 +637,10 @@
             SELECT *
             FROM user_education_details
         ) as e ON u.id = e.user_id
+        JOIN (
+            SELECT *
+            FROM user_files
+        ) as f ON u.id = f.user_id
         JOIN (
             SELECT *
             FROM user_work_details

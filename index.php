@@ -245,14 +245,18 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <?php foreach ($positions as $positionName => $listPositions) { ?>
                         <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-                            <img src="./images/Wahab-Egbewole.jpg" alt="Academic Positions" class="rounded-lg mb-4">
+                            <?php 
+                            // Example: If each position has an associated image
+                            $imagePath = "./images/" . $positionName . ".jpg"; 
+                            ?>
+                            <img src="<?php echo $imagePath; ?>" alt="<?php echo $positionName; ?>" class="rounded-lg mb-4 w-full h-40 object-cover">
+
                             <div>
                                 <h3 class="text-xl font-semibold text-[#00044B]"><?php echo $positionName; ?></h3>
                                 <ul class="mt-4 list-disc list-inside text-gray-700">
                                     <?php 
                                     $totalItems = count($listPositions);
                                     foreach ($listPositions as $index => $listPosition) { 
-                                        // Hide items after the 5th one
                                         $hiddenClass = ($index >= 5) ? 'hidden' : ''; 
                                     ?>
                                         <li class="list-item <?php echo $hiddenClass; ?>" data-position="<?php echo $positionName; ?>">
@@ -261,7 +265,7 @@
                                     <?php } ?>
                                 </ul>
                                 <?php if ($totalItems > 5) { ?>
-                                    <button class="see-more-btn mt-2 text-blue-500 " 
+                                    <button class="see-more-btn mt-2 text-blue-500" 
                                         onclick="toggleList('<?php echo $positionName; ?>')">
                                         See More...
                                     </button>

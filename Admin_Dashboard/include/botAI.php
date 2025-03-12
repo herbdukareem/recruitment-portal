@@ -116,19 +116,27 @@
                                                     <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
                                                     <input type="hidden" name="status" id="statusInput_<?php echo $user['user_id'] ?>">
 
-                                                    <button type="button" class="btn btn-success" 
-                                                        onclick="confirmHandler('<?php echo $user['user_id'] ?>', 'approved')">
-                                                        Approve
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger" 
-                                                        onclick="confirmHandler('<?php echo $user['user_id'] ?>', 'declined')">
-                                                        Decline
-                                                    </button>
+                                                    <div class="button-container">
+                                                        <button type="button" class="btn btn-primary" 
+                                                            onclick="confirmHandler('<?php echo $user['user_id']; ?>', 'shortlisted')">
+                                                            Shortlist
+                                                        </button>
+
+                                                        <button type="button" class="btn btn-warning" 
+                                                            onclick="confirmHandler('<?php echo $user['user_id']; ?>', 'interviewed')">
+                                                            Interviewed
+                                                        </button>
+
+                                                        <button type="button" class="btn btn-danger" 
+                                                            onclick="confirmHandler('<?php echo $user['user_id']; ?>', 'unemployed')">
+                                                            Unemployed
+                                                        </button>
+                                                    </div>
 
                                                      <!-- Single Reusable Modal -->
                                                     <div class="status_con modal-container" id="statusModal_<?php echo $user['user_id'] ?>" style="display:none;">
                                                         <div class="modal">
-                                                            <div class="modal_text" id="modalMessage">Are you sure?</div>
+                                                            <div class="modal_text" id="modalMessage_<?php echo $user['user_id'] ?>">Are you sure?</div>
                                                             <div class="modal_btn">
                                                                 <button type="submit" name="saveStatus" class="btn btn-success" id="confirmButton">Confirm</button>
                                                                 <button type="button" class="btn btn-inverse" onclick="closeModal('<?php echo $user['user_id'] ?>')">Cancel</button>
@@ -271,13 +279,16 @@
 
         // Get modal elements
         let modal = document.getElementById('statusModal_'+ index);
-        let modalMessage = document.getElementById('modalMessage');
+        let modalMessage = document.getElementById('modalMessage_' + index);
         let confirmButton = document.getElementById('confirmButton');
         let statusInput = document.getElementById('statusInput_' + index);
 
         // Set modal message and button color dynamically
-        if (status === 'approved') {
-            modalMessage.textContent = `Are you sure you want to approve this applicant?`;
+        if (status === 'shortlisted') {
+            modalMessage.textContent = `Are you sure you want to shortlisted this applicant?`;
+            confirmButton.className = "btn btn-success";
+        } else if (status === 'interviewed') {
+            modalMessage.textContent = `Are you sure this applicant has been interviewed?`;
             confirmButton.className = "btn btn-success";
         } else {
             modalMessage.textContent = `Are you sure you want to decline this applicant?`;
