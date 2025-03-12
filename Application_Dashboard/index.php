@@ -6,6 +6,7 @@
     ini_set('display_errors', 0);
 
     $user_id = $_SESSION['user_id'];
+    $adminRole = false;
 
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) {
@@ -771,7 +772,7 @@
             <p>Copyright &copy; 2024 University Of Ilorin. All Rights Reserved</p>
         </div>
         <div class="right-footer">
-            <a href="./pages/logout.php">
+            <a href="./logout.php">
                 <button>
                     Log out
                 </button>
