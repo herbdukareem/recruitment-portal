@@ -680,7 +680,7 @@
     <div class="db-winscroll">
         <div class="nav-bar">
             <div class="left-nav">
-                <svg id="open_panel" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19"><animate fill="freeze" attributeName="d" dur="0.4s" values="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19;M5 5L12 5L19 5M5 12H19M5 19L12 19L19 19"/></path></svg>
+                <svg id="open_panel" onclick="openPanelHandler()" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19"><animate fill="freeze" attributeName="d" dur="0.4s" values="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19;M5 5L12 5L19 5M5 12H19M5 19L12 19L19 19"/></path></svg>
                 
                 <h1>APPLICANT</h1>
             </div>
@@ -702,12 +702,12 @@
         <div id="db-panel">
             <div class="head-panel">
                 <a href="../index.php"><img src="../images/logo-plain.jpg" alt="unilorin Logo"></a>
-                <svg id="close_panel" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><g fill="none" stroke="var(--main-color-light)" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7l10 10"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="16;0"/></path><path d="M17 7l-10 10"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" values="16;0"/></path></g></svg>
+                <svg id="close_panel" onclick="closePanelHandler" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><g fill="none" stroke="var(--main-color-light)" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7l10 10"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="16;0"/></path><path d="M17 7l-10 10"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" values="16;0"/></path></g></svg>
             </div>
             <div class="body-panel">
                 <ul>
                     <?php 
-                        include_once('./pages/nav_lists.php');
+                        include_once('../includes/nav_lists.php');
                     ?>
                 </ul>
             </div>
@@ -715,18 +715,26 @@
        
         
         <div id="display-screen">
-            <div id="alert-con" class="alert"></div>
+            <div id="alert-con" 
+                data-message="<?php echo htmlspecialchars($_SESSION['alert_message'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
+                data-type="<?php echo htmlspecialchars($_SESSION['alert_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+            </div>
+            <?php 
+                // Clear session messages after loading
+                unset($_SESSION['alert_message']);
+                unset($_SESSION['alert_type']);
+            ?>
             <?php
-                include_once('./pages/biodata.php');
-                include_once('./pages/education.php');
-                include_once('./pages/work.php');
-                include_once('./pages/pmc.php');
-                include_once('./pages/summary.php');
+                include_once('../includes/biodata.php');
+                include_once('../includes/education.php');
+                include_once('../includes/work.php');
+                include_once('../includes/pmc.php');
+                include_once('../includes/summary.php');
 
                 
                 // Ensure quiz score does not exist before showing proficiency page
                 if (!empty($formsCompleted) && !isset($userQuizScore['score'])) {
-                    include_once('./pages/proficiency.php');
+                    include_once('../includes/proficiency.php');
                 } else {
                     echo '
                         <div id="cpl-screen" style="display:none">
@@ -740,7 +748,7 @@
 
                 // Ensure quiz score exist before showing application status page
                 if (!empty($formsCompleted) && isset($userQuizScore['score'])) {
-                    include_once('./pages/application_status.php');
+                    include_once('../includes/application_status.php');
                 } else {
                     echo '
                         <div id="application-status_screen" style="display:none">
@@ -770,140 +778,7 @@
             </a>
         </div>
     </div>
-
-    <script>
-        // JavaScript to display the correct section based on the URL hash
-        window.onload = function () {
-            // Hide all sections by default
-            document.getElementById('biodata-screen').style.display = 'none';
-            document.getElementById('education-screen').style.display = 'none';
-            document.getElementById('work-screen').style.display = 'none';
-            document.getElementById('pmc-screen').style.display = 'none';
-            document.getElementById('summary-screen').style.display = 'none';
-            document.getElementById('cpl-screen').style.display = 'none';
-
-            // Check which section to display based on the URL hash
-            if (window.location.hash === "#application-status_screen") {
-                document.getElementById('application-status_screen').style.display = 'block';
-            } else if (window.location.hash === "#education-screen") {
-                document.getElementById('education-screen').style.display = 'block';
-            } else if (window.location.hash === "#work-screen") {
-                document.getElementById('work-screen').style.display = 'block';
-            } else if (window.location.hash === "#pmc-screen") {
-                document.getElementById('pmc-screen').style.display = 'block';
-            } else if (window.location.hash === "#summary-screen") {
-                document.getElementById('summary-screen').style.display = 'block';
-            } else if (window.location.hash === "#cpl-screen") {
-                document.getElementById('cpl-screen').style.display = 'block';
-            } else {
-                document.getElementById('biodata-screen').style.display = 'block';
-            }
-        };
-
-          //db-pannel control
-        const openPanel = document.getElementById('open_panel');
-        const closePanel = document.getElementById('close_panel');
-        const dbPanel = document.getElementById('db-panel');
-
-        
-        openPanel.addEventListener('click', (e)=>{
-            dbPanel.style.transform = "translateX(0)"
-            closePanel.style.display = 'block'
-        });
-        closePanel.addEventListener('click', (e)=>{
-            dbPanel.style.transform = "translateX(-180px)"
-            closePanel.style.display = 'none'
-
-        });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            function initializeNavigation() {
-                // Buttons and Screens Mapping
-                const screens = {
-                    "cpl-btn": "cpl-screen",
-                    "bio-btn": "biodata-screen",
-                    "edu-btn": "education-screen",
-                    "work-btn": "work-screen",
-                    "pmc-btn": "pmc-screen",
-                    "sum-btn": "summary-screen",
-                    "app-status-btn": "application-status_screen",
-                };
-
-                function getVisibleButtons() {
-                    return Object.keys(screens)
-                        .map(id => document.getElementById(id))
-                        .filter(btn => btn && getComputedStyle(btn).display !== "none"); // Only visible buttons
-                }
-
-                function getExistingScreens() {
-                    return Object.values(screens)
-                        .map(id => document.getElementById(id))
-                        .filter(screen => screen); // Ignore missing screens
-                }
-
-                function attachEventListeners() {
-                    const buttons = getVisibleButtons();
-                    const screensElements = getExistingScreens();
-
-                    buttons.forEach(button => {
-                        button.addEventListener("click", (e) => {
-                            // Reset all button backgrounds and hide all screens
-                            buttons.forEach(btn => btn.style.background = "none");
-                            screensElements.forEach(screen => screen.style.display = "none");
-
-                            // Highlight the clicked button and display the corresponding screen
-                            e.target.style.background = "#bd911985";
-                            const targetScreen = screens[e.target.id];
-                            if (targetScreen) {
-                                document.getElementById(targetScreen).style.display = "block";
-                            }
-                        });
-                    });
-                }
-
-                // Run function to attach listeners only to visible buttons
-                attachEventListeners();
-
-                // Observe DOM changes (like hiding "cpl-btn") and reinitialize
-                const observer = new MutationObserver(() => {
-                    attachEventListeners();
-                });
-
-                observer.observe(document.body, { subtree: true, attributes: true, attributeFilter: ["style"] });
-            }
-
-            initializeNavigation();
-        });
-
-    </script>
-
-    <script>
-        // Check for the alert message and type from the PHP session
-        <?php if (isset($_SESSION['alert_message'])): ?>
-            var alertMessage = "<?php echo $_SESSION['alert_message']; ?>";
-            var alertType = "<?php echo $_SESSION['alert_type']; ?>";
-
-            // Display alert for login form
-            document.getElementById('alert-con').innerHTML =
-                `<div class='alert ${alertType}'>
-                    ${alertMessage}
-                    <span class='close-btn' onclick='this.parentElement.style.display="none";'>&times;</span>
-                </div>`;
-
-            document.querySelector('.alert').style.display = 'block';
-
-            // Automatically hide the alert after 5 seconds
-            setTimeout(function() {
-                document.querySelector('.alert').style.display = 'none';
-            }, 3000);
-
-            // Clear the session message after displaying it
-            <?php unset($_SESSION['alert_message']); ?>
-            <?php unset($_SESSION['alert_type']); ?>
-        <?php endif; ?>
-    </script>
+	<script type="module" src="../scripts/main.js"></script>
 
 </body>
 

@@ -433,6 +433,7 @@ a.dropdown-item{
 	border-radius: 10px;
 	margin: 4px 0;
 	white-space: nowrap;
+	text-decoration: none;
 }
 #sidebar .side-menu > li > a:hover {
 	background: #1B2B65;

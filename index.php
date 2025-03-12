@@ -249,7 +249,7 @@
                             // Example: If each position has an associated image
                             $imagePath = "./images/" . $positionName . ".jpg"; 
                             ?>
-                            <img src="<?php echo $imagePath; ?>" alt="<?php echo $positionName; ?>" class="rounded-lg mb-4 w-full h-40 object-cover">
+                            <img src="<?php echo $imagePath; ?>" alt="<?php echo $positionName; ?>" class="rounded-lg mb-4 w-full h-80 object-cover">
 
                             <div>
                                 <h3 class="text-xl font-semibold text-[#00044B]"><?php echo $positionName; ?></h3>

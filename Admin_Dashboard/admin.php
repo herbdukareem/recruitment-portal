@@ -2,8 +2,8 @@
 	session_start();
 	include_once('../db_connect.php');
 
-	error_reporting(E_ERROR | E_PARSE); // Only show critical errors
-	ini_set('display_errors', 0);
+	// error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+	// ini_set('display_errors', 0);
 
 	$admin_unid = $_SESSION['admin_unid'];
 	$adminRole = $_SESSION["admin_role"];
@@ -321,7 +321,7 @@
 	<title>Admin Dashboard | UNILORIN</title>
 	<!-- Bootstrap CSS-->
 	<!-- <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css"> -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
 	<!-- Style CSS -->
 	<link rel="stylesheet" href="./assets/css/style.css">
 	<!-- FontAwesome CSS-->
@@ -467,11 +467,11 @@
 			<?php 
 				if ( !empty($adminRole) && $adminRole === 'sup_admin'){
 			?>
-				<button type="button" class="btn transition" id="admin_sidebar_toggle">
+				<button type="button" class="btn transition" id="admin_sidebar_toggle" onclick="adminSidebarToggleHandler()">
 					<i class="fa fa-bars"></i>
 				</button>
 				<!-- Admin side bar -->
-				<div id="admin_sidebar" class="admin_sidebar">
+				<div id="admin_sidebar" class="admin_sidebar" onclick="toggleButtonHandler()">
 					<ul>
 						<li><a href="" id="btn-all">All Applicant</a></li>
 						<li><a href="" id="btn-add">Add Applicant</a></li>
@@ -482,7 +482,7 @@
 		</div>
 
 	</div>
-	
+	<div id="app-data" data-applications='<?php echo json_encode($jsArrayOutput); ?>'></div>
 	<div class="main">
 		<!-- Sorted Applicant -->
 		<div id="sort_applicant" style="display:block">
@@ -756,8 +756,66 @@
 			if(!empty($adminRole) && $adminRole === 'sup_admin'){		
 		?>
 			<!-- Add Applicant -->
-			<div id="add_applicant" style="display: none;">
-				<?php include_once('./include/biodata.php') ?>
+			<div id="db-panel">
+				<div class="head-panel">
+					<svg id="close_panel" onclick="closePanelHandler" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><g fill="none" stroke="var(--main-color-light)" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7l10 10"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="16;0"/></path><path d="M17 7l-10 10"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" values="16;0"/></path></g></svg>
+				</div>
+				<div class="body-panel">
+					<ul>
+						<?php 
+							include_once('../includes/nav_lists.php');
+						?>
+					</ul>
+				</div>
+			</div>
+			<div id="display-screen">
+				<div id="alert-con" 
+					data-message="<?php echo htmlspecialchars($_SESSION['alert_message'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
+					data-type="<?php echo htmlspecialchars($_SESSION['alert_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+				</div>
+				<?php 
+					// Clear session messages after loading
+					unset($_SESSION['alert_message']);
+					unset($_SESSION['alert_type']);
+				?>
+				<?php
+					include_once('../includes/biodata.php');
+					include_once('../includes/education.php');
+					include_once('../includes/work.php');
+					include_once('../includes/pmc.php');
+					include_once('../includes/summary.php');
+
+					
+					// Ensure quiz score does not exist before showing proficiency page
+					if (!empty($formsCompleted) && !isset($userQuizScore['score'])) {
+						include_once('../includes/proficiency.php');
+					} else {
+						echo '
+							<div id="cpl-screen" style="display:none">
+								<div class="error-400">
+									<h2>Page Restriction!</h2>
+									<p>Fill all required forms to proceed.</p>   
+								</div>
+							</div>
+						';
+					};
+
+					// Ensure quiz score exist before showing application status page
+					if (!empty($formsCompleted) && isset($userQuizScore['score'])) {
+						include_once('../includes/application_status.php');
+					} else {
+						echo '
+							<div id="application-status_screen" style="display:none">
+								<div class="error-400">
+									<h2>Page Restriction!</h2>
+									<p>Fill all required forms, and take <u>COMPUTER PROFICENCY TEST</u> to view application status.</p>   
+								</div>
+							</div>
+						';
+					};
+
+				?>
+
 			</div>
 
 			<!-- Create admin -->
@@ -786,235 +844,13 @@
 	
 	<!-- JS Libraies -->
 	<script src="assets/modules/jquery/jquery.min.js"></script>
-	<!-- <script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-	<!-- <script src="assets/modules/popper/popper.min.js"></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 	<!-- Template JS File -->
 	<script src="assets/js/script.js"></script>
-
-
-	<!-- Dashboard chart JS script -->
-	<script>
-		const adminSidebarToggle = document.getElementById('admin_sidebar_toggle');
-		const adminSidebar = document.getElementById('admin_sidebar');
-		const ctx = document.getElementById('myChart').getContext('2d');
-		const totalApplications = <?php echo $jsArrayOutput; ?>; // PHP-generated data
-		const toggleButton = document.getElementById('sidebar-toggle');
-		const applicantSidebar = document.getElementById('all_applicant_sidebar');
-		let sidebarOpen = false
-
-		toggleButton.addEventListener('click', ()=>{
-			if(!sidebarOpen){
-				applicantSidebar.style.left = '0';
-				toggleButton.style.zIndex = 98;
-				toggleButton.style.transform = 'translateX(250px)';
-				sidebarOpen = true
-				console.log('list Clicked');
-			} else {
-				applicantSidebar.style.left = '-275px';
-				toggleButton.style.zIndex = 0;
-				toggleButton.style.transform = 'translateX(0)';
-				sidebarOpen = false
-				console.log('list Clicked');
-			}
-		})
-
-		const myChart = new Chart(ctx, {
-			type: 'bar', // Change this to 'line', 'bar', etc. if needed
-			data: {
-				labels: [
-					"Administrative Cadre",
-					"Executive Officer Cadre",
-					"Clerical Officer Cadre",
-					"Secretarial Cadre",
-					"Secretarial Assistant Cadre",
-					"Porter",
-					"Office Assistant Cadre",
-					"Accountant Cadre",
-					"Executive Officer (Accounts) Cadre",
-					"Stores Officers' Cadre",
-					"Store Attendant",
-					"Internal Auditors' Cadre",
-					"Executive Officer (Audit) Cadre",
-					"Information Officer Cadre",
-					"Protocol Officer Cadre",
-					"Photographer Cadre",
-					"Video Camera Operator Cadre",
-					"Information Assistant Cadre",
-					"Executive Officer (Information) Cadre",
-					"Doctors Cadre",
-					"Pharmacists Cadre",
-					"Nursing Officer Cadre",
-					"Pharmacy Technician Cadre",
-					"Medical Laboratory Technologist Cadre",
-					"Medical Laboratory Technician Cadre",
-					"Medical Laboratory Assistant Cadre",
-					"Health Records Officer",
-					"Environmental Health Officer Cadre",
-					"Veterinary Officer Cadre",
-					"Legal Officer Cadre",
-					"Library Officer Cadre",
-					"Library Assistant Cadre",
-					"Bindery Officers' Cadre",
-					"Bindery Assistant Cadre",
-					"Data Operator/I.T. Operator Cadre",
-					"Data Analyst Cadre",
-					"Computer Electronics Engineer Cadre",
-					"Systems Programmer/Analyst Cadre",
-					"Director, COMSIT",
-					"Engineer Cadre",
-					"Architect Cadre",
-					"Quantity Surveyor Cadre",
-					"Physical Planning Unit",
-					"Maintenance Officer",
-					"Workshop Attendant/Assistant/Superintendent Cadre",
-					"Driver Cadre",
-					"Driver/Mechanic Cadre",
-					"Craftsman (Carpentry & Mason, Welding, Plumbing, Electrical, R&G, Mechanical, etc.)",
-					"Technical Officer Cadre",
-					"Artisan/Craftsman",
-					"Power Station Operator Cadre",
-					"Horticulturist Cadre (Parks & Gardens)",
-					"Estate Officers' Cadre",
-					"Gardening Staff (Biological and Parks & Gardens Units)",
-					"Turnstile Keeper Cadre",
-					"Zoo Keeper Cadre",
-					"Curator Cadre",
-					"Farm Officer/Manager",
-					"Agricultural/Animal Health/Forestry Superintendent Cadre",
-					"Farm/Livestock Supervisor",
-					"Technologist Cadre",
-					"Laboratory Supervisor",
-					"Staff School Cadre I (Lower Basic)",
-					"Staff School Cadre II (Upper Basic)",
-					"Security Cadre",
-					"Planning Officer Cadre",
-					"Coach Cadre",
-					"Coordinator Cadre (SIWES)",
-					"Counsellor Cadre",
-					"Signer (Interpreter) Cadre",
-					"Archives Assistant Cadre",
-					"Archives' Officer Cadre",
-					"Archivist Cadre",
-					"Graphic Arts Assistant Cadre",
-					"Graphic Arts Officers' Cadre",
-					"Cook/Steward/Catering Officer Cadre",
-					"Laundry Cadre",
-					"Fireman Cadre",
-					"Fire Superintendent Cadre - 120",
-					"Fire Officer Cadre - 122"
-				],
-				datasets: [{
-					label: 'Count',
-					data: totalApplications, // Use the dynamic PHP data
-					backgroundColor: [
-						'#2BC155', '#FF9B52', '#3F9AE0', '#FFC107', '#8E44AD', '#E74C3C', '#3498DB',
-						'#1ABC9C', '#F39C12', '#9B59B6', '#34495E', '#2ECC71', '#16A085', '#F1C40F',
-						'#E67E22', '#E74C3C', '#7D3C98', '#A569BD', '#EC7063', '#5DADE2', '#48C9B0',
-						'#F5B041', '#58D68D', '#DC7633', '#F1948A', '#AAB7B8', '#2874A6', '#1F618D',
-						'#17A589', '#B7950B', '#CB4335', '#5B2C6F', '#F8C471', '#52BE80', '#AF7AC5',
-						'#76448A', '#C0392B', '#1A5276', '#1ABC9C', '#D4AC0D', '#C0392B', '#F1C40F',
-						'#E59866', '#7FB3D5', '#73C6B6', '#F7DC6F', '#5499C7', '#45B39D', '#F0B27A',
-						'#E74C3C', '#2980B9', '#27AE60', '#D35400', '#F7F9F9', '#BDC3C7', '#95A5A6',
-						'#2C3E50', '#8E44AD', '#F4D03F', '#C0392B', '#BDC3C7', '#7D6608', '#7B7D7D',
-						'#D35400', '#2ECC71', '#1ABC9C', '#3498DB', '#16A085', '#F39C12', '#9B59B6',
-						'#34495E', '#2BC155', '#FF9B52', '#3F9AE0', '#FFC107', '#8E44AD', '#E74C3C',
-						'#3498DB', '#1ABC9C', '#F39C12'
-					],
-					borderColor: [
-						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
-						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
-						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
-						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
-						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
-						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
-						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
-						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
-						'#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff',
-						'#fff', '#fff', '#fff'
-					],
-					borderWidth: 1
-				}]
-			},
-			options: {
-				responsive: true, // Make the chart responsive
-				plugins: {
-					legend: {
-						position: 'top', // Position of the legend
-					},
-					title: {
-						display: true,
-						text: 'Application Statistics' // Title of the chart
-					}
-				}
-			}
-		});
-
-		adminSidebarToggle.addEventListener('click', ()=>{
-			adminSidebar.style.right = "0"
-			console.log('Clicked')
-		});
-
-		function initializeNavigation() {
-			// Buttons and Screens Mapping
-			const screens = {
-				"btn-all":"sort_applicant",
-				"btn-add":"add_applicant",
-				"btn-create":"create_admin"
-			};
-
-			function getVisibleButtons() {
-				return Object.keys(screens)
-					.map(id => document.getElementById(id))
-					.filter(btn => btn && getComputedStyle(btn).display !== "none"); // Only visible buttons
-			}
-
-			function getExistingScreens() {
-				return Object.values(screens)
-					.map(id => document.getElementById(id))
-					.filter(screen => screen); // Ignore missing screens
-			}
-
-			function attachEventListeners() {
-				const buttons = getVisibleButtons();
-				const screensElements = getExistingScreens();
-
-				buttons.forEach(button => {
-					button.addEventListener("click", (e) => {
-						e.preventDefault()
-						// Reset all button backgrounds and hide all screens
-						buttons.forEach(btn => btn.style.background = "none");
-						screensElements.forEach(screen => screen.style.display = "none");
-
-						// Highlight the clicked button and display the corresponding screen
-						e.target.style.background = "#ffffff5f";
-						e.target.style.borderRadius = "8px";
-						const targetScreen = screens[e.target.id];
-						if (targetScreen) {
-							document.getElementById(targetScreen).style.display = "block";
-						}
-						adminSidebar.style.right = "-350px"
-					});
-				});
-			}
-
-			// Run function to attach listeners only to visible buttons
-			attachEventListeners();
-
-			// Observe DOM changes (like hiding "cpl-btn") and reinitialize
-			const observer = new MutationObserver(() => {
-				attachEventListeners();
-			});
-
-			observer.observe(document.body, { subtree: true, attributes: true, attributeFilter: ["style"] });
-		}
-
-		initializeNavigation();
-
-	</script>
+	<script type="module" src="../scripts/main.js"></script>
 
 </body>
 

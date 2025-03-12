@@ -91,7 +91,7 @@
 						<h5 class="px-4 mt-1 fs-4">University of Ilorin Nigeria</h5>
 					</a>
 				</div>
-				<div id="alert-con" class="alert"></div>
+				<!-- <div id="alert-con" class="alert"></div> -->
 				<div id="admin_login" style="display: block;">
 					
 					<!-- <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p> -->
@@ -100,7 +100,15 @@
 						<h1 class="auth-title fs-5">Log in As an Administartor</h1>
 						<div class="form-group position-relative has-icon-left mb-4">
 							<div class="form-control-icon">
-								<i class="bi bi-person" id="alert-con"></i>
+								<div id="alert-con" 
+									data-message="<?php echo htmlspecialchars($_SESSION['alert_message'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
+									data-type="<?php echo htmlspecialchars($_SESSION['alert_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+								</div>
+								<?php 
+									// Clear session messages after loading
+									unset($_SESSION['alert_message']);
+									unset($_SESSION['alert_type']);
+								?>
 							</div>
 						</div>
 						<div class="form-group position-relative has-icon-left mb-4">
@@ -162,40 +170,8 @@
 			forgotBtn.style.display = "block"
 		});
 
-        // Check for the alert message and type from the PHP session
-        <?php if (isset($_SESSION['alert_message'])): ?>
-            var alertMessage = "<?php echo $_SESSION['alert_message']; ?>";
-            var alertType = "<?php echo $_SESSION['alert_type']; ?>";
-
-            // Display alert for login form
-            document.getElementById('alert-con').innerHTML =
-                `<div class='alert ${alertType}'>
-                    ${alertMessage}
-                    <span class='close-btn' onclick='this.parentElement.style.display="none";'>&times;</span>
-                </div>`;
-
-            document.querySelector('.alert').style.display = 'block';
-
-            // Automatically hide the alert after 5 seconds
-            setTimeout(function() {
-                document.querySelector('.alert').style.display = 'none';
-            }, 3000);
-
-            // Clear the session message after displaying it
-            <?php unset($_SESSION['alert_message']); ?>
-            <?php unset($_SESSION['alert_type']); ?>
-        <?php endif; ?>
-
 	</script>
-
-
-
-	<!-- <script src="assets/js/atrana.js"></script> -->
-
-	<!-- JS Libraies -->
-	<!-- <script src="assets/modules/jquery/jquery.min.js"></script>
-	<script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
-	<script src="assets/modules/popper/popper.min.js"></script> -->
+	<script type="module" src="../scripts/main.js"></script>
 
 	<!-- Template JS File -->
 	<script src="assets/js/script.js"></script>
