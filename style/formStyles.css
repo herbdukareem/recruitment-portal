@@ -16,7 +16,7 @@ body {
   position: relative;
 }
 
-.db-winscroll {
+.add_applicant, .db-winscroll {
   display: grid;
   grid-template-columns: 15% 85%;
 }
@@ -120,9 +120,9 @@ body {
   color: var(--main-color);
   font-weight: bold;
 }
-.screen {
+/* .screen {
   padding: 0 0.5em;
-}
+} */
 .screen .screen-head {
   display: grid;
   grid-template-columns: 1fr 1fr;

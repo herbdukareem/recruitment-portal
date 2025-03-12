@@ -26,4 +26,5 @@ export function toggleButtonHandler() {
 
 export function adminSidebarToggleHandler() {
     document.getElementById('admin_sidebar').style.right = "0";
+    console.log('clicked')
 }

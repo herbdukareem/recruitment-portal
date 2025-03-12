@@ -671,8 +671,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style/alert.css">
-    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="../style/formStyles.css">
+	<link rel="stylesheet" href="../style/alert.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
 </head>
 

@@ -219,7 +219,7 @@
         </form>
     </div>
 </div>
-<script>
+<!-- <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Primary School Form Logic
         const priAddformSubmit = document.getElementById('priAddformSubmit');
@@ -489,4 +489,4 @@
             row.remove();
         }
     });
-</script>
+</script> -->

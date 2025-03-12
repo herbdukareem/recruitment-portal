@@ -1,4 +1,4 @@
-<div id="biodata-screen" class="screen" style="display: none;">
+<div id="biodata-screen" class="screen" style="display: block;">
     <div class="screen-head">
         <div class="screen-head-left">
             <h3>Bio Data</h3>

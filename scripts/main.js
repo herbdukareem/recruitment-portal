@@ -1,8 +1,10 @@
+import { initializeScreens } from "./screenHandler.js";
 import { initializeNavigation } from "./navigation.js";
 import { adminInitializeNavigation } from "./admin.js";
 import { openPanelHandler, closePanelHandler, toggleButtonHandler, adminSidebarToggleHandler } from "./ui.js";
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
+    initializeScreens();
     initializeNavigation();
     adminInitializeNavigation();
 
