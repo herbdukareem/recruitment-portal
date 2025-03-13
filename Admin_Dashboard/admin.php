@@ -2,8 +2,8 @@
 	session_start();
 	include_once('../db_connect.php');
 
-	// error_reporting(E_ERROR | E_PARSE); // Only show critical errors
-	// ini_set('display_errors', 0);
+	error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+	ini_set('display_errors', 0);
 
 	$admin_unid = $_SESSION['admin_unid'];
 	$adminRole = $_SESSION["admin_role"];
@@ -319,10 +319,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Admin Dashboard | UNILORIN</title>
-	<!-- Bootstrap CSS-->
-	<!-- <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css"> -->
-	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
-	<!-- Style CSS -->
 	<link rel="stylesheet" href="./assets/css/style.css">
 	<!-- FontAwesome CSS-->
 	<link rel="stylesheet" href="./assets/modules/fontawesome6.1.1/css/all.css">
@@ -447,7 +443,7 @@
 	<div class="transition admin_top_nav">
 		<div class="bars">
 			<div class="hdd-text mx-4 mt-3 fs-2">
-				<h4 class="">University of Ilorin Admin Dashbaord</h4>
+				<h4 class="" style="color: #00044B;">University of Ilorin Admin Dashbaord</h4>
 			</div>
 		</div>
 

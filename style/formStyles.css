@@ -244,7 +244,7 @@ form .form-body table tr td {
 }
 form .form-body table tr td div label {
   font-size: 0.6em;
-  height: 0.4em;
+  /* height: 0.4em; */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

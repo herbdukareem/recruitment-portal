@@ -74,8 +74,15 @@ a:hover {
 table thead {
 	color: #00044B !important;
 }
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+.h3, h3{
 	color: var(--default-color);
+	font-weight: bold;
+	line-height: 1.2;
+	margin-bottom: .5rem;
+	margin-top: 0;
+}
+.h1, .h2, .h4, .h5, .h6, h1, h2, h4, h5, h6{
+	color: var(--white);
 	font-weight: bold;
 	line-height: 1.2;
 	margin-bottom: .5rem;
@@ -4419,7 +4426,13 @@ ul.timeline > li:before {
   .progress.progress-dark .progress-bar{background-color:#212529;border-radius:.25rem}
   .progress.progress-sm{height:.4rem}.progress.progress-lg{height:1.5rem}
   .progress .progress-bar{overflow:visible;position:relative}
-  .progress .progress-bar.progress-label:before{color:#495057;content:attr(aria-valuenow) "%";font-size:.8rem;position:absolute;right:0;top:-1.3rem}
+  .progress .progress-bar.progress-label:before{
+	color:#495057;
+	content:attr(aria-valuenow) "%";
+	font-size:.8rem;
+	position:absolute;
+	right:0;top:-1.3rem;
+}
   
   label{
 	color: #7c8db5!important;

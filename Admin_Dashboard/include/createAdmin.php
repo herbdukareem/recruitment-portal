@@ -22,7 +22,7 @@
         margin-bottom: 5px;
     }
 
-    input, select {
+    .form-control, .form-select {
         width: 100%;
         padding: 10px;
         border: 1px solid #ccc;
