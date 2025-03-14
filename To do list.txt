@@ -22,3 +22,15 @@ candidate jorney ----- progress
 member
 apply here
 nnpc change
+
+
+all applicant 1
+analysis data 2
+query setup
+
+front back
+save admin Application
+sql query from db
+
+backend
+ajax and move all backend file to backend folder

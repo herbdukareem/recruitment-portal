@@ -70,7 +70,6 @@ li{
 a:hover {
 	color: #ddd;
 }
-
 table thead {
 	color: #00044B !important;
 }
@@ -161,6 +160,7 @@ p{
 	padding: 10px; 
 }
 table{
+	width: 100%;
 	box-sizing: border-box;
 	padding: 5px;
 	gap: 5px;
@@ -193,6 +193,7 @@ table{
 }
 
 .topbar .bars {
+	padding: 20px;
 	float: left;
 	display: flex;
 	align-items: center;
@@ -1592,10 +1593,7 @@ ul.timeline > li:before {
   
 /** 5. Content Start **/
 .content-start {
-	padding-top: 50px;
-	padding-left: 0;
-	margin-left: 0;
-	margin-right: 0;
+	padding: 10px 0 ;
 	min-height: 100vh;
 }
 .content-start{
@@ -1612,7 +1610,7 @@ ul.timeline > li:before {
   
   .content-start h3 {
 	font-weight: 500;
-	color: #556EE6;
+	color: #00044B;
   }
   
  
@@ -1657,10 +1655,10 @@ ul.timeline > li:before {
 .content-start .content-header h1 {
    font-size: 35px;
    font-weight: 700;
-   color: #25396f;
+   color: #00044B;
 }
 .content-start .content-header p {
-	color: #7c8db5!important;
+	color: #00044B!important;
 	margin-bottom: 40px;
 	white-space: normal;
 }
@@ -1754,9 +1752,8 @@ ul.timeline > li:before {
 	}
 
 	.content-start {
-		padding-left: 275px;
-		margin-left: 10px;
-		margin-right: 10px;
+		/* padding-left: 275px; */
+		margin: 0 10px;
 	}
 
 	.footer {

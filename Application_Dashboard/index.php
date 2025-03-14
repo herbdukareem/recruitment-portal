@@ -708,7 +708,7 @@
             <div class="body-panel">
                 <ul>
                     <?php 
-                        include_once('../includes/nav_lists.php');
+                        include_once('../pages/nav_lists.php');
                     ?>
                 </ul>
             </div>
@@ -726,16 +726,16 @@
                 unset($_SESSION['alert_type']);
             ?>
             <?php
-                include_once('../includes/biodata.php');
-                include_once('../includes/education.php');
-                include_once('../includes/work.php');
-                include_once('../includes/pmc.php');
-                include_once('../includes/summary.php');
+                include_once('../pages/biodata.php');
+                include_once('../pages/education.php');
+                include_once('../pages/work.php');
+                include_once('../pages/pmc.php');
+                include_once('../pages/summary.php');
 
                 
                 // Ensure quiz score does not exist before showing proficiency page
                 if (!empty($formsCompleted) && !isset($userQuizScore['score'])) {
-                    include_once('../includes/proficiency.php');
+                    include_once('../pages/proficiency.php');
                 } else {
                     echo '
                         <div id="cpl-screen" style="display:none">
@@ -749,7 +749,7 @@
 
                 // Ensure quiz score exist before showing application status page
                 if (!empty($formsCompleted) && isset($userQuizScore['score'])) {
-                    include_once('../includes/application_status.php');
+                    include_once('../pages/application_status.php');
                 } else {
                     echo '
                         <div id="application-status_screen" style="display:none">
