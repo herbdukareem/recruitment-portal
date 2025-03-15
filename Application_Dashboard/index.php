@@ -81,7 +81,7 @@
                     $checkRecordQuery = $pdo->prepare("SELECT * FROM user_applications WHERE user_id = :user_id");
                     $checkRecordQuery->execute([":user_id" => $user_id]);
 
-                    if ($checkRecordQuery->rowCount() === 0) { // New applicant
+                    if ($checkRecordQuery->rowCount() === 0) {
                         if ($existingNIN && $existingNIN !== $user_id) {
                             // NIN belongs to another user, block insertion
                             $_SESSION['alert_message'] = "Application Failed! This NIN is already registered with another applicant.";
@@ -113,6 +113,7 @@
                                     dateOfBirth = :dateOfBirth,
                                     maritalStatus = :maritalStatus,
                                     stateOfOrigin = :stateOfOrigin,
+                                    nin = :nin,
                                     lga = :lga,
                                     phoneNumber = :phoneNumber,
                                     emergencyNumber = :emergencyNumber,
@@ -191,12 +192,12 @@
                         }
                     }
 
-                    if ($lgaPath || $birthCertPath || $passportPath) {
-
-                        $checkFilePath=$pdo->prepare("SELECT id FROM user_files WHERE user_id = :user_id");
-                        $checkFilePath->execute([':user_id'=> $user_id]);
+                    if (!empty($lgaPath) || !empty($birthCertPath) || !empty($passportPath)) {
+                        $checkFilePath = $pdo->prepare("SELECT id FROM user_files WHERE user_id = :user_id");
+                        $checkFilePath->execute([':user_id' => $user_id]);
+                    
                         try {
-                            if($checkFilePath->rowCount() === 0){
+                            if ($checkFilePath->rowCount() === 0) {
                                 $sql = "INSERT INTO user_files (user_id, lga_file_path, birth_certificate_file_path, passport_file_path) 
                                         VALUES (:user_id, :lga_file_path, :birth_certificate_file_path, :passport_file_path)";
                             } else {
@@ -206,21 +207,27 @@
                                             passport_file_path = :passport_file_path
                                         WHERE user_id = :user_id";
                             }
+                    
                             $stmt = $pdo->prepare($sql);
                             $stmt->execute([
                                 ':user_id' => $user_id,
-                                ':lga_file_path' => $lgaPath,
-                                ':birth_certificate_file_path' => $birthCertPath,
-                                ':passport_file_path' => $passportPath
+                                ':lga_file_path' => $lgaPath ?? '',
+                                ':birth_certificate_file_path' => $birthCertPath ?? '',
+                                ':passport_file_path' => $passportPath ?? ''
                             ]);
+                    
                             $_SESSION['alert_message'] = "File saved successfully";
                             $_SESSION['alert_type'] = "success";
-                            header("Location:" . $_SERVER['PHP_SELF'] . "#education-screen");
-
+                            header("Location: " . $_SERVER['PHP_SELF'] . "#education-screen");
+                            exit();
+                            
                         } catch (PDOException $e) {
-                            $_SESSION['alert_message'] = "Error saving file";
+                            $_SESSION['alert_message'] = "Error saving file: " . $e->getMessage();
                             $_SESSION['alert_type'] = "warning";
                         }
+                    } else {
+                        $_SESSION['alert_message'] = "No valid file uploaded.";
+                        $_SESSION['alert_type'] = "warning";
                     }
                 } catch (PDOException $e) {
                     echo 'Error: ' . $e->getMessage();

@@ -1,139 +1,153 @@
 <?php
-    function renderPositionSection($positionId, $positionData, $index) {
-    ?>
+function renderPositionSection($positionId, $positionData, $index) {
+?>
 
-    <div id="<?php echo htmlspecialchars($positionId); ?>" class="row">
-        <div class="postion-body">
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
+<div id="<?php echo htmlspecialchars($positionId); ?>" class="row" style="margin-top:20px">
+    <div class="postion-body">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Profile</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">CPL%</th>
+                            <th scope="col">Reg Date/Time</th>
+                            <th scope="col">View Details</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (is_array($positionData) && !empty($positionData)): ?>
                             <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Profile</th>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">CPL%</th>
-                                <th scope="col">Reg Date/Time</th>
-                                <th scope="col">View Details</th>
-                                <th scope="col">Action</th>
+                                <td><?php echo $index + 1; ?></td>
+                                <td>
+                                    <a href="../Application_Dashboard/<?php echo htmlspecialchars($positionData['passport_file_path']); ?>" target="_blank">
+                                        <img src="../Application_Dashboard/<?php echo htmlspecialchars($positionData['passport_file_path']); ?>" 
+                                            alt="<?php echo htmlspecialchars($positionData['lastname']); ?>" 
+                                            width="50" height="50" style="border-radius:50%">
+                                    </a>
+                                </td>
+                                <td><?php echo htmlspecialchars($positionData['email']); ?></td>
+                                <td><?php echo htmlspecialchars($positionData['score_percentage']); ?></td>
+                                <td><?php echo htmlspecialchars($positionData['created_at']); ?></td>
+                                <td>
+                                    <button id="btn_<?php echo $positionId . '-' . $index; ?>" 
+                                        class="btn btn-primary" 
+                                        onclick="toggleDetails('<?php echo $positionId; ?>', <?php echo $index; ?>)">
+                                        View Details
+                                    </button>
+                                </td>
+                                <td>
+                                   <button class="btn btn-primary">Edit</button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!is_array($positionData)): ?>
-                                <?php foreach ($positionData as $index => $user): ?>
-                                    <tr>
-                                        <td><?php echo $index; ?></td>
-                                        <td>
-                                            <a href="../Application_Dashboard/<?php echo htmlspecialchars($user['passport_file_path']); ?>" target="_blank">
-                                                <img src="../Application_Dashboard/<?php echo htmlspecialchars($user['passport_file_path']); ?>" 
-                                                    alt="<?php echo htmlspecialchars($user['lastname']); ?>" 
-                                                    width="50" height="50">
-                                            </a>
-                                        </td>
-                                        <td><?php echo htmlspecialchars($user['email']); ?></td>
-                                        <td><?php echo htmlspecialchars($user['score_percentage']); ?></td>
-                                        <td><?php echo htmlspecialchars($user['created_at']); ?></td>
-                                        <td>
-                                            <button id="btn_<?php echo $positionId . '-' . $index; ?>" 
-                                                class="btn btn-primary" 
-                                                onclick="toggleDetails('<?php echo $positionId; ?>', <?php echo $index; ?>)">
-                                                View Details
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <form action="" method="POST" class="statusForm">
-                                                <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                                                <input type="hidden" name="status" id="statusInput_<?php echo $user['user_id'] ?>">
+                            <tr class="details-row" id="details_<?php echo $positionId; ?>-<?php echo $index; ?>" style="display:none;">
+                                <td colspan="8">
+                                    <table style="width: 100%;" class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Gender:</strong> <?php echo htmlspecialchars($positionData['gender']); ?></td>
+                                                <td><strong>DOB:</strong> <?php echo htmlspecialchars($positionData['dateOfBirth']); ?></td>
+                                                <td><strong>MS:</strong> <?php echo htmlspecialchars($positionData['maritalStatus']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Phone No.:</strong> <?php echo htmlspecialchars($positionData['phoneNumber']); ?></td>
+                                                <td><strong>Emergency No.:</strong> <?php echo htmlspecialchars($positionData['emergencyNumber']); ?></td>
+                                                <td><strong>NIN:</strong> <?php echo htmlspecialchars($positionData['nin']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Address:</strong> <?php echo htmlspecialchars($positionData['address']); ?></td>
+                                                <td><strong>LGA:</strong> <?php echo htmlspecialchars($positionData['lga']); ?></td>
+                                                <td><strong>SOO:</strong> <?php echo htmlspecialchars($positionData['stateOfOrigin']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Pri Name:</strong> <?php echo htmlspecialchars($positionData['primary_school_name']); ?></td>
+                                                <td><strong>Year: </strong> <?php echo htmlspecialchars($positionData['primary_graduation_year']); ?></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Sec Name:</strong> <?php echo htmlspecialchars($positionData['secondarySchoolName']); ?></td>
+                                                <td><strong>Year:</strong> <?php echo htmlspecialchars($positionData['secondaryGraduationYear']); ?></td>
+                                                <td><a href="../Application_Dashboard/<?php echo htmlspecialchars($positionData['sec_file_path']); ?>" target="_blank">Sec Cert</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Insti Name:</strong> <?php echo htmlspecialchars($positionData['institution']); ?></td>
+                                                <td><strong>Cert:</strong> <?php echo htmlspecialchars($positionData['certificateType']); ?></td>
+                                                <td><a href="../Application_Dashboard/<?php echo htmlspecialchars($positionData['high_certificate_file_path']); ?>" target="_blank">High Inst Cert</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Degree:</strong> <?php echo htmlspecialchars($positionData['classOfDegree']); ?></td>
+                                                <td><strong>Course:</strong> <?php echo htmlspecialchars($positionData['course']); ?></td>
+                                                <td><strong>Year:</strong> <?php echo htmlspecialchars($positionData['highGraduationYear']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Organization Name:</strong> <?php echo htmlspecialchars($positionData['organizationName']); ?></td>
+                                                <td><strong>Rank:</strong> <?php echo htmlspecialchars($positionData['rank']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"><strong>Responsibilities:</strong> <?php echo htmlspecialchars($positionData['responsibilities']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Start Date:</strong> <?php echo htmlspecialchars($positionData['startDate']); ?></td>
+                                                <td><strong>End Date:</strong> <?php echo htmlspecialchars($positionData['endDate']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Body Name:</strong> <?php echo htmlspecialchars($positionData['organizationName']); ?></td>
+                                                <td><strong>Membership ID:</strong> <?php echo htmlspecialchars($positionData['rank']); ?></td>
+                                                <td><strong>Membership Type:</strong> <?php echo htmlspecialchars($positionData['rank']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"><strong>Responsibilities:</strong> <?php echo htmlspecialchars($positionData['responsibilities']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Cert Date:</strong> <?php echo htmlspecialchars($positionData['startDate']); ?></td>
+                                                <td><a href="../Application_Dashboard/<?php echo htmlspecialchars($positionData['sec_file_path']); ?>" target="_blank">PMC Cert</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <form action="" method="POST" class="statusForm">
+                                                        <input type="hidden" name="user_id" value="<?php echo $positionData['user_id']; ?>">
+                                                        <input type="hidden" name="status" id="statusInput_<?php echo $positionData['user_id'] ?>">
 
-                                                <div class="button-container">
-                                                    <button type="button" class="btn btn-primary" 
-                                                        onclick="confirmHandler('<?php echo $user['user_id']; ?>', 'shortlisted')">
-                                                        Shortlist
-                                                    </button>
+                                                        <div class="button-container">
+                                                            <button type="button" class="btn btn-primary" 
+                                                                onclick="confirmHandler('<?php echo $positionData['user_id']; ?>', 'shortlisted')">
+                                                                Shortlist
+                                                            </button>
 
-                                                    <button type="button" class="btn btn-warning" 
-                                                        onclick="confirmHandler('<?php echo $user['user_id']; ?>', 'interviewed')">
-                                                        Interviewed
-                                                    </button>
+                                                            <button type="button" class="btn btn-warning" 
+                                                                onclick="confirmHandler('<?php echo $positionData['user_id']; ?>', 'interviewed')">
+                                                                Interviewed
+                                                            </button>
 
-                                                    <button type="button" class="btn btn-danger" 
-                                                        onclick="confirmHandler('<?php echo $user['user_id']; ?>', 'unemployed')">
-                                                        Unemployed
-                                                    </button>
-                                                </div>
-
-                                                <div class="status_con modal-container" id="statusModal_<?php echo $user['user_id'] ?>" style="display:none;">
-                                                    <div class="modal">
-                                                        <div class="modal_text" id="modalMessage_<?php echo $user['user_id'] ?>">Are you sure?</div>
-                                                        <div class="modal_btn">
-                                                            <button type="submit" name="saveStatus" class="btn btn-success">Confirm</button>
-                                                            <button type="button" class="btn btn-inverse" onclick="closeModal('<?php echo $user['user_id'] ?>')">Cancel</button>
+                                                            <button type="button" class="btn btn-danger" 
+                                                                onclick="confirmHandler('<?php echo $positionData['user_id']; ?>', 'unemployed')">
+                                                                Unemployed
+                                                            </button>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr class="details-row" id="details_<?php echo $positionId; ?>-<?php echo $index; ?>" style="display:none;">
-                                        <td colspan="8">
-                                            <table style="width: 100%;" class="table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td><strong>Gender:</strong> <?php echo htmlspecialchars($user['gender']); ?></td>
-                                                        <td><strong>DOB:</strong> <?php echo htmlspecialchars($user['dateOfBirth']); ?></td>
-                                                        <td><strong>MS:</strong> <?php echo htmlspecialchars($user['maritalStatus']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Phone No.:</strong> <?php echo htmlspecialchars($user['phoneNumber']); ?></td>
-                                                        <td><strong>Emergency No.:</strong> <?php echo htmlspecialchars($user['emergencyNumber']); ?></td>
-                                                        <td><strong>NIN:</strong> <?php echo htmlspecialchars($user['nin']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Address:</strong> <?php echo htmlspecialchars($user['address']); ?></td>
-                                                        <td><strong>LGA:</strong> <?php echo htmlspecialchars($user['lga']); ?></td>
-                                                        <td><strong>SOO:</strong> <?php echo htmlspecialchars($user['stateOfOrigin']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Pri Name:</strong> <?php echo htmlspecialchars($user['primary_school_name']); ?></td>
-                                                        <td><strong>Year: </strong> <?php echo htmlspecialchars($user['primary_graduation_year']); ?></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Sec Name:</strong> <?php echo htmlspecialchars($user['secondarySchoolName']); ?></td>
-                                                        <td><strong>Year:</strong> <?php echo htmlspecialchars($user['secondaryGraduationYear']); ?></td>
-                                                        <td><a href="../Application_Dashboard/<?php echo htmlspecialchars($user['sec_file_path']); ?>" target="_blank">Sec Cert</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Insti Name:</strong> <?php echo htmlspecialchars($user['institution']); ?></td>
-                                                        <td><strong>Cert:</strong> <?php echo htmlspecialchars($user['certificateType']); ?></td>
-                                                        <td><a href="../Application_Dashboard/<?php echo htmlspecialchars($user['high_certificate_file_path']); ?>" target="_blank">High Inst Cert</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Degree:</strong> <?php echo htmlspecialchars($user['classOfDegree']); ?></td>
-                                                        <td><strong>Course:</strong> <?php echo htmlspecialchars($user['course']); ?></td>
-                                                        <td><strong>Year:</strong> <?php echo htmlspecialchars($user['highGraduationYear']); ?></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="8">No Applicant data found</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="8">No Applicant data found</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <?php
+</div>
+<?php
 }
-?>S
-
+?>
 
 <script>
 

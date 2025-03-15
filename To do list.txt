@@ -8,7 +8,7 @@ birthCertificate
 maritalStatus
 stateOfOrigin
 localGovernmentArea
-lgaCertificate
+lgaCertificate  
 nin
 phoneNumber
 emergencyNumber
@@ -24,9 +24,9 @@ apply here
 nnpc change
 
 
-all applicant 1
-analysis data 2
-query setup
+all applicant 1--
+analysis data 2---
+query setup--
 
 front back
 save admin Application

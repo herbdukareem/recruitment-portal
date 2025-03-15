@@ -185,64 +185,7 @@
                     </tbody>
                     
                 </table>
-                <!-- Work History Sumary -->
-                <table>
-                    <thead>
-                        <th class="table_head" colspan="2">
-                            <div>
-                                <h4>Work History</h4>
-                            </div>
-                        </th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="table_data">
-                                <div>
-                                    <label for="">Organization Name</label>
-                                </div>
-                                <div>
-                                    <?php echo htmlspecialchars($allUserData['organizationName'] ?? ''); ?>
-                                </div>
-                            </td>
-                            <td class="table_data">
-                                <div>
-                                    <label for="">Rank</label>
-                                </div>
-                                <div>
-                                    <?php echo htmlspecialchars($allUserData['rank'] ?? ''); ?>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="table_data">
-                                <div>
-                                    <label for="">Responsibilities</label>
-                                </div>
-                                <div>
-                                    <?php echo htmlspecialchars($allUserData['responsibilities'] ?? ''); ?>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="table_data">
-                                <div>
-                                    <label for="">Start Date</label>
-                                </div>
-                                <div>
-                                    <?php echo htmlspecialchars($allUserData['startDate'] ?? ''); ?>
-                                </div>
-                            </td>
-                            <td class="table_data">
-                                <div>
-                                    <label for="">End Date</label>
-                                </div>
-                                <div>
-                                    <?php echo htmlspecialchars($allUserData['endDate'] ?? ''); ?>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                
                 <!-- Education Summary -->
                 <table>
                     <thead>
@@ -390,6 +333,64 @@
                                 </div>
                                 <div>
                                     <a href="../Application_Dashboard/<?php echo $allUserData['nysc_file_path'] ?>" target="_blank">NYSC Cert</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Work History Sumary -->
+                <table>
+                    <thead>
+                        <th class="table_head" colspan="2">
+                            <div>
+                                <h4>Work History</h4>
+                            </div>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="table_data">
+                                <div>
+                                    <label for="">Organization Name</label>
+                                </div>
+                                <div>
+                                    <?php echo htmlspecialchars($allUserData['organizationName'] ?? ''); ?>
+                                </div>
+                            </td>
+                            <td class="table_data">
+                                <div>
+                                    <label for="">Rank</label>
+                                </div>
+                                <div>
+                                    <?php echo htmlspecialchars($allUserData['rank'] ?? ''); ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="table_data">
+                                <div>
+                                    <label for="">Responsibilities</label>
+                                </div>
+                                <div>
+                                    <?php echo htmlspecialchars($allUserData['responsibilities'] ?? ''); ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_data">
+                                <div>
+                                    <label for="">Start Date</label>
+                                </div>
+                                <div>
+                                    <?php echo htmlspecialchars($allUserData['startDate'] ?? ''); ?>
+                                </div>
+                            </td>
+                            <td class="table_data">
+                                <div>
+                                    <label for="">End Date</label>
+                                </div>
+                                <div>
+                                    <?php echo htmlspecialchars($allUserData['endDate'] ?? ''); ?>
                                 </div>
                             </td>
                         </tr>
