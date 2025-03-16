@@ -169,7 +169,9 @@
 		}
 	
 		try {
-			$pdo->beginTransaction();
+			if (!$pdo->inTransaction()) { // Ensure transaction starts only if not already active
+				$pdo->beginTransaction();
+			}
 	
 			// Check if email already exists
 			$checkEmail = $pdo->prepare("SELECT id FROM users WHERE email = :email");
@@ -204,6 +206,8 @@
 				]);
 	
 				$user_id = $pdo->lastInsertId();
+
+				$_SESSION['user_id'] = $user_id;
 			}
 	
 			// Check if user already has an application
@@ -257,8 +261,6 @@
 				':emergencyNumber' => $emergencyNumber,
 				':address' => $address
 			]);
-	
-			$pdo->commit();
 
 			/** FILE UPLOAD HANDLING **/
 			$uploadDirectory = "./uploads/";
@@ -311,19 +313,22 @@
 				]);
 			}
 	
-			$pdo->commit();
 			$_SESSION['alert_message'] = "Applicant details saved successfully!";
 			$_SESSION['alert_type'] = "success";
-			header("Location: " . $_SERVER['PHP_SELF'] . "#education-screen");
+			header("Location: " . strtok($_SERVER["REQUEST_URI"], '?') . "#education-screen");
 			exit();
-	
+			$pdo->commit();
 		} catch (PDOException $e) {
-			$pdo->rollBack();
+			if ($pdo->inTransaction()) { // Rollback only if a transaction is active
+				$pdo->rollBack();
+			}
 			$_SESSION['alert_message'] = "Error: " . $e->getMessage();
 			$_SESSION['alert_type'] = "danger";
 			echo "Error: " . $e->getMessage(); // Debugging
 		}
 	}
+
+	$user_id = $_SESSION['user_id'];
 
     if (isset($_POST['saveEdu'])) {
         // Retrieve POST data with null fallback for empty values
@@ -472,10 +477,11 @@
             $_SESSION['alert_message'] = "File saved successfully";
             $_SESSION['alert_type'] = "success";
             
-            header("Location:" . $_SERVER['PHP_SELF'] . "#work-screen");
+           
+			$_SESSION['alert_message'] = "Education details saved successfully";
+			$_SESSION['alert_type'] = "success";
+			header("Location:" . $_SERVER['PHP_SELF'] . "#work-screen");
             exit();
-                $_SESSION['alert_message'] = "Education details saved successfully";
-                $_SESSION['alert_type'] = "success";
         } catch (PDOException $e) {
             $_SESSION['alert_message'] = "Error saving education details";
             $_SESSION['alert_type'] = "danger";
@@ -677,6 +683,15 @@
 	$fetchAllUserData->execute(['user_id' => $user_id]);
 	$allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
 
+	if (isset($_POST['new_applicant'])) {
+		unset($_SESSION['user_id']); // Remove stored user_id
+		$_SESSION['alert_message'] = "New applicant session started!";
+		$_SESSION['alert_type'] = "info";
+	
+		// Redirect to the same page to refresh the form
+		header("Location: " . $_SERVER['PHP_SELF'] . "#biodata-screen");
+		exit();
+	}
 
 ?>
 <!doctype html>
