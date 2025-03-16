@@ -255,6 +255,7 @@ form .form-body table tr td div label i {
 }
 input[type=text], 
 input[type=email], 
+input[type=password], 
 input[type=date], 
 select {
     font-family: "Gruppo", sans-serif;
@@ -321,9 +322,9 @@ textarea {
   border-bottom: 2px solid #00044B;
   background-color: #fff;
 }
-.position{
+/* .position{
   display: none;
-}
+} */
 .details-row {
   display: none;
 }
@@ -516,6 +517,7 @@ button:hover {
 }
 .screen-body form .no-br table tr td input[type=text], 
 .screen-body form .no-br table tr td input[type=email], 
+.screen-body form .no-br table tr td input[type=password], 
 .screen-body form .no-br table tr td input[type=date], 
 .screen-body form .no-br table tr td select {
   font-family: "Gruppo", sans-serif;

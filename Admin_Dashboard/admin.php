@@ -2,8 +2,8 @@
 	session_start();
 	include_once('../db_connect.php');
 
-	// error_reporting(E_ERROR | E_PARSE); // Only show critical errors
-	// ini_set('display_errors', 0);
+	error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+	ini_set('display_errors', 0);
 
 	$admin_unid = $_SESSION['admin_unid'];
 	$adminRole = $_SESSION["admin_role"];
@@ -15,92 +15,6 @@
 		exit();
 	}
 
-	// $positions = [
-	// 	"Professor",
-	// 	"Associate Professor/Reader",
-	// 	"Lecturer I",
-	// 	"Lecturer II",
-	// 	"Assistant Lecturer",
-	// 	"Administrative Cadre",
-	// 	"Executive Officer Cadre",
-	// 	"Clerical Officer Cadre",
-	// 	"Secretarial Cadre",
-	// 	"Secretarial Assistant Cadre",
-	// 	"Portel",
-	// 	"Office Assistant Cadre",
-	// 	"Accountant Cadre",
-	// 	"Executive Officer (Accounts) Cadre",
-	// 	"Stores Officers' Cadre",
-	// 	"Store Attendant",
-	// 	"Internal Auditors' Cadre",
-	// 	"Executive Officer (Audit) Cadre",
-	// 	"Information Officer Cadre",
-	// 	"Protocol Officer Cadre",
-	// 	"Photographer Cadre",
-	// 	"Video Camera Operator Cadre",
-	// 	"Information Assistant Cadre",
-	// 	"Executive Officer (Information) Cadre",
-	// 	"Doctors Cadre",
-	// 	"Pharmacists Cadre",
-	// 	"Nursing Officer Cadre",
-	// 	"Pharmacy Technician Cadre",
-	// 	"Medical Laboratory Technologist Cadre",
-	// 	"Medical Laboratory Technician Cadre",
-	// 	"Medical Laboratory Assistant Cadre",
-	// 	"Health Records Officer",
-	// 	"Environmental Health Officer Cadre",
-	// 	"Veterinary Officer Cadre",
-	// 	"Legal Officer Cadre",
-	// 	"Library Officer Cadre",
-	// 	"Library Assistant Cadre",
-	// 	"Bindery Officers' Cadre",
-	// 	"Bindery Assistant Cadre",
-	// 	"Data Operator/I.T. Operator Cadre",
-	// 	"Data Analyst Cadre",
-	// 	"Computer Electronics Engineer Cadre",
-	// 	"Systems Programmer/Analyst Cadre",
-	// 	"Director, COMSIT",
-	// 	"Engineer Cadre",
-	// 	"Architect Cadre",
-	// 	"Quantity Surveyor Cadre",
-	// 	"Physical Planning Unit",
-	// 	"Maintenance Officer",
-	// 	"Workshop Attendant/Assistant/Superintendent Cadre",
-	// 	"Driver Cadre",
-	// 	"Driver/Mechanic Cadre",
-	// 	"Craftsman (Carpentry & Mason, Welding, Plumbing, Electrical, R&G, Mechanical, etc.)",
-	// 	"Technical Officer Cadre",
-	// 	"Artisan/Craftsman",
-	// 	"Power Station Operator Cadre",
-	// 	"Horticulturist Cadre (Parks & Gardens)",
-	// 	"Estate Officers' Cadre",
-	// 	"Gardening Staff (Biological and Parks & Gardens Units)",
-	// 	"Turnstile Keeper Cadre",
-	// 	"Zoo Keeper Cadre",
-	// 	"Curator Cadre",
-	// 	"Farm Officer/Manager",
-	// 	"Agricultural/Animal Health/Forestry Superintendent Cadre",
-	// 	"Technologist Cadre",
-	// 	"Laboratory Supervisor",
-	// 	"Staff School Cadre I (Lower Basic)",
-	// 	"Staff School Cadre II (Upper Basic)",
-	// 	"Security Cadre",
-	// 	"Planning Officer Cadre",
-	// 	"Coach Cadre",
-	// 	"Coordinator Cadre (SIWES)",
-	// 	"Counsellor Cadre",
-	// 	"Signer (Interpreter) Cadre",
-	// 	"Archives Assistant Cadre",
-	// 	"Archives' Officer Cadre",
-	// 	"Archivist Cadre",
-	// 	"Graphic Arts Assistant Cadre",
-	// 	"Graphic Arts Officers' Cadre",
-	// 	"Cook/Steward/Catering Officer Cadre",
-	// 	"Laundry Cadre",
-	// 	"Fireman Cadre",
-	// 	"Fire Superintendent Cadre - 120",
-	// 	"Fire Officer Cadre - 122",
-	// ];
 	$fetchData = $pdo->prepare('
 		SELECT 
 			u.id AS user_id,
@@ -228,199 +142,189 @@
 
 	$formSection = 1;
 
-    //save biodata form to db
-    if (isset($_POST['saveBio'])) {
-        $positionType = $_POST['positionType'];
-        $supPosition = $_POST['supPosition'];
-        $position = $_POST['position'];
-        $firstname = $_POST['firstname'];
-        $middlename = $_POST['middlename'];
-        $lastname = $_POST['lastname'];
-        $gender = $_POST['gender'];
-        $dateOfBirth = $_POST['dateOfBirth'];
-        $maritalStatus = $_POST['maritalStatus'];
-        $stateOfOrigin = $_POST['stateOfOrigin'];
-        $lga = $_POST['lga'];
-        $nin = $_POST['nin'];
-        $phoneNumber = $_POST['phoneNumber'];
-        $emergencyNumber = $_POST['emergencyNumber'];
-        $address = $_POST['address'];
+	if (isset($_POST['saveBio'])) {
+		$positionType = $_POST['positionType'];
+		$supPosition = $_POST['supPosition'];
+		$position = $_POST['position'];
+		$firstname = $_POST['firstname'];
+		$middlename = $_POST['middlename'];
+		$lastname = $_POST['lastname'];
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+		$gender = $_POST['gender'];
+		$dateOfBirth = $_POST['dateOfBirth'];
+		$maritalStatus = $_POST['maritalStatus'];
+		$stateOfOrigin = $_POST['stateOfOrigin'];
+		$lga = $_POST['lga'];
+		$nin = $_POST['nin'];
+		$phoneNumber = $_POST['phoneNumber'];
+		$emergencyNumber = $_POST['emergencyNumber'];
+		$address = $_POST['address'];
+	
+		if (empty($positionType) || empty($supPosition) || empty($position) || empty($firstname) || empty($lastname) || empty($middlename) || empty($gender) || empty($email) || empty($password)) {
+			$_SESSION['alert_message'] = "All fields are required.";
+			$_SESSION['alert_type'] = "warning";
+			header("Location:" . $_SERVER['PHP_SELF'] . "#bio-screen");
+			exit();
+		}
+	
+		try {
+			$pdo->beginTransaction();
+	
+			// Check if email already exists
+			$checkEmail = $pdo->prepare("SELECT id FROM users WHERE email = :email");
+			$checkEmail->execute([':email' => $email]);
+			$existingEmail = $checkEmail->fetch(PDO::FETCH_ASSOC);
+	
+			if ($existingEmail) {
+				$_SESSION['alert_message'] = "Email already registered.";
+				$_SESSION['alert_type'] = "danger";
+				header("Location: " . $_SERVER['PHP_SELF'] . "#bio-screen");
+				exit();
+			}
+	
+			// Check if NIN already exists
+			$checkNIN = $pdo->prepare("SELECT user_id FROM user_applications WHERE nin = :nin");
+			$checkNIN->execute([':nin' => $nin]);
+			$existingUser = $checkNIN->fetch(PDO::FETCH_ASSOC);
+	
+			if ($existingUser) {
+				$user_id = $existingUser['user_id']; // Use existing user_id
+			} else {
+				// Hash the password
+				$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+	
+				// Insert user into users table
+				$createUser = $pdo->prepare("INSERT INTO users (firstname, lastname, email, password) VALUES (:firstname, :lastname, :email, :password)");
+				$createUser->execute([
+					':firstname' => $firstname,
+					':lastname' => $lastname,
+					':email' => $email,
+					':password' => $hashedPassword
+				]);
+	
+				$user_id = $pdo->lastInsertId();
+			}
+	
+			// Check if user already has an application
+			$checkRecordQuery = $pdo->prepare("SELECT * FROM user_applications WHERE user_id = :user_id");
+			$checkRecordQuery->execute([":user_id" => $user_id]);
+	
+			if ($checkRecordQuery->rowCount() === 0) {
+				$sql = "INSERT INTO user_applications (
+							user_id, positionType, supPosition, position, firstname, lastname, middlename, gender, dateOfBirth, 
+							maritalStatus, stateOfOrigin, lga, nin, phoneNumber, emergencyNumber, address
+						) VALUES (
+							:user_id, :positionType, :supPosition, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
+							:maritalStatus, :stateOfOrigin, :lga, :nin, :phoneNumber, :emergencyNumber, :address
+						)";
+			} else {
+				$sql = "UPDATE user_applications SET 
+							positionType = :positionType,
+							supPosition = :supPosition,
+							position = :position,
+							firstname = :firstname,
+							lastname = :lastname,
+							middlename = :middlename,
+							gender = :gender,
+							dateOfBirth = :dateOfBirth,
+							maritalStatus = :maritalStatus,
+							stateOfOrigin = :stateOfOrigin,
+							lga = :lga,
+							nin = :nin,
+							phoneNumber = :phoneNumber,
+							emergencyNumber = :emergencyNumber,
+							address = :address
+						WHERE user_id = :user_id";
+			}
+	
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute([
+				':user_id' => $user_id,
+				':positionType' => $positionType,
+				':supPosition' => $supPosition,
+				':position' => $position,
+				':firstname' => $firstname,
+				':lastname' => $lastname,
+				':middlename' => $middlename,
+				':gender' => $gender,
+				':dateOfBirth' => $dateOfBirth,
+				':maritalStatus' => $maritalStatus,
+				':stateOfOrigin' => $stateOfOrigin,
+				':lga' => $lga,
+				':nin' => $nin,
+				':phoneNumber' => $phoneNumber,
+				':emergencyNumber' => $emergencyNumber,
+				':address' => $address
+			]);
+	
+			$pdo->commit();
 
-        // Get the last inserted user_id
-        $user_id = $pdo->lastInsertId();
+			/** FILE UPLOAD HANDLING **/
+			$uploadDirectory = "./uploads/";
+			$allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png'];
+	
+			if (!is_dir($uploadDirectory)) {
+				mkdir($uploadDirectory, 0777, true);
+			}
+	
+			$fileInputs = ['lgaCertificate', 'birthCertificate', 'passport'];
+			$filePaths = [];
+	
+			foreach ($fileInputs as $inputName) {
+				if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
+					$fileTmpPath = $_FILES[$inputName]["tmp_name"];
+					$fileExt = strtolower(pathinfo($_FILES[$inputName]["name"], PATHINFO_EXTENSION));
+	
+					if (in_array($fileExt, $allowedFileTypes)) {
+						$newFileName = $user_id . "_" . $inputName . "." . $fileExt;
+						$uploadPath = $uploadDirectory . $newFileName;
+	
+						if (move_uploaded_file($fileTmpPath, $uploadPath)) {
+							$filePaths[$inputName] = $uploadPath;
+						}
+					}
+				}
+			}
+	
+			if (!empty($filePaths)) {
+				$checkFilePath = $pdo->prepare("SELECT id FROM user_files WHERE user_id = :user_id");
+				$checkFilePath->execute([':user_id' => $user_id]);
+	
+				if ($checkFilePath->rowCount() === 0) {
+					$sql = "INSERT INTO user_files (user_id, lga_file_path, birth_certificate_file_path, passport_file_path) 
+							VALUES (:user_id, :lga_file_path, :birth_certificate_file_path, :passport_file_path)";
+				} else {
+					$sql = "UPDATE user_files SET
+								lga_file_path = :lga_file_path,
+								birth_certificate_file_path = :birth_certificate_file_path,
+								passport_file_path = :passport_file_path
+							WHERE user_id = :user_id";
+				}
+	
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute([
+					':user_id' => $user_id,
+					':lga_file_path' => $filePaths['lgaCertificate'] ?? '',
+					':birth_certificate_file_path' => $filePaths['birthCertificate'] ?? '',
+					':passport_file_path' => $filePaths['passport'] ?? ''
+				]);
+			}
+	
+			$pdo->commit();
+			$_SESSION['alert_message'] = "Applicant details saved successfully!";
+			$_SESSION['alert_type'] = "success";
+			header("Location: " . $_SERVER['PHP_SELF'] . "#education-screen");
+			exit();
+	
+		} catch (PDOException $e) {
+			$pdo->rollBack();
+			$_SESSION['alert_message'] = "Error: " . $e->getMessage();
+			$_SESSION['alert_type'] = "danger";
+			echo "Error: " . $e->getMessage(); // Debugging
+		}
+	}
 
-       // Check if NIN exists in the database
-        $checkNIN = $pdo->prepare("SELECT user_id FROM user_applications WHERE nin = :nin");
-        $checkNIN->execute([":nin" => $nin]);
-        $existingNIN = $checkNIN->fetch(PDO::FETCH_ASSOC);
-
-        if (empty($positionType) || empty($supPosition) || empty($position) || empty($firstname) || empty($lastname) || empty($middlename) || empty($gender)) {
-            $_SESSION['alert_message'] = "All fields are required.";
-            $_SESSION['alert_type'] = "warning";
-            header("Location:" . $_SERVER['PHP_SELF'] . "#bio-screen");
-            return;
-        } else {
-                try {
-                    // Check if user already exists in user_applications
-                    $checkRecordQuery = $pdo->prepare("SELECT * FROM user_applications WHERE user_id = :user_id");
-                    $checkRecordQuery->execute([":user_id" => $user_id]);
-
-                    if ($checkRecordQuery->rowCount() === 0) {
-                        if ($existingNIN && $existingNIN !== $user_id) {
-                            // NIN belongs to another user, block insertion
-                            $_SESSION['alert_message'] = "Application Failed! This NIN is already registered with another applicant.";
-                            $_SESSION['alert_type'] = "danger";
-                            header("Location:" . $_SERVER['PHP_SELF'] . "#biodata-screen");
-                            exit();
-                        } else {
-                            // Insert new record
-                            $sql = "INSERT INTO user_applications (
-                                        user_id, positionType, supPosition, position, firstname, lastname, middlename, gender, dateOfBirth, 
-                                        maritalStatus, stateOfOrigin, lga, nin, 
-                                        phoneNumber, emergencyNumber, address
-                                    ) VALUES (
-                                        :user_id, :positionType, :supPosition, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
-                                        :maritalStatus, :stateOfOrigin, :lga, :nin, 
-                                        :phoneNumber, :emergencyNumber, :address
-                                    )";
-                        }
-                    } else {
-                        // Allow update if user already exists
-                        $sql = "UPDATE user_applications SET 
-                                    positionType = :positionType,
-                                    supPosition = :supPosition,
-                                    position = :position,
-                                    firstname = :firstname,
-                                    lastname = :lastname,
-                                    middlename = :middlename,
-                                    gender = :gender,
-                                    dateOfBirth = :dateOfBirth,
-                                    maritalStatus = :maritalStatus,
-                                    stateOfOrigin = :stateOfOrigin,
-                                    nin = :nin,
-                                    lga = :lga,
-                                    phoneNumber = :phoneNumber,
-                                    emergencyNumber = :emergencyNumber,
-                                    address = :address
-                                WHERE user_id = :user_id";
-                    }
-
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute([
-                        ':user_id' => $user_id,
-                        ':positionType' => $positionType,
-                        ':supPosition' => $supPosition,
-                        ':position' => $position,
-                        ':firstname' => $firstname,
-                        ':lastname' => $lastname,
-                        ':middlename' => $middlename,
-                        ':gender' => $gender,
-                        ':dateOfBirth' => $dateOfBirth,
-                        ':maritalStatus' => $maritalStatus,
-                        ':stateOfOrigin' => $stateOfOrigin,
-                        ':lga' => $lga,
-                        ':nin' => $nin,
-                        ':phoneNumber' => $phoneNumber,
-                        ':emergencyNumber' => $emergencyNumber,
-                        ':address' => $address
-                    ]);
-
-                    // File upload handling
-                    $uploadDirectory = "./uploads/";
-                    $allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png']; 
-
-                    // Ensure the upload directory exists
-                    if (!is_dir($uploadDirectory)) {
-                        mkdir($uploadDirectory, 0777, true);
-                    }
-
-                    // Initialize variables to store file paths
-                    $lgaPath = null;
-                    $birthCertPath = null;
-                    $passportPath = null;
-
-                    $fileInputs = ['lgaCertificate', 'birthCertificate', 'passport'];
-
-                    foreach ($fileInputs as $inputName) {
-                        if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
-                            $fileTmpPath = $_FILES[$inputName]["tmp_name"];
-                            $fileExt = strtolower(pathinfo($_FILES[$inputName]["name"], PATHINFO_EXTENSION));
-
-                            // Verify the file extension
-                            if (in_array($fileExt, $allowedFileTypes)) {
-                                // Create a unique file name
-                                $newFileName = $user_id . "_" . $inputName . "." . $fileExt;
-                                $uploadPath = $uploadDirectory . $newFileName;
-
-                                if (move_uploaded_file($fileTmpPath, $uploadPath)) {
-                                    $_SESSION['alert_message'] = "$newFileName has been uploaded successfully";
-                                    $_SESSION['alert_type'] = "success";
-                                    if ($inputName === 'lgaCertificate') {
-                                        $lgaPath = $uploadPath;
-                                    } elseif ($inputName === 'birthCertificate') {
-                                        $birthCertPath = $uploadPath;
-                                    } else {
-                                        $passportPath = $uploadPath;
-                                    }
-                                } else {
-                                    $_SESSION['alert_message'] = "Error moving file: $_FILES[$inputName]['name']";
-                                    $_SESSION['alert_type'] = "warning";
-                                }
-                            } else {
-                                $_SESSION['alert_message'] = "Invalid file type for: $_FILES[$inputName]['name'] ";
-                                $_SESSION['alert_type'] = "warning";
-                            }
-                        } else {
-                            $_SESSION['alert_message'] = "No file uploaded or an error occurred for $inputName";
-                            $_SESSION['alert_type'] = "warning";
-                        }
-                    }
-
-                    if (!empty($lgaPath) || !empty($birthCertPath) || !empty($passportPath)) {
-                        $checkFilePath = $pdo->prepare("SELECT id FROM user_files WHERE user_id = :user_id");
-                        $checkFilePath->execute([':user_id' => $user_id]);
-                    
-                        try {
-                            if ($checkFilePath->rowCount() === 0) {
-                                $sql = "INSERT INTO user_files (user_id, lga_file_path, birth_certificate_file_path, passport_file_path) 
-                                        VALUES (:user_id, :lga_file_path, :birth_certificate_file_path, :passport_file_path)";
-                            } else {
-                                $sql = "UPDATE user_files SET
-                                            lga_file_path = :lga_file_path,
-                                            birth_certificate_file_path = :birth_certificate_file_path,
-                                            passport_file_path = :passport_file_path
-                                        WHERE user_id = :user_id";
-                            }
-                    
-                            $stmt = $pdo->prepare($sql);
-                            $stmt->execute([
-                                ':user_id' => $user_id,
-                                ':lga_file_path' => $lgaPath ?? '',
-                                ':birth_certificate_file_path' => $birthCertPath ?? '',
-                                ':passport_file_path' => $passportPath ?? ''
-                            ]);
-                    
-                            $_SESSION['alert_message'] = "File saved successfully";
-                            $_SESSION['alert_type'] = "success";
-                            header("Location: " . $_SERVER['PHP_SELF'] . "#education-screen");
-                            exit();
-                            
-                        } catch (PDOException $e) {
-                            $_SESSION['alert_message'] = "Error saving file: " . $e->getMessage();
-                            $_SESSION['alert_type'] = "warning";
-                        }
-                    } else {
-                        $_SESSION['alert_message'] = "No valid file uploaded.";
-                        $_SESSION['alert_type'] = "warning";
-                    }
-                } catch (PDOException $e) {
-                    echo 'Error: ' . $e->getMessage();
-                }
-            
-        }
-    }
-
-    //Submission of Education data to db
     if (isset($_POST['saveEdu'])) {
         // Retrieve POST data with null fallback for empty values
         $primary_school_name = !empty($_POST['primary_school_name']) ? $_POST['primary_school_name'] : null;
@@ -746,6 +650,32 @@
             $_SESSION['alert_type'] = "danger";
         }
     }
+
+	$fetchAllUserData = $pdo->prepare("
+		SELECT * 
+		FROM users as u
+		JOIN user_applications as b ON u.id = b.user_id 
+		JOIN (
+			SELECT *
+			FROM user_education_details
+		) as e ON u.id = e.user_id
+		JOIN (
+			SELECT *
+			FROM user_files
+		) as f ON u.id = f.user_id
+		JOIN (
+			SELECT *
+			FROM user_work_details
+		)as w ON u.id = w.user_id
+		JOIn (
+			SELECT *
+			FROM user_pmc_details
+		)as p ON u.id = p.user_id
+		WHERE u.id = :user_id
+
+	");
+	$fetchAllUserData->execute(['user_id' => $user_id]);
+	$allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
 
 
 ?>

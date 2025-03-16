@@ -82,6 +82,26 @@
                             </div>
                         </td>
                     </tr>
+                    <?php if ($adminRole){?>
+                        <tr>
+                            <td>
+                                <div>
+                                    <label for="email">Email</label>
+                                </div>
+                                <div>
+                                    <input type="text" name="email" id=""  value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <label for="lname">Password</label>
+                                </div>
+                                <div>
+                                    <input type="password" name="password" id=""  value="">
+                                </div>
+                            </td>
+                        </tr>
+                    <?php }?>
                     <tr>
                         <td>
                             <div>
