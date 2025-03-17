@@ -28,9 +28,94 @@ all applicant 1--
 analysis data 2---
 query setup--
 
-front back
-save admin Application
-sql query from db
+front back --
+save admin Application --
+sql query from db --
+edit 
 
 backend
 ajax and move all backend file to backend folder
+
+
+
+
+
+const position = [
+    "Professor",
+    "Associate Professor/Reader",
+    "Lecturer I",
+    "Lecturer II",
+    "Assistant Lecturer",
+    "Administrative Cadre",
+    "Executive Officer Cadre",
+    "Clerical Officer Cadre",
+    "Secretarial Cadre",
+    "Secretarial Assistant Cadre",
+    "Portel",
+    "Office Assistant Cadre",
+    "Accountant Cadre",
+    "Executive Officer (Accounts) Cadre",
+    "Stores Officers' Cadre",
+    "Store Attendant",
+    "Internal Auditors' Cadre",
+    "Executive Officer (Audit) Cadre",
+    "Information Officer Cadre",
+    "Protocol Officer Cadre",
+    "Photographer Cadre",
+    "Video Camera Operator Cadre",
+    "Information Assistant Cadre",
+    "Executive Officer (Information) Cadre",
+    "Doctors Cadre",
+    "Pharmacists Cadre",
+    "Nursing Officer Cadre",
+    "Pharmacy Technician Cadre",
+    "Medical Laboratory Technologist Cadre",
+    "Medical Laboratory Technician Cadre",
+    "Medical Laboratory Assistant Cadre",
+    "Health Records Officer",
+    "Environmental Health Officer Cadre",
+    "Veterinary Officer Cadre",
+    "Legal Officer Cadre",
+    "Library Officer Cadre",
+    "Library Assistant Cadre",
+    "Bindery Officers' Cadre",
+    "Bindery Assistant Cadre",
+    "Data Operator/I.T. Operator Cadre",
+    "Data Analyst Cadre",
+    "Computer Electronics Engineer Cadre",
+    "Systems Programmer/Analyst Cadre",
+    "Director, COMSIT",
+    "Engineer Cadre",
+    "Architect Cadre",
+    "Quantity Surveyor Cadre",
+    "Physical Planning Unit",
+    "Maintenance Officer",
+    "Workshop Attendant/Assistant/Superintendent Cadre",
+    "Driver Cadre",
+    "Driver/Mechanic Cadre",
+    "Craftsman (Carpentry & Mason, Welding, Plumbing, Electrical, R&G, Mechanical, etc.)",
+    "Technical Officer Cadre",
+    "Artisan/Craftsman",
+    "Power Station Operator Cadre",
+    "Horticulturist Cadre (Parks & Gardens)",
+    "Estate Officers' Cadre",
+    "Gardening Staff (Biological and Parks & Gardens Units)",
+    "Technologist Cadre",
+    "Laboratory Supervisor",
+    "Staff School Cadre I (Lower Basic)",
+    "Staff School Cadre II (Upper Basic)",
+    "Security Cadre",
+    "Planning Officer Cadre",
+    "Coach Cadre",
+    "Coordinator Cadre (SIWES)",
+    "Counsellor Cadre",
+    "Signer (Interpreter) Cadre",
+    "Archives Assistant Cadre",
+    "Archives' Officer Cadre",
+    "Archivist Cadre",
+    "Graphic Arts Assistant Cadre",
+    "Graphic Arts Officers' Cadre",
+    "Fireman Cadre",
+    "Fire Superintendent Cadre - 120",
+    "Fire Officer Cadre - 122",
+]

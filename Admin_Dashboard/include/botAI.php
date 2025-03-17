@@ -48,6 +48,14 @@ function renderPositionSection($positionId, $positionData, $index) {
                                     <table style="width: 100%;" class="table">
                                         <tbody>
                                             <tr>
+                                                <td><strong>Position:</strong> <?php echo htmlspecialchars($positionData['position']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Firstname:</strong> <?php echo htmlspecialchars($positionData['firstname']); ?></td>
+                                                <td><strong>MIddlename:</strong> <?php echo htmlspecialchars($positionData['middlename']); ?></td>
+                                                <td><strong>Lastname:</strong> <?php echo htmlspecialchars($positionData['lastname']); ?></td>
+                                            </tr>
+                                            <tr>
                                                 <td><strong>Gender:</strong> <?php echo htmlspecialchars($positionData['gender']); ?></td>
                                                 <td><strong>DOB:</strong> <?php echo htmlspecialchars($positionData['dateOfBirth']); ?></td>
                                                 <td><strong>MS:</strong> <?php echo htmlspecialchars($positionData['maritalStatus']); ?></td>
@@ -106,10 +114,10 @@ function renderPositionSection($positionId, $positionData, $index) {
                                                 <td><a href="../Application_Dashboard/<?php echo htmlspecialchars($positionData['sec_file_path']); ?>" target="_blank">PMC Cert</a></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="3">
+                                                <td>
                                                     <form action="" method="POST" class="statusForm">
                                                         <input type="hidden" name="user_id" value="<?php echo $positionData['user_id']; ?>">
-                                                        <input type="hidden" name="status" id="statusInput_<?php echo $positionData['user_id'] ?>">
+                                                        <input type="hidden" name="status" id="statusInput_<?php echo $positionData['user_id'] ?>" value="">
 
                                                         <div class="button-container">
                                                             <button type="button" class="btn btn-primary" 
@@ -126,6 +134,19 @@ function renderPositionSection($positionId, $positionData, $index) {
                                                                 onclick="confirmHandler('<?php echo $positionData['user_id']; ?>', 'unemployed')">
                                                                 Unemployed
                                                             </button>
+                                                        </div>
+
+                                                        <!-- MODAL for each user -->
+                                                        <div id="statusModal_<?php echo $positionData['user_id']; ?>" class="modal" style="display: none;">
+                                                            <div class="modal-content">
+                                                                <span class="close" onclick="closeModal('<?php echo $positionData['user_id']; ?>')">&times;</span>
+                                                                <p id="modalMessage_<?php echo $positionData['user_id']; ?>"></p>
+
+                                                                <!-- Unique Confirm Button -->
+                                                                <button type="submit" name="saveStatus" id="confirmButton_<?php echo $positionData['user_id']; ?>" class="btn">
+                                                                    Confirm
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </form>
                                                 </td>
@@ -168,44 +189,6 @@ function renderPositionSection($positionId, $positionData, $index) {
         }
     };
 
-    function confirmHandler(index, status) {
-        // Close any open modals before opening a new one
-        closeModal(index);
-
-        // Get modal elements
-        let modal = document.getElementById('statusModal_'+ index);
-        let modalMessage = document.getElementById('modalMessage_' + index);
-        let confirmButton = document.getElementById('confirmButton');
-        let statusInput = document.getElementById('statusInput_' + index);
-
-        // Set modal message and button color dynamically
-        if (status === 'shortlisted') {
-            modalMessage.textContent = `Are you sure you want to shortlisted this applicant?`;
-            confirmButton.className = "btn btn-success";
-        } else if (status === 'interviewed') {
-            modalMessage.textContent = `Are you sure this applicant has been interviewed?`;
-            confirmButton.className = "btn btn-success";
-        } else {
-            modalMessage.textContent = `Are you sure you want to decline this applicant?`;
-            confirmButton.className = "btn btn-danger";
-        }
-
-        // Update hidden input field with status
-        statusInput.value = status;
-
-        // Set form action dynamically
-        confirmButton.onclick = function () {
-            statusInput.closest('form').submit();
-        };
-
-        // Show modal
-        modal.style.display = "block";
-    }
-
-    function closeModal(index) {
-        document.getElementById('statusModal_' + index).style.display = "none";
-    }
-
     function toggleDetailsAC(index) {
         // Get the details row by index
         var detailsRow = document.getElementById("details_AC-" + index);
@@ -223,5 +206,44 @@ function renderPositionSection($positionId, $positionData, $index) {
         }
     }
 
+    function confirmHandler(index, status) {
+        // Get modal elements
+        let modal = document.getElementById('statusModal_' + index);
+        let modalMessage = document.getElementById('modalMessage_' + index);
+        let confirmButton = document.getElementById('confirmButton_' + index); // FIXED: Use unique ID
+        let statusInput = document.getElementById('statusInput_' + index);
+
+        // Ensure elements exist before modifying them
+        if (!modal || !modalMessage || !confirmButton || !statusInput) {
+            console.error("Modal elements not found for index:", index);
+            return;
+        }
+
+        // Set modal message and button color dynamically
+        if (status === 'shortlisted') {
+            modalMessage.textContent = `Are you sure you want to shortlist this applicant?`;
+            confirmButton.className = "btn btn-success";
+        } else if (status === 'interviewed') {
+            modalMessage.textContent = `Are you sure this applicant has been interviewed?`;
+            confirmButton.className = "btn btn-warning";
+        } else {
+            modalMessage.textContent = `Are you sure you want to decline this applicant?`;
+            confirmButton.className = "btn btn-danger";
+        }
+
+        // Update hidden input field with status
+        statusInput.value = status;
+
+        // Show modal
+        modal.style.display = "block";
+    }
+
+    // Function to close modal
+    function closeModal(index) {
+        let modal = document.getElementById('statusModal_' + index);
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }
 
 </script>
