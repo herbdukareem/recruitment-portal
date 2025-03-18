@@ -733,7 +733,16 @@
 	$fetchAllUserData->execute(['user_id' => $user_id]);
 	$allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
 
-	
+	if(isset($_POST['editUser'])){
+		$userId = $edituser;
+		$_SESSION['user_id'] = $userId;
+
+		$_SESSION['alert_message'] = "You can proceed to edit applicant";
+		$_SESSION['alert_type'] = "success";
+
+		header("Location: " . $_SERVER['PHP_SELF'] . "#biodata-screen");
+		exit();
+	} 
 
 	if (isset($_POST['new_applicant'])) {
 		unset($_SESSION['user_id']); // Remove stored user_id
@@ -743,7 +752,12 @@
 		// Redirect to the same page to refresh the form
 		header("Location: " . $_SERVER['PHP_SELF'] . "#biodata-screen");
 		exit();
-	}
+	};
+
+	// Fetch user data for display in the form after saving
+    $fetchUserData = $pdo->prepare("SELECT * FROM user_applications WHERE user_id = :user_id");
+    $fetchUserData->execute(['user_id' => $user_id]);
+    $user_data = $fetchUserData->fetch(PDO::FETCH_ASSOC);
 
 ?>
 <!doctype html>
@@ -974,11 +988,9 @@
 				<div id="content">
 					<?php include_once('./include/botAI.php'); ?>
 					<?php 
-					$index = 0;
-					foreach ($allApplicant as $key => $applicant) {
-						renderPositionSection($key, $applicant, $index);
+						$index = 0;
+						renderPositionSection($allApplicant, $index, $adminRole);
 						$index++;
-					}
 					?>
 				</div>
 
