@@ -2,11 +2,12 @@
 	session_start();
 	include_once('../db_connect.php');
 
-	error_reporting(E_ERROR | E_PARSE); // Only show critical errors
-	ini_set('display_errors', 0);
+	// error_reporting(E_ERROR | E_PARSE); // Only show critical errors
+	// ini_set('display_errors', 0);
 
 	$admin_unid = $_SESSION['admin_unid'];
-	$adminRole = $_SESSION["admin_role"];
+	$adminRole = $_SESSION['admin_role'];
+	$user_id = $_SESSION['user_id'];
 
 	//Check if the user is logged in
 	if (!isset($_SESSION['admin_unid'])) {
@@ -188,7 +189,6 @@
 			exit();
 		}
 	}
-	
 
 	$formSection = 1;
 
@@ -377,8 +377,6 @@
 			echo "Error: " . $e->getMessage(); // Debugging
 		}
 	}
-	
-	$user_id = $_SESSION['user_id'];
 
     if (isset($_POST['saveEdu'])) {
         // Retrieve POST data with null fallback for empty values
@@ -733,13 +731,15 @@
 	$fetchAllUserData->execute(['user_id' => $user_id]);
 	$allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
 
-	if(isset($_POST['editUser'])){
-		$userId = $edituser;
-		$_SESSION['user_id'] = $userId;
-
+	if (isset($_POST['editUser'])) {
+		$edituser = htmlspecialchars($_POST['edituser']); 
+	
+		$_SESSION['user_id'] = $edituser;
+	
 		$_SESSION['alert_message'] = "You can proceed to edit applicant";
 		$_SESSION['alert_type'] = "success";
 
+	
 		header("Location: " . $_SERVER['PHP_SELF'] . "#biodata-screen");
 		exit();
 	} 
@@ -755,9 +755,28 @@
 	};
 
 	// Fetch user data for display in the form after saving
-    $fetchUserData = $pdo->prepare("SELECT * FROM user_applications WHERE user_id = :user_id");
-    $fetchUserData->execute(['user_id' => $user_id]);
-    $user_data = $fetchUserData->fetch(PDO::FETCH_ASSOC);
+	$fetchUserData = $pdo->prepare("SELECT * FROM user_applications WHERE user_id = :user_id");
+	$fetchUserData->execute(['user_id' => $user_id]);
+	$user_data = $fetchUserData->fetch(PDO::FETCH_ASSOC);
+
+	 // Fetch user Education Detials for display in the form after saving
+	$fetchUserEducationData = $pdo->prepare("SELECT * FROM user_education_details WHERE user_id = :user_id");
+	$fetchUserEducationData->execute(['user_id' => $user_id]);
+	$user_edu_data = $fetchUserEducationData->fetch(PDO::FETCH_ASSOC);
+
+	// Fetch user Education Detials for display in the form after saving
+	$fetchUserWorkData = $pdo->prepare("SELECT * FROM user_work_details WHERE user_id = :user_id");
+	$fetchUserWorkData->execute(['user_id' => $user_id]);
+	$user_work_data = $fetchUserWorkData->fetch(PDO::FETCH_ASSOC);
+
+	$fetchUserPMCData = $pdo->prepare("SELECT * FROM user_pmc_details WHERE user_id = :user_id");
+    $fetchUserPMCData->execute(['user_id' => $user_id]);
+    $user_pmc_data = $fetchUserPMCData->fetch(PDO::FETCH_ASSOC);
+	//Fetching user score from DB
+    $fetchUserQuizScore = $pdo->prepare("SELECT * FROM quiz_scores WHERE user_id = :user_id");
+    $fetchUserQuizScore->execute(['user_id' => $user_id]);
+    $userQuizScore = $fetchUserQuizScore->fetch(PDO::FETCH_ASSOC);
+
 
 ?>
 <!doctype html>
@@ -984,7 +1003,6 @@
 						
 					</form>
 				</div>
-
 				<div id="content">
 					<?php include_once('./include/botAI.php'); ?>
 					<?php 
@@ -992,8 +1010,8 @@
 						renderPositionSection($allApplicant, $index, $adminRole);
 						$index++;
 					?>
-				</div>
 
+				</div>
 				
 			</div>
 		</div>

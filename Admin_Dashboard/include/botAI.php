@@ -180,6 +180,7 @@ function renderPositionSection($allApplicant, $index, $adminRole) {
                         <?php foreach ($allApplicant as $positionId => $positionData) { ?>
 
                             <?php if (is_array($positionData) && !empty($positionData)): ?>
+
                                 <tr>
                                     <td><?php echo $index + 1; ?></td>
                                     <td>
@@ -201,9 +202,13 @@ function renderPositionSection($allApplicant, $index, $adminRole) {
                                     </td>
                                     <?php if( !empty($adminRole) && $adminRole  === 'sup_admin'){ ?>
                                         <td>
-                                            <button class="btn btn-primary" onclick='editButtonHandler('<?php echo htmlspecialchars($positionData['uder_id'])')'>Edit</button>
-                                            <form action="" method="post" style="display:none" id="editSubmit"><input type="text" id="edituser" name="edituser"><button name="editUser"></button></form>
+                                            <button class="btn btn-primary" onclick="editButtonHandler('<?php echo htmlspecialchars($positionData['user_id']); ?>')">Edit</button>
+                                            <form action="" method="post" id="editSubmit_<?php echo htmlspecialchars($positionData['user_id']); ?>" style="display:none;">
+                                                <input type="text" id="edituser_<?php echo htmlspecialchars($positionData['user_id']); ?>" name="edituser" hidden>
+                                                <button name="editUser"></button>
+                                            </form>
                                         </td>
+
                                     <?php } ?>
                                     
                                 </tr>
@@ -413,12 +418,18 @@ function renderPositionSection($allApplicant, $index, $adminRole) {
     }
 
     // Edit function
-    function editButtonHandler(id){
-        let editValue = document.getElementById('edituser');
-        const editForm = document.getElementById('editSubmit');
+    function editButtonHandler(id) {
+        let editValue = document.getElementById(`edituser_${id}`);
+        const editForm = document.getElementById(`editSubmit_${id}`);
+        if (editValue && editForm) {
+            editValue.value = id;
+            console.log(editValue.value); // For debugging purposes
+            editForm.submit(); // Submitting the form
+        } else {
+            console.error('Either the input field or form element was not found');
+        }
+}
 
-        editValue.value = id;
-        editForm.submit();
-    }
+
 
 </script>
