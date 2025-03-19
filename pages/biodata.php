@@ -52,7 +52,7 @@
                                 <label for="fname">Firstname</label>
                             </div>
                             <div>
-                                <input type="text" name="firstname" id="" value="<?php echo htmlspecialchars($_SESSION['user_firstname'])?>">
+                                <input type="text" name="firstname" id="" value="<?php echo htmlspecialchars($user_names['firstname'])?>">
                             </div>
                         </td>
                         <td>
@@ -78,7 +78,7 @@
                                 <label for="lname">Surname</label>
                             </div>
                             <div>
-                                <input type="text" name="lastname" id=""  value=" <?php echo htmlspecialchars($_SESSION['user_lastname']) ?? ''?>">
+                                <input type="text" name="lastname" id=""  value=" <?php echo htmlspecialchars($user_names['lastname']) ?? ''?>">
                             </div>
                         </td>
                     </tr>
@@ -89,7 +89,7 @@
                                     <label for="email">Email</label>
                                 </div>
                                 <div>
-                                    <input type="text" name="email" id=""  value="">
+                                    <input type="text" name="email" id=""  value="<?php echo htmlspecialchars($user_names['email']) ?? ''?>">
                                 </div>
                             </td>
                             <td>

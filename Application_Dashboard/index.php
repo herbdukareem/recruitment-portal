@@ -18,6 +18,7 @@
     // Fetch user firstname and lastname from the database using user ID
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :user_id");
     $stmt->execute(['user_id' => $user_id]);
+    $user_names = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Fetch user record
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
