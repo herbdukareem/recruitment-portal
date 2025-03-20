@@ -202,7 +202,7 @@ function renderPositionSection($allApplicant, $index, $adminRole) {
                                     </td>
                                     <?php if( !empty($adminRole) && $adminRole  === 'sup_admin'){ ?>
                                         <td>
-                                            <form action="" method="post" id="editSubmit_<?php echo htmlspecialchars($positionData['user_id']); ?>">
+                                            <form action="" method="post" id="editSubmit_<?php echo htmlspecialchars($positionData['user_id']); ?>" style="all:unset">
                                                 <input type="hidden" id="edituser_<?php echo htmlspecialchars($positionData['user_id']); ?>" 
                                                     name="editUser" value="<?php echo htmlspecialchars($positionData['user_id']); ?>">
                                                 <button type="submit" name="saveEditUser" class="btn btn-primary">Edit</button>

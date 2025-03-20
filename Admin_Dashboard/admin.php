@@ -196,7 +196,6 @@
 					</div>
 				</div>
 
-				<?php echo $user_id ?>
 				<!-- Search -->
 				<div id="query-navbar" class="col-12">
 					<form action="" method="post">

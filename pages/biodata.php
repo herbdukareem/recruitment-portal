@@ -82,14 +82,14 @@
                             </div>
                         </td>
                     </tr>
-                    <?php if ($adminRole){?>
+                    <?php if ($adminRole || $form){?>
                         <tr>
                             <td>
                                 <div>
                                     <label for="email">Email</label>
                                 </div>
                                 <div>
-                                    <input type="text" name="email" id=""  value="<?php echo htmlspecialchars($user_names['email']) ?? ''?>">
+                                    <input type="text" name="email" id=""  value="<?php echo htmlspecialchars($user_names['email']) ?? ''?>" disabled="<?php $form ?>" style="cursor:no-drop">
                                 </div>
                             </td>
                             <td>
@@ -97,7 +97,7 @@
                                     <label for="lname">Password</label>
                                 </div>
                                 <div>
-                                    <input type="password" name="password" id=""  value="">
+                                    <input type="password" name="password" id=""  value="" disabled="<?php $form ?>" style="cursor:no-drop">
                                 </div>
                             </td>
                         </tr>

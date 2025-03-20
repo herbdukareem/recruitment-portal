@@ -7,6 +7,7 @@
 
     $user_id = $_SESSION['user_id'];
     $adminRole = false;
+    $form = false;
 
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) {
@@ -21,9 +22,9 @@
     $user_names = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Fetch user record
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user) {
+    if (!$user_names) {
         die('User not found.');
     }
     if (!isset($_SESSION['user_id'])) {

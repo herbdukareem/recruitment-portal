@@ -119,3 +119,87 @@ const position = [
     "Fire Superintendent Cadre - 120",
     "Fire Officer Cadre - 122",
 ]
+
+
+
+% MATLAB Script: Computer Proficiency Table
+
+positions = {
+    'Professor' : 50
+    'Associate Professor/Reader' : 50
+    'Lecturer I' : 50
+    'Lecturer II' : 50
+    'Assistant Lecturer' : 50
+    'Administrative Cadre' : 50
+    'Executive Officer Cadre' : 35
+    'Clerical Officer Cadre' : 25
+    'Secretarial Cadre' : 50
+    'Secretarial Assistant Cadre' : 30,  
+    'Portel': 30,
+    'Office Assistant Cadre', NaN, NaN; ...
+    'Accountant Cadre' : 50
+    'Executive Officer (Accounts) Cadre' : 40
+    'Stores Officers'' Cadre' : 45
+    'Store Attendant' : 15,
+    'Internal Auditors'' Cadre' : 50,
+    'Executive Officer (Audit) Cadre' : 40,
+    'Information Officer Cadre' : 60,
+    'Protocol Officer Cadre',  : 50, 
+    'Photographer Cadre' : 20,
+    'Video Camera Operator Cadre' : 25,
+    'Information Assistant Cadre',  :NaN,
+    'Executive Officer (Information) Cadre' : 50,
+    'Doctors Cadre' : 60,
+    'Pharmacists Cadre' : 55,
+    'Nursing Officer Cadre' : 50,
+    'Pharmacy Technician Cadre' : 50,
+    'Medical Laboratory Technologist Cadre' : 50,
+    'Medical Laboratory Technician Cadre' : 40,
+    'Medical Laboratory Assistant Cadre' : 25,
+    'Health Records Officer' : 45,
+    'Environmental Health Officer Cadre' : 45,
+    'Veterinary Officer Cadre' : 40,
+    'Legal Officer Cadre' : 50,
+    'Library Officer Cadre' : 40,
+    'Library Assistant Cadre' : 25,
+    'Bindery Officers'' Cadre' : 35,
+    'Bindery Assistant Cadre' : 25,
+    'Data Operator/I.T. Operator Cadre' : 45,
+    'Data Analyst Cadre' : 55,
+    'Computer Electronics Engineer Cadre' : 70,
+    'Systems Programmer/Analyst Cadre' : 70,
+    'Director, COMSIT' : 95,
+    'Engineer Cadre' : 50,
+    'Architect Cadre' : 55,
+    'Quantity Surveyor Cadre' : 50,
+    'Physical Planning Unit' : 50,
+    'Maintenance Officer' : 45,
+    'Workshop Attendant/Assistant/Superintendent Cadre' : 20,
+    'Driver Cadre' : 25,
+    'Driver/Mechanic Cadre' : 25,
+    'Craftsman (Carpentry & Mason, Welding, Plumbing, Electrical, R&G, Mechanical, etc.)' : 15,
+    'Technical Officer Cadre' : 35,
+    'Artisan/Craftsman' : 20,
+    'Power Station Operator Cadre' : 20,
+    'Horticulturist Cadre (Parks & Gardens)' : 35,
+    'Estate Officers Cadre', 50,
+    'Gardening Staff (Biological and Parks & Gardens Units)' : 15,
+    'Technologist Cadre' : 50,
+    'Laboratory Supervisor' : 20,
+    'Staff School Cadre I (Lower Basic)' : 35,
+    'Staff School Cadre II (Upper Basic)' : 35,
+    'Security Cadre' : 15,
+    'Planning Officer Cadre' : 50,
+    'Coach Cadre' : 25,
+    'Coordinator Cadre (SIWES)' : 40,
+    'Counsellor Cadre' : 40,
+    'Signer (Interpreter) Cadre' : 35,
+    'Archives Assistant Cadre' : 15,
+    'Archives'' Officer Cadre' : 25,
+    'Archivist Cadre' : 45,
+    'Graphic Arts Assistant Cadre' : 15,
+    'Graphic Arts Officers'' Cadre' : 35,
+    'Fireman Cadre' : 25,
+    'Fire Superintendent Cadre - 120' : 30,
+    'Fire Officer Cadre - 122' : 40
+};

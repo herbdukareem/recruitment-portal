@@ -45,7 +45,7 @@
         $password = $_POST['password'];
 
         // Prepare and execute the SQL statement
-        $sql = "SELECT id, firstname, lastname, password FROM users WHERE email = :email";
+        $sql = "SELECT * FROM users WHERE email = :email";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
