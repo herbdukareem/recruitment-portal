@@ -14,7 +14,7 @@
     </div>
     <div class="screen-body">
         <!-- Display Input Data -->
-        <form action="" method="post">
+        <form action="" method="post" id="workForm">
             <div class="form-head">
                 <h4>Work History</h4>
             </div>
@@ -51,27 +51,27 @@
                     <tr>
                         <td>
                             <div>
-                                <input type="text" name="organizationName" id="organizationName" value="<?php echo htmlspecialchars($user_work_data['organizationName']); ?>" >
+                                <input type="text" name="organizationName" id="organizationName" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="rank" id="rank" value="<?php echo htmlspecialchars($user_work_data['rank']); ?>" >
+                                <input type="text" name="rank" id="rank" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="responsibilities" id="responsibilities" value="<?php echo htmlspecialchars($user_work_data['responsibilities']); ?>" >
+                                <input type="text" name="responsibilities" id="responsibilities" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="date" name="startDate" id="startDate" value="<?php echo htmlspecialchars($user_work_data['startDate']); ?>" >
+                                <input type="date" name="startDate" id="startDate" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="date" name="endDate" id="endDate" value="<?php echo htmlspecialchars($user_work_data['endDate']); ?>" >
+                                <input type="date" name="endDate" id="endDate" value="" >
                             </div>
                         </td>
                     </tr>
@@ -183,27 +183,27 @@
                 newRow.innerHTML = `
                     <td>
                         <div>
-                            <input type="text" name="organizationName" id="organizationName" value="<?php echo htmlspecialchars($user_work_data['organizationName']); ?>" >
+                            <input type="text" name="organizationName" id="organizationName" value="" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="rank" id="rank" value="<?php echo htmlspecialchars($user_work_data['rank']); ?>" >
+                            <input type="text" name="rank" id="rank" value="" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="resposibilities" id="resposibilities" value="<?php echo htmlspecialchars($user_work_data['resposibilities']); ?>" >
+                            <input type="text" name="resposibilities" id="resposibilities" value="" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="startDate" id="startDate" value="<?php echo htmlspecialchars($user_work_data['startDate']); ?>" >
+                            <input type="text" name="startDate" id="startDate" value="" >
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="endDate" id="endDate" value="<?php echo htmlspecialchars($user_work_data['endDate']); ?>" >
+                            <input type="text" name="endDate" id="endDate" value="" >
                         </div>
                     </td>
                     `;

@@ -52,7 +52,7 @@ try {
     ]);
     
     $pdo->commit();
-    echo json_encode(['success' => true, 'message' => 'PMC details saved', 'next' => 'files']);
+    echo json_encode(['success' => true, 'message' => 'PMC details saved', 'next' => 'summary']);
 } catch (Exception $e) {
     $pdo->rollBack();
     http_response_code(500);

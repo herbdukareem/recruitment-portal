@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../../config/config.php';
-require_once __DIR__ . '/../../helpers/auth_helper.php';
-require_once __DIR__ . '/../../helpers/rate_limit.php';
+require_once __DIR__ . '/../../../config/config.php';
+require_once __DIR__ . '/../../../helpers/auth_helper.php';
+require_once __DIR__ . '/../../../helpers/rate_limit.php';
 limitRequests('login', 5, 60); // 5 attempts per minute
 
 // session_start([

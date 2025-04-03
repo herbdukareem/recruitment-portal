@@ -19,53 +19,14 @@
 	<link rel="stylesheet" href="../style/formStyles.css">
 	<!-- <script type="module" src="./script/loadApplicants.js"></script> -->
 	<script src="./script/alert.js"></script>
+
 	<script>
 
-		// Initialize when DOM is loaded
-		document.addEventListener('DOMContentLoaded', () => {
-			// Initialize functions
-			checkSession();
-			loadAdminData();
-			loadStats();
-			loadApplicants();
-			handleStatusUpdate();
-
-			// Form filtering setup
-			const filterForm = document.getElementById('filterForm');
-			if (filterForm) {
-				const filterInputs = filterForm.querySelectorAll('select, input');
-				
-				// Real-time filtering with debounce
-				filterInputs.forEach(input => {
-				input.addEventListener('input', debounce(function() {
-					loadApplicants();
-				}, 300));
-				});
-				
-				// Prevent default form submission
-				filterForm.addEventListener('submit', function(e) {
-					e.preventDefault();
-					loadApplicants();
-				});
-			}
-
-			// Event delegation for dynamic buttons
-			document.addEventListener('click', (e) => {
-				// View details button
-				if (e.target.classList.contains('view-details-btn')) {
-					const index = e.target.getAttribute('data-index');
-					toggleDetails(index);
-				}
-				
-				// Edit button
-				if (e.target.classList.contains('edit-btn')) {
-					const userId = e.target.getAttribute('data-user-id');
-					handleEditApplicant(userId);
-				}
-			});
-		});
-
 		let adminRole;
+		let user_id;
+		let user_data;
+		let form;
+	
 		// let allApplicants = [];
 
 		const checkSession = async () => {
@@ -152,7 +113,7 @@
 				const adminData = await response.json();
 
 				adminRole = adminData.data.role;
-				
+
 				// 2. Update admin info in navbar
 				document.getElementById('admin-id-display').innerText = adminData.data.admin_id;
 				
@@ -173,7 +134,21 @@
 						</div>
 					`;
 
-					adminInitializeNavigation()
+					// Event listeners for navigation buttons
+					document.getElementById('btn-all').addEventListener('click', function(e) {
+						e.preventDefault();
+						showSection('sort_applicant');
+					});
+
+					document.getElementById('btn-add').addEventListener('click', function(e) {
+						e.preventDefault();
+						showSection('add_applicant');
+					});
+
+					document.getElementById('btn-create').addEventListener('click', function(e) {
+						e.preventDefault();
+						showSection('create_admin');
+					});
 
 					// // Toggle sidebar
 					document.getElementById('admin_sidebar_toggle').addEventListener('click', ()=>{
@@ -181,6 +156,8 @@
 						console.log('clicked')
 					});
 				}
+				renderUserLoginInput();
+				renderNavListBtn();
 
 			} catch (error) {
 				console.log('Error loading admin data:', error);
@@ -188,53 +165,18 @@
 			}
 		};
 
-		function adminInitializeNavigation() {
-			const screens = {
-				"btn-all": "sort_applicant",
-				"btn-add": "add_applicant",
-				"btn-create": "create_admin"
-			};
-
-			function getVisibleButtons() {
-				return Object.keys(screens)
-					.map(id => document.getElementById(id))
-					.filter(btn => btn && getComputedStyle(btn).display !== "none");
-			}
-
-			function getExistingScreens() {
-				return Object.values(screens)
-					.map(id => document.getElementById(id))
-					.filter(screen => screen);
-			}
-
-			function attachEventListeners() {
-				const buttons = getVisibleButtons();
-				const screensElements = getExistingScreens();
-
-				buttons.forEach(button => {
-					button.addEventListener("click", (e) => {
-						e.preventDefault();
-						buttons.forEach(btn => btn.style.background = "none");
-						screensElements.forEach(screen => screen.style.display = "none");
-
-						e.target.style.background = "#ffffff5f";
-						e.target.style.borderRadius = "8px";
-						const targetScreen = screens[e.target.id];
-						if (targetScreen) {
-							document.getElementById(targetScreen).style.display = "block";
-						}
-						document.getElementById('admin_sidebar').style.right = "-350px";
-					});
-				});
-			}
-
-			attachEventListeners();
-
-			const observer = new MutationObserver(() => {
-				attachEventListeners();
-			});
-
-			observer.observe(document.body, { subtree: true, attributes: true, attributeFilter: ["style"] });
+		// Function to show a specific section and hide others
+		function showSection(sectionId) {
+			// Hide all sections
+			document.getElementById('sort_applicant').style.display = 'none';
+			document.getElementById('add_applicant').style.display = 'none';
+			document.getElementById('create_admin').style.display = 'none';
+			
+			// Show the requested section
+			document.getElementById(sectionId).style.display = 'block';
+			
+			// Store the active section in localStorage
+			localStorage.setItem('activeSection', sectionId);
 		}
 
 		// Render Applications Stats
@@ -420,48 +362,49 @@
 
 		// Render the table with applicant data
 		function renderTable(applicants) {
-		const container = document.getElementById('applicants-table-container');
-		if (!container) return;
+			const container = document.getElementById('applicants-table-container');
+			if (!container) return;
 
-		// Get admin role (you'll need to set this from your session)
-		const adminRole = localStorage.getItem('admin_role') || '';
+			// Get admin role (you'll need to set this from your session)
+			// adminRole = localStorage.getItem('admin_role') || '';
 
-		let html = `
-			<div class="table-responsive">
-			<table class="table table-striped">
-				<thead>
-				<tr>
-					<th scope="col">Id</th>
-					<th scope="col">Profile</th>
-					<th scope="col">Email</th>
-					<th scope="col">CPL%</th>
-					<th scope="col">Reg Date/Time</th>
-					<th scope="col">View Details</th>
-					${adminRole === 'sup_admin' ? '<th scope="col">Action</th>' : ''}
-				</tr>
-				</thead>
-				<tbody>
-		`;
-
-		if (applicants.length === 0) {
-			html += `
-			<tr>
-				<td colspan="${adminRole === 'sup_admin' ? '7' : '6'}">No applicants found</td>
-			</tr>
+			let html = `
+				<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+					<tr>
+						<th scope="col">Id</th>
+						<th scope="col">Profile</th>
+						<th scope="col">Email</th>
+						<th scope="col">CPL%</th>
+						<th scope="col">Reg Date/Time</th>
+						<th scope="col">View Details</th>
+						${adminRole === 'sup_admin' ? '<th scope="col">Action</th>' : ''}
+					</tr>
+					</thead>
+					<tbody>
 			`;
-		} else {
-			applicants.forEach((applicant, index) => {
-			html += renderApplicantRow(applicant, index, adminRole);
-			});
-		}
+			console.log(adminRole + ": admin_Role for table");
 
-		html += `
-				</tbody>
-			</table>
-			</div>
-		`;
+			if (applicants.length === 0) {
+				html += `
+				<tr>
+					<td colspan="${adminRole === 'sup_admin' ? '7' : '6'}">No applicants found</td>
+				</tr>
+				`;
+			} else {
+				applicants.forEach((applicant, index) => {
+				html += renderApplicantRow(applicant, index, adminRole);
+				});
+			}
 
-		container.innerHTML = html;
+			html += `
+					</tbody>
+				</table>
+				</div>
+			`;
+
+			container.innerHTML = html;
 		}
 
 		function safeData(value, fallback = 'N/A') {
@@ -483,6 +426,7 @@
 		function renderApplicantRow(applicant, index, adminRole) {
 			const defaultAvatar = '../assets/images/default-avatar.png';
 			const avatarPath = applicant.passport_file_path || defaultAvatar;
+			console.log(adminRole + ": admin_Role for applicant table");
 			
 			return `
 				<tr>
@@ -517,6 +461,7 @@
 					</td>
 				</tr>
 			`;
+			
 		}
 
 		// Render applicant details
@@ -767,8 +712,335 @@
 			};
 		};
 
+		// AJAX call to fetch user data
+		const fetchUserData = async () => {
+			try {
+				const response = await fetch(`/test/backend/user/data?user_id=${user_id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const user_data = await response.json();
+				return user_data;
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		function populateUserData(user_data, user_names) {
+			// Position selects (you'll need to set these based on your data)
+			document.getElementById('positionType').value = user_data.positionType || '';
+			document.getElementById('supPosition').value = user_data.supPosition || '';
+			document.getElementById('position').value = user_data.position || '';
+			
+			// Basic info
+			document.querySelector('input[name="firstname"]').value = user_names.firstname || '';
+			document.querySelector('input[name="middlename"]').value = user_data.middlename || '';
+			document.querySelector('input[name="lastname"]').value = user_names.lastname || '';
+			
+			// Email and password (if applicable)
+			if (user_names.email) {
+				document.querySelector('input[name="email"]').value = user_names.email || '';
+				document.querySelector('input[name="password"]').value = '';
+			}
+			
+			// Personal details
+			document.querySelector('select[name="gender"]').value = user_data.gender || '';
+			document.querySelector('input[name="dateOfBirth"]').value = user_data.dateOfBirth || '';
+			document.querySelector('select[name="maritalStatus"]').value = user_data.maritalStatus || '';
+			
+			// Location info
+			document.getElementById('state').value = user_data.stateOfOrigin || '';
+			// You'll need to populate LGA based on state selection
+			document.getElementById('lga').value = user_data.lga || '';
+			
+			// Identification
+			document.querySelector('input[name="nin"]').value = user_data.nin || '';
+			
+			// Contact info
+			document.querySelector('input[name="phoneNumber"]').value = user_data.phoneNumber || '';
+			document.querySelector('input[name="emergencyNumber"]').value = user_data.emergencyNumber || '';
+			document.querySelector('input[name="address"]').value = user_data.address || '';
+			
+			// Note: For file inputs, you can't set the value directly due to security restrictions
+			// You might want to display the existing filenames differently
+		}
+
+		const setupFormHandlers = () => {
+			// Biodata form
+			document.getElementById('bioForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await submitForm('bio', new FormData(e.target));
+			});
+			
+			// Education form
+			document.getElementById('eduForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await submitForm('education', new FormData(e.target));
+			});
+			
+			// Work history form
+			document.getElementById('workForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await submitForm('work', new FormData(e.target));
+			});
+			
+			// PMC form
+			document.getElementById('pmcForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await submitForm('pmc', new FormData(e.target));
+			});
+			
+			// File upload form
+			document.getElementById('fileForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await uploadFiles(new FormData(e.target));
+			});
+		}
+
+		const submitForm = async (endpoint, formData) => {
+			try {
+				const response = await fetch(`/test/backend/submit/${endpoint}`, {
+					method: 'POST',
+					body: JSON.stringify(Object.fromEntries(formData)),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+				
+				const data = await response.json();
+				
+				if (data.success) {
+					this.showAlert('alert-container-application', data.message, 'success');
+					user_id = data.user_id
+					localStorage.setItem('userID', user_id)
+					if (data.next) {
+						setTimeout(() => {
+							this.navigateToStep(data.next);
+						}, 5200);
+					}
+				} else {
+					this.showAlert('alert-container-application', data.error || 'Submission failed', 'danger');
+				}
+			} catch (error) {
+				console.error('Form submission error:', error);
+				this.showAlert('alert-container-application', 'Network error', 'danger');
+			}
+		}
+
+		const uploadFiles = async (formData) => {
+			try {
+				const response = await fetch('/backend/files', {
+					method: 'POST',
+					body: formData
+				});
+				
+				const data = await response.json();
+				
+				if (data.success) {
+					this.showSuccess(data.message);
+					this.navigateToStep(data.next);
+				} else {
+					this.showError(data.error || 'File upload failed');
+				}
+			} catch (error) {
+				console.error('File upload error:', error);
+				this.showError('Network error');
+			}
+		}
+
+		function navigateToStep(step) {
+			try {
+				// Validate step input
+				if (typeof step !== 'string' || !step.trim()) {
+					throw new Error('Invalid step parameter');
+				}
+
+				const formScreens = {
+					"cpl": "cpl-screen",
+					"bio": "biodata-screen",
+					"edu": "education-screen",
+					"work": "work-screen",
+					"pmc": "pmc-screen",
+					"sum": "summary-screen",
+					"app-status": "application-status_screen"
+				};
+
+				const stepId = formScreens[step] || `${step}-screen`;
+				const targetElement = document.getElementById(stepId);
+
+				if (!targetElement) {
+					console.error(`Element with ID '${stepId}' not found`);
+					return false;
+				}
+
+				// Update URL hash without page jump (replaces PHP's header location)
+				history.replaceState(null, null, `#${stepId}`);
+				
+				// Get all buttons and screens
+				const buttons = Object.keys(formScreens)
+					.map(key => document.getElementById(`${key}-btn`))
+					.filter(btn => btn && getComputedStyle(btn).display !== "none");
+				
+				const screens = Object.values(formScreens)
+					.map(id => document.getElementById(id))
+					.filter(screen => screen);
+
+				// Update UI
+				buttons.forEach(btn => btn.style.background = "none");
+				screens.forEach(screen => screen.style.display = "none");
+				
+				// Highlight active button and show target screen
+				const activeBtn = document.getElementById(`${step}-btn`);
+				if (activeBtn) activeBtn.style.background = "#bd911985";
+				targetElement.style.display = "block";
+
+				// Smooth scroll to element
+				targetElement.scrollIntoView({
+					behavior: 'smooth',
+					block: 'start'
+				});
+
+				return true;
+			} catch (error) {
+				console.error('Error navigating to step:', error);
+				return false;
+			}
+		}
+
+
+		function renderUserLoginInput() {
+
+			const userLoginTR = document.getElementById('user_login_form');
+			// const form = ( user_data ? true : false );
+
+			if(adminRole){
+				userLoginTR.innerHTML = `
+					<td>
+						<div>
+							<label for="email">Email</label>
+						</div>
+						<div>
+							<input type="text" name="admin_role" id="admin_role"  value="${adminRole}" hidden >
+							<input type="email" name="email" id="email"  value=""  >
+						</div>
+					</td>
+					<td>
+						<div>
+							<label for="lname">Password</label>
+						</div>
+						<div>
+							<input type="password" name="password" id="password"  value="" >
+						</div>
+					</td>            
+				`;
+			}
+
+
+		}
+
+		function renderNavListBtn() {
+			const profTestBtn = document.getElementById('prof_test');
+			const closeApplicationBtn = document.getElementById('close_apllication');
+
+			if (adminRole) {
+				profTestBtn.innerHTML = `
+					 <button id="cpl-btn" class="all-bt-bg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
+                            <path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M38.5 5.5h-29c-2.2 0-4 1.8-4 4v29c0 2.2 1.8 4 4 4h29c2.2 0 4-1.8 4-4v-29c0-2.2-1.8-4-4-4" stroke-width="1"/><path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M34.3 35.9L24 30.5l-10.3 5.4V19L24 12.1L34.3 19zM24 12.1v18.4z" stroke-width="1"/>
+                        </svg>
+                        CPL Test
+                    </button>
+				`;
+				closeApplicationBtn.innerHTML = `
+					<form method="post" action="" style="all:unset">
+						<button type="submit" name="new_applicant" id="cpl-btn" class="all-bt-bg">
+							<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
+								<path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M38.5 5.5h-29c-2.2 0-4 1.8-4 4v29c0 2.2 1.8 4 4 4h29c2.2 0 4-1.8 4-4v-29c0-2.2-1.8-4-4-4" stroke-width="1"/>
+								<path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M34.3 35.9L24 30.5l-10.3 5.4V19L24 12.1L34.3 19zM24 12.1v18.4z" stroke-width="1"/>
+							</svg>
+							${(form ? 'Close Form' : 'Add New Applicant')}
+					</form>
+				`
+			}
+		}
+
+		// function renderUserSessionId() {
+		// 	document.querySelectorAll('.userId').forEach(function(element) {
+		// 		console.log(element)
+		// 		element.value = localStorage.getItem('userId');
+		// 	});
+		// };
+
+		// On page load, check if there's a stored section and show it
+		window.addEventListener('DOMContentLoaded', function() {
+			const activeSection = localStorage.getItem('activeSection') || 'sort_applicant';
+			showSection(activeSection);
+		});
+		
+		// Initialize when DOM is loaded
+		document.addEventListener('DOMContentLoaded', () => {
+			// Initialize functions
+			checkSession();
+			loadAdminData();
+			loadStats();
+			loadApplicants();
+			handleStatusUpdate();
+			fetchUserData();
+			setupFormHandlers();
+			// renderUserSessionId()
+			
+			// Form filtering setup
+			const filterForm = document.getElementById('filterForm');
+
+			if (filterForm) {
+				const filterInputs = filterForm.querySelectorAll('select, input');
+				
+				// Real-time filtering with debounce
+				filterInputs.forEach(input => {
+				input.addEventListener('input', debounce(function() {
+					loadApplicants();
+				}, 300));
+				});
+				
+				// Prevent default form submission
+				filterForm.addEventListener('submit', function(e) {
+					e.preventDefault();
+					loadApplicants();
+				});
+			}
+
+			// Event delegation for dynamic buttons
+			document.addEventListener('click', (e) => {
+				// View details button
+				if (e.target.classList.contains('view-details-btn')) {
+					const index = e.target.getAttribute('data-index');
+					toggleDetails(index);
+				}
+				
+				// Edit button
+				if (e.target.classList.contains('edit-btn')) {
+					const userId = e.target.getAttribute('data-user-id');
+					handleEditApplicant(userId);
+				}
+			});
+			
+						
+			
+		});
+
+		
+		
+
 
 	</script>
+
 </head>
 <body>
 
@@ -909,6 +1181,9 @@
 			width: 120px;
 			text-align: center;
 		}
+		.panel-btn{
+			display:none;
+		}
 
 		/* Responsive Styles */
 		@media (max-width: 768px) {
@@ -928,6 +1203,17 @@
 			.button {
 				width: 100%;
 				margin-bottom: 10px;
+			}
+			.panel-btn{
+				display: block;
+				position: absolute;
+				top: 0;
+				right: -40px;
+				z-index: 9999;
+				background-color: #00044B;
+				color: #fff;
+				padding: 10px;
+				border-radius: 0 5px 5px 0;
 			}
 		}
 		.pagination {
@@ -1005,11 +1291,12 @@
 	</div>
 
 	<div class="main">
-		<div id="dashboard_alert_con"></div>
 
 
 		<!-- Sorted Applicant -->
-		<div id="sort_applicant" style="display:block">
+		<div id="sort_applicant">
+			<div id="dashboard_alert_con"></div>
+
 			<div class="content-start transition">
 				
 				<!-- Done -->
@@ -1065,13 +1352,15 @@
 		</div>
 
 		<!-- Add Applicant -->
-		<div id="add_applicant" style="display: none;">
+		<div id="add_applicant">
 			<div class="db-winscroll">
+				
 				<div id="db-panel">
+					<div class="panel-btn">
+						<i id="toggle_panel" onclick="closePanelHandler()" class="fa fa-bars" style="cursor:pointer; margin-left: 10px"></i>
+					</div>
 					<div class="body-panel">
-						<div class="head-panel">
-							<svg id="close_panel" onclick="closePanelHandler" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><g fill="none" stroke="#e4b535" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7l10 10"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="16;0"/></path><path d="M17 7l-10 10"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" values="16;0"/></path></g></svg>
-						</div>
+						
 						<ul>
 							<?php 
 								include_once('../pages/nav_lists.php');
@@ -1081,6 +1370,7 @@
 				</div>
 				
 				<div id="display-screen">
+   					<div id="alert-container-application"></div>
 
 					<?php
 						include_once('../pages/biodata.php');
@@ -1125,7 +1415,7 @@
 		</div>
 
 		<!-- Create admin -->
-		<div id="create_admin" style="display: none;">
+		<div id="create_admin">
 			<?php include_once('./include/createAdmin.php') ?>
 		</div>
 	
@@ -1145,6 +1435,20 @@
 
 	<!-- <script src="./script/get_script.js"></script> -->
 	<script>
+		let openPanel = false;
+
+		function closePanelHandler() {
+			const panel = document.getElementById('toggle_panel');
+			const dbPanel = document.getElementById('db-panel');
+
+			if (!openPanel){
+				dbPanel.style.transform = "translateX(0px)";
+				openPanel = true;
+			} else {
+				dbPanel.style.transform = "translateX(-180px)";
+				openPanel = false;
+			}
+		}
 		
 		const position = [
 			"Professor",

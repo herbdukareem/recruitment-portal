@@ -15,7 +15,7 @@
     <div id="alert-container-login"></div>
     <div class="screen-body">
         <!-- Display Input Data -->
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="" method="post" enctype="multipart/form-data" id="pmcForm">
             <div class="form-head">
                 <h4>Professional Memberships and Certifications</h4>
             </div>
@@ -59,32 +59,32 @@
                     <tr>
                         <td>
                             <div>
-                                <input type="text" name="bodyName" id="bodyName" value="<?php echo htmlspecialchars($user_pmc_data['bodyName']) ?? '' ?>" >
+                                <input type="text" name="bodyName" id="bodyName" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="membershipID" id="membershipID" value="<?php echo htmlspecialchars($user_pmc_data['membershipID']) ?? '' ?>" >
+                                <input type="text" name="membershipID" id="membershipID" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="membershipType" id="membershipType" value="<?php echo htmlspecialchars($user_pmc_data['membershipType']) ?? '' ?>" >
+                                <input type="text" name="membershipType" id="membershipType" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="membershipResposibilities" id="membershipResposibilities" value="<?php echo htmlspecialchars($user_pmc_data['membershipResposibilities']) ?? '' ?>" >
+                                <input type="text" name="membershipResposibilities" id="membershipResposibilities" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="date" name="certificateDate" id="certificateDate" value="<?php echo htmlspecialchars($user_pmc_data['certificateDate']) ?? '' ?>" >
+                                <input type="date" name="certificateDate" id="certificateDate" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="file" name="membershipCertificate" id="membershipCertificate" value="<?php echo htmlspecialchars($user_pmc_data['membershipCertificate']) ?>"  accept="application/pdf,image/jpeg,image/png,image/jpg">
+                                <input type="file" name="membershipCertificate" id="membershipCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg">
                             </div>
                         </td>
                     </tr>
@@ -197,32 +197,32 @@
                 newRow.innerHTML = `
                     <td>
                         <div>
-                            <input type="text" name="bodyName" id="bodyName" value="<?php echo htmlspecialchars($user_pmc_data['bodyName']); ?>">
+                            <input type="text" name="bodyName" id="bodyName" value="">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="membershipID" id="membershipID" value="<?php echo htmlspecialchars($user_pmc_data['membershipID']); ?>">
+                            <input type="text" name="membershipID" id="membershipID" value="">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="membershipType" id="membershipType" value="<?php echo htmlspecialchars($user_pmc_data['membershipType']); ?>">
+                            <input type="text" name="membershipType" id="membershipType" value="">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="membershipResposibilities" id="membershipResposibilities" value="<?php echo htmlspecialchars($user_pmc_data['membershipResposibilities']); ?>">
+                            <input type="text" name="membershipResposibilities" id="membershipResposibilities" value="">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="text" name="certificateDate" id="certificateDate" value="<?php echo htmlspecialchars($user_pmc_data['certificateDate']); ?>">
+                            <input type="text" name="certificateDate" id="certificateDate" value="">
                         </div>
                     </td>
                     <td>
                         <div>
-                            <input type="file" name="membershipCertificate" id="membershipCertificate" value="<?php echo htmlspecialchars($user_pmc_data['membershipCertificate']) ?>"  accept="application/pdf,image/jpeg,image/png,image/jpg" >
+                            <input type="file" name="membershipCertificate" id="membershipCertificate" value=""  accept="application/pdf,image/jpeg,image/png,image/jpg" >
                         </div>
                     </td>
                     `;

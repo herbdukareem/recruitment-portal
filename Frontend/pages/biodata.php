@@ -9,7 +9,6 @@
                     </svg>Bio Data</a></p>
         </div>
     </div>
-    <div id="alert-container-login"></div>
     <div class="screen-body">
         <form action="" method="post" enctype="multipart/form-data" id="bioForm">
             <div class="position">
@@ -52,7 +51,7 @@
                                 <label for="fname">Firstname</label>
                             </div>
                             <div>
-                                <input type="text" name="firstname" id="" value="<?php echo htmlspecialchars($user_names['firstname'])?>">
+                                <input type="text" name="firstname" id="firstname" value="">
                             </div>
                         </td>
                         <td>
@@ -60,7 +59,7 @@
                                 <label for="passport">Passport<i>(file types, jpeg, png, jpg, size limit 2MB)</i></label>
                             </div>
                             <div>
-                                <input type="file" name="passport" id=""  value="<?php echo htmlspecialchars($user_data['passport'] ?? ''); ?>"  accept="image/jpeg,image/png,image/jpg">
+                                <input type="file" name="passport" id="passport"  value=""  accept="image/jpeg,image/png,image/jpg">
                             </div>
                         </td>
                     </tr>
@@ -70,7 +69,7 @@
                                 <label for="mname">Middlename</label>
                             </div>
                             <div>
-                                <input type="text" name="middlename" id=""  value="<?php echo htmlspecialchars($user_data['middlename'] ?? ''); ?>">
+                                <input type="text" name="middlename" id="middlename"  value="">
                             </div>
                         </td>
                         <td>
@@ -78,40 +77,23 @@
                                 <label for="lname">Surname</label>
                             </div>
                             <div>
-                                <input type="text" name="lastname" id=""  value=" <?php echo htmlspecialchars($user_names['lastname']) ?? ''?>">
+                                <input type="text" name="lastname" id="lastname"  value="">
                             </div>
                         </td>
                     </tr>
-                    <?php if ($adminRole || $form){?>
-                        <tr>
-                            <td>
-                                <div>
-                                    <label for="email">Email</label>
-                                </div>
-                                <div>
-                                    <input type="text" name="email" id=""  value="<?php echo htmlspecialchars($user_names['email']) ?? ''?>" disabled="<?php $form ?>" style="cursor:no-drop">
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <label for="lname">Password</label>
-                                </div>
-                                <div>
-                                    <input type="password" name="password" id=""  value="" disabled="<?php $form ?>" style="cursor:no-drop">
-                                </div>
-                            </td>
-                        </tr>
-                    <?php }?>
+                    <tr id='user_login_form'>
+                        <!-- User Login details will be populates if it is admin -->
+                    </tr>
                     <tr>
                         <td>
                             <div>
                                 <label for="gender">Gender</label>
                             </div>
                             <div>
-                                <select name="gender" id="" value="<?= $gender?>">
+                                <select name="gender" id="gender" value="">
                                     <option value="" disabled hidden selected> --select an option--</option>
-                                    <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
-                                    <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
                             </div>
                         </td>
@@ -120,7 +102,7 @@
                                 <label for="DoF">Date of Birth</label>
                             </div>
                             <div>
-                                <input type="date" name="dateOfBirth" id="" value="<?php echo htmlspecialchars($user_data['dateOfBirth'] ?? ''); ?>" placeholder="mm/dd/yy">
+                                <input type="date" name="dateOfBirth" id="dateOfBirth" value="" placeholder="mm/dd/yy">
                             </div>
                         </td>
                     </tr>
@@ -130,7 +112,7 @@
                                 <label for="">Birth Certifiate <i>(file types, jpeg, png, pdf, size limit 2MB)</i></label>
                             </div>
                             <div>
-                                <input type="file" name="birthCertificate" id="" value="" placeholder="No file chosen" accept="application/pdf,image/jpeg,image/png,image/jpg">
+                                <input type="file" name="birthCertificate" id="birthCertificate" value="" placeholder="No file chosen" accept="application/pdf,image/jpeg,image/png,image/jpg">
                             </div>
                         </td>
                         <td>
@@ -138,11 +120,11 @@
                                 <label for="">Marital status</label>
                             </div>
                             <div>
-                                <select name="maritalStatus" id="" Value="">
+                                <select name="maritalStatus" id="maritalStatus" Value="">
                                     <option value="" disabled hidden selected> --select an option--</option>
-                                    <option value="Married" <?php echo (isset($user_data['maritalStatus']) && $user_data['maritalStatus'] == 'Married') ? 'selected' : ''; ?>>Married</option>
-                                    <option value="Single" <?php echo (isset($user_data['maritalStatus']) && $user_data['maritalStatus'] == 'Single') ? 'selected' : ''; ?>>Single</option>
-                                    <option value="Divorce" <?php echo (isset($user_data['maritalStatus']) && $user_data['maritalStatus'] == 'Divorce') ? 'selected' : ''; ?>>Divorce</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Divorce">Divorce</option>
                                 </select>
                             </div>
                         </td>
@@ -175,7 +157,7 @@
                                 <label for="lga-cert">LGA Indigene\Origin Certifiate <i>(file types, jpeg, png, pdf, size limit 2MB)</i></label>
                             </div>
                             <div>
-                                <input type="file" name="lgaCertificate" id="" value="" placeholder="No file chosen" accept="application/pdf,image/jpeg,image/png,image/jpg">
+                                <input type="file" name="lgaCertificate" id="lgaCertificate" value="" placeholder="No file chosen" accept="application/pdf,image/jpeg,image/png,image/jpg">
                             </div>
                         </td>
                         <td>
@@ -183,7 +165,7 @@
                                 <label for="nin">NIN</label>
                             </div>
                             <div>
-                                <input type="text" name="nin" id="" value="<?php echo htmlspecialchars($user_data['nin'] ?? ''); ?>">
+                                <input type="text" name="nin" id="nin" value="">
                             </div>
                         </td>
                     </tr>
@@ -193,10 +175,10 @@
                                 <label for="number">Phone Number</label>
                             </div>
                             <div id="Emergency">
-                                <select name="" id="">
+                                <select name="preno" id="preno">
                                     <option value="+234">+234</option>
                                 </select>
-                                <input type="text" name="phoneNumber" id=""  value="<?php echo htmlspecialchars($user_data['phoneNumber'] ?? ''); ?>">
+                                <input type="text" name="phoneNumber" id="phoneNumber"  value="">
                             </div>
                         </td>
                         <td>
@@ -207,7 +189,7 @@
                                 <select name="" id="">
                                     <option value="+234">+234</option>
                                 </select>
-                                <input type="text" name="emergencyNumber" id="" value="<?php echo htmlspecialchars($user_data['emergencyNumber'] ?? ''); ?>">
+                                <input type="text" name="emergencyNumber" id="emergencyNumber" value="">
                             </div>
                         </td>
                     </tr>
@@ -217,7 +199,7 @@
                                 <label for="">Residetial Address</label>
                             </div>
                             <div>
-                                <input type="text" name="address" id="" value="<?php echo htmlspecialchars($user_data['address'] ?? ''); ?>">
+                                <input type="text" name="address" id="address" value="">
                             </div>
                         </td>
                     </tr>
@@ -234,7 +216,6 @@
         </form>
     </div>
 </div>
-
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

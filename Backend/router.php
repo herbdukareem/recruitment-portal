@@ -31,16 +31,16 @@ try {
     // Route the request
     switch ($request) {
         // Authentication routes
-        case '/auth/login':
-            require __DIR__ . '/api/auth/login.php';
+        case '/auth/admin/login':
+            require __DIR__ . '/api/auth/admin/login.php';
             break;
             
-        case '/auth/logout':
-            require __DIR__ . '/api/auth/logout.php';
+        case '/auth/admin/logout':
+            require __DIR__ . '/api/auth/admin/logout.php';
             break;
             
-        case '/auth/register':
-            require __DIR__ . '/api/auth/register.php';
+        case '/auth/admin/register':
+            require __DIR__ . '/api/auth/admin/register.php';
             break;
             
         // Admin routes
@@ -62,6 +62,23 @@ try {
 
         case '/admin/update_status':
             require __DIR__ . '/api/admin/update_status.php';
+            break;
+
+        // User Authetication Routes
+        case '/auth/user/session':
+            require __DIR__ . '/api/auth/user/userSession.php';
+            break;
+
+        case '/auth/user/login':
+            require __DIR__ . '/api/auth/user/login.php';
+            break;
+            
+        case '/auth/user/logout':
+            require __DIR__ . '/api/auth/user/logout.php';
+            break;
+            
+        case '/auth/user/signup':
+            require __DIR__ . '/api/auth/user/signup.php';
             break;
             
         // Applicant data routes

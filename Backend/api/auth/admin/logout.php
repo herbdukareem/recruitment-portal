@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../../config/config.php';
 
 // In your logout endpoint (logout.php or similar)
 header("Access-Control-Allow-Origin: http://your-frontend-domain.com");

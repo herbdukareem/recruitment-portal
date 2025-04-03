@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="screen-body body-edu">
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="" method="post" enctype="multipart/form-data" id="eduForm">
             <style>
                 th{
                     text-align: left;
@@ -41,12 +41,13 @@
                     <tr>
                         <td>
                             <div>
-                                <input type="text" name="primary_school_name" id="priEduText" value="<?php echo htmlspecialchars($user_edu_data['primary_school_name']); ?>" >
+                                <input type="text" name="primary_school_name" id="priEduText" value="" >
+                                <input type="text" name="userId" class="userId" value="" hidden >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="primary_graduation_year" id="priEduYear" value="<?php echo htmlspecialchars($user_edu_data['primary_graduation_year']); ?>" >
+                                <input type="text" name="primary_graduation_year" id="priEduYear" value="" >
                             </div>
                         </td>
                     </tr>
@@ -78,12 +79,12 @@
                     <tr data-id="2">
                         <td>
                             <div>
-                                <input type="text" name="secondarySchoolName" id="secondarySchoolName" value="<?php echo htmlspecialchars($user_edu_data['secondarySchoolName']); ?>" >
+                                <input type="text" name="secondarySchoolName" id="secondarySchoolName" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="secondaryGraduationYear" id="secondaryGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['secondaryGraduationYear']); ?>" >
+                                <input type="text" name="secondaryGraduationYear" id="secondaryGraduationYear" value="" >
                             </div>
                         </td>
                         <td>
@@ -135,27 +136,27 @@
                     <tr>
                         <td>
                             <div>
-                                <input type="text" name="certificateType" id="certificateType" value="<?php echo htmlspecialchars($user_edu_data['certificateType']); ?>" >
+                                <input type="text" name="certificateType" id="certificateType" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="classOfDegree" id="classOfDegree" value="<?php echo htmlspecialchars($user_edu_data['classOfDegree']); ?>" >
+                                <input type="text" name="classOfDegree" id="classOfDegree" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="institution" id="institution" value="<?php echo htmlspecialchars($user_edu_data['institution']); ?>" >
+                                <input type="text" name="institution" id="institution" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="course" id="course" value="<?php echo htmlspecialchars($user_edu_data['course']); ?>" >
+                                <input type="text" name="course" id="course" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="highGraduationYear" id="highGraduationYear" value="<?php echo htmlspecialchars($user_edu_data['highGraduationYear']); ?>" >
+                                <input type="text" name="highGraduationYear" id="highGraduationYear" value="" >
                             </div>
                         </td>
                         <td>
@@ -192,12 +193,12 @@
                     <tr>
                         <td>
                             <div>
-                                <input type="text" name="nyscCertificateNumber" id="nyscCertificateNumber" value="<?php echo htmlspecialchars($user_edu_data['nyscCertificateNumber']); ?>" >
+                                <input type="text" name="nyscCertificateNumber" id="nyscCertificateNumber" value="" >
                             </div>
                         </td>
                         <td>
                             <div>
-                                <input type="text" name="yearOfService" id="yearOfService" value="<?php echo htmlspecialchars($user_edu_data['yearOfService']); ?>" >
+                                <input type="text" name="yearOfService" id="yearOfService" value="" >
                             </div>
                         </td>
                         <td>

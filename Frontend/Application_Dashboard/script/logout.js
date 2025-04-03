@@ -1,4 +1,4 @@
-document.getElementById('logoutBtn').addEventListener('click', async () => {
+document.getElementById('logout').addEventListener('click', async () => {
     try {
         const response = await fetch('/test/backend/auth/admin/logout', {
             method: 'POST',
@@ -12,8 +12,8 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
 
         if (response.ok) {
             // Clear client-side storage and redirect
-            localStorage.removeItem('admin');
-            window.location.href = './auth.php';
+            localStorage.removeItem('user_id');
+            window.location.href = './auth.php?display=login';
         } else {
             showAlert(data.error || 'Logout failed', 'danger');
         }

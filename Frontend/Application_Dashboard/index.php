@@ -1,676 +1,4 @@
-<?php
-    session_start();
-    include_once('../db_connect.php');
 
-    error_reporting(E_ERROR | E_PARSE); // Only show critical errors
-    ini_set('display_errors', 0);
-
-    $user_id = $_SESSION['user_id'];
-    $adminRole = false;
-    $form = false;
-
-    // Check if the user is logged in
-    if (!isset($_SESSION['user_id'])) {
-        header("Location: ./Auth/auth.php?display=login");
-        exit();
-    }
-
-
-    // Fetch user firstname and lastname from the database using user ID
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :user_id");
-    $stmt->execute(['user_id' => $user_id]);
-    $user_names = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Fetch user record
-    // $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$user_names) {
-        die('User not found.');
-    }
-    if (!isset($_SESSION['user_id'])) {
-        header("Location: ./Auth/auth.php?display=login");
-        exit();
-    }
-
-    // Prepare SQL to check if the user has existing data in user_applications
-    $req = $pdo->prepare("
-        SELECT a.*, u.firstname, u.lastname 
-        FROM user_applications as a 
-        JOIN users as u ON a.user_id = u.id 
-        WHERE u.id = :user_id
-    ");
-    $req->execute(['user_id' => $user_id]);
-    $user_detail = $req->fetch(PDO::FETCH_ASSOC);
-    if (!$user_detail) {
-        $is_new_user = true;
-    } else {
-        $is_new_user = false;
-    }
-
-    $formSection = 1;
-
-    //save biodata form to db
-    if (isset($_POST['saveBio'])) {
-        $positionType = $_POST['positionType'];
-        $supPosition = $_POST['supPosition'];
-        $position = $_POST['position'];
-        $firstname = $_POST['firstname'];
-        $middlename = $_POST['middlename'];
-        $lastname = $_POST['lastname'];
-        $gender = $_POST['gender'];
-        $dateOfBirth = $_POST['dateOfBirth'];
-        $maritalStatus = $_POST['maritalStatus'];
-        $stateOfOrigin = $_POST['stateOfOrigin'];
-        $lga = $_POST['lga'];
-        $nin = $_POST['nin'];
-        $phoneNumber = $_POST['phoneNumber'];
-        $emergencyNumber = $_POST['emergencyNumber'];
-        $address = $_POST['address'];
-
-       // Check if NIN exists in the database
-        $checkNIN = $pdo->prepare("SELECT user_id FROM user_applications WHERE nin = :nin");
-        $checkNIN->execute([":nin" => $nin]);
-        $existingNIN = $checkNIN->fetch(PDO::FETCH_ASSOC);
-
-        if (empty($positionType) || empty($supPosition) || empty($position) || empty($firstname) || empty($lastname) || empty($middlename) || empty($gender)) {
-            $_SESSION['alert_message'] = "All fields are required.";
-            $_SESSION['alert_type'] = "warning";
-            header("Location:" . $_SERVER['PHP_SELF'] . "#bio-screen");
-            return;
-        } else {
-                try {
-                    // Check if user already exists in user_applications
-                    $checkRecordQuery = $pdo->prepare("SELECT * FROM user_applications WHERE user_id = :user_id");
-                    $checkRecordQuery->execute([":user_id" => $user_id]);
-
-                    if ($checkRecordQuery->rowCount() === 0) {
-                        if ($existingNIN && $existingNIN !== $user_id) {
-                            // NIN belongs to another user, block insertion
-                            $_SESSION['alert_message'] = "Application Failed! This NIN is already registered with another applicant.";
-                            $_SESSION['alert_type'] = "danger";
-                            header("Location:" . $_SERVER['PHP_SELF'] . "#biodata-screen");
-                            exit();
-                        } else {
-                            // Insert new record
-                            $sql = "INSERT INTO user_applications (
-                                        user_id, positionType, supPosition, position, firstname, lastname, middlename, gender, dateOfBirth, 
-                                        maritalStatus, stateOfOrigin, lga, nin, 
-                                        phoneNumber, emergencyNumber, address
-                                    ) VALUES (
-                                        :user_id, :positionType, :supPosition, :position, :firstname, :lastname, :middlename, :gender, :dateOfBirth, 
-                                        :maritalStatus, :stateOfOrigin, :lga, :nin, 
-                                        :phoneNumber, :emergencyNumber, :address
-                                    )";
-                        }
-                    } else {
-                        // Allow update if user already exists
-                        $sql = "UPDATE user_applications SET 
-                                    positionType = :positionType,
-                                    supPosition = :supPosition,
-                                    position = :position,
-                                    firstname = :firstname,
-                                    lastname = :lastname,
-                                    middlename = :middlename,
-                                    gender = :gender,
-                                    dateOfBirth = :dateOfBirth,
-                                    maritalStatus = :maritalStatus,
-                                    stateOfOrigin = :stateOfOrigin,
-                                    nin = :nin,
-                                    lga = :lga,
-                                    phoneNumber = :phoneNumber,
-                                    emergencyNumber = :emergencyNumber,
-                                    address = :address
-                                WHERE user_id = :user_id";
-                    }
-
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute([
-                        ':user_id' => $user_id,
-                        ':positionType' => $positionType,
-                        ':supPosition' => $supPosition,
-                        ':position' => $position,
-                        ':firstname' => $firstname,
-                        ':lastname' => $lastname,
-                        ':middlename' => $middlename,
-                        ':gender' => $gender,
-                        ':dateOfBirth' => $dateOfBirth,
-                        ':maritalStatus' => $maritalStatus,
-                        ':stateOfOrigin' => $stateOfOrigin,
-                        ':lga' => $lga,
-                        ':nin' => $nin,
-                        ':phoneNumber' => $phoneNumber,
-                        ':emergencyNumber' => $emergencyNumber,
-                        ':address' => $address
-                    ]);
-
-                    // File upload handling
-                    $uploadDirectory = "./uploads/";
-                    $allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png']; 
-
-                    // Ensure the upload directory exists
-                    if (!is_dir($uploadDirectory)) {
-                        mkdir($uploadDirectory, 0777, true);
-                    }
-
-                    // Initialize variables to store file paths
-                    $lgaPath = null;
-                    $birthCertPath = null;
-                    $passportPath = null;
-
-                    $fileInputs = ['lgaCertificate', 'birthCertificate', 'passport'];
-
-                    foreach ($fileInputs as $inputName) {
-                        if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
-                            $fileTmpPath = $_FILES[$inputName]["tmp_name"];
-                            $fileExt = strtolower(pathinfo($_FILES[$inputName]["name"], PATHINFO_EXTENSION));
-
-                            // Verify the file extension
-                            if (in_array($fileExt, $allowedFileTypes)) {
-                                // Create a unique file name
-                                $newFileName = $user_id . "_" . $inputName . "." . $fileExt;
-                                $uploadPath = $uploadDirectory . $newFileName;
-
-                                if (move_uploaded_file($fileTmpPath, $uploadPath)) {
-                                    $_SESSION['alert_message'] = "$newFileName has been uploaded successfully";
-                                    $_SESSION['alert_type'] = "success";
-                                    if ($inputName === 'lgaCertificate') {
-                                        $lgaPath = $uploadPath;
-                                    } elseif ($inputName === 'birthCertificate') {
-                                        $birthCertPath = $uploadPath;
-                                    } else {
-                                        $passportPath = $uploadPath;
-                                    }
-                                } else {
-                                    $_SESSION['alert_message'] = "Error moving file: $_FILES[$inputName]['name']";
-                                    $_SESSION['alert_type'] = "warning";
-                                }
-                            } else {
-                                $_SESSION['alert_message'] = "Invalid file type for: $_FILES[$inputName]['name'] ";
-                                $_SESSION['alert_type'] = "warning";
-                            }
-                        } else {
-                            $_SESSION['alert_message'] = "No file uploaded or an error occurred for $inputName";
-                            $_SESSION['alert_type'] = "warning";
-                        }
-                    }
-
-                    if (!empty($lgaPath) || !empty($birthCertPath) || !empty($passportPath)) {
-                        $checkFilePath = $pdo->prepare("SELECT id FROM user_files WHERE user_id = :user_id");
-                        $checkFilePath->execute([':user_id' => $user_id]);
-                    
-                        try {
-                            if ($checkFilePath->rowCount() === 0) {
-                                $sql = "INSERT INTO user_files (user_id, lga_file_path, birth_certificate_file_path, passport_file_path) 
-                                        VALUES (:user_id, :lga_file_path, :birth_certificate_file_path, :passport_file_path)";
-                            } else {
-                                $sql = "UPDATE user_files SET
-                                            lga_file_path = :lga_file_path,
-                                            birth_certificate_file_path = :birth_certificate_file_path,
-                                            passport_file_path = :passport_file_path
-                                        WHERE user_id = :user_id";
-                            }
-                    
-                            $stmt = $pdo->prepare($sql);
-                            $stmt->execute([
-                                ':user_id' => $user_id,
-                                ':lga_file_path' => $lgaPath ?? '',
-                                ':birth_certificate_file_path' => $birthCertPath ?? '',
-                                ':passport_file_path' => $passportPath ?? ''
-                            ]);
-                    
-                            $_SESSION['alert_message'] = "File saved successfully";
-                            $_SESSION['alert_type'] = "success";
-                            header("Location: " . $_SERVER['PHP_SELF'] . "#education-screen");
-                            exit();
-                            
-                        } catch (PDOException $e) {
-                            $_SESSION['alert_message'] = "Error saving file: " . $e->getMessage();
-                            $_SESSION['alert_type'] = "warning";
-                        }
-                    } else {
-                        $_SESSION['alert_message'] = "No valid file uploaded.";
-                        $_SESSION['alert_type'] = "warning";
-                    }
-                } catch (PDOException $e) {
-                    echo 'Error: ' . $e->getMessage();
-                }
-            
-        }
-    }
-
-
-    // Fetch user data for display in the form after saving
-    $fetchUserData = $pdo->prepare("SELECT * FROM user_applications WHERE user_id = :user_id");
-    $fetchUserData->execute(['user_id' => $user_id]);
-    $user_data = $fetchUserData->fetch(PDO::FETCH_ASSOC);
-
-    //Submission of Education data to db
-    if (isset($_POST['saveEdu'])) {
-        // Retrieve POST data with null fallback for empty values
-        $primary_school_name = !empty($_POST['primary_school_name']) ? $_POST['primary_school_name'] : null;
-        $primary_graduation_year = !empty($_POST['primary_graduation_year']) ? $_POST['primary_graduation_year'] : null;
-        $secondarySchoolName = !empty($_POST['secondarySchoolName']) ? $_POST['secondarySchoolName'] : null;
-        $secondaryGraduationYear = !empty($_POST['secondaryGraduationYear']) ? $_POST['secondaryGraduationYear'] : null;
-        $certificateType = !empty($_POST['certificateType']) ? $_POST['certificateType'] : null;
-        $classOfDegree = !empty($_POST['classOfDegree']) ? $_POST['classOfDegree'] : null;
-        $institution = !empty($_POST['institution']) ? $_POST['institution'] : null;
-        $course = !empty($_POST['course']) ? $_POST['course'] : null;
-        $highGraduationYear = !empty($_POST['highGraduationYear']) ? $_POST['highGraduationYear'] : null;
-        $nyscCertificateNumber = !empty($_POST['nyscCertificateNumber']) ? $_POST['nyscCertificateNumber'] : null;
-        $yearOfService = !empty($_POST['yearOfService']) ? $_POST['yearOfService'] : null;
-
-        try {
-            // Check if user education history already exists
-            $checkUserEducationHistory = $pdo->prepare("SELECT id FROM user_education_details WHERE user_id = :user_id");
-            $checkUserEducationHistory->execute(['user_id' => $user_id]);
-
-            if ($checkUserEducationHistory->rowCount() === 0) {
-                // Insert new record
-                $sql = "INSERT INTO user_education_details (
-                            user_id, primary_school_name, primary_graduation_year, 
-                            secondarySchoolName, secondaryGraduationYear, 
-                            certificateType, classOfDegree, 
-                            institution, course,
-                            highGraduationYear, nyscCertificateNumber,
-                            yearOfService
-                        ) VALUES (
-                            :user_id, :primary_school_name, :primary_graduation_year, 
-                            :secondarySchoolName, :secondaryGraduationYear, 
-                            :certificateType, :classOfDegree, 
-                            :institution, :course, 
-                            :highGraduationYear, :nyscCertificateNumber, 
-                            :yearOfService
-                        )";
-            } else {
-                // Update existing record (added missing commas)
-                $sql = "UPDATE user_education_details SET
-                            primary_school_name = :primary_school_name,
-                            primary_graduation_year = :primary_graduation_year,
-                            secondarySchoolName = :secondarySchoolName,
-                            secondaryGraduationYear = :secondaryGraduationYear,
-                            certificateType = :certificateType,
-                            classOfDegree = :classOfDegree,
-                            institution = :institution,
-                            course = :course,
-                            highGraduationYear = :highGraduationYear,
-                            nyscCertificateNumber = :nyscCertificateNumber,
-                            yearOfService = :yearOfService
-                        WHERE user_id = :user_id";
-            }
-
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ':user_id' => $user_id,
-                ':primary_school_name' => $primary_school_name,
-                ':primary_graduation_year' => $primary_graduation_year,
-                ':secondarySchoolName' => $secondarySchoolName,
-                ':secondaryGraduationYear' => $secondaryGraduationYear,
-                ':certificateType' => $certificateType,
-                ':classOfDegree' => $classOfDegree,
-                ':institution' => $institution,
-                ':course' => $course,
-                ':highGraduationYear' => $highGraduationYear,
-                ':nyscCertificateNumber' => $nyscCertificateNumber,
-                ':yearOfService' => $yearOfService,
-            ]);
-
-            // File upload handling
-            $uploadDirectory = "./uploads/";
-            $allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png'];
-
-            // Ensure the upload directory exists
-            if (!is_dir($uploadDirectory)) {
-                mkdir($uploadDirectory, 0777, true);
-            }
-
-            // Initialize variables to store file paths
-            $secPath = null;
-            $highCertPath = null;
-            $nyscPath = null;
-
-            $fileInputs = ['secondaryCertificate', 'highCertificate', 'nyscCertificate'];
-
-            foreach ($fileInputs as $inputName) {
-                if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
-                    $fileTmpPath = $_FILES[$inputName]["tmp_name"];
-                    $fileExt = strtolower(pathinfo($_FILES[$inputName]["name"], PATHINFO_EXTENSION));
-
-                    // Verify the file extension
-                    if (in_array($fileExt, $allowedFileTypes)) {
-                        // Create a unique file name
-                        $newFileName = $user_id . "_" . $inputName . "." . $fileExt;
-                        $uploadPath = $uploadDirectory . $newFileName;
-
-                        if (move_uploaded_file($fileTmpPath, $uploadPath)) {
-                            $_SESSION['alert_message'] = "Files uploaded successfully";
-                            $_SESSION['alert_type'] = "success";
-                            if ($inputName === 'secondaryCertificate') {
-                                $secPath = $uploadPath;
-                            } elseif ($inputName === 'highCertificate') {
-                                $highCertPath = $uploadPath;
-                            } else {
-                                $nyscPath = $uploadPath;
-                            }
-                        } else {
-                            $_SESSION['alert_message'] = "Error moving file: $newFileName";
-                            $_SESSION['alert_type'] = "danger";
-                        }
-                    } else {
-                        $_SESSION['alert_message'] = "Invalid file type for $inputName";
-                        $_SESSION['alert_type'] = "warning";
-                    }
-                } else {
-                    $_SESSION['alert_message'] = "No file uploaded";
-                    $_SESSION['alert_type'] = "warning";
-                }
-            }
-
-            // Check if a record already exists for the user
-            $checkFileRecord = $pdo->prepare("SELECT id FROM user_files WHERE user_id = :user_id");
-            $checkFileRecord->execute([':user_id' => $user_id]);
-
-            if ($checkFileRecord->rowCount() > 0) {
-                // Update existing record
-                $sql = "UPDATE user_files SET 
-                            sec_file_path = COALESCE(:sec_file_path, sec_file_path),
-                            high_certificate_file_path = COALESCE(:high_certificate_file_path, high_certificate_file_path),
-                            nysc_file_path = COALESCE(:nysc_file_path, nysc_file_path)
-                        WHERE user_id = :user_id";
-            } else {
-                // Insert a new record if none exists
-                $sql = "INSERT INTO user_files (user_id, sec_file_path, high_certificate_file_path, nysc_file_path) 
-                        VALUES (:user_id, :sec_file_path, :high_certificate_file_path, :nysc_file_path)";
-            }
-
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ':user_id' => $user_id,
-                ':sec_file_path' => $secPath,
-                ':high_certificate_file_path' => $highCertPath,
-                ':nysc_file_path' => $nyscPath
-            ]);
-            $_SESSION['alert_message'] = "File saved successfully";
-            $_SESSION['alert_type'] = "success";
-            
-            header("Location:" . $_SERVER['PHP_SELF'] . "#work-screen");
-            exit();
-                $_SESSION['alert_message'] = "Education details saved successfully";
-                $_SESSION['alert_type'] = "success";
-        } catch (PDOException $e) {
-            $_SESSION['alert_message'] = "Error saving education details";
-            $_SESSION['alert_type'] = "danger";
-        }
-    }
-    // Fetch user Education Detials for display in the form after saving
-    $fetchUserEducationData = $pdo->prepare("SELECT * FROM user_education_details WHERE user_id = :user_id");
-    $fetchUserEducationData->execute(['user_id' => $user_id]);
-    $user_edu_data = $fetchUserEducationData->fetch(PDO::FETCH_ASSOC);
-
-
-
-    if (isset($_POST['saveWork'])) {
-        // Retrieve POST data with empty string fallback for empty values
-        $organizationName = !empty($_POST['organizationName']) ? $_POST['organizationName'] : '';
-        $rank = !empty($_POST['rank']) ? $_POST['rank'] : '';
-        $responsibilities = !empty($_POST['responsibilities']) ? $_POST['responsibilities'] : '';
-        $startDate = !empty($_POST['startDate']) ? $_POST['startDate'] : null;
-        $endDate = !empty($_POST['endDate']) ? $_POST['endDate'] : null;
-
-        try {
-            // Check if user work history already exists
-            $checkUserWorkHistory = $pdo->prepare("SELECT id FROM user_work_details WHERE user_id = :user_id");
-            $checkUserWorkHistory->execute(['user_id' => $user_id]);
-
-            if ($checkUserWorkHistory->rowCount() === 0) {
-                // Insert new record
-                $sql = "INSERT INTO user_work_details (
-                            user_id, organizationName, rank, 
-                            responsibilities, startDate, 
-                            endDate
-                        ) VALUES (
-                            :user_id, :organizationName, :rank, 
-                            :responsibilities, :startDate, 
-                            :endDate
-                        )";
-            } else {
-                // Update existing record
-                $sql = "UPDATE user_work_details SET
-                            organizationName = :organizationName,
-                            rank = :rank,
-                            responsibilities = :responsibilities,
-                            startDate = :startDate,
-                            endDate = :endDate
-                        WHERE user_id = :user_id";
-            }
-
-            // Prepare and execute the query
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ':user_id' => $user_id,
-                ':organizationName' => $organizationName,
-                ':rank' => $rank,
-                ':responsibilities' => $responsibilities,
-                ':startDate' => $startDate,
-                ':endDate' => $endDate,
-            ]);
-            $_SESSION['alert_message'] = "Error saving Work History details";
-            $_SESSION['alert_type'] = "success";
-            header("Location:" . $_SERVER['PHP_SELF'] . "#pmc-screen");
-            exit();
-        } catch (PDOException $e) {
-            $_SESSION['alert_message'] = "Work History details saved successfully!";
-            $_SESSION['alert_type'] = "danger";
-        }
-    }
-    // Fetch user Education Detials for display in the form after saving
-    $fetchUserWorkData = $pdo->prepare("SELECT * FROM user_work_details WHERE user_id = :user_id");
-    $fetchUserWorkData->execute(['user_id' => $user_id]);
-    $user_work_data = $fetchUserWorkData->fetch(PDO::FETCH_ASSOC);
-
-
-    if (isset($_POST['savePMC'])) {
-        // Retrieve POST data with empty string fallback for empty values
-        $bodyName = !empty($_POST['bodyName']) ? $_POST['bodyName'] : '';
-        $membershipID = !empty($_POST['membershipID']) ? $_POST['membershipID'] : '';
-        $membershipType = !empty($_POST['membershipType']) ? $_POST['membershipType'] : '';
-        $membershipResposibilities = !empty($_POST['membershipResposibilities']) ? $_POST['membershipResposibilities'] : '';
-        $certificateDate = !empty($_POST['certificateDate']) ? $_POST['certificateDate'] : null;
-
-        try {
-            // Check if user PMC details already exist
-            $checkUserPMCDetails = $pdo->prepare("SELECT id FROM user_pmc_details WHERE user_id = :user_id");
-            $checkUserPMCDetails->execute(['user_id' => $user_id]);
-
-            if ($checkUserPMCDetails->rowCount() === 0) {
-                // Insert new record
-                $sql = "INSERT INTO user_pmc_details (
-                            user_id, bodyName, membershipID, membershipType,
-                            membershipResposibilities, certificateDate 
-                        ) VALUES (
-                            :user_id, :bodyName, :membershipID, :membershipType, 
-                            :membershipResposibilities, :certificateDate 
-                        )";
-            } else {
-                // Update existing record
-                $sql = "UPDATE user_pmc_details SET
-                            bodyName = :bodyName,
-                            membershipID = :membershipID,
-                            membershipType = :membershipType,
-                            membershipResposibilities = :membershipResposibilities,
-                            certificateDate = :certificateDate
-                        WHERE user_id = :user_id";
-            }
-
-            // Prepare and execute the query
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ':user_id' => $user_id,
-                ':bodyName' => $bodyName,
-                ':membershipID' => $membershipID,
-                ':membershipType' => $membershipType,
-                ':membershipResposibilities' => $membershipResposibilities,
-                ':certificateDate' => $certificateDate,
-            ]);
-
-            // File upload handling
-            $uploadDirectory = "./uploads/";
-            $allowedFileTypes = ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png'];
-            
-            // List of file input names to handle
-            $fileInputs = ['membershipCertificate']; // Add more input names if needed
-
-            foreach ($fileInputs as $inputName) {
-                if (isset($_FILES[$inputName]) && $_FILES[$inputName]["error"] == 0) {
-                    $fileTmpPath = $_FILES[$inputName]["tmp_name"];
-                    $fileExt = strtolower(pathinfo($_FILES[$inputName]["name"], PATHINFO_EXTENSION));
-
-                    // Verify the file extension
-                    if (in_array($fileExt, $allowedFileTypes)) {
-                        // Create a unique file name
-                        $newFileName = $user_id . "_" . $inputName . "." . $fileExt;
-                        $pmcPath = $uploadDirectory . $newFileName;
-
-                        // Move the uploaded file to the destination path
-                        if (move_uploaded_file($fileTmpPath, $pmcPath)) {
-                            $_SESSION['alert_message'] = "The file $inputName has been uploaded successfully!";
-                            $_SESSION['alert_type'] = "success";
-                        } else {
-                            $_SESSION['alert_message'] = "Error: There was an error moving the file $inputName";
-                            $_SESSION['alert_type'] = "warning";
-                        }
-                    } else {
-                        $_SESSION['alert_message'] = "Error: Invalid file type for $inputName";
-                        $_SESSION['alert_type'] = "warning";
-                    }
-                } else {
-                    $_SESSION['alert_message'] = "Error: No file uploaded or there was an issue with the upload for $inputName'";
-                    $_SESSION['alert_type'] = "danger";
-                }
-            };
-
-            // checking if user USER ID exist
-            $checkPMCPath = $pdo->prepare("SELECT id FROM user_files WHERE user_id=:user_id");
-            $checkPMCPath -> execute([':user_id' => $user_id]);
-
-            if($checkPMCPath->rowCount() > 0){
-                $sql = "UPDATE user_files SET 
-                            pmc_file_path = :pmc_file_path
-                        WHERE user_id = :user_id";
-            } else {
-                $sql = "INSERT INTO (
-                            user_id,
-                            pmc_file_path
-                        ) VALUES (
-                            user_id = :user_id,
-                            pmc_file_path = :pmc_file_path
-                        )";
-            };
-
-            $stmt=$pdo->prepare($sql);
-            $stmt->execute([
-                ':user_id' => $user_id,
-                'pmc_file_path' => $pmcPath
-            ]);
-            $_SESSION['alert_message'] = "Files saved successfully!";
-            $_SESSION['alert_type'] = "success";
-            header("Location:" . $_SERVER['PHP_SELF'] . "#summary-screen");
-            exit();
-
-        } catch (PDOException $e) {
-            $_SESSION['alert_message'] = "Error saving files!";
-            $_SESSION['alert_type'] = "danger";
-        }
-    }
-    // Fetch user Education Detials for display in the form after saving
-    $fetchUserPMCData = $pdo->prepare("SELECT * FROM user_pmc_details WHERE user_id = :user_id");
-    $fetchUserPMCData->execute(['user_id' => $user_id]);
-    $user_pmc_data = $fetchUserPMCData->fetch(PDO::FETCH_ASSOC);
-
-    // Saving Quiz Score to DB
-    if (isset($_POST['saveQuizScore'])) {
-        $quizScore = $_POST['score'];
-        $quizPercentage = $_POST['scorePercentage'];
-    
-        try {
-            // Check if a record exists
-            $checkQuizScore = $pdo->prepare("SELECT COUNT(*) FROM quiz_scores WHERE user_id = :user_id");
-            $checkQuizScore->execute(['user_id' => $user_id]);
-            $recordExists = $checkQuizScore->fetchColumn() > 0; // Fetch the count correctly
-    
-            if (!$recordExists) {
-                $sql = "INSERT INTO quiz_scores (user_id, score, score_percentage)
-                        VALUES (:user_id, :score, :score_percentage)";
-                echo "<script>console.log('Inserting new score')</script>";
-            } else {
-                $sql = "UPDATE quiz_scores SET score = :score, score_percentage = :score_percentage 
-                        WHERE user_id = :user_id";
-                echo "<script>console.log('Updating existing score');</script>";
-            }
-    
-            // Execute query
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ':user_id' => $user_id,
-                ':score' => $quizScore,
-                ':score_percentage' => $quizPercentage
-            ]);
-    
-            // Delay before redirecting
-            echo "<script>
-                    setTimeout(function() {
-                        window.location.href = '#biodata-screen';
-                    }, 5000); // Redirects after 5 seconds
-                  </script>";
-                  $_SESSION['alert_message'] = "Test Submitted successfuly";
-                  $_SESSION['alert_type'] = "success";
-            
-            header("Location:" . $_SERVER['PHP_SELF'] . "#application-status_screen");
-        } catch (PDOException $e) {
-            $_SESSION['alert_message'] = "Error saving files!";
-            $_SESSION['alert_type'] = "danger";
-            echo "<script>alert('Error saving Quiz Score: " . $e->getMessage() . "');</script>";
-        }
-    }
-    
-
-    //Fetching user score from DB
-    $fetchUserQuizScore = $pdo->prepare("SELECT * FROM quiz_scores WHERE user_id = :user_id");
-    $fetchUserQuizScore->execute(['user_id' => $user_id]);
-    $userQuizScore = $fetchUserQuizScore->fetch(PDO::FETCH_ASSOC);
-
-    // Prepare SQL to merge all user data
-    $fetchAllUserData = $pdo->prepare("
-        SELECT * 
-        FROM users as u
-        JOIN user_applications as b ON u.id = b.user_id 
-        JOIN (
-            SELECT *
-            FROM user_education_details
-        ) as e ON u.id = e.user_id
-        JOIN (
-            SELECT *
-            FROM user_files
-        ) as f ON u.id = f.user_id
-        JOIN (
-            SELECT *
-            FROM user_work_details
-        )as w ON u.id = w.user_id
-        JOIn (
-            SELECT *
-            FROM user_pmc_details
-        )as p ON u.id = p.user_id
-        WHERE u.id = :user_id
-
-    ");
-    $fetchAllUserData->execute(['user_id' => $user_id]);
-    $allUserData = $fetchAllUserData->fetch(PDO::FETCH_ASSOC);
-
-    
-    // Check if all previous forms are completed
-    $formsCompleted = !empty($allUserData);
-
-   
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -684,6 +12,269 @@
     <link rel="stylesheet" href="../style/formStyles.css">
 	<link rel="stylesheet" href="../style/alert.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
+
+    <script>
+
+		let adminRole;
+		let user_id;
+		let user_data;
+		let form;
+	
+		// let allApplicants = [];
+
+		const checkSession = async () => {
+			try {
+				console.log('Initiating session check...');
+				
+				const response = await fetch('/test/backend/auth/user/session', {
+					method: 'GET',
+					credentials: 'include',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-Requested-With': 'XMLHttpRequest',
+						'Authorization': `Bearer ${localStorage.getItem('admin_token') || ''}`
+					}
+				});
+		
+				console.log('Session check response status:', response.status); // Debug log
+		
+				// Handle 401 Unauthorized
+				if (response.status === 401) {
+					console.warn('Session expired or invalid - redirecting to login');
+					localStorage.removeItem('admin_token');
+					sessionStorage.removeItem('session_valid');
+					window.location.href = './Auth/auth.php';
+					return false;
+				}
+		
+				// Handle other error statuses
+				if (!response.ok) {
+					const errorText = await response.text();
+					throw new Error(`Server responded with ${response.status}: ${errorText}`);
+				}
+		
+				const data = await response.json();
+
+				console.log('Session check response data:', data);
+		
+				if (data.success && data.admin) {
+					console.log('Session valid for admin:', data.admin.id); 
+					this.currentUser = data.admin;
+					sessionStorage.setItem('session_valid', 'true');
+					// this.updateUI();
+					return true;
+				}
+		
+				console.warn('Session check failed - no valid admin data');
+				return false;
+				
+			} catch (error) {
+				console.error('Session check failed:', {
+					error: error.message,
+					stack: error.stack,
+					timestamp: new Date().toISOString()
+				});
+				
+				showAlert('dashboard_alert_con', 'Session verification failed. Please login again.', 'danger');
+				
+				// For network errors, don't redirect immediately - might be temporary
+				if (error.name !== 'TypeError') {
+					localStorage.removeItem('admin_token');
+					window.location.href = 'auth.php';
+				}
+				
+				return false;
+			}
+		};
+
+		const setupFormHandlers = () => {
+			// Biodata form
+			document.getElementById('bioForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await submitForm('bio', new FormData(e.target));
+			});
+			
+			// Education form
+			document.getElementById('eduForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await submitForm('education', new FormData(e.target));
+			});
+			
+			// Work history form
+			document.getElementById('workForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await submitForm('work', new FormData(e.target));
+			});
+			
+			// PMC form
+			document.getElementById('pmcForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await submitForm('pmc', new FormData(e.target));
+			});
+			
+			// File upload form
+			document.getElementById('fileForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await uploadFiles(new FormData(e.target));
+			});
+		}
+
+		const submitForm = async (endpoint, formData) => {
+			try {
+				const response = await fetch(`/test/backend/submit/${endpoint}`, {
+					method: 'POST',
+					body: JSON.stringify(Object.fromEntries(formData)),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+				
+				const data = await response.json();
+				
+				if (data.success) {
+					this.showAlert('alert-container-application', data.message, 'success');
+					user_id = data.user_id
+					localStorage.setItem('userID', user_id)
+					if (data.next) {
+						setTimeout(() => {
+							this.navigateToStep(data.next);
+						}, 5200);
+					}
+				} else {
+					this.showAlert('alert-container-application', data.error || 'Submission failed', 'danger');
+				}
+			} catch (error) {
+				console.error('Form submission error:', error);
+				this.showAlert('alert-container-application', 'Network error', 'danger');
+			}
+		}
+
+		const uploadFiles = async (formData) => {
+			try {
+				const response = await fetch('/backend/files', {
+					method: 'POST',
+					body: formData
+				});
+				
+				const data = await response.json();
+				
+				if (data.success) {
+					this.showSuccess(data.message);
+					this.navigateToStep(data.next);
+				} else {
+					this.showError(data.error || 'File upload failed');
+				}
+			} catch (error) {
+				console.error('File upload error:', error);
+				this.showError('Network error');
+			}
+		}
+
+		function navigateToStep(step) {
+			try {
+				// Validate step input
+				if (typeof step !== 'string' || !step.trim()) {
+					throw new Error('Invalid step parameter');
+				}
+
+				const formScreens = {
+					"cpl": "cpl-screen",
+					"bio": "biodata-screen",
+					"edu": "education-screen",
+					"work": "work-screen",
+					"pmc": "pmc-screen",
+					"sum": "summary-screen",
+					"app-status": "application-status_screen"
+				};
+
+				const stepId = formScreens[step] || `${step}-screen`;
+				const targetElement = document.getElementById(stepId);
+
+				if (!targetElement) {
+					console.error(`Element with ID '${stepId}' not found`);
+					return false;
+				}
+
+				// Update URL hash without page jump (replaces PHP's header location)
+				history.replaceState(null, null, `#${stepId}`);
+				
+				// Get all buttons and screens
+				const buttons = Object.keys(formScreens)
+					.map(key => document.getElementById(`${key}-btn`))
+					.filter(btn => btn && getComputedStyle(btn).display !== "none");
+				
+				const screens = Object.values(formScreens)
+					.map(id => document.getElementById(id))
+					.filter(screen => screen);
+
+				// Update UI
+				buttons.forEach(btn => btn.style.background = "none");
+				screens.forEach(screen => screen.style.display = "none");
+				
+				// Highlight active button and show target screen
+				const activeBtn = document.getElementById(`${step}-btn`);
+				if (activeBtn) activeBtn.style.background = "#bd911985";
+				targetElement.style.display = "block";
+
+				// Smooth scroll to element
+				targetElement.scrollIntoView({
+					behavior: 'smooth',
+					block: 'start'
+				});
+
+				return true;
+			} catch (error) {
+				console.error('Error navigating to step:', error);
+				return false;
+			}
+		}
+
+		// Initialize when DOM is loaded
+		document.addEventListener('DOMContentLoaded', () => {
+			// Initialize functions
+			checkSession();
+			setupFormHandlers();
+			
+			// Form filtering setup
+			const filterForm = document.getElementById('filterForm');
+
+			if (filterForm) {
+				const filterInputs = filterForm.querySelectorAll('select, input');
+				
+				// Real-time filtering with debounce
+				filterInputs.forEach(input => {
+				input.addEventListener('input', debounce(function() {
+					loadApplicants();
+				}, 300));
+				});
+				
+				// Prevent default form submission
+				filterForm.addEventListener('submit', function(e) {
+					e.preventDefault();
+					loadApplicants();
+				});
+			}
+
+			// Event delegation for dynamic buttons
+			document.addEventListener('click', (e) => {
+				// View details button
+				if (e.target.classList.contains('view-details-btn')) {
+					const index = e.target.getAttribute('data-index');
+					toggleDetails(index);
+				}
+				
+				// Edit button
+				if (e.target.classList.contains('edit-btn')) {
+					const userId = e.target.getAttribute('data-user-id');
+					handleEditApplicant(userId);
+				}
+			});
+			
+						
+			
+		});
+
+	</script>
 </head>
 
 <body>
@@ -781,14 +372,13 @@
             <p>Copyright &copy; 2024 University Of Ilorin. All Rights Reserved</p>
         </div>
         <div class="right-footer">
-            <a href="./logout.php">
-                <button>
-                    Log out
-                </button>
-            </a>
+            <button id="logout">
+                Log out
+            </button>
         </div>
     </div>
 	<script type="module" src="../scripts/main.js"></script>
+	<script src="./script/logout.js"></script>
 
 </body>
 

@@ -203,3 +203,7 @@ positions = {
     'Fire Superintendent Cadre - 120' : 30,
     'Fire Officer Cadre - 122' : 40
 };
+
+
+
+Blue Ocean stratege

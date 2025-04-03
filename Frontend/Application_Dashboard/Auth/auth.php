@@ -1,7 +1,4 @@
 <?php 
-    session_start();
-    include_once('../../db_connect.php');
-
     $display = $_GET['display'];
     
     if (in_array($display, ['login', 'signup', 'forget_password'])) {
@@ -30,12 +27,8 @@
             </script>
         ';
     } else {
-       // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) {
-            // Redirect to login page if not logged in
-            header("Location: ./Auth/auth?display=login");
-            exit();
-        }
+        header("Location: ./Auth/auth?display=login");
+        exit();
     }
     
     
@@ -144,7 +137,8 @@
     <title> Authentication | UNILORIN</title>
     <link rel="stylesheet" href="./session_style.css">
     <link rel="stylesheet" href="../../style/alert.css">
-    <link rel="shortcut icon" href="../../images/logo-plain.jpeg.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="../../images/logo-plain.jpg" type="image/x-icon">
+    <script src="../../scripts/alert.js"></script>
 </head>
 <body>
     <div class="winscroll">
@@ -156,11 +150,13 @@
                         Go to Career Page
                     </p>
                 </div>
+                
                 <!-- login  -->
                 <form action="" method='post' id="login_section"  style="display: none;">
                     <input type="hidden" name="login" value="1">
-                    <div id="alert-container-login"></div>
-                    <div class="input-set">
+                    <b>Login in with <span onclick="loginOptionHandler('lemail')" style="cursor:pointer;">Email</span>/<span onclick="loginOptionHandler('lnin')" style="cursor:pointer;">NIN</span></b>
+                    <div id="alert_container_login"></div>
+                    <div class="input-set" id="logOption">
                         <input type="email" name="email" id="lemail" value="" placeholder="Email">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="var(--main-bg)" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2M7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.5.88 4.93 1.78A7.9 7.9 0 0 1 12 20c-1.86 0-3.57-.64-4.93-1.72m11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33A7.93 7.93 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.5-1.64 4.83M12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6m0 5a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 12 8a1.5 1.5 0 0 1 1.5 1.5A1.5 1.5 0 0 1 12 11"/></svg>
                     </div>
@@ -182,10 +178,11 @@
                         <a href="auth.php?display=signup">Create an account</a>
                     </div>
                 </form>
+                
                 <!-- sign up  -->
                 <form action="" method="post" id="signup_section" style="display: none;">
                     <input type="hidden" name="Signup" value="1">
-                    <div id="alert-container-signup"></div>
+                    <div id="alert_container_signup"></div>
                     <div class="input-set">
                         <input type="text"  name="firstname" id="sfname" placeholder="Firstname">
                     </div>
@@ -194,6 +191,9 @@
                     </div>
                     <div class="input-set">
                         <input type="email"  name="email"  id="semail" placeholder="Email">
+                    </div>
+                    <div class="input-set">
+                        <input type="text"  name="nin"  id="snin" placeholder="1234567890">
                     </div>
                     <div class="input-set">
                         <input type="password" name="password"  id="spass" placeholder="Password">
@@ -242,8 +242,19 @@
                 </form>
             </section>
         </div>
-    </div>
-    <script src="./action.js"></script>
+    </div>  
+    <script>
+        function loginOptionHandler(id) {
+            const inputField = document.getElementById('logOption');
+            if(id === 'lemail'){
+                inputField.innerHTML = `<input type="email" name="email" id="lemail" value="" placeholder="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="var(--main-bg)" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2M7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.5.88 4.93 1.78A7.9 7.9 0 0 1 12 20c-1.86 0-3.57-.64-4.93-1.72m11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33A7.93 7.93 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.5-1.64 4.83M12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6m0 5a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 12 8a1.5 1.5 0 0 1 1.5 1.5A1.5 1.5 0 0 1 12 11"/></svg>`
+            } else {
+                inputField.innerHTML = `<input type="text" name="lnin" id="lnin" value="" placeholder="NIN">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="var(--main-bg)" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2M7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.5.88 4.93 1.78A7.9 7.9 0 0 1 12 20c-1.86 0-3.57-.64-4.93-1.72m11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33A7.93 7.93 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.5-1.64 4.83M12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6m0 5a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 12 8a1.5 1.5 0 0 1 1.5 1.5A1.5 1.5 0 0 1 12 11"/></svg>`
+            }
+        }
+    </script>
     <script>
         // Check for the alert message and type from the PHP session
         <?php if (isset($_SESSION['alert_message'])): ?>
@@ -277,6 +288,7 @@
         <?php endif; ?>
         
     </script>
-
+    <script src="./script/action.js"></script>
+    <script src="./script/auth.js"></script>
 </body>
 </html>

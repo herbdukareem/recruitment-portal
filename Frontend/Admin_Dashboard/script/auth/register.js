@@ -13,7 +13,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
     };
 
     try {
-        const response = await fetch('/test/backend/auth/register', {
+        const response = await fetch('/test/backend/auth/admin/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

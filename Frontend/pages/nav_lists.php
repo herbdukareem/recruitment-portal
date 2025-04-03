@@ -42,22 +42,10 @@
     </button>
 </li>
 
-<?php 
-    if(!$adminRole){
-        if (!isset($userQuizScore['score'])) {
-            echo <<<HTML
-                <li>
-                    <button id="cpl-btn" class="all-bt-bg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
-                            <path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M38.5 5.5h-29c-2.2 0-4 1.8-4 4v29c0 2.2 1.8 4 4 4h29c2.2 0 4-1.8 4-4v-29c0-2.2-1.8-4-4-4" stroke-width="1"/><path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M34.3 35.9L24 30.5l-10.3 5.4V19L24 12.1L34.3 19zM24 12.1v18.4z" stroke-width="1"/>
-                        </svg>
-                        CPL Test
-                    </button>
-                </li>
-            HTML;
-        }
-    }
-?>
+<li id="prof_test">
+    <!-- Button will be render -->
+</li>
+
 <li>
     <button id="app-status-btn" class="all-bt-bg">
     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 14 14">
@@ -66,15 +54,7 @@
         Apllication Status
     </button>
 </li>
-<?php if ($adminRole) {?>
-    <li>
-        <form method="post" action="" style="all:unset">
-            <button type="submit" name="new_applicant" id="cpl-btn" class="all-bt-bg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
-                    <path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M38.5 5.5h-29c-2.2 0-4 1.8-4 4v29c0 2.2 1.8 4 4 4h29c2.2 0 4-1.8 4-4v-29c0-2.2-1.8-4-4-4" stroke-width="1"/>
-                    <path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M34.3 35.9L24 30.5l-10.3 5.4V19L24 12.1L34.3 19zM24 12.1v18.4z" stroke-width="1"/>
-                </svg>
-                <?php echo htmlspecialchars($form ? 'Close Form' : 'Add New Applicant'); ?>
-        </form>
-    </li>
-<?php } ?>
+
+<li id="close_apllication">
+    <!-- Button will be render -->
+</li>

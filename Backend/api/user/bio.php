@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../config.php';
+require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../helpers/auth_helper.php';
 
 header('Content-Type: application/json');
@@ -13,11 +13,11 @@ try {
         WHERE user_id = :user_id
     ");
     $stmt->execute([':user_id' => $user_id]);
-    $application = $stmt->fetch(PDO::FETCH_ASSOC);
+    $bio = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode([
         'success' => true,
-        'data' => $application ?: []
+        'data' => $bio ?: []
     ]);
 
 } catch (Exception $e) {

@@ -7,7 +7,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     };
 
     try {
-        const response = await fetch('/test/backend/auth/login', {
+        const response = await fetch('/test/backend/auth/admin/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         
         if (response.status === 429) {
             const retryAfter = response.headers.get('Retry-After');
-            showAlert(`'login_alert', Too many requests. Try again in ${retryAfter} seconds.`, 'danger');
+            showAlert('login_alert', `Too many requests. Try again in ${retryAfter} seconds.`, 'danger');
         }
 
         const data = await response.json();

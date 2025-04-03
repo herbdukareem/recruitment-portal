@@ -39,7 +39,10 @@ export function initializeNavigation() {
         });
     }
 
-    attachEventListeners();
+     if (window.location.hash) {
+        const step = window.location.hash.replace('#', '').replace('-screen', '');
+        navigateToStep(step);
+    }
 
     const observer = new MutationObserver(() => {
         attachEventListeners();

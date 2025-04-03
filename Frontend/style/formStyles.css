@@ -38,7 +38,7 @@ body {
 #db-panel .head-panel img {
   width: 2.5em;
 }
-#db-panel .head-panel svg {
+#db-panel .head-panel i {
   display: none;
 }
 #db-panel .body-panel ul {
@@ -715,11 +715,11 @@ button:hover {
   #db-panel {
     width: 180px;
     position: fixed;
-    top: 0;
+    top: 55px;
     transform: translateX(-180px);
     z-index: 10;
   }
-  #db-panel .head-panel svg{
+  #db-panel .head-panel i{
     display: block;
     cursor: pointer;
     position: absolute;
@@ -727,7 +727,7 @@ button:hover {
     top: 3px;
   }
   .db-winscroll #display-screen .screen .screen-body {
-    margin: 20px 0;
+    margin: 60px 0 0 20px;
   }
   .db-winscroll #display-screen .screen .body-edu {
     display: block;

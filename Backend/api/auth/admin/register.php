@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../config/config.php';
-require_once __DIR__ . '/../../helpers/auth_helper.php';
+require_once __DIR__ . '/../../../config/config.php';
+require_once __DIR__ . '/../../../helpers/auth_helper.php';
 
 header('Content-Type: application/json');
 
