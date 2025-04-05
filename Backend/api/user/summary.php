@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../../config.php';
-require_once __DIR__ . '/../helpers/auth_helper.php';
-require_once __DIR__ . '/../helpers/rate_limit.php';
+require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../helpers/auth_helper.php';
+require_once __DIR__ . '/../../helpers/rate_limit.php';
 
 header('Content-Type: application/json');
 
@@ -11,8 +11,24 @@ try {
 
     // Authenticate the user
     authenticateUser();
-    $user_id = $_SESSION['user_id'];
+    // Get current user ID from session
+    $current_user_id = $_SESSION['user']['user_id'] ?? null;
+    if (!$current_user_id) {
+        throw new Exception('User not authenticated', 401);
+    }
 
+    // Extract user_id from URL parameter
+    $user_id = $_GET['user_id'] ?? null; // Simplified parameter extraction
+    
+    // If no user_id provided, default to current user
+    if (!$user_id) {
+        $user_id = $current_user_id;
+    }
+    
+    // Validate user_id
+    if (!is_numeric($user_id)) {
+        throw new Exception('Invalid User ID format', 400);
+    }
     // Start transaction for data consistency
     $pdo->beginTransaction();
 
@@ -21,52 +37,29 @@ try {
         SELECT 
             -- User basic info
             u.id, u.email, u.created_at, u.last_login,
-            
-            -- Application details
             b.position, b.firstname, b.lastname, b.middlename, b.gender,
             b.dateOfBirth, b.maritalStatus, b.phoneNumber, b.nin,
             b.emergencyNumber, b.address, b.lga, b.stateOfOrigin, b.status,
-            
-            -- Education details
             e.primary_school_name, e.primary_graduation_year,
             e.secondarySchoolName, e.secondaryGraduationYear,
             e.certificateType, e.classOfDegree, e.institution, e.course,
             e.highGraduationYear, e.nyscCertificateNumber, e.yearOfService,
-            
-            -- Work history (as JSON array)
-            (
-                SELECT JSON_ARRAYAGG(
-                    JSON_OBJECT(
-                        'id', id,
-                        'organizationName', organizationName,
-                        'rank', rank,
-                        'responsibilities', responsibilities,
-                        'startDate', startDate,
-                        'endDate', endDate
-                    )
-                )
-                FROM user_work_details
-                WHERE user_id = u.id
-            ) AS work_history,
-            
-            -- PMC details
+            w.organizationName, w.rank, w.responsibilities,
+            w.startDate, w.endDate,
             p.bodyName, p.membershipID, p.membershipType,
             p.membershipResposibilities, p.certificateDate,
-            
-            -- Quiz scores
             q.score_percentage, q.completed_at,
-            
-            -- File references
             f.passport_file_path, f.birth_certificate_file_path,
             f.sec_file_path, f.high_certificate_file_path,
             f.nysc_file_path, f.pmc_file_path
             
         FROM users u
-        LEFT JOIN user_applications b ON u.id = b.user_id
-        LEFT JOIN user_education_details e ON u.id = e.user_id
-        LEFT JOIN user_pmc_details p ON u.id = p.user_id
-        LEFT JOIN quiz_scores q ON u.id = q.user_id
-        LEFT JOIN user_files f ON u.id = f.user_id
+        JOIN user_applications b ON u.id = b.user_id
+        JOIN user_education_details e ON u.id = e.user_id
+        JOIN user_pmc_details p ON u.id = p.user_id
+        JOIN user_work_details w ON u.id = w.user_id
+        JOIN quiz_scores q ON u.id = q.user_id
+        JOIN user_files f ON u.id = f.user_id
         WHERE u.id = :user_id
     ";
 
@@ -134,7 +127,13 @@ try {
             'nyscCertificateNumber' => $result['nyscCertificateNumber'],
             'yearOfService' => $result['yearOfService']
         ],
-        'work_history' => json_decode($result['work_history'], true) ?: [],
+        'work_history' => [
+            'organizationName' => $result['organizationName'], 
+            'rank' => $result['rank'], 
+            'responsibilities' => $result['responsibilities'],
+            'startDate' => $result['startDate'], 
+            'endDate' => $result['endDate'],
+        ],
         'pmc_details' => [
             'bodyName' => $result['bodyName'],
             'membershipID' => $result['membershipID'],
@@ -146,14 +145,14 @@ try {
             'score_percentage' => $result['score_percentage'],
             'completed_at' => $result['completed_at']
         ],
-        'files' => [
-            'passport' => $result['passport_file_path'],
-            'birth_certificate' => $result['birth_certificate_file_path'],
-            'secondary_certificate' => $result['sec_file_path'],
-            'higher_certificate' => $result['high_certificate_file_path'],
-            'nysc_certificate' => $result['nysc_file_path'],
-            'pmc_certificate' => $result['pmc_file_path']
-        ]
+        // 'files' => [
+        //     'passport' => $result['passport_file_path'],
+        //     'birth_certificate' => $result['birth_certificate_file_path'],
+        //     'secondary_certificate' => $result['sec_file_path'],
+        //     'higher_certificate' => $result['high_certificate_file_path'],
+        //     'nysc_certificate' => $result['nysc_file_path'],
+        //     'pmc_certificate' => $result['pmc_file_path']
+        // ]
     ];
 
     $pdo->commit();

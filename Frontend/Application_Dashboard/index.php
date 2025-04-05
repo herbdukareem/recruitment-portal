@@ -254,16 +254,11 @@
 			}
 		}
 
-		let user_profile;
-		let user_data;
-
 		// AJAX call to fetch user data
 		const fetchUserProfile = async () => {
-			// console.log(user_id);
 			try {
-				const user_id = localStorage.getItem('userID');
-
-				const response = await fetch(`/test/backend/user/data?user_id=${user_id}`, {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/data?user_id=${user_id.id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -273,21 +268,19 @@
 
 				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-				user_profile = await response.json();
-				console.log(user_profile)
+				const data = await response.json();
+				populateUserProfile(data)
 
 			} catch (error) {
 				console.error("Error fetching user data:", error);
 				throw error;
 			}
-		}
+		};
 
-		const fetchUserData = async () => {
-			// console.log(user_id);
+		const fetchUserBio = async () => {
 			try {
-				const user_id = localStorage.getItem('userID');
-
-				const response = await fetch(`/test/backend/user/bio?user_id=${user_id}`, {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/bio?user_id=${user_id.id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -297,8 +290,8 @@
 
 				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-				user_data = await response.json();
-				console.log(user_data)
+				const bio = await response.json();
+				populateUserData(bio.data)
 
 			} catch (error) {
 				console.error("Error fetching user data:", error);
@@ -306,51 +299,253 @@
 			}
 		}
 
-		function populateUserData(user_data, user_profile) {
-			// Position selects (you'll need to set these based on your data)
+		const fetchUserEducation = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/education?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const edu = await response.json();
+				console.log(edu)
+				populateUserEdu(edu.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		const fetchUserWork = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/work?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const work = await response.json();
+				console.log(work)
+				populateUserWork(work.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		const fetchUserPmc = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/pmc?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const pmc = await response.json();
+				console.log(pmc)
+				populateUserPmc(pmc.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		const fetchUserSum = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/summary?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const sum = await response.json();
+				console.log(sum)
+				populateUserSum(sum.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		function populateUserProfile(data) {
+			const profile = document.getElementById('profile');
+
+			if (!data) {
+				profile.innerHTML = `
+					<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
+						<circle cx="18" cy="12" r="0" fill="#00045c">
+							<animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/>
+						</circle>
+						<circle cx="12" cy="12" r="0" fill="#00045c">
+							<animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/>
+						</circle>
+						<circle cx="6" cy="12" r="0" fill="#00045c">
+							<animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/>
+						</circle>
+					</svg>
+				`;
+			} else {
+				profile.innerText = `${data.data.firstname} ${data.data.lastname}`;
+			}
+
+		}
+
+		function populateUserData(user_data) {
 			document.getElementById('positionType').value = user_data.positionType || '';
 			document.getElementById('supPosition').value = user_data.supPosition || '';
 			document.getElementById('position').value = user_data.position || '';
-			
-			// Basic info
-			document.querySelector('input[name="firstname"]').value = user_profile.firstname || '';
+			document.querySelector('input[name="firstname"]').value = user_data.firstname || '';
 			document.querySelector('input[name="middlename"]').value = user_data.middlename || '';
-			document.querySelector('input[name="lastname"]').value = user_profile.lastname || '';
-			
-			// Email and password (if applicable)
-			if (user_names.email) {
-				document.querySelector('input[name="email"]').value = user_profile.email || '';
+			document.querySelector('input[name="lastname"]').value = user_data.lastname || '';
+			if (user_data.email) {
+				document.querySelector('input[name="email"]').value = user_data.email || '';
 				document.querySelector('input[name="password"]').value = '';
 			}
-			
-			// Personal details
 			document.querySelector('select[name="gender"]').value = user_data.gender || '';
 			document.querySelector('input[name="dateOfBirth"]').value = user_data.dateOfBirth || '';
 			document.querySelector('select[name="maritalStatus"]').value = user_data.maritalStatus || '';
-			
-			// Location info
 			document.getElementById('state').value = user_data.stateOfOrigin || '';
-			// You'll need to populate LGA based on state selection
 			document.getElementById('lga').value = user_data.lga || '';
-			
-			// Identification
 			document.querySelector('input[name="nin"]').value = user_data.nin || '';
-			
-			// Contact info
 			document.querySelector('input[name="phoneNumber"]').value = user_data.phoneNumber || '';
 			document.querySelector('input[name="emergencyNumber"]').value = user_data.emergencyNumber || '';
 			document.querySelector('input[name="address"]').value = user_data.address || '';
-			
-			// Note: For file inputs, you can't set the value directly due to security restrictions
-			// You might want to display the existing filenames differently
 		}
+
+		function populateUserEdu(edu) {
+			document.getElementById('primary_school_name').value = edu.primary_school_name || '';
+			document.getElementById('primary_graduation_year').value = edu.primary_graduation_year || '';
+			document.getElementById('secondarySchoolName').value = edu.secondarySchoolName || '';
+			document.getElementById('secondaryGraduationYear').value = edu.secondaryGraduationYear || '';
+			document.getElementById('certificateType').value = edu.certificateType || '';
+			document.getElementById('classOfDegree').value = edu.classOfDegree || '';
+			document.getElementById('institution').value = edu.institution || '';
+			document.getElementById('course').value = edu.course || '';
+			document.getElementById('highGraduationYear').value = edu.institution || '';
+			document.getElementById('nyscCertificateNumber').value = edu.nyscCertificateNumber || '';
+			document.getElementById('yearOfService').value = edu.yearOfService || '';
+		}
+
+		function populateUserWork(work) {
+			document.getElementById('organizationName').value = work.organizationName || '';
+			document.getElementById('rank').value = work.rank || '';
+			document.getElementById('responsibilities').value = work.responsibilities || '';
+			document.getElementById('startDate').value = work.startDate || '';
+			document.getElementById('endDate').value = work.endDate || '';
+		}
+
+		function populateUserPmc(pmc) {
+			document.getElementById('bodyName').value = pmc.bodyName || '';
+			document.getElementById('membershipID').value = pmc.membershipID || '';
+			document.getElementById('membershipType').value = pmc.membershipType || '';
+			document.getElementById('membershipResposibilities').value = pmc.membershipResposibilities || '';
+			document.getElementById('certificateDate').value = pmc.certificateDate || '';
+		}
+
+		function populateUserSum(sumData){
+			document.querySelector('.form-head h2 span').textContent = sumData.application.position || 'Position not provided';
+			const passportImg = document.querySelector('.form-head img');
+			const passportMessage = document.querySelector('.form-head p');
+			if (sumData.application.passportFilePath) {
+				passportImg.src = sumData.application.passportFilePath;
+				passportImg.style.display = 'block';
+				passportMessage.style.display = 'none';
+			} else {
+				passportImg.style.display = 'none';
+				passportMessage.style.display = 'block';
+			}
+			// Bio Data Summary
+			document.querySelector('[label="First Name"]').nextElementSibling.textContent = sumData.application.firstname || 'N/A';
+			document.querySelector('[label="Middle Name"]').nextElementSibling.textContent = sumData.application.middlename || 'N/A';
+			document.querySelector('[label="Last Name"]').nextElementSibling.textContent = sumData.application.lastname || 'N/A';
+			document.querySelector('[label="Gender"]').nextElementSibling.textContent = sumData.application.gender || 'N/A';
+			document.querySelector('[label="Date Of Birth"]').nextElementSibling.textContent = sumData.application.dateOfBirth || 'N/A';
+			document.querySelector('[label="Marital Status"]').nextElementSibling.textContent = sumData.application.maritalStatus || 'N/A';
+			document.querySelector('[label="Phone Number"]').nextElementSibling.textContent = sumData.application.phoneNumber || 'N/A';
+			document.querySelector('[label="Emergency Number"]').nextElementSibling.textContent = sumData.application.emergencyNumber || 'N/A';
+			document.querySelector('[label="NIN"]').nextElementSibling.textContent = sumData.application.nin || 'N/A';
+			document.querySelector('[label="State Of Origin"]').nextElementSibling.textContent = sumData.application.stateOfOrigin || 'N/A';
+			document.querySelector('[label="Local Government"]').nextElementSibling.textContent = sumData.application.lga || 'N/A';
+			document.querySelector('[label="Residential Address"]').nextElementSibling.textContent = sumData.application.address || 'N/A';
+			// Populate LGA Indigene/Origin Certificate Link (Assumed Link)
+			const lgaCert = document.querySelector('a[href^="../Application_Dashboard/"]');
+			if (lgaCert) {
+				lgaCert.href = sumData.application.lgaFilePath ? `../Application_Dashboard/${sumData.application.lgaFilePath}` : '#';
+				lgaCert.style.display = sumData.application.lgaFilePath ? 'inline' : 'none';
+			}
+			// Populate Birth Certificate Link (Assumed Link)
+			const birthCert = document.querySelector('a[href^="../Application_Dashboard/"]:not([href^="#"])');
+			if (birthCert) {
+				birthCert.href = sumData.application.birthCertificateFilePath ? `../Application_Dashboard/${sumData.application.birthCertificateFilePath}` : '#';
+				birthCert.style.display = sumData.application.birthCertificateFilePath ? 'inline' : 'none';
+			}
+			// Education Summary
+			document.querySelector('[label="Primary School Name"]').nextElementSibling.textContent = sumData.education.primary_school_name || 'N/A';
+			document.querySelector('[label="Graduation Year"]').nextElementSibling.textContent = sumData.education.primary_graduation_year || 'N/A';
+			document.querySelector('[label="Secondary Education"]').nextElementSibling.textContent = sumData.education.secondarySchoolName || 'N/A';
+			document.querySelector('[label="Secondary Education Certificate"]').nextElementSibling.textContent = sumData.education.secondaryCertificate || 'N/A';
+			document.querySelector('[label="Secondary Graduation Year"]').nextElementSibling.textContent = sumData.education.secondaryGraduationYear || 'N/A';
+			document.querySelector('[label="Higher Institution Name"]').nextElementSibling.textContent = sumData.education.institution || 'N/A';
+			document.querySelector('[label="Certificate Type"]').nextElementSibling.textContent = sumData.education.certificateType || 'N/A';
+			document.querySelector('[label="Class Of Degree"]').nextElementSibling.textContent = sumData.education.classOfDegree || 'N/A';
+			document.querySelector('[label="Course"]').nextElementSibling.textContent = sumData.education.course || 'N/A';
+			document.querySelector('[label="Higher Education Certificate"]').nextElementSibling.textContent = sumData.education.highCertificateFilePath || 'N/A';
+			document.querySelector('[label="Higher Education Graduation Year"]').nextElementSibling.textContent = sumData.education.highGraduationYear || 'N/A';
+			// NYSC Summary (not used directly in the provided data, assuming this is not available)
+			document.querySelector('[label="Certificate Number"]').nextElementSibling.textContent = sumData.education.nyscCertificateNumber || 'N/A';
+			document.querySelector('[label="Year Of Service"]').nextElementSibling.textContent = sumData.education.yearOfService || 'N/A';
+			document.querySelector('[label="NYSC Certificate"]').nextElementSibling.textContent = sumData.education.nyscFilePath || 'N/A';
+			// Work History Summary
+			document.querySelector('[label="Organization Name"]').nextElementSibling.textContent = sumData.work_history.organizationName || 'N/A';
+			document.querySelector('[label="Rank"]').nextElementSibling.textContent = sumData.work_history.rank || 'N/A';
+			document.querySelector('[label="Responsibilities"]').nextElementSibling.textContent = sumData.work_history.responsibilities || 'N/A';
+			document.querySelector('[label="Start Date"]').nextElementSibling.textContent = sumData.work_history.startDate || 'N/A';
+			document.querySelector('[label="End Date"]').nextElementSibling.textContent = sumData.work_history.endDate || 'N/A';
+			// Professional Membership Summary
+			document.querySelector('[label="Body Name"]').nextElementSibling.textContent = sumData.pmc_details.bodyName || 'N/A';
+			document.querySelector('[label="Membership ID"]').nextElementSibling.textContent = sumData.pmc_details.membershipID || 'N/A';
+			document.querySelector('[label="Membership Type"]').nextElementSibling.textContent = sumData.pmc_details.membershipType || 'N/A';
+			document.querySelector('[label="Responsibilities"]').nextElementSibling.textContent = sumData.pmc_details.membershipResposibilities || 'N/A';
+			document.querySelector('[label="Certificate Date"]').nextElementSibling.textContent = sumData.pmc_details.certificateDate || 'N/A';
+			document.querySelector('[label="Certificate"]').nextElementSibling.textContent = sumData.pmc_details.pmcFilePath || 'N/A';
+		}
+
+
+
 
 		// Initialize when DOM is loaded
 		document.addEventListener('DOMContentLoaded', () => {
 			checkSession();
 			fetchUserProfile();
-			fetchUserData();
-			populateUserData();
+			fetchUserBio();
+			fetchUserEducation();
+			fetchUserWork();
+			fetchUserPmc();
+			fetchUserSum();
 			setupFormHandlers();
 			renderNavListBtn();
 			
@@ -375,7 +570,7 @@
                         <path stroke-linecap="round" d="M17.97 20c-.16-2.892-1.045-5-5.97-5s-5.81 2.108-5.97 5" opacity="0.5" />
                     </g>
                 </svg>
-                <p id="user_profile">
+                <p id="profile">
 					<!-- Populate with JS -->
                 </p>
             </div>
@@ -385,7 +580,6 @@
         <div id="db-panel">
             <div class="head-panel">
                 <a href="../index.php"><img src="../images/logo-plain.jpg" alt="unilorin Logo"></a>
-                <svg id="close_panel" onclick="closePanelHandler" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><g fill="none" stroke="var(--main-color-light)" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 7l10 10"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="16;0"/></path><path d="M17 7l-10 10"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" values="16;0"/></path></g></svg>
             </div>
             <div class="body-panel">
                 <ul>

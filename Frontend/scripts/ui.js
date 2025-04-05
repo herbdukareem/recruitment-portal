@@ -1,6 +1,16 @@
 export function openPanelHandler() {
-    document.getElementById('db-panel').style.transform = "translateX(0)";
-    document.getElementById('close_panel').style.display = 'block';
+    let open = true;
+
+    if(open){
+        document.getElementById('db-panel').style.transform = "translateX(-180px)";
+        document.getElementById('close_panel').style.display = 'none';
+        open = false
+    } else {
+        document.getElementById('db-panel').style.transform = "translateX(0)";
+        document.getElementById('close_panel').style.display = 'block';
+        open = true;
+    }
+    
 }
 
 export function closePanelHandler() {

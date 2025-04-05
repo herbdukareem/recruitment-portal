@@ -39,7 +39,8 @@ try {
     ]);
 
 } catch (Exception $e) {
-    http_response_code($e->getCode() ?: 400);
+    $code = is_int($e->getCode()) ? $e->getCode() : 400;
+    http_response_code($code);
     echo json_encode([
         'success' => false,
         'error' => $e->getMessage()

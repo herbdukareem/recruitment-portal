@@ -106,8 +106,8 @@ try {
             require __DIR__ . '/api/user/quiz.php';
             break;
             
-        case '/user/full':
-            require __DIR__ . '/api/user/full.php';
+        case '/user/summary':
+            require __DIR__ . '/api/user/summary.php';
             break;
             
         case '/user/files':
