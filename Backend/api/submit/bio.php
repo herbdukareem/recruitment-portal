@@ -17,16 +17,16 @@ $files = $_FILES ?? [];
 // Check if admin role
 if (empty($input['admin_role'])) {
     // Validate session for admin role
-    if (!isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['user']['user_id'])) {
         http_response_code(401);
         echo json_encode(['error' => 'No applicant session']);
         exit;
     }
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user']['user_id'];
 } else {
     try {
         // Validate required user fields
-        $userFields = ['firstname', 'lastname', 'email', 'password'];
+        $userFields = ['firstname', 'lastname', 'email', 'nin', 'password'];
         foreach ($userFields as $field) {
             if (empty($input[$field])) {
                 http_response_code(400);
@@ -38,6 +38,7 @@ if (empty($input['admin_role'])) {
         $firstname = trim($input['firstname']);
         $lastname = trim($input['lastname']);
         $email = trim($input['email']);
+        $nin = trim($input['nin']);
         
         // Validate email format
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -59,10 +60,10 @@ if (empty($input['admin_role'])) {
 
         // Insert new user
         $userSql = $pdo->prepare(
-            "INSERT INTO users (firstname, lastname, email, password) 
-            VALUES (?, ?, ?, ?)"
+            "INSERT INTO users (firstname, lastname, email, nin, password) 
+            VALUES (?, ?, ?, ?, ?)"
         );
-        $userSql->execute([$firstname, $lastname, $email, $hashedPassword]);
+        $userSql->execute([$firstname, $lastname, $email, $nin,  $hashedPassword]);
 
         // Get the new user ID
         $user_id = $pdo->lastInsertId();
@@ -73,7 +74,7 @@ if (empty($input['admin_role'])) {
             exit;
         }
 
-        $_SESSION['user_id'] = $user_id;
+        $_SESSION['user']['useri_id'] = $user_id;
 
     } catch (PDOException $e) {
         http_response_code(500);
@@ -108,6 +109,8 @@ if (!empty($missingFields)) {
 
 // Validate NIN format (assuming 11 digits)
 if (!preg_match('/^\d{11}$/', $input['nin'])) {
+    $stmt= $pdo->prepare("DELETE FROM users WHERE email = :email");
+    $stmt->execute([':email' => $input['email']]);
     http_response_code(400);
     echo json_encode(['error' => 'NIN must be 11 digits']);
     exit;

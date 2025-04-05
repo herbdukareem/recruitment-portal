@@ -86,8 +86,8 @@ try {
             require __DIR__ . '/api/user/data.php';
             break;
             
-        case '/user/application':
-            require __DIR__ . '/api/user/application.php';
+        case '/user/bio':
+            require __DIR__ . '/api/user/bio.php';
             break;
             
         case '/user/education':

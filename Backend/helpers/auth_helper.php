@@ -4,7 +4,7 @@
  */
 
 function authenticateUser() {
-    if (!isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['user']['user_id'])) {
         http_response_code(401);
         echo json_encode(['error' => 'Unauthorized']);
         exit;
@@ -20,7 +20,7 @@ function validateUserAccess($pdo, $user_id) {
     }
     
     // Regular users can only access their own data
-    if ($_SESSION['user_id'] != $user_id) {
+    if ($_SESSION['user']['user_id'] != $user_id) {
         http_response_code(403);
         echo json_encode(['error' => 'Forbidden']);
         exit;

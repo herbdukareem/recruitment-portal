@@ -113,8 +113,8 @@
 
 	</script>
 	<script type="module" src="../scripts/main.js"></script>
-	<script type="module" src="./script/alert.js"></script>
-	<script type="module" src="./script/auth/login.js"></script>
+	<script src="./script/alert.js"></script>
+	<script src="./script/auth/login.js"></script>
 
 	<!-- Template JS File -->
 	<script src="assets/js/script.js"></script>

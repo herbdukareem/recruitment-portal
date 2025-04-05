@@ -35,27 +35,29 @@ document.getElementById('login_section').addEventListener('submit', async (e) =>
         
         if (response.status === 429) {
             const retryAfter = response.headers.get('Retry-After');
-            showAlert('alert_container_login', `Too many requests. Try again in ${retryAfter} seconds.`, 'danger');
+            showAlert('alert_container', `Too many requests. Try again in ${retryAfter} seconds.`, 'danger');
         }
 
         const data = await response.json();
         console.log('finally')
         if (response.ok) {
             console.log(data)
-            showAlert('alert_container_login', 'Login Successful', 'sucess');
+            showAlert('alert_container', 'Login Successful', 'sucess');
             // Store admin data and redirect
-            localStorage.setItem('user_id', JSON.stringify(data.user));
+            localStorage.setItem('csrf_token', JSON.stringify(data.csrf_token));
+            localStorage.setItem('user', JSON.stringify(data.user));
+
             window.location.href = '../index.php';
         } else {
-            showAlert('alert_container_login', data.error || 'Login failed', 'danger');
+            showAlert('alert_container', data.error || 'Login failed', 'danger');
         }
     } catch (error) {
-        showAlert('alert_container_login', 'Network error', 'danger');
+        showAlert('alert_container', 'Network error', 'danger');
     }
 });
 
 function getCsrfToken() {
-    return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    return document.querySelector('meta[name="user-token"]').getAttribute('content');
 }
 
 document.getElementById('signup_section').addEventListener('submit', async (e) => {
@@ -87,8 +89,8 @@ document.getElementById('signup_section').addEventListener('submit', async (e) =
 
         const data = await response.json();
 
-        if (response.ok) {
-            showAlert('alert_container_signup', 'Admin created successfully!', 'success');
+        if (data.ok) {
+            showAlert('alert_container', 'Admin created successfully!', 'success');
             localStorage.setItem('user_id', JSON.stringify(data.user));
             window.location.href = '../index.php';
             setTimeout(() => {
@@ -100,9 +102,9 @@ document.getElementById('signup_section').addEventListener('submit', async (e) =
                 confirm_password    .value = '';
             }, 1500);
         } else {
-            showAlert('alert_container_signup', data.error || 'Registration failed', 'danger');
+            showAlert('alert_container', data.error || 'Registration failed', 'danger');
         }
     } catch (error) {
-        showAlert('alert_container_signup', 'Network error', 'danger');
+        showAlert('alert_container', 'Network error', 'danger');
     }
 });

@@ -30,103 +30,6 @@
         header("Location: ./Auth/auth?display=login");
         exit();
     }
-    
-    
-    // Check if the Login form is submitted
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-
-        // Prepare and execute the SQL statement
-        $sql = "SELECT * FROM users WHERE email = :email";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([':email' => $email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!empty($user)) {
-            // Verify the password
-            if (password_verify($password, $user['password'])) {
-                // Set session variables
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_firstname'] = $user['firstname'];
-                $_SESSION['user_lastname'] = $user['lastname'];
-                $_SESSION['user_email'] = $email; // Store email in session
-
-                // Set success message in session
-                $_SESSION['alert_message'] = "Login successful!";
-                $_SESSION['alert_type'] = "success";
-
-                // Redirect to the dashboard page
-                header("Location: ../index.php");
-                exit(); // Ensure the script stops after redirecting
-            } else {
-                // Set error message in session
-                $_SESSION['alert_message'] = "Invalid email or password!";
-                $_SESSION['alert_type'] = "warning";
-            }
-        } else {
-            // Set alert message in session
-            $_SESSION['alert_message'] = "User does not exist, create an account.";
-            $_SESSION['alert_type'] = "alert";
-        }
-    }
-
-    // Signup form check
-    if (isset($_POST['Signup'])) {
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $confirm_password = $_POST['confirm_password'];
-
-        // Validate input
-        if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($confirm_password)) {
-            // Set alert message in session
-            $_SESSION['alert_message'] = "All fields are required.";
-            $_SESSION['alert_type'] = "alert";
-        } elseif ($password !== $confirm_password) {
-            // Set alert message in session
-            $_SESSION['alert_message'] = "Password doesn't match.";
-            $_SESSION['alert_type'] = "alert";
-        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // Set warning message in session
-            $_SESSION['alert_message'] = "Incorrect email format.";
-            $_SESSION['alert_type'] = "warning";
-        } else {
-            // Hash the password
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            // Prepare an SQL statement
-            $sql = "INSERT INTO users (firstname, lastname, email, password) VALUES (:firstname, :lastname, :email, :password)";
-            $stmt = $pdo->prepare($sql);
-
-            try {
-                // Execute the statement
-                $stmt->execute([
-                    ':firstname' => $firstname,
-                    ':lastname' => $lastname,
-                    ':email' => $email,
-                    ':password' => $hashed_password,
-                ]);
-
-                // Set success message in session
-                $_SESSION['alert_message'] = "Signup successful!";
-                $_SESSION['alert_type'] = "success";
-
-                header("Location: ../index.php");
-            } catch (PDOException $e) {
-                if ($e->errorInfo[1] == 1062) {
-                    // Set error message in session
-                    $_SESSION['alert_message'] = "Email already exists.";
-                    $_SESSION['alert_type'] = "warning";
-                } else {
-                    // Set error message in session
-                    $_SESSION['alert_message'] = "Error signing up.";
-                    $_SESSION['alert_type'] = "alert";
-                }
-            }
-        }
-    }
 ?>
 
 <!DOCTYPE html>
@@ -150,12 +53,12 @@
                         Go to Career Page
                     </p>
                 </div>
+                <div id="alert_container"></div>
                 
                 <!-- login  -->
                 <form action="" method='post' id="login_section"  style="display: none;">
                     <input type="hidden" name="login" value="1">
                     <b>Login in with <span onclick="loginOptionHandler('lemail')" style="cursor:pointer;">Email</span>/<span onclick="loginOptionHandler('lnin')" style="cursor:pointer;">NIN</span></b>
-                    <div id="alert_container_login"></div>
                     <div class="input-set" id="logOption">
                         <input type="email" name="email" id="lemail" value="" placeholder="Email">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="var(--main-bg)" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2M7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.5.88 4.93 1.78A7.9 7.9 0 0 1 12 20c-1.86 0-3.57-.64-4.93-1.72m11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33A7.93 7.93 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.5-1.64 4.83M12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6m0 5a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 12 8a1.5 1.5 0 0 1 1.5 1.5A1.5 1.5 0 0 1 12 11"/></svg>
@@ -182,7 +85,6 @@
                 <!-- sign up  -->
                 <form action="" method="post" id="signup_section" style="display: none;">
                     <input type="hidden" name="Signup" value="1">
-                    <div id="alert_container_signup"></div>
                     <div class="input-set">
                         <input type="text"  name="firstname" id="sfname" placeholder="Firstname">
                     </div>

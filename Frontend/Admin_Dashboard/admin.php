@@ -23,7 +23,6 @@
 	<script>
 
 		let adminRole;
-		let user_id;
 		let user_data;
 		let form;
 	
@@ -630,29 +629,29 @@
 
 		// Error display
 		function showError(message) {
-		const container = document.getElementById('applicants-table-container');
-		if (container) {
-			container.innerHTML = `
-			<div class="alert alert-danger">
-				${message}
-				<button class="btn btn-sm btn-primary mt-2" onclick="loadApplicants()">Try Again</button>
-			</div>
-			`;
-		}
+			const container = document.getElementById('applicants-table-container');
+			if (container) {
+				container.innerHTML = `
+				<div class="alert alert-danger">
+					${message}
+					<button class="btn btn-sm btn-primary mt-2" onclick="loadApplicants()">Try Again</button>
+				</div>
+				`;
+			}
 		}
 
 		// Toggle details visibility
 		function toggleDetails(index) {
-		const detailsRow = document.getElementById(`details-${index}`);
-		const button = document.querySelector(`[data-index="${index}"]`);
-		
-		if (detailsRow.style.display === "none") {
-			detailsRow.style.display = "table-row";
-			button.textContent = "Hide Details";
-		} else {
-			detailsRow.style.display = "none";
-			button.textContent = "View Details";
-		}
+			const detailsRow = document.getElementById(`details-${index}`);
+			const button = document.querySelector(`[data-index="${index}"]`);
+			
+			if (detailsRow.style.display === "none") {
+				detailsRow.style.display = "table-row";
+				button.textContent = "Hide Details";
+			} else {
+				detailsRow.style.display = "none";
+				button.textContent = "View Details";
+			}
 		}
 
 		// Handle Status form submission
@@ -714,6 +713,7 @@
 
 		// AJAX call to fetch user data
 		const fetchUserData = async () => {
+			const user_id = localStorage.getItem('userID')
 			try {
 				const response = await fetch(`/test/backend/user/data?user_id=${user_id}`, {
 					method: 'GET',
@@ -725,8 +725,9 @@
 
 				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-				const user_data = await response.json();
-				return user_data;
+				user_data = await response.json();
+				populateUserData(user_data, user_names);
+
 			} catch (error) {
 				console.error("Error fetching user data:", error);
 				throw error;
@@ -818,8 +819,7 @@
 				
 				if (data.success) {
 					this.showAlert('alert-container-application', data.message, 'success');
-					user_id = data.user_id
-					localStorage.setItem('userID', user_id)
+					localStorage.setItem('userID', data.user_id)
 					if (data.next) {
 						setTimeout(() => {
 							this.navigateToStep(data.next);
@@ -971,13 +971,6 @@
 			}
 		}
 
-		// function renderUserSessionId() {
-		// 	document.querySelectorAll('.userId').forEach(function(element) {
-		// 		console.log(element)
-		// 		element.value = localStorage.getItem('userId');
-		// 	});
-		// };
-
 		// On page load, check if there's a stored section and show it
 		window.addEventListener('DOMContentLoaded', function() {
 			const activeSection = localStorage.getItem('activeSection') || 'sort_applicant';
@@ -993,6 +986,7 @@
 			loadApplicants();
 			handleStatusUpdate();
 			fetchUserData();
+			// populateUserData();
 			setupFormHandlers();
 			// renderUserSessionId()
 			

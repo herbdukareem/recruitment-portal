@@ -11,7 +11,7 @@ try {
     
     // Authenticate user
     authenticateUser();
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user']['user_id'];
 
     $stmt = $pdo->prepare("
         SELECT 

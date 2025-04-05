@@ -26,7 +26,7 @@ try {
     $adminData = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$adminData) {
-        throw new Exception('Admin not found', 404);
+        throw new Exception('Admin not found', 404); // Ensure this is an integer
     }
     
     // 4. Prepare response data
@@ -44,10 +44,17 @@ try {
     echo json_encode($response);
     
 } catch (Exception $e) {
-    http_response_code($e->getCode() ?: 500);
+    // Ensure the response code is always an integer
+    $statusCode = is_int($e->getCode()) && $e->getCode() >= 100 && $e->getCode() < 600 
+        ? $e->getCode() 
+        : 500;
+    
+    http_response_code($statusCode);
+    
     echo json_encode([
         'success' => false,
         'error' => $e->getMessage(),
-        'message' => 'Failed to fetch admin data'
+        'message' => 'Failed to fetch admin data',
+        'error_id' => uniqid('ERR-', true)
     ]);
 }

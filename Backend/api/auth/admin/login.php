@@ -4,13 +4,6 @@ require_once __DIR__ . '/../../../helpers/auth_helper.php';
 require_once __DIR__ . '/../../../helpers/rate_limit.php';
 limitRequests('login', 5, 60); // 5 attempts per minute
 
-// session_start([
-//     'cookie_lifetime' => 86400,
-//     'cookie_secure' => isset($_SERVER['HTTPS']),
-//     'cookie_httponly' => true,
-//     'cookie_samesite' => 'Lax'
-// ]);
-
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </form>
-            <form action="" id="realQuizResult" method="post" style="display: none;">
+            <form action="" id="proficiencyTestForm" method="post" style="display: none;">
                 <input type="text" value="" name="score" id="score">
                 <input type="text" value="" name="scorePercentage" id="scorePercentage">
                 <button type="submit" name="saveQuizScore" id="saveQuizScore">save</button>

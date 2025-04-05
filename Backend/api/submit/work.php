@@ -6,13 +6,13 @@ if ($method !== 'POST') {
 }
 
 // Validate session
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user']['user_id'])) {
     http_response_code(401);
     echo json_encode(['error' => 'No applicant session']);
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user']['user_id'];
 
 try {
     $pdo->beginTransaction();

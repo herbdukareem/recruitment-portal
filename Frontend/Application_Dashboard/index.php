@@ -12,13 +12,10 @@
     <link rel="stylesheet" href="../style/formStyles.css">
 	<link rel="stylesheet" href="../style/alert.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
-
+	<script src="../scripts/alert.js"></script>
     <script>
 
 		let adminRole;
-		let user_id;
-		let user_data;
-		let form;
 	
 		// let allApplicants = [];
 
@@ -32,7 +29,7 @@
 					headers: {
 						'Content-Type': 'application/json',
 						'X-Requested-With': 'XMLHttpRequest',
-						'Authorization': `Bearer ${localStorage.getItem('admin_token') || ''}`
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token') || ''}`
 					}
 				});
 		
@@ -40,13 +37,19 @@
 		
 				// Handle 401 Unauthorized
 				if (response.status === 401) {
-					console.warn('Session expired or invalid - redirecting to login');
-					localStorage.removeItem('admin_token');
+					console.warn('Session expired or invalid - performing full cleanup');
+					
+					// Clear all authentication-related data
+					localStorage.removeItem('csrf_token');
 					sessionStorage.removeItem('session_valid');
-					window.location.href = './Auth/auth.php';
+					
+					// Clear cookies
+					document.cookie = 'PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+					
+					// Redirect with cache busting and force login display
+					window.location.href = './Auth/auth.php?display=login&nocache=' + Date.now();
 					return false;
 				}
-		
 				// Handle other error statuses
 				if (!response.ok) {
 					const errorText = await response.text();
@@ -80,7 +83,7 @@
 				// For network errors, don't redirect immediately - might be temporary
 				if (error.name !== 'TypeError') {
 					localStorage.removeItem('admin_token');
-					window.location.href = 'auth.php';
+					window.location.href = './Auth/auth.php?display=login';
 				}
 				
 				return false;
@@ -112,6 +115,12 @@
 				await submitForm('pmc', new FormData(e.target));
 			});
 			
+			// PMC form
+			document.getElementById('proficiencyTestForm').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				await submitForm('pmc', new FormData(e.target));
+			});
+			
 			// File upload form
 			document.getElementById('fileForm').addEventListener('submit', async (e) => {
 				e.preventDefault();
@@ -132,7 +141,7 @@
 				const data = await response.json();
 				
 				if (data.success) {
-					this.showAlert('alert-container-application', data.message, 'success');
+					showAlert('dashboard_alert_con', data.message, 'success');
 					user_id = data.user_id
 					localStorage.setItem('userID', user_id)
 					if (data.next) {
@@ -141,11 +150,11 @@
 						}, 5200);
 					}
 				} else {
-					this.showAlert('alert-container-application', data.error || 'Submission failed', 'danger');
+					showAlert('dashboard_alert_con', data.error || 'Submission failed', 'danger');
 				}
 			} catch (error) {
 				console.error('Form submission error:', error);
-				this.showAlert('alert-container-application', 'Network error', 'danger');
+				showAlert('dashboard_alert_con', 'Network error', 'danger');
 			}
 		}
 
@@ -228,49 +237,122 @@
 				return false;
 			}
 		}
+		
+		function renderNavListBtn() {
+			const profTestBtn = document.getElementById('prof_test');
+			let form = true;
+
+			if (!form) {
+				profTestBtn.innerHTML = `
+					 <button id="cpl-btn" class="all-bt-bg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
+                            <path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M38.5 5.5h-29c-2.2 0-4 1.8-4 4v29c0 2.2 1.8 4 4 4h29c2.2 0 4-1.8 4-4v-29c0-2.2-1.8-4-4-4" stroke-width="1"/><path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M34.3 35.9L24 30.5l-10.3 5.4V19L24 12.1L34.3 19zM24 12.1v18.4z" stroke-width="1"/>
+                        </svg>
+                        CPL Test
+                    </button>
+				`;
+			}
+		}
+
+		let user_profile;
+		let user_data;
+
+		// AJAX call to fetch user data
+		const fetchUserProfile = async () => {
+			// console.log(user_id);
+			try {
+				const user_id = localStorage.getItem('userID');
+
+				const response = await fetch(`/test/backend/user/data?user_id=${user_id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				user_profile = await response.json();
+				console.log(user_profile)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		const fetchUserData = async () => {
+			// console.log(user_id);
+			try {
+				const user_id = localStorage.getItem('userID');
+
+				const response = await fetch(`/test/backend/user/bio?user_id=${user_id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				user_data = await response.json();
+				console.log(user_data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		function populateUserData(user_data, user_profile) {
+			// Position selects (you'll need to set these based on your data)
+			document.getElementById('positionType').value = user_data.positionType || '';
+			document.getElementById('supPosition').value = user_data.supPosition || '';
+			document.getElementById('position').value = user_data.position || '';
+			
+			// Basic info
+			document.querySelector('input[name="firstname"]').value = user_profile.firstname || '';
+			document.querySelector('input[name="middlename"]').value = user_data.middlename || '';
+			document.querySelector('input[name="lastname"]').value = user_profile.lastname || '';
+			
+			// Email and password (if applicable)
+			if (user_names.email) {
+				document.querySelector('input[name="email"]').value = user_profile.email || '';
+				document.querySelector('input[name="password"]').value = '';
+			}
+			
+			// Personal details
+			document.querySelector('select[name="gender"]').value = user_data.gender || '';
+			document.querySelector('input[name="dateOfBirth"]').value = user_data.dateOfBirth || '';
+			document.querySelector('select[name="maritalStatus"]').value = user_data.maritalStatus || '';
+			
+			// Location info
+			document.getElementById('state').value = user_data.stateOfOrigin || '';
+			// You'll need to populate LGA based on state selection
+			document.getElementById('lga').value = user_data.lga || '';
+			
+			// Identification
+			document.querySelector('input[name="nin"]').value = user_data.nin || '';
+			
+			// Contact info
+			document.querySelector('input[name="phoneNumber"]').value = user_data.phoneNumber || '';
+			document.querySelector('input[name="emergencyNumber"]').value = user_data.emergencyNumber || '';
+			document.querySelector('input[name="address"]').value = user_data.address || '';
+			
+			// Note: For file inputs, you can't set the value directly due to security restrictions
+			// You might want to display the existing filenames differently
+		}
 
 		// Initialize when DOM is loaded
 		document.addEventListener('DOMContentLoaded', () => {
-			// Initialize functions
 			checkSession();
+			fetchUserProfile();
+			fetchUserData();
+			populateUserData();
 			setupFormHandlers();
-			
-			// Form filtering setup
-			const filterForm = document.getElementById('filterForm');
-
-			if (filterForm) {
-				const filterInputs = filterForm.querySelectorAll('select, input');
-				
-				// Real-time filtering with debounce
-				filterInputs.forEach(input => {
-				input.addEventListener('input', debounce(function() {
-					loadApplicants();
-				}, 300));
-				});
-				
-				// Prevent default form submission
-				filterForm.addEventListener('submit', function(e) {
-					e.preventDefault();
-					loadApplicants();
-				});
-			}
-
-			// Event delegation for dynamic buttons
-			document.addEventListener('click', (e) => {
-				// View details button
-				if (e.target.classList.contains('view-details-btn')) {
-					const index = e.target.getAttribute('data-index');
-					toggleDetails(index);
-				}
-				
-				// Edit button
-				if (e.target.classList.contains('edit-btn')) {
-					const userId = e.target.getAttribute('data-user-id');
-					handleEditApplicant(userId);
-				}
-			});
-			
-						
+			renderNavListBtn();
 			
 		});
 
@@ -293,8 +375,8 @@
                         <path stroke-linecap="round" d="M17.97 20c-.16-2.892-1.045-5-5.97-5s-5.81 2.108-5.97 5" opacity="0.5" />
                     </g>
                 </svg>
-                <p>
-                    <?php echo htmlspecialchars($_SESSION['user_firstname']) . ' ' . htmlspecialchars($_SESSION['user_lastname']); ?>
+                <p id="user_profile">
+					<!-- Populate with JS -->
                 </p>
             </div>
 
@@ -316,15 +398,7 @@
        
         
         <div id="display-screen">
-            <div id="alert-con" 
-                data-message="<?php echo htmlspecialchars($_SESSION['alert_message'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
-                data-type="<?php echo htmlspecialchars($_SESSION['alert_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
-            </div>
-            <?php 
-                // Clear session messages after loading
-                unset($_SESSION['alert_message']);
-                unset($_SESSION['alert_type']);
-            ?>
+            <div id="dashboard_alert_con" ></div>
             <?php
                 include_once('../pages/biodata.php');
                 include_once('../pages/education.php');
@@ -332,35 +406,9 @@
                 include_once('../pages/pmc.php');
                 include_once('../pages/summary.php');
 
-                
                 // Ensure quiz score does not exist before showing proficiency page
-                if (!empty($formsCompleted) && !isset($userQuizScore['score'])) {
-                    include_once('../pages/proficiency.php');
-                } else {
-                    echo '
-                        <div id="cpl-screen" style="display:none">
-                            <div class="error-400">
-                                <h2>Page Restriction!</h2>
-                                <p>Fill all required forms to proceed.</p>   
-                            </div>
-                        </div>
-                    ';
-                };
-
-                // Ensure quiz score exist before showing application status page
-                if (!empty($formsCompleted) && isset($userQuizScore['score'])) {
-                    include_once('../pages/application_status.php');
-                } else {
-                    echo '
-                        <div id="application-status_screen" style="display:none">
-                            <div class="error-400">
-                                <h2>Page Restriction!</h2>
-                                <p>Fill all required forms, and take <u>COMPUTER PROFICENCY TEST</u> to view application status.</p>   
-                            </div>
-                        </div>
-                    ';
-                };
-
+				include_once('../pages/proficiency.php');
+				include_once('../pages/application_status.php');
             ?>
 
         </div>
