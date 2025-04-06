@@ -60,9 +60,10 @@
                 </div>
             </form>
             <form action="" id="proficiencyTestForm" method="post" style="display: none;">
-                <input type="text" value="" name="score" id="score">
-                <input type="text" value="" name="scorePercentage" id="scorePercentage">
-                <button type="submit" name="saveQuizScore" id="saveQuizScore">save</button>
+                <input type="text" value="" name="score" id="score" >
+                <input type="text" value="" name="scorePercentage" id="scorePercentage" >
+                <p>Save to view result</p>
+                <button type="submit" name="" id="">save</button>
             </form>
 
             <div id="result-section" class="hidden container mx-auto my-10 p-6 bg-white rounded-lg shadow-lg text-center">
@@ -194,8 +195,9 @@
         e.preventDefault();
         showResults()
         setTimeout(()=>{
-            document.getElementById('saveQuizScore').click()
-        },2000)
+            document.getElementById('proficiencyTestForm').style.display = 'block';
+            submitBtn.style.display = 'none';
+        },500)
     })
 
     function getRandomQuestions() {
@@ -254,7 +256,8 @@
                 clearInterval(timer);
                 showResults(); // Calculate and display results
                 setTimeout(() => {
-                    document.getElementById('saveQuizScore').click(); // Trigger form submission
+                    document.getElementById('proficiencyTestForm').style.display = 'block'; 
+                    submitBtn.style.display = 'none' 
                 }, 2000); 
             } else {
                 timeLeft--;

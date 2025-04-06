@@ -13,6 +13,7 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
         if (response.ok) {
             // Clear client-side storage and redirect
             localStorage.removeItem('admin');
+            localStorage.removeItem('activeSection');
             window.location.href = './auth.php';
         } else {
             showAlert(data.error || 'Logout failed', 'danger');

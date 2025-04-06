@@ -102,16 +102,16 @@ try {
             require __DIR__ . '/api/user/pmc.php';
             break;
             
-        case '/user/quiz':
-            require __DIR__ . '/api/user/quiz.php';
-            break;
-            
         case '/user/summary':
             require __DIR__ . '/api/user/summary.php';
             break;
             
         case '/user/files':
             require __DIR__ . '/api/user/files.php';
+            break;
+
+        case '/user/status':
+            require __DIR__ . '/api/user/status.php';
             break;
             
         // Form submission routes
@@ -129,6 +129,10 @@ try {
             
         case '/submit/pmc':
             require __DIR__ . '/api/submit/pmc.php';
+            break;
+            
+        case '/submit/quiz':
+            require __DIR__ . '/api/submit/quiz.php';
             break;
             
         case '/submit/files':

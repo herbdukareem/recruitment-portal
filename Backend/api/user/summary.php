@@ -48,7 +48,6 @@ try {
             w.startDate, w.endDate,
             p.bodyName, p.membershipID, p.membershipType,
             p.membershipResposibilities, p.certificateDate,
-            q.score_percentage, q.completed_at,
             f.passport_file_path, f.birth_certificate_file_path,
             f.sec_file_path, f.high_certificate_file_path,
             f.nysc_file_path, f.pmc_file_path
@@ -58,7 +57,6 @@ try {
         JOIN user_education_details e ON u.id = e.user_id
         JOIN user_pmc_details p ON u.id = p.user_id
         JOIN user_work_details w ON u.id = w.user_id
-        JOIN quiz_scores q ON u.id = q.user_id
         JOIN user_files f ON u.id = f.user_id
         WHERE u.id = :user_id
     ";
@@ -140,10 +138,6 @@ try {
             'membershipType' => $result['membershipType'],
             'membershipResposibilities' => $result['membershipResposibilities'],
             'certificateDate' => $result['certificateDate']
-        ],
-        'quiz_scores' => [
-            'score_percentage' => $result['score_percentage'],
-            'completed_at' => $result['completed_at']
         ],
         // 'files' => [
         //     'passport' => $result['passport_file_path'],

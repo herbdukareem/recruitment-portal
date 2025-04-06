@@ -2,12 +2,10 @@ export function openPanelHandler() {
     let open = true;
 
     if(open){
-        document.getElementById('db-panel').style.transform = "translateX(-180px)";
-        document.getElementById('close_panel').style.display = 'none';
+        document.getElementById('db-panel').style.transform = "translateX(0)";
         open = false
     } else {
-        document.getElementById('db-panel').style.transform = "translateX(0)";
-        document.getElementById('close_panel').style.display = 'block';
+        document.getElementById('db-panel').style.transform = "translateX(-180px)";
         open = true;
     }
     

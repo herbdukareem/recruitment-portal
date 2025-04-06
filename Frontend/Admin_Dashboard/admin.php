@@ -971,6 +971,306 @@
 			}
 		}
 
+		// AJAX call to fetch user data
+		const fetchUserBio = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/bio?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const bio = await response.json();
+				populateUserData(bio.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		const fetchUserEducation = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/education?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const edu = await response.json();
+				console.log(edu)
+				populateUserEdu(edu.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		const fetchUserWork = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/work?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const work = await response.json();
+				console.log(work)
+				populateUserWork(work.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		const fetchUserPmc = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/pmc?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const pmc = await response.json();
+				console.log(pmc)
+				populateUserPmc(pmc.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		const fetchUserSum = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/summary?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const sum = await response.json();
+				console.log(sum)
+				populateUserSum(sum.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		const fetchUserStatus = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/status?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const status = await response.json();
+				console.log(status)
+				populateUserStatus(status.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		function populateUserData(user_data) {
+			document.getElementById('positionType').value = user_data.positionType || '';
+			document.getElementById('supPosition').value = user_data.supPosition || '';
+			document.getElementById('position').value = user_data.position || '';
+			document.querySelector('input[name="firstname"]').value = user_data.firstname || '';
+			document.querySelector('input[name="middlename"]').value = user_data.middlename || '';
+			document.querySelector('input[name="lastname"]').value = user_data.lastname || '';
+			if (user_data.email) {
+				document.querySelector('input[name="email"]').value = user_data.email || '';
+				document.querySelector('input[name="password"]').value = '';
+			}
+			document.querySelector('select[name="gender"]').value = user_data.gender || '';
+			document.querySelector('input[name="dateOfBirth"]').value = user_data.dateOfBirth || '';
+			document.querySelector('select[name="maritalStatus"]').value = user_data.maritalStatus || '';
+			document.getElementById('state').value = user_data.stateOfOrigin || '';
+			document.getElementById('lga').value = user_data.lga || '';
+			document.querySelector('input[name="nin"]').value = user_data.nin || '';
+			document.querySelector('input[name="phoneNumber"]').value = user_data.phoneNumber || '';
+			document.querySelector('input[name="emergencyNumber"]').value = user_data.emergencyNumber || '';
+			document.querySelector('input[name="address"]').value = user_data.address || '';
+		}
+
+		function populateUserEdu(edu) {
+			document.getElementById('primary_school_name').value = edu.primary_school_name || '';
+			document.getElementById('primary_graduation_year').value = edu.primary_graduation_year || '';
+			document.getElementById('secondarySchoolName').value = edu.secondarySchoolName || '';
+			document.getElementById('secondaryGraduationYear').value = edu.secondaryGraduationYear || '';
+			document.getElementById('certificateType').value = edu.certificateType || '';
+			document.getElementById('classOfDegree').value = edu.classOfDegree || '';
+			document.getElementById('institution').value = edu.institution || '';
+			document.getElementById('course').value = edu.course || '';
+			document.getElementById('highGraduationYear').value = edu.institution || '';
+			document.getElementById('nyscCertificateNumber').value = edu.nyscCertificateNumber || '';
+			document.getElementById('yearOfService').value = edu.yearOfService || '';
+		}
+
+		function populateUserWork(work) {
+			document.getElementById('organizationName').value = work.organizationName || '';
+			document.getElementById('rank').value = work.rank || '';
+			document.getElementById('responsibilities').value = work.responsibilities || '';
+			document.getElementById('startDate').value = work.startDate || '';
+			document.getElementById('endDate').value = work.endDate || '';
+		}
+
+		function populateUserPmc(pmc) {
+			document.getElementById('bodyName').value = pmc.bodyName || '';
+			document.getElementById('membershipID').value = pmc.membershipID || '';
+			document.getElementById('membershipType').value = pmc.membershipType || '';
+			document.getElementById('membershipResposibilities').value = pmc.membershipResposibilities || '';
+			document.getElementById('certificateDate').value = pmc.certificateDate || '';
+		}
+
+		function populateUserSum(sumData) {
+			// Application Summary Section
+			document.querySelector('#application-title h2 span').textContent = sumData.application.position || 'Position not provided';
+
+			const passportImg = document.querySelector('#passport-photo');
+			if (sumData.application.passportFilePath) {
+				passportImg.innertHTML = `<img src="/Backend/config/uploads${sumData.application.passportFilePath}"`
+			} else {
+				passportImg.innertHTML = `<p>No passport found</p>`
+
+			}
+
+			// Bio Data Section
+			document.querySelector('#sfname').textContent = sumData.application.firstname || 'N/A';
+			document.querySelector('#smname').textContent = sumData.application.middlename || 'N/A';
+			document.querySelector('#slname').textContent = sumData.application.lastname || 'N/A';
+			document.querySelector('#sgender').textContent = sumData.application.gender || 'N/A';
+			document.querySelector('#sdob').textContent = sumData.application.dateOfBirth || 'N/A';
+			document.querySelector('#smaritalstatus').textContent = sumData.application.maritalStatus || 'N/A';
+			document.querySelector('#sphoneNumber').textContent = sumData.application.phoneNumber || 'N/A';
+			document.querySelector('#semerNumber').textContent = sumData.application.emergencyNumber || 'N/A';
+			document.querySelector('#snin').textContent = sumData.application.nin || 'N/A';
+			document.querySelector('#ssof').textContent = sumData.application.stateOfOrigin || 'N/A';
+			document.querySelector('#slga').textContent = sumData.application.lga || 'N/A';
+			document.querySelector('#saddress').textContent = sumData.application.address || 'N/A';
+
+			// Links for LGA and Birth Certificates
+			const lgaCert = document.querySelector('#slgaCert');
+			if (sumData.application.lgaFilePath) {
+				lgaCert.href = `/Backend/config/uploads${sumData.application.lgaFilePath}`;
+				lgaCert.style.display = 'inline';
+			} else {
+				lgaCert.href = '#';
+				lgaCert.style.display = 'none';
+			}
+
+			const birthCert = document.querySelector('#sbirthCert');
+			if (sumData.application.birthCertificateFilePath) {
+				birthCert.href = `/Backend/config/uploads${sumData.application.birthCertificateFilePath}`;
+				birthCert.style.display = 'inline';
+			} else {
+				birthCert.href = '#';
+				birthCert.style.display = 'none';
+			}
+
+			// Education Section
+			document.querySelector('#spriSchoolName').textContent = sumData.education.primary_school_name || 'N/A';
+			document.querySelector('#spriGradYear').textContent = sumData.education.primary_graduation_year || 'N/A';
+			document.querySelector('#ssecName').textContent = sumData.education.secondarySchoolName || 'N/A';
+			document.querySelector('#ssecGradYear').textContent = sumData.education.secondaryGraduationYear || 'N/A';
+			document.querySelector('#ssecEduCert').textContent = sumData.education.secondaryCertificate || 'N/A';
+			
+			document.querySelector('#shighName').textContent = sumData.education.institution || 'N/A';
+			document.querySelector('#scertType').textContent = sumData.education.certificateType || 'N/A';
+			document.querySelector('#scod').textContent = sumData.education.classOfDegree || 'N/A';
+			document.querySelector('#scourse').textContent = sumData.education.course || 'N/A';
+			document.querySelector('#shighCert').href = sumData.education.highCertificateFilePath || '#';
+			document.querySelector('#shighGradYear').textContent = sumData.education.highGraduationYear || 'N/A';
+
+			// NYSC Section
+			document.querySelector('#snyscCertNo').textContent = sumData.education.nyscCertificateNumber || 'N/A';
+			document.querySelector('#snyscYOS').textContent = sumData.education.yearOfService || 'N/A';
+			document.querySelector('#snyscCert').href = sumData.education.nyscFilePath || '#';
+
+			// Work History Section
+			document.querySelector('#sorgName').textContent = sumData.work_history.organizationName || 'N/A';
+			document.querySelector('#sorgRank').textContent = sumData.work_history.rank || 'N/A';
+			document.querySelector('#sorgRes').textContent = sumData.work_history.responsibilities || 'N/A';
+			document.querySelector('#sstartDate').textContent = sumData.work_history.startDate || 'N/A';
+			document.querySelector('#sendDate').textContent = sumData.work_history.endDate || 'N/A';
+
+			// Professional Membership Section
+			document.querySelector('#sbodyName').textContent = sumData.pmc_details.bodyName || 'N/A';
+			document.querySelector('#smemId').textContent = sumData.pmc_details.membershipID || 'N/A';
+			document.querySelector('#smemTpe').textContent = sumData.pmc_details.membershipType || 'N/A';
+			document.querySelector('#smemRes').textContent = sumData.pmc_details.membershipResposibilities || 'N/A';
+			document.querySelector('#smemCertDate').textContent = sumData.pmc_details.certificateDate || 'N/A';
+			document.querySelector('#smemCert').href = sumData.pmc_details.pmcFilePath || '#';
+		}
+
+		function populateUserStatus(status) {
+			document.getElementById('aname').innerText = status.firstname + ' ' + status.lastname;  // Name
+			document.getElementById('aposition').innerText = status.position;  // Position
+			document.getElementById('aquizpercent').innerText = status.score_percentage + '%';  // Quiz score percentage
+			document.getElementById('adate').innerText = status.completed_at;  // Date of completion
+			
+			// Handling the status button
+			const statusButton = document.getElementById('astatus');
+			statusButton.style.color = 'white';
+			// Change status when button is clicked (toggle example)
+			statusButton.addEventListener('click', function() {
+				if (status.status === 'shortlisted') {
+					statusButton.style.backgroundColor = 'green';
+					statusButton.innerText = status.status;  
+				} else if(status.status === 'eejected') {
+					statusButton.style.backgroundColor = 'red';
+					statusButtoninnerTexts = status.status;  
+				} else if(status.status === 'interviewed'){
+					statusButton.style.backgroundColor = 'blue';
+					statusButton.innerText = status.status; 
+				} else {
+					statusButton.style.backgroundColor = 'blue';
+					statusButton.innerText = status.status; 
+				}
+				
+				// Optionally, update the button or send an update request to the backend
+				alert("Status updated to: " + status.status); // Notify the user of the status change
+			});
+		}
+
 		// On page load, check if there's a stored section and show it
 		window.addEventListener('DOMContentLoaded', function() {
 			const activeSection = localStorage.getItem('activeSection') || 'sort_applicant';
@@ -986,6 +1286,14 @@
 			loadApplicants();
 			handleStatusUpdate();
 			fetchUserData();
+			fetchUserProfile();
+			fetchUserBio();
+			fetchUserEducation();
+			fetchUserWork();
+			fetchUserPmc();
+			fetchUserSum();
+			fetchUserStatus();
+			setupFormHandlers();
 			// populateUserData();
 			setupFormHandlers();
 			// renderUserSessionId()

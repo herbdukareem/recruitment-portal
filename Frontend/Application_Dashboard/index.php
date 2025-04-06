@@ -16,6 +16,7 @@
     <script>
 
 		let adminRole;
+		let form
 	
 		// let allApplicants = [];
 
@@ -118,8 +119,9 @@
 			// PMC form
 			document.getElementById('proficiencyTestForm').addEventListener('submit', async (e) => {
 				e.preventDefault();
-				await submitForm('pmc', new FormData(e.target));
+				await submitForm('quiz', new FormData(e.target));
 			});
+			
 			
 			// File upload form
 			document.getElementById('fileForm').addEventListener('submit', async (e) => {
@@ -146,6 +148,10 @@
 					localStorage.setItem('userID', user_id)
 					if (data.next) {
 						setTimeout(() => {
+							if(data.next === 'application-status_screen'){
+								document.getElementById('cpl-screen').style.display = 'none'
+								this.navigateToStep(data.next);
+							}
 							this.navigateToStep(data.next);
 						}, 5200);
 					}
@@ -235,22 +241,6 @@
 			} catch (error) {
 				console.error('Error navigating to step:', error);
 				return false;
-			}
-		}
-		
-		function renderNavListBtn() {
-			const profTestBtn = document.getElementById('prof_test');
-			let form = true;
-
-			if (!form) {
-				profTestBtn.innerHTML = `
-					 <button id="cpl-btn" class="all-bt-bg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
-                            <path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M38.5 5.5h-29c-2.2 0-4 1.8-4 4v29c0 2.2 1.8 4 4 4h29c2.2 0 4-1.8 4-4v-29c0-2.2-1.8-4-4-4" stroke-width="1"/><path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M34.3 35.9L24 30.5l-10.3 5.4V19L24 12.1L34.3 19zM24 12.1v18.4z" stroke-width="1"/>
-                        </svg>
-                        CPL Test
-                    </button>
-				`;
 			}
 		}
 
@@ -382,8 +372,33 @@
 				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
 				const sum = await response.json();
-				console.log(sum)
+				form = true
 				populateUserSum(sum.data)
+
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+				throw error;
+			}
+		}
+
+		const fetchUserStatus = async () => {
+			try {
+				const user_id = JSON.parse(localStorage.getItem('user'));
+				const response = await fetch(`/test/backend/user/status?user_id=${user_id.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+					}
+				});
+
+				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+				const status = await response.json();
+				if(status.data !== null){
+					document.getElementById('prof_test').style.display = 'none'
+				}
+				populateUserStatus(status.data)
 
 			} catch (error) {
 				console.error("Error fetching user data:", error);
@@ -466,72 +481,114 @@
 			document.getElementById('certificateDate').value = pmc.certificateDate || '';
 		}
 
-		function populateUserSum(sumData){
-			document.querySelector('.form-head h2 span').textContent = sumData.application.position || 'Position not provided';
-			const passportImg = document.querySelector('.form-head img');
-			const passportMessage = document.querySelector('.form-head p');
+		function populateUserSum(sumData) {
+			// Application Summary Section
+			document.querySelector('#application-title h2 span').textContent = sumData.application.position || 'Position not provided';
+
+			const passportImg = document.querySelector('#passport-photo');
 			if (sumData.application.passportFilePath) {
-				passportImg.src = sumData.application.passportFilePath;
-				passportImg.style.display = 'block';
-				passportMessage.style.display = 'none';
+				passportImg.innertHTML = `<img src="/Backend/config/uploads${sumData.application.passportFilePath}"`
 			} else {
-				passportImg.style.display = 'none';
-				passportMessage.style.display = 'block';
+				passportImg.innertHTML = `<p>No passport found</p>`
+
 			}
-			// Bio Data Summary
-			document.querySelector('[label="First Name"]').nextElementSibling.textContent = sumData.application.firstname || 'N/A';
-			document.querySelector('[label="Middle Name"]').nextElementSibling.textContent = sumData.application.middlename || 'N/A';
-			document.querySelector('[label="Last Name"]').nextElementSibling.textContent = sumData.application.lastname || 'N/A';
-			document.querySelector('[label="Gender"]').nextElementSibling.textContent = sumData.application.gender || 'N/A';
-			document.querySelector('[label="Date Of Birth"]').nextElementSibling.textContent = sumData.application.dateOfBirth || 'N/A';
-			document.querySelector('[label="Marital Status"]').nextElementSibling.textContent = sumData.application.maritalStatus || 'N/A';
-			document.querySelector('[label="Phone Number"]').nextElementSibling.textContent = sumData.application.phoneNumber || 'N/A';
-			document.querySelector('[label="Emergency Number"]').nextElementSibling.textContent = sumData.application.emergencyNumber || 'N/A';
-			document.querySelector('[label="NIN"]').nextElementSibling.textContent = sumData.application.nin || 'N/A';
-			document.querySelector('[label="State Of Origin"]').nextElementSibling.textContent = sumData.application.stateOfOrigin || 'N/A';
-			document.querySelector('[label="Local Government"]').nextElementSibling.textContent = sumData.application.lga || 'N/A';
-			document.querySelector('[label="Residential Address"]').nextElementSibling.textContent = sumData.application.address || 'N/A';
-			// Populate LGA Indigene/Origin Certificate Link (Assumed Link)
-			const lgaCert = document.querySelector('a[href^="../Application_Dashboard/"]');
-			if (lgaCert) {
-				lgaCert.href = sumData.application.lgaFilePath ? `../Application_Dashboard/${sumData.application.lgaFilePath}` : '#';
-				lgaCert.style.display = sumData.application.lgaFilePath ? 'inline' : 'none';
+
+			// Bio Data Section
+			document.querySelector('#sfname').textContent = sumData.application.firstname || 'N/A';
+			document.querySelector('#smname').textContent = sumData.application.middlename || 'N/A';
+			document.querySelector('#slname').textContent = sumData.application.lastname || 'N/A';
+			document.querySelector('#sgender').textContent = sumData.application.gender || 'N/A';
+			document.querySelector('#sdob').textContent = sumData.application.dateOfBirth || 'N/A';
+			document.querySelector('#smaritalstatus').textContent = sumData.application.maritalStatus || 'N/A';
+			document.querySelector('#sphoneNumber').textContent = sumData.application.phoneNumber || 'N/A';
+			document.querySelector('#semerNumber').textContent = sumData.application.emergencyNumber || 'N/A';
+			document.querySelector('#snin').textContent = sumData.application.nin || 'N/A';
+			document.querySelector('#ssof').textContent = sumData.application.stateOfOrigin || 'N/A';
+			document.querySelector('#slga').textContent = sumData.application.lga || 'N/A';
+			document.querySelector('#saddress').textContent = sumData.application.address || 'N/A';
+
+			// Links for LGA and Birth Certificates
+			const lgaCert = document.querySelector('#slgaCert');
+			if (sumData.application.lgaFilePath) {
+				lgaCert.href = `/Backend/config/uploads${sumData.application.lgaFilePath}`;
+				lgaCert.style.display = 'inline';
+			} else {
+				lgaCert.href = '#';
+				lgaCert.style.display = 'none';
 			}
-			// Populate Birth Certificate Link (Assumed Link)
-			const birthCert = document.querySelector('a[href^="../Application_Dashboard/"]:not([href^="#"])');
-			if (birthCert) {
-				birthCert.href = sumData.application.birthCertificateFilePath ? `../Application_Dashboard/${sumData.application.birthCertificateFilePath}` : '#';
-				birthCert.style.display = sumData.application.birthCertificateFilePath ? 'inline' : 'none';
+
+			const birthCert = document.querySelector('#sbirthCert');
+			if (sumData.application.birthCertificateFilePath) {
+				birthCert.href = `/Backend/config/uploads${sumData.application.birthCertificateFilePath}`;
+				birthCert.style.display = 'inline';
+			} else {
+				birthCert.href = '#';
+				birthCert.style.display = 'none';
 			}
-			// Education Summary
-			document.querySelector('[label="Primary School Name"]').nextElementSibling.textContent = sumData.education.primary_school_name || 'N/A';
-			document.querySelector('[label="Graduation Year"]').nextElementSibling.textContent = sumData.education.primary_graduation_year || 'N/A';
-			document.querySelector('[label="Secondary Education"]').nextElementSibling.textContent = sumData.education.secondarySchoolName || 'N/A';
-			document.querySelector('[label="Secondary Education Certificate"]').nextElementSibling.textContent = sumData.education.secondaryCertificate || 'N/A';
-			document.querySelector('[label="Secondary Graduation Year"]').nextElementSibling.textContent = sumData.education.secondaryGraduationYear || 'N/A';
-			document.querySelector('[label="Higher Institution Name"]').nextElementSibling.textContent = sumData.education.institution || 'N/A';
-			document.querySelector('[label="Certificate Type"]').nextElementSibling.textContent = sumData.education.certificateType || 'N/A';
-			document.querySelector('[label="Class Of Degree"]').nextElementSibling.textContent = sumData.education.classOfDegree || 'N/A';
-			document.querySelector('[label="Course"]').nextElementSibling.textContent = sumData.education.course || 'N/A';
-			document.querySelector('[label="Higher Education Certificate"]').nextElementSibling.textContent = sumData.education.highCertificateFilePath || 'N/A';
-			document.querySelector('[label="Higher Education Graduation Year"]').nextElementSibling.textContent = sumData.education.highGraduationYear || 'N/A';
-			// NYSC Summary (not used directly in the provided data, assuming this is not available)
-			document.querySelector('[label="Certificate Number"]').nextElementSibling.textContent = sumData.education.nyscCertificateNumber || 'N/A';
-			document.querySelector('[label="Year Of Service"]').nextElementSibling.textContent = sumData.education.yearOfService || 'N/A';
-			document.querySelector('[label="NYSC Certificate"]').nextElementSibling.textContent = sumData.education.nyscFilePath || 'N/A';
-			// Work History Summary
-			document.querySelector('[label="Organization Name"]').nextElementSibling.textContent = sumData.work_history.organizationName || 'N/A';
-			document.querySelector('[label="Rank"]').nextElementSibling.textContent = sumData.work_history.rank || 'N/A';
-			document.querySelector('[label="Responsibilities"]').nextElementSibling.textContent = sumData.work_history.responsibilities || 'N/A';
-			document.querySelector('[label="Start Date"]').nextElementSibling.textContent = sumData.work_history.startDate || 'N/A';
-			document.querySelector('[label="End Date"]').nextElementSibling.textContent = sumData.work_history.endDate || 'N/A';
-			// Professional Membership Summary
-			document.querySelector('[label="Body Name"]').nextElementSibling.textContent = sumData.pmc_details.bodyName || 'N/A';
-			document.querySelector('[label="Membership ID"]').nextElementSibling.textContent = sumData.pmc_details.membershipID || 'N/A';
-			document.querySelector('[label="Membership Type"]').nextElementSibling.textContent = sumData.pmc_details.membershipType || 'N/A';
-			document.querySelector('[label="Responsibilities"]').nextElementSibling.textContent = sumData.pmc_details.membershipResposibilities || 'N/A';
-			document.querySelector('[label="Certificate Date"]').nextElementSibling.textContent = sumData.pmc_details.certificateDate || 'N/A';
-			document.querySelector('[label="Certificate"]').nextElementSibling.textContent = sumData.pmc_details.pmcFilePath || 'N/A';
+
+			// Education Section
+			document.querySelector('#spriSchoolName').textContent = sumData.education.primary_school_name || 'N/A';
+			document.querySelector('#spriGradYear').textContent = sumData.education.primary_graduation_year || 'N/A';
+			document.querySelector('#ssecName').textContent = sumData.education.secondarySchoolName || 'N/A';
+			document.querySelector('#ssecGradYear').textContent = sumData.education.secondaryGraduationYear || 'N/A';
+			document.querySelector('#ssecEduCert').textContent = sumData.education.secondaryCertificate || 'N/A';
+			
+			document.querySelector('#shighName').textContent = sumData.education.institution || 'N/A';
+			document.querySelector('#scertType').textContent = sumData.education.certificateType || 'N/A';
+			document.querySelector('#scod').textContent = sumData.education.classOfDegree || 'N/A';
+			document.querySelector('#scourse').textContent = sumData.education.course || 'N/A';
+			document.querySelector('#shighCert').href = sumData.education.highCertificateFilePath || '#';
+			document.querySelector('#shighGradYear').textContent = sumData.education.highGraduationYear || 'N/A';
+
+			// NYSC Section
+			document.querySelector('#snyscCertNo').textContent = sumData.education.nyscCertificateNumber || 'N/A';
+			document.querySelector('#snyscYOS').textContent = sumData.education.yearOfService || 'N/A';
+			document.querySelector('#snyscCert').href = sumData.education.nyscFilePath || '#';
+
+			// Work History Section
+			document.querySelector('#sorgName').textContent = sumData.work_history.organizationName || 'N/A';
+			document.querySelector('#sorgRank').textContent = sumData.work_history.rank || 'N/A';
+			document.querySelector('#sorgRes').textContent = sumData.work_history.responsibilities || 'N/A';
+			document.querySelector('#sstartDate').textContent = sumData.work_history.startDate || 'N/A';
+			document.querySelector('#sendDate').textContent = sumData.work_history.endDate || 'N/A';
+
+			// Professional Membership Section
+			document.querySelector('#sbodyName').textContent = sumData.pmc_details.bodyName || 'N/A';
+			document.querySelector('#smemId').textContent = sumData.pmc_details.membershipID || 'N/A';
+			document.querySelector('#smemTpe').textContent = sumData.pmc_details.membershipType || 'N/A';
+			document.querySelector('#smemRes').textContent = sumData.pmc_details.membershipResposibilities || 'N/A';
+			document.querySelector('#smemCertDate').textContent = sumData.pmc_details.certificateDate || 'N/A';
+			document.querySelector('#smemCert').href = sumData.pmc_details.pmcFilePath || '#';
+		}
+
+		function populateUserStatus(status) {
+			document.getElementById('aname').innerText = status.firstname + ' ' + status.lastname;  // Name
+			document.getElementById('aposition').innerText = status.position;  // Position
+			document.getElementById('aquizpercent').innerText = status.score_percentage + '%';  // Quiz score percentage
+			document.getElementById('adate').innerText = status.completed_at;  // Date of completion
+			
+			// Handling the status button
+			const statusButton = document.getElementById('astatus');
+			statusButton.style.color = 'white';
+			// Change status when button is clicked (toggle example)
+			statusButton.addEventListener('click', function() {
+				if (status.status === 'shortlisted') {
+					statusButton.style.backgroundColor = 'green';
+					statusButton.innerText = status.status;  
+				} else if(status.status === 'eejected') {
+					statusButton.style.backgroundColor = 'red';
+					statusButtoninnerTexts = status.status;  
+				} else if(status.status === 'interviewed'){
+					statusButton.style.backgroundColor = 'blue';
+					statusButton.innerText = status.status; 
+				} else {
+					statusButton.style.backgroundColor = 'blue';
+					statusButton.innerText = status.status; 
+				}
+				
+				// Optionally, update the button or send an update request to the backend
+				alert("Status updated to: " + status.status); // Notify the user of the status change
+			});
 		}
 
 
@@ -546,6 +603,7 @@
 			fetchUserWork();
 			fetchUserPmc();
 			fetchUserSum();
+			fetchUserStatus();
 			setupFormHandlers();
 			renderNavListBtn();
 			

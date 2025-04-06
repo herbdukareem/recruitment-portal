@@ -74,7 +74,7 @@ if (empty($input['admin_role'])) {
             exit;
         }
 
-        $_SESSION['user']['useri_id'] = $user_id;
+        $_SESSION['user']['user_id'] = $user_id;
 
     } catch (PDOException $e) {
         http_response_code(500);

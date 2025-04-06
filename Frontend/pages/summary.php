@@ -37,432 +37,411 @@
             }
         </style>
         <form action="" id="printableArea">
-            <div class="form-head" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <h2>Appication Summary for the position of <span style="font-weight:bold;color:var(--main-color-light)"><?php echo htmlspecialchars($allUserData['position'] ?? ''); ?></span></h2>
+            <div id="application-summary" class="form-head" style="display:flex; justify-content:space-between; align-items:center;">
+                <div id="application-title">
+                    <h2>Application Summary for the position of <span style="font-weight:bold;color:var(--main-color-light)"><?php echo htmlspecialchars($allUserData['position'] ?? ''); ?></span></h2>
                 </div>
-                <div style="padding: 8px 5px 5px 5px;">
-                    <?php if (!empty($allUserData['passport_file_path'])): ?>
-                        <img src="<?php echo htmlspecialchars($allUserData['passport_file_path']); ?>" alt="My Profile" width="200px">
-                    <?php else: ?>
-                        <p>No passport uploaded.</p>
-                    <?php endif; ?>
+                <div id="passport-photo" style="padding: 8px 5px 5px 5px;">
+                        <!-- populate  -->
                 </div>
             </div>
-            <div class="form-body">
+
+            <div id="form-body" class="form-body">
                 <!-- Bio Data Summary -->
-                <table>
+                <table id="bio-data">
                     <thead>
                         <th class="table_head" colspan="3">
-                            <div>
-                                <h4 >Bio Data</h4>
+                            <div id="bio-data-title">
+                                <h4>Bio Data</h4>
                             </div>
                         </th>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="table_data">
+                            <td id="first-name" class="table_data">
                                 <div>
                                     <label>First Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['firstname'] ?? ''); ?>
+                                    <p id="sfname"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="middle-name" class="table_data">
                                 <div>
                                     <label>Middle Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['middlename'] ?? ''); ?>
+                                    <p id="smname"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="last-name" class="table_data">
                                 <div>
                                     <label>Last Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['lastname'] ?? ''); ?>
+                                    <p id="slname"></p>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="table_data">
+                            <td id="" class="table_data">
                                 <div>
                                     <label>Gender</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['gender'] ?? ''); ?>
+                                    <p id="sgender"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="" class="table_data">
                                 <div>
                                     <label>Date Of Birth</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['dateOfBirth'] ?? ''); ?>
+                                    <p id="sdob"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="marital-status" class="table_data">
                                 <div>
                                     <label>Marital Status</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['maritalStatus'] ?? ''); ?>
+                                    <p id="smaritalstatus"></p>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="table_data">
+                            <td id="phone-number" class="table_data">
                                 <div>
                                     <label>Phone Number</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['phoneNumber'] ?? ''); ?>
+                                    <p id="sphoneNumber"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="emergency-number" class="table_data">
                                 <div>
                                     <label>Emergency Number</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['emergencyNumber'] ?? ''); ?>
+                                    <p id="semerNumber"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="" class="table_data">
                                 <div>
                                     <label>NIN</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['nin'] ?? ''); ?>
+                                    <p id="snin"></p>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="table_data">
+                            <td id="state-of-origin" class="table_data">
                                 <div>
                                     <label>State Of Origin</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['stateOfOrigin'] ?? ''); ?>
+                                    <p id="ssof"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="local-government" class="table_data">
                                 <div>
                                     <label>Local Government</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['lga'] ?? ''); ?>
+                                    <p id="slga"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="" class="table_data">
                                 <div>
                                     <label>Residential Address</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['address'] ?? ''); ?>
+                                    <p id="saddress"></p>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="table_data" colspan="1.5">
+                            <td id="lga-certificate" class="table_data" colspan="1.5">
                                 <div>
-                                    <label>LGA Indigene\Origin Certifiate</label>
+                                    <label>LGA Indigene/Origin Certificate</label>
                                 </div>
                                 <div>
-                                    <a href="../Application_Dashboard/<?php echo $allUserData['lga_file_path'] ?>" target="_blank">Origin Cert</a>
+                                    <a href="" target="_blank" id="slgaCert">Origin Cert</a>
                                 </div>
                             </td>
-                            <td class="table_data" colspan="1.5">
+                            <td id="birth-certificate" class="table_data" colspan="1.5">
                                 <div>
-                                    <label>Birth Certifiate</label>
+                                    <label>Birth Certificate</label>
                                 </div>
                                 <div>
-                                    <a href="../Application_Dashboard/<?php echo $allUserData['birth_certificate_file_path'] ?>" target="_blank">Birth Cert</a>
+                                    <a href="" target="_blank" id="sbirthCert">Birth Cert</a>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
-                    
                 </table>
-                
+
                 <!-- Education Summary -->
-                <table>
+                <table id="education-summary">
                     <thead>
                         <th class="table_head" colspan="3">
-                            <h4 >Education</h4>
+                            <h4>Education</h4>
                         </th>
                     </thead>
                     <tbody>
-                        <!-- <tr>
-                            <th colspan="3">
-                                <h4 class="section_h4">Primary Education</h4>
-                            </th>
-                        </tr> -->
-                        <tr>
-                            <td colspan="2" class="table_data">
+                        <tr id="primary-education">
+                            <td id="primary-school-name" colspan="2" class="table_data">
                                 <div>
-                                    <label for="">Primary School Name</label>
+                                    <label>Primary School Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['primary_school_name'] ?? ''); ?>
+                                    <p id="spriSchoolName"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="primary-graduation-year" class="table_data">
                                 <div>
-                                    <label for="">Graduation Year</label>
+                                    <label>Graduation Year</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['primary_graduation_year'] ?? ''); ?>
+                                    <p id="spriGradYear"></p>
                                 </div>
                             </td>
                         </tr>
-                        <!-- <tr>
-                            <th colspan="3">
-                                <h4 class="section_h4">Secondary Education</h4>
-                            </th>
-                        </tr> -->
-                        <tr>
-                            <td class="table_data">
+                        <tr id="secondary-education">
+                            <td id="secondary-school-name" class="table_data">
                                 <div>
-                                    <label for="">Secondary Education</label>
+                                    <label>Secondary Education</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['secondarySchoolName'] ?? ''); ?>
+                                    <p id="ssecName"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="secondary-certificate" class="table_data">
                                 <div>
-                                    <label for="">Secondary Education Certificate</label>
+                                    <label>Graduation Year</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['secondaryCertificate'] ?? ''); ?>
+                                    <p id="ssecGradYear"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="secondary-graduation-year" class="table_data">
                                 <div>
-                                    <label for="">Graduation Year</label>
+                                    <label>Secondary Education Certificate</label>
                                 </div>
                                 <div>
-                                    <a href="../Application_Dashboard/<?php echo $allUserData['sec_file_path'] ?>" target="_blank">Sec Cert</a>
+                                    <a href="" target="_blank" id="ssecEduCert">Sec Cert</a>
                                 </div>
                             </td>
                         </tr>
-                        <!-- <tr>
-                            <th colspan="3">
-                                <h4 class="section_h4">Higher Education</h4>
-                            </th>
-                        </tr> -->
-                        <tr>
-                            <td class="table_data">
+                        <tr id="higher-education">
+                            <td id="institution-name" class="table_data">
                                 <div>
-                                    <label for="">Higher Institution Name</label>
+                                    <label>Higher Institution Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['institution'] ?? ''); ?>
+                                    <p id="shighName"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="certificate-type" class="table_data">
                                 <div>
-                                    <label for="">Certificate Type</label>
+                                    <label>Certificate Type</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['certificateType'] ?? ''); ?>
+                                    <p id="scertType"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="class-of-degree" class="table_data">
                                 <div>
-                                    <label for="">Class Of Degree</label>
+                                    <label>Class Of Degree</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['classOfDegree'] ?? ''); ?>
+                                    <p id="scod"></p>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="table_data">
+                        <tr id="course">
+                            <td id="course-name" class="table_data">
                                 <div>
-                                    <label for="">Course</label>
+                                    <label>Course</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['course'] ?? ''); ?>
-                                </div>
-                            </td>
-                            <td class="table_data">
-                                <div>
-                                    <label for="">Higher Education Certificate</label>
-                                </div>
-                                <div>
-                                    <a href="../Application_Dashboard/<?php echo $allUserData['high_certificate_file_path'] ?>" target="_blank">Higher Cert</a>
+                                    <p id="scourse"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="higher-education-certificate" class="table_data">
                                 <div>
-                                    <label for="">Graduation Year</label>
+                                    <label>Higher Education Certificate</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['highGraduationYear'] ?? ''); ?>
+                                    <a href="" target="_blank" id="shighCert">Higher Cert</a>
+                                </div>
+                            </td>
+                            <td id="higher-graduation-year" class="table_data">
+                                <div>
+                                    <label>Graduation Year</label>
+                                </div>
+                                <div>
+                                    <p id="shighGradYear"></p>
                                 </div>
                             </td>
                         </tr>
-                        <!-- <tr>
-                            <th colspan="3">
-                                <h4 class="section_h4">NYSC</h4>
-                            </th>
-                        </tr> -->
-                        <tr>
-                            <td class="table_data">
+                        <tr id="nysc">
+                            <td id="nysc-certificate-number" class="table_data">
                                 <div>
-                                    <label for="">Certificate Number</label>
+                                    <label>Certificate Number</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['nyscCertificateNumber'] ?? ''); ?>
+                                    <p id="snyscCertNo"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="nysc-year-of-service" class="table_data">
                                 <div>
-                                    <label for="">Year Of Service</label>
+                                    <label>Year Of Service</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['yearOfService'] ?? ''); ?>
+                                    <p id="snyscYOS"></p>
                                 </div>
                             </td>
-                            <td class="table_data">
+                            <td id="nysc-certificate" class="table_data">
                                 <div>
-                                    <label for="">NYSC Certificate</label>
+                                    <label>NYSC Certificate</label>
                                 </div>
                                 <div>
-                                    <a href="../Application_Dashboard/<?php echo $allUserData['nysc_file_path'] ?>" target="_blank">NYSC Cert</a>
+                                    <a href="" target="_blank" id="snyscCert">NYSC Cert</a>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <!-- Work History Sumary -->
-                <table>
+
+                <!-- Work History Summary -->
+                <table id="work-history-summary">
                     <thead>
                         <th class="table_head" colspan="2">
-                            <div>
+                            <div id="work-history-title">
                                 <h4>Work History</h4>
                             </div>
                         </th>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr id="organization-name">
                             <td class="table_data">
                                 <div>
-                                    <label for="">Organization Name</label>
+                                    <label>Organization Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['organizationName'] ?? ''); ?>
+                                    <p id="sorgName"></p>
                                 </div>
                             </td>
                             <td class="table_data">
                                 <div>
-                                    <label for="">Rank</label>
+                                    <label>Rank</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['rank'] ?? ''); ?>
+                                    <p id="sorgRank"></p>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="responsibilities">
                             <td colspan="2" class="table_data">
                                 <div>
-                                    <label for="">Responsibilities</label>
+                                    <label>Responsibilities</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['responsibilities'] ?? ''); ?>
+                                    <p id="sorgRes"></p>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="work-start-end-dates">
                             <td class="table_data">
                                 <div>
-                                    <label for="">Start Date</label>
+                                    <label>Start Date</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['startDate'] ?? ''); ?>
+                                    <p id="sstartDate"></p>
                                 </div>
                             </td>
                             <td class="table_data">
                                 <div>
-                                    <label for="">End Date</label>
+                                    <label>End Date</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['endDate'] ?? ''); ?>
+                                    <p id="sendDate"></p>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                 <!-- Work Professional Membership -->
-                 <table>
+
+                <!-- Work Professional Membership -->
+                <table id="professional-membership-summary">
                     <thead>
                         <th class="table_head" colspan="3">
-                            <div>
+                            <div id="professional-membership-title">
                                 <h4>Professional Membership</h4>
                             </div>
                         </th>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr id="membership-body">
                             <td class="table_data">
                                 <div>
-                                    <label for="">Body Name</label>
+                                    <label>Body Name</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['bodyName'] ?? ''); ?>
+                                    <p id="sbodyName"></p>
                                 </div>
                             </td>
                             <td class="table_data">
                                 <div>
-                                    <label for="">Membership ID</label>
+                                    <label>Membership ID</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['membershipID'] ?? ''); ?>
+                                    <p id="smemId"></p>
                                 </div>
                             </td>
                             <td class="table_data">
                                 <div>
-                                    <label for="">Membership Type</label>
+                                    <label>Membership Type</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['membershipType'] ?? ''); ?>
+                                    <p id="smemTpe"></p>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="membership-responsibilities">
                             <td colspan="3" class="table_data">
                                 <div>
-                                    <label for="">Responsibilities</label>
+                                    <label>Responsibilities</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['membershipResposibilities'] ?? ''); ?>
+                                    <p id="smemRes"></p>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="membership-certificate">
                             <td class="table_data">
                                 <div>
-                                    <label for="">Certificate Date</label>
+                                    <label>Certificate Date</label>
                                 </div>
                                 <div>
-                                    <?php echo htmlspecialchars($allUserData['certificateDate'] ?? ''); ?>
+                                    <p id="smemCertDate"></p>
                                 </div>
                             </td>
                             <td class="table_data">
                                 <div>
-                                    <label for="">Certificate</label>
+                                    <label>Certificate</label>
                                 </div>
                                 <div>
-                                    <a href="../Application_Dashboard/<?php echo $allUserData['pmc_file_path'] ?>" target="_blank">Membership Cert</a>
+                                    <a href="" target="_blank" id="smemCert">Membership Cert</a>
                                 </div>
                             </td>
-                        </tr>
+                        </tr> 
                     </tbody>
                 </table>
             </div>
+
             <div class="form-footer">
                 <button id="print" type="" onclick="printDiv('printableArea')">
                     Print
