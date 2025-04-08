@@ -418,7 +418,7 @@
 
 		function fileLink(path, text) {
 			if (!path) return '';
-			return `<a href="../Application_Dashboard/${safeData(path)}" target="_blank">${text}</a>`;
+			return `<a href="../..${safeData(path)}" target="_blank">${text}</a>`;
 		}
 
 		// Render a single applicant row
@@ -1286,7 +1286,7 @@
 			loadApplicants();
 			handleStatusUpdate();
 			fetchUserData();
-			fetchUserProfile();
+			// fetchUserProfile();
 			fetchUserBio();
 			fetchUserEducation();
 			fetchUserWork();
