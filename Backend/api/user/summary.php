@@ -18,7 +18,7 @@ try {
     }
 
     // Extract user_id from URL parameter
-    $user_id = $_GET['user_id'] ?? null; // Simplified parameter extraction
+    $user_id = $_GET['user_id'] ?? null;
     
     // If no user_id provided, default to current user
     if (!$user_id) {
@@ -50,14 +50,13 @@ try {
             p.membershipResposibilities, p.certificateDate,
             f.passport_file_path, f.birth_certificate_file_path,
             f.sec_file_path, f.high_certificate_file_path,
-            f.nysc_file_path, f.pmc_file_path
-            
+            f.nysc_file_path, f.pmc_file_path, f.lga_file_path
         FROM users u
-        JOIN user_applications b ON u.id = b.user_id
-        JOIN user_education_details e ON u.id = e.user_id
-        JOIN user_pmc_details p ON u.id = p.user_id
-        JOIN user_work_details w ON u.id = w.user_id
-        JOIN user_files f ON u.id = f.user_id
+        LEFT JOIN user_applications b ON u.id = b.user_id
+        LEFT JOIN user_education_details e ON u.id = e.user_id
+        LEFT JOIN user_pmc_details p ON u.id = p.user_id
+        LEFT JOIN user_work_details w ON u.id = w.user_id
+        LEFT JOIN user_files f ON u.id = f.user_id
         WHERE u.id = :user_id
     ";
 
@@ -69,24 +68,33 @@ try {
         throw new Exception('User not found', 404);
     }
 
-    // Process file paths into secure URLs
-    $fileFields = [
-        'passport_file_path',
-        'birth_certificate_file_path',
-        'sec_file_path',
-        'high_certificate_file_path',
-        'nysc_file_path',
-        'pmc_file_path'
-    ];
+    // // Process file paths into secure URLs
+    // $fileFields = [
+    //     'passport_file_path',
+    //     'birth_certificate_file_path',
+    //     'sec_file_path',
+    //     'high_certificate_file_path',
+    //     'nysc_file_path',
+    //     'pmc_file_path',
+    // ];
 
-    foreach ($fileFields as $field) {
-        if (!empty($result[$field])) {
-            $result[$field] = generateSecureFileUrl($result[$field]);
-        } else {
-            $result[$field] = null;
-        }
-        unset($result[$field]);
-    }
+    // foreach ($fileFields as $field) {
+    //     // Check if the field exists in $result
+    //     if (isset($result[$field]) && !empty($result[$field])) {
+    //         // Debug: Check the original file path
+    //         error_log("Original file path for $field: " . $result[$field]);
+    
+    //         // Generate the secure file URL
+    //         $result[$field] = generateSecureFileUrl($result[$field]);
+    
+    //         // Debug: Check the generated secure URL
+    //         error_log("Generated secure file URL for $field: " . $result[$field]);
+    //     } else {
+    //         $result[$field] = null;
+    //     }
+    // }
+    
+
 
     // Reorganize data into logical groups
     $profileData = [
@@ -139,14 +147,15 @@ try {
             'membershipResposibilities' => $result['membershipResposibilities'],
             'certificateDate' => $result['certificateDate']
         ],
-        // 'files' => [
-        //     'passport' => $result['passport_file_path'],
-        //     'birth_certificate' => $result['birth_certificate_file_path'],
-        //     'secondary_certificate' => $result['sec_file_path'],
-        //     'higher_certificate' => $result['high_certificate_file_path'],
-        //     'nysc_certificate' => $result['nysc_file_path'],
-        //     'pmc_certificate' => $result['pmc_file_path']
-        // ]
+        'files' => [
+            'passport' => $result['passport_file_path'],
+            'lga_certificate' => $result['lga_file_path'],
+            'birth_certificate' => $result['birth_certificate_file_path'],
+            'secondary_certificate' => $result['sec_file_path'],
+            'higher_certificate' => $result['high_certificate_file_path'],
+            'nysc_certificate' => $result['nysc_file_path'],
+            'pmc_certificate' => $result['pmc_file_path']
+        ]
     ];
 
     $pdo->commit();

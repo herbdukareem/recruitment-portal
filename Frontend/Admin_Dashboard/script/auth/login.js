@@ -25,7 +25,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         
         if (response.status === 429) {
             const retryAfter = response.headers.get('Retry-After');
-            showAlert('login_alert', `Too many requests. Try again in ${retryAfter} seconds.`, 'danger');
+            showAlert('admin_login', `Too many requests. Try again in ${retryAfter} seconds.`, 'danger');
         }
 
         const data = await response.json();
@@ -37,10 +37,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             localStorage.setItem('admin', JSON.stringify(data.admin));
             window.location.href = 'admin.php';
         } else {
-            showAlert('login_alert', data.error || 'Login failed', 'danger');
+            showAlert('admin_login', data.error || 'Login failed', 'danger');
         }
     } catch (error) {
-        showAlert('login_alert', 'Network error', 'danger');
+        showAlert('admin_login', 'Network error', 'danger');
     }
 });
 

@@ -431,8 +431,8 @@
 				<tr>
 					<td>${index + 1}</td>
 					<td>
-						<a href="../Application_Dashboard/${avatarPath}" target="_blank">
-						<img src="../Application_Dashboard/${avatarPath}" 
+						<a href="../..${avatarPath}" target="_blank">
+						<img src="../..${avatarPath}" 
 							alt="${applicant.lastname || 'Applicant'}" 
 							width="50" height="50" style="border-radius:50%"
 							onerror="this.onerror=null;this.src='${defaultAvatar}'">
@@ -539,7 +539,7 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td colspan="3" >
+								<td colspan="3">
 									${renderStatusForm(applicant.user_id)}
 								</td>
 							</tr>

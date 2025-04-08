@@ -1,8 +1,36 @@
 <?php
+// Check if config file exists and constants are defined
+if (!file_exists(__DIR__ . '/../../config/config.php')) {
+    http_response_code(500);
+    die(json_encode(['error' => 'Configuration file missing']));
+}
+
 require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../helpers/auth_helper.php';
 require_once __DIR__ . '/../../helpers/rate_limit.php';
-limitRequests('bio', 5, 60); // 5 attempts per minute
+limitRequests('bio', 5, 60); 
+// Add this check right after including config.php
+if (!file_exists(UPLOAD_DIR)) {
+    if (!mkdir(UPLOAD_DIR, 0755, true)) {
+        http_response_code(500);
+        die(json_encode([
+            'error' => 'System Error',
+            'message' => 'Failed to create upload directory',
+            'directory' => UPLOAD_DIR
+        ]));
+    }
+}
+
+$requiredConstants = ['ALLOWED_FILE_TYPES', 'MAX_FILE_SIZE', 'UPLOAD_DIR'];
+foreach ($requiredConstants as $constant) {
+    if (!defined($constant)) {
+        http_response_code(500);
+        die(json_encode([
+            'error' => 'System configuration error',
+            'message' => "Constant $constant is not defined"
+        ]));
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -13,6 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Get input data
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 $files = $_FILES ?? [];
+
+
 
 // Check if admin role
 if (empty($input['admin_role'])) {
@@ -109,8 +139,15 @@ if (!empty($missingFields)) {
 
 // Validate NIN format (assuming 11 digits)
 if (!preg_match('/^\d{11}$/', $input['nin'])) {
-    $stmt= $pdo->prepare("DELETE FROM users WHERE email = :email");
-    $stmt->execute([':email' => $input['email']]);
+    // Only try to delete if we created a new user in this request
+    if (!empty($input['admin_role'])) {
+        try {
+            $stmt = $pdo->prepare("DELETE FROM users WHERE id = :id");
+            $stmt->execute([':id' => $user_id]);
+        } catch (PDOException $e) {
+            error_log("Failed to delete user after NIN validation: " . $e->getMessage());
+        }
+    }
     http_response_code(400);
     echo json_encode(['error' => 'NIN must be 11 digits']);
     exit;
@@ -187,6 +224,17 @@ try {
     $stmt = $pdo->prepare($sql);
     $stmt->execute($appData);
 
+    // Add this before file uploads
+    if (!is_writable(UPLOAD_DIR)) {
+        http_response_code(500);
+        die(json_encode([
+            'error' => 'System Error',
+            'message' => 'Upload directory is not writable',
+            'directory' => UPLOAD_DIR,
+            'permissions' => substr(sprintf('%o', fileperms(UPLOAD_DIR)), -4)
+        ]));
+    }
+
     // Process file uploads
     $filePaths = [
         'lga_file_path' => null,
@@ -195,37 +243,46 @@ try {
     ];
 
     $fileFields = [
-        'lgaFile' => 'lga_file_path',
+        'lgaCertificate' => 'lga_file_path',
         'birthCertificate' => 'birth_certificate_file_path',
-        'passportPhoto' => 'passport_file_path'
+        'passport' => 'passport_file_path'
     ];
 
     foreach ($fileFields as $field => $dbField) {
         if (!empty($files[$field]['tmp_name'])) {
             $file = $files[$field];
 
-            // Validate file
+            // Validate file extension
             $fileExt = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            $fileSize = $file['size'];
-
             if (!in_array($fileExt, ALLOWED_FILE_TYPES)) {
-                throw new Exception("Invalid file type for $field. Allowed types: " . implode(', ', ALLOWED_FILE_TYPES));
+                throw new Exception(
+                    "Invalid file type for $field. Allowed types: " . 
+                    implode(', ', ALLOWED_FILE_TYPES)
+                );
             }
 
-            if ($fileSize > MAX_FILE_SIZE) {
-                throw new Exception("File too large for $field (max " . (MAX_FILE_SIZE / 1024 / 1024) . "MB)");
+            // Validate file size
+            if ($file['size'] > MAX_FILE_SIZE) {
+                throw new Exception(
+                    "File too large for $field (max " . 
+                    (MAX_FILE_SIZE / 1024 / 1024) . "MB)"
+                );
             }
 
             // Generate unique filename
-            $newFilename = "user_{$user_id}_" . time() . "_{$field}.{$fileExt}";
+            $newFilename = "user_{$user_id}_" . "_{$field}.{$fileExt}";
             $destination = UPLOAD_DIR . $newFilename;
 
             // Move uploaded file
             if (!move_uploaded_file($file['tmp_name'], $destination)) {
-                throw new Exception("Failed to move uploaded file: $field");
+                $error = error_get_last();
+                throw new Exception(
+                    "Failed to move uploaded file: " . 
+                    ($error['message'] ?? 'Unknown error')
+                );
             }
 
-            $filePaths[$dbField] = $destination;
+            $filePaths[$dbField] = '/uploads/' . $newFilename;
         }
     }
 

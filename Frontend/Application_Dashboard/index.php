@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style/formStyles.css">
-	<link rel="stylesheet" href="../style/alert.css">
+	<link rel="stylesheet" href="./styles/alert.css">
     <link rel="shortcut icon" href="../images/logo-plain.jpg" type="image/x-icon">
 	<script src="../scripts/alert.js"></script>
     <script>
@@ -95,13 +95,21 @@
 			// Biodata form
 			document.getElementById('bioForm').addEventListener('submit', async (e) => {
 				e.preventDefault();
-				await submitForm('bio', new FormData(e.target));
+				const form = e.target;
+				const formData = new FormData(form);
+				await submitForm('bio', formData);
 			});
-			
+
 			// Education form
 			document.getElementById('eduForm').addEventListener('submit', async (e) => {
 				e.preventDefault();
-				await submitForm('education', new FormData(e.target));
+				const form = e.target;
+				const formData = new FormData(form);
+				// for (let [key, value] of formData.entries()) {
+				// 	console.log(key, value);
+				// }
+				console.log(formData)
+				await submitForm('education', formData);
 			});
 			
 			// Work history form
@@ -113,7 +121,9 @@
 			// PMC form
 			document.getElementById('pmcForm').addEventListener('submit', async (e) => {
 				e.preventDefault();
-				await submitForm('pmc', new FormData(e.target));
+				const form = e.target;
+				const formData = new FormData(form);
+				await submitForm('pmc', formData);
 			});
 			
 			// PMC form
@@ -122,34 +132,25 @@
 				await submitForm('quiz', new FormData(e.target));
 			});
 			
-			
-			// File upload form
-			document.getElementById('fileForm').addEventListener('submit', async (e) => {
-				e.preventDefault();
-				await uploadFiles(new FormData(e.target));
-			});
 		}
 
 		const submitForm = async (endpoint, formData) => {
 			try {
 				const response = await fetch(`/test/backend/submit/${endpoint}`, {
 					method: 'POST',
-					body: JSON.stringify(Object.fromEntries(formData)),
-					headers: {
-						'Content-Type': 'application/json'
-					}
+					body: formData, 
 				});
 				
 				const data = await response.json();
 				
 				if (data.success) {
 					showAlert('dashboard_alert_con', data.message, 'success');
-					user_id = data.user_id
-					localStorage.setItem('userID', user_id)
+					const user_id = data.user_id;
+					localStorage.setItem('userID', user_id);
 					if (data.next) {
 						setTimeout(() => {
-							if(data.next === 'application-status_screen'){
-								document.getElementById('cpl-screen').style.display = 'none'
+							if (data.next === 'application-status_screen') {
+								document.getElementById('cpl-screen').style.display = 'none';
 								this.navigateToStep(data.next);
 							}
 							this.navigateToStep(data.next);
@@ -486,12 +487,12 @@
 			document.querySelector('#application-title h2 span').textContent = sumData.application.position || 'Position not provided';
 
 			const passportImg = document.querySelector('#passport-photo');
-			if (sumData.application.passportFilePath) {
-				passportImg.innertHTML = `<img src="/Backend/config/uploads${sumData.application.passportFilePath}"`
+			if (sumData.files.passport) {
+				passportImg.innerHTML = `<img src="../..${sumData.files.passport}" alt="${sumData.application.firstname}_passport" width="100px"/>`;
 			} else {
-				passportImg.innertHTML = `<p>No passport found</p>`
-
+				passportImg.innerHTML = '<p>No passport found</p>';
 			}
+
 
 			// Bio Data Section
 			document.querySelector('#sfname').textContent = sumData.application.firstname || 'N/A';
@@ -509,8 +510,8 @@
 
 			// Links for LGA and Birth Certificates
 			const lgaCert = document.querySelector('#slgaCert');
-			if (sumData.application.lgaFilePath) {
-				lgaCert.href = `/Backend/config/uploads${sumData.application.lgaFilePath}`;
+			if (sumData.files.lga_certificate) {
+				lgaCert.href = `../..${sumData.files.lga_certificate}`;
 				lgaCert.style.display = 'inline';
 			} else {
 				lgaCert.href = '#';
@@ -518,8 +519,8 @@
 			}
 
 			const birthCert = document.querySelector('#sbirthCert');
-			if (sumData.application.birthCertificateFilePath) {
-				birthCert.href = `/Backend/config/uploads${sumData.application.birthCertificateFilePath}`;
+			if (sumData.files.birth_certificate) {
+				birthCert.href = `../..${sumData.files.birth_certificate}`;
 				birthCert.style.display = 'inline';
 			} else {
 				birthCert.href = '#';
@@ -531,19 +532,44 @@
 			document.querySelector('#spriGradYear').textContent = sumData.education.primary_graduation_year || 'N/A';
 			document.querySelector('#ssecName').textContent = sumData.education.secondarySchoolName || 'N/A';
 			document.querySelector('#ssecGradYear').textContent = sumData.education.secondaryGraduationYear || 'N/A';
-			document.querySelector('#ssecEduCert').textContent = sumData.education.secondaryCertificate || 'N/A';
+			// NYSC Section
+			document.querySelector('#snyscCertNo').textContent = sumData.education.nyscCertificateNumber || 'N/A';
+			document.querySelector('#snyscYOS').textContent = sumData.education.yearOfService || 'N/A';
+			const secEduCert = document.querySelector('#ssecEduCert');
+			if (sumData.files.secondary_certificate) {
+				secEduCert.href = `../..${sumData.files.secondary_certificate}`;
+				secEduCert.style.display = 'inline';
+			} else {
+				secEduCert.href = '#';
+				secEduCert.style.display = 'none';
+			}
 			
 			document.querySelector('#shighName').textContent = sumData.education.institution || 'N/A';
 			document.querySelector('#scertType').textContent = sumData.education.certificateType || 'N/A';
 			document.querySelector('#scod').textContent = sumData.education.classOfDegree || 'N/A';
 			document.querySelector('#scourse').textContent = sumData.education.course || 'N/A';
+			const highCert = document.querySelector('#shighCert');
+			if (sumData.files.higher_certificate) {
+				highCert.href = `../..${sumData.files.higher_certificate}`;
+				highCert.style.display = 'inline';
+			} else {
+				highCert.href = '#';
+				highCert.style.display = 'none';
+			}
 			document.querySelector('#shighCert').href = sumData.education.highCertificateFilePath || '#';
 			document.querySelector('#shighGradYear').textContent = sumData.education.highGraduationYear || 'N/A';
 
 			// NYSC Section
 			document.querySelector('#snyscCertNo').textContent = sumData.education.nyscCertificateNumber || 'N/A';
 			document.querySelector('#snyscYOS').textContent = sumData.education.yearOfService || 'N/A';
-			document.querySelector('#snyscCert').href = sumData.education.nyscFilePath || '#';
+			const nyscCert = document.querySelector('#snyscCert');
+			if (sumData.files.nysc_certificate) {
+				nyscCert.href = `../..${sumData.files.nysc_certificate}`;
+				nyscCert.style.display = 'inline';
+			} else {
+				nyscCert.href = '#';
+				nyscCert.style.display = 'none';
+			}
 
 			// Work History Section
 			document.querySelector('#sorgName').textContent = sumData.work_history.organizationName || 'N/A';
@@ -558,7 +584,14 @@
 			document.querySelector('#smemTpe').textContent = sumData.pmc_details.membershipType || 'N/A';
 			document.querySelector('#smemRes').textContent = sumData.pmc_details.membershipResposibilities || 'N/A';
 			document.querySelector('#smemCertDate').textContent = sumData.pmc_details.certificateDate || 'N/A';
-			document.querySelector('#smemCert').href = sumData.pmc_details.pmcFilePath || '#';
+			const memCert = document.querySelector('#smemCert');
+			if (sumData.files.pmc_certificate) {
+				memCert.href = `../..${sumData.files.pmc_certificate}`;
+				memCert.style.display = 'inline';
+			} else {
+				memCert.href = '#';
+				memCert.style.display = 'none';
+			}
 		}
 
 		function populateUserStatus(status) {
@@ -591,10 +624,6 @@
 			});
 		}
 
-
-
-
-		// Initialize when DOM is loaded
 		document.addEventListener('DOMContentLoaded', () => {
 			checkSession();
 			fetchUserProfile();
@@ -605,7 +634,7 @@
 			fetchUserSum();
 			fetchUserStatus();
 			setupFormHandlers();
-			renderNavListBtn();
+			// renderNavListBtn();
 			
 		});
 
@@ -616,7 +645,7 @@
     <div class="db-winscroll">
         <div class="nav-bar">
             <div class="left-nav">
-                <svg id="open_panel" onclick="openPanelHandler()" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19"><animate fill="freeze" attributeName="d" dur="0.4s" values="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19;M5 5L12 5L19 5M5 12H19M5 19L12 19L19 19"/></path></svg>
+                <svg id="open_panel" onClick="closePanelHandler()" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19"><animate fill="freeze" attributeName="d" dur="0.4s" values="M5 5L12 12L19 5M12 12H12M5 19L12 12L19 19;M5 5L12 5L19 5M5 12H19M5 19L12 19L19 19"/></path></svg>
                 
                 <h1>APPLICANT</h1>
             </div>
@@ -677,6 +706,23 @@
             </button>
         </div>
     </div>
+
+	<script>
+		let openPanel = false;
+
+		function closePanelHandler() {
+			// const panel = document.getElementById('toggle_panel');
+			const dbPanel = document.getElementById('db-panel');
+
+			if (!openPanel){
+				dbPanel.style.transform = "translateX(0px)";
+				openPanel = true;
+			} else {
+				dbPanel.style.transform = "translateX(-180px)";
+				openPanel = false;
+			}
+		}
+	</script>
 	<script type="module" src="../scripts/main.js"></script>
 	<script src="./script/logout.js"></script>
 

@@ -1,20 +1,20 @@
-export function openPanelHandler() {
-    let open = true;
+// export function openPanelHandler() {
+//     let open = true;
 
-    if(open){
-        document.getElementById('db-panel').style.transform = "translateX(0)";
-        open = false
-    } else {
-        document.getElementById('db-panel').style.transform = "translateX(-180px)";
-        open = true;
-    }
+//     if(open){
+//         document.getElementById('db-panel').style.transform = "translateX(0)";
+//         open = false
+//     } else {
+//         document.getElementById('db-panel').style.transform = "translateX(-180px)";
+//         open = true;
+//     }
     
-}
+// }
 
-export function closePanelHandler() {
-    document.getElementById('db-panel').style.transform = "translateX(-180px)";
-    document.getElementById('close_panel').style.display = 'none';
-}
+// export function closePanelHandler() {
+//     document.getElementById('db-panel').style.transform = "translateX(-180px)";
+//     document.getElementById('close_panel').style.display = 'none';
+// }
 
 export function toggleButtonHandler() {
     const sidebar = document.getElementById('all_applicant_sidebar');

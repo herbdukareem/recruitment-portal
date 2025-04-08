@@ -39,7 +39,7 @@
         <form action="" id="printableArea">
             <div id="application-summary" class="form-head" style="display:flex; justify-content:space-between; align-items:center;">
                 <div id="application-title">
-                    <h2>Application Summary for the position of <span style="font-weight:bold;color:var(--main-color-light)"><?php echo htmlspecialchars($allUserData['position'] ?? ''); ?></span></h2>
+                    <h2>Application Summary for the position of <span style="font-weight:bold;color:var(--main-color-light)"></span></h2>
                 </div>
                 <div id="passport-photo" style="padding: 8px 5px 5px 5px;">
                         <!-- populate  -->
@@ -178,6 +178,7 @@
                                     <a href="" target="_blank" id="sbirthCert">Birth Cert</a>
                                 </div>
                             </td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
