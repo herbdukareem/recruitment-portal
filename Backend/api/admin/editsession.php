@@ -17,16 +17,15 @@ try {
     // $userId = $_POST['user_id'] ?? null;
     // $status = $_POST['status'] ?? null;
 
-    if (empty($input['user_id'])|| empty($input['status'])) {
+    if (empty($input['user_id'])) {
         throw new Exception('Missing required parameters');
     }
 
-    $stmt = $pdo->prepare("UPDATE user_applications SET status = ? WHERE user_id = ?");
-    $stmt->execute([$input['status'], $input['user_id']]);
+    $_SESSION['user']['user_id'] = $input['user_id']
 
     echo json_encode([
         'success' => true,
-        'message' => 'Status updated successfully'
+        'message' => 'Edit session initiated successfully'
     ]);
 
 } catch (Exception $e) {

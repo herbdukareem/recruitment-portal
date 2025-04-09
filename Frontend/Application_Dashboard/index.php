@@ -164,7 +164,7 @@
 				showAlert('dashboard_alert_con', 'Network error', 'danger');
 			}
 		}
-
+		
 		const uploadFiles = async (formData) => {
 			try {
 				const response = await fetch('/backend/files', {

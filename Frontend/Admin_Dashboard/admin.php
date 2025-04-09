@@ -442,19 +442,22 @@
 					<td>${applicant.score_percentage || '0'}%</td>
 					<td>${applicant.created_at || 'N/A'}</td>
 					<td>
-						<button class="btn btn-primary view-details-btn" data-index="${index}">
-						View Details
+						<button id="btn_${applicant.id}-${index}" class="btn btn-primary view-details-btn" onClick="toggleDetails(${applicant.id}, ${index})">
+							View Details
 						</button>
 					</td>
 					${adminRole === 'sup_admin' ? `
 					<td>
-						<button class="btn btn-primary edit-btn" data-user-id="${applicant.user_id}">
-						Edit
-						</button>
+						<form id="session" method="POST" class="d-inline">
+							<input type="hidden" id="setUserId" name="setUserId" value="${applicant.id}" />
+							<button type="submit" class="btn btn-primary edit-btn" data-user-id="${applicant.id}">
+								Edit
+							</button>
+						</form>
 					</td>
 					` : ''}
 				</tr>
-				<tr class="details-row" id="details-${index}" style="display:none;">
+				<tr class="details-row" id="details_${applicant.id}-${index}" style="display:none;">
 					<td colspan="${adminRole === 'sup_admin' ? '7' : '6'}">
 						${renderApplicantDetails(applicant)}
 					</td>
@@ -641,18 +644,17 @@
 		}
 
 		// Toggle details visibility
-		function toggleDetails(index) {
-			const detailsRow = document.getElementById(`details-${index}`);
-			const button = document.querySelector(`[data-index="${index}"]`);
-			
-			if (detailsRow.style.display === "none") {
+		function toggleDetails(positionId, index) {
+			var detailsRow = document.getElementById("details_" + positionId + "-" + index);
+			var button = document.getElementById("btn_" + positionId + "-" + index);
+			if (detailsRow.style.display === "none" || detailsRow.style.display === "") {
 				detailsRow.style.display = "table-row";
 				button.textContent = "Hide Details";
 			} else {
 				detailsRow.style.display = "none";
 				button.textContent = "View Details";
 			}
-		}
+		};
 
 		// Handle Status form submission
 		const handleStatusUpdate = async (e) => {
@@ -769,8 +771,6 @@
 			document.querySelector('input[name="emergencyNumber"]').value = user_data.emergencyNumber || '';
 			document.querySelector('input[name="address"]').value = user_data.address || '';
 			
-			// Note: For file inputs, you can't set the value directly due to security restrictions
-			// You might want to display the existing filenames differently
 		}
 
 		const setupFormHandlers = () => {
@@ -798,10 +798,10 @@
 				await submitForm('pmc', new FormData(e.target));
 			});
 			
-			// File upload form
-			document.getElementById('fileForm').addEventListener('submit', async (e) => {
+			// FSet Session
+			document.getElementById('session').addEventListener('submit', async (e) => {
 				e.preventDefault();
-				await uploadFiles(new FormData(e.target));
+				await setSession('session', new FormData(e.target));
 			});
 		}
 
@@ -913,6 +913,42 @@
 				return false;
 			}
 		}
+
+		const setSession = async (endpoint, formData) => {
+			try {
+				// Convert FormData to a plain object
+				const formObject = {};
+				formData.forEach((value, key) => {
+					formObject[key] = value;
+				});
+
+				// Send the form data as JSON
+				const response = await fetch(`/test/backend/submit/${endpoint}`, {
+					method: 'POST',
+					body: JSON.stringify(formObject),  // JSON stringified object
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+
+				const data = await response.json();
+
+				if (data.success) {
+					showAlert('alert-container-application', data.message, 'success');
+					localStorage.setItem('userID', data.user_id);
+					if (data.next) {
+						setTimeout(() => {
+							navigateToStep(data.next);
+						}, 5200);
+					}
+				} else {
+					showAlert('alert-container-application', data.error || 'Submission failed', 'danger');
+				}
+			} catch (error) {
+				console.error('Form submission error:', error);
+				showAlert('alert-container-application', 'Network error', 'danger');
+			}
+		};
 
 
 		function renderUserLoginInput() {
@@ -1286,7 +1322,6 @@
 			loadApplicants();
 			handleStatusUpdate();
 			fetchUserData();
-			// fetchUserProfile();
 			fetchUserBio();
 			fetchUserEducation();
 			fetchUserWork();
@@ -1318,23 +1353,6 @@
 				});
 			}
 
-			// Event delegation for dynamic buttons
-			document.addEventListener('click', (e) => {
-				// View details button
-				if (e.target.classList.contains('view-details-btn')) {
-					const index = e.target.getAttribute('data-index');
-					toggleDetails(index);
-				}
-				
-				// Edit button
-				if (e.target.classList.contains('edit-btn')) {
-					const userId = e.target.getAttribute('data-user-id');
-					handleEditApplicant(userId);
-				}
-			});
-			
-						
-			
 		});
 
 		
