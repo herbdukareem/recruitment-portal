@@ -442,22 +442,22 @@
 					<td>${applicant.score_percentage || '0'}%</td>
 					<td>${applicant.created_at || 'N/A'}</td>
 					<td>
-						<button id="btn_${applicant.id}-${index}" class="btn btn-primary view-details-btn" onClick="toggleDetails(${applicant.id}, ${index})">
+						<button id="btn_${applicant.user_id}-${index}" class="btn btn-primary view-details-btn" onClick="toggleDetails(${applicant.user_id}, ${index})">
 							View Details
 						</button>
 					</td>
 					${adminRole === 'sup_admin' ? `
 					<td>
-						<form id="session" method="POST" class="d-inline">
-							<input type="hidden" id="setUserId" name="setUserId" value="${applicant.id}" />
-							<button type="submit" class="btn btn-primary edit-btn" data-user-id="${applicant.id}">
+						<form id="setSession_${applicant.user_id}" method="POST" class="d-inline" style="all:unset">
+							<input type="hidden" id="setUserId_${applicant.user_id}" name="setUserId" value="${applicant.user_id}" />
+							<button type="submit" class="btn btn-primary edit-btn" data-user-id="${applicant.user_id}">
 								Edit
 							</button>
 						</form>
 					</td>
 					` : ''}
 				</tr>
-				<tr class="details-row" id="details_${applicant.id}-${index}" style="display:none;">
+				<tr class="details-row" id="details_${applicant.user_id}-${index}" style="display:none;">
 					<td colspan="${adminRole === 'sup_admin' ? '7' : '6'}">
 						${renderApplicantDetails(applicant)}
 					</td>
@@ -714,7 +714,7 @@
 		};
 
 		// AJAX call to fetch user data
-		const fetchUserData = async () => {
+		const fetchUserData = async (id) => {
 			const user_id = localStorage.getItem('userID')
 			try {
 				const response = await fetch(`/test/backend/user/data?user_id=${user_id}`, {
@@ -798,10 +798,12 @@
 				await submitForm('pmc', new FormData(e.target));
 			});
 			
-			// FSet Session
-			document.getElementById('session').addEventListener('submit', async (e) => {
+			// Set Session
+			document.getElementById(`setSession_${applicant.user_id}`).addEventListener('submit', async (e) => {
 				e.preventDefault();
-				await setSession('session', new FormData(e.target));
+				consloe.log(`setSession_${applicant.user_id}`)
+				const formData = new FormData(form);
+				await submitForm('session', formData);
 			});
 		}
 
@@ -914,41 +916,43 @@
 			}
 		}
 
-		const setSession = async (endpoint, formData) => {
-			try {
-				// Convert FormData to a plain object
-				const formObject = {};
-				formData.forEach((value, key) => {
-					formObject[key] = value;
-				});
+		// const setSession = async (endpoint, formData) => {
+		// 	try {
+		// 		// Convert FormData to a plain object
+		// 		const formObject = {};
+		// 		formData.forEach((value, key) => {
+		// 			formObject[key] = value;
+		// 		});
 
-				// Send the form data as JSON
-				const response = await fetch(`/test/backend/submit/${endpoint}`, {
-					method: 'POST',
-					body: JSON.stringify(formObject),  // JSON stringified object
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				});
+		// 		// Send the form data as JSON
+		// 		const response = await fetch(`/test/backend/submit/${endpoint}`, {
+		// 			method: 'POST',
+		// 			body: JSON.stringify(formObject),  // JSON stringified object
+		// 			headers: {
+		// 				'Content-Type': 'application/json'
+		// 			}
+		// 		});
 
-				const data = await response.json();
+		// 		const data = await response.json();
 
-				if (data.success) {
-					showAlert('alert-container-application', data.message, 'success');
-					localStorage.setItem('userID', data.user_id);
-					if (data.next) {
-						setTimeout(() => {
-							navigateToStep(data.next);
-						}, 5200);
-					}
-				} else {
-					showAlert('alert-container-application', data.error || 'Submission failed', 'danger');
-				}
-			} catch (error) {
-				console.error('Form submission error:', error);
-				showAlert('alert-container-application', 'Network error', 'danger');
-			}
-		};
+		// 		if (data.success) {
+		// 			showAlert('alert-container-application', data.message, 'success');
+		// 			localStorage.setItem('userID', data.user_id);
+		// 			fetchUserData(data.user_id);
+
+		// 			if (data.next) {
+		// 				setTimeout(() => {
+		// 					navigateToStep(data.next);
+		// 				}, 5200);
+		// 			}
+		// 		} else {
+		// 			showAlert('alert-container-application', data.error || 'Submission failed', 'danger');
+		// 		}
+		// 	} catch (error) {
+		// 		console.error('Form submission error:', error);
+		// 		showAlert('alert-container-application', 'Network error', 'danger');
+		// 	}
+		// };
 
 
 		function renderUserLoginInput() {
@@ -1321,7 +1325,7 @@
 			loadStats();
 			loadApplicants();
 			handleStatusUpdate();
-			fetchUserData();
+			// fetchUserData();
 			fetchUserBio();
 			fetchUserEducation();
 			fetchUserWork();
@@ -1329,9 +1333,6 @@
 			fetchUserSum();
 			fetchUserStatus();
 			setupFormHandlers();
-			// populateUserData();
-			setupFormHandlers();
-			// renderUserSessionId()
 			
 			// Form filtering setup
 			const filterForm = document.getElementById('filterForm');
