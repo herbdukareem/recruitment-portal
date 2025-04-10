@@ -17,7 +17,14 @@ $user_id = $_SESSION['user']['user_id'];
 try {
     $pdo->beginTransaction();
     
-    $input = json_decode(file_get_contents('php://input'), true);
+    $input = $_POST;
+
+    if (!is_array($input)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid input data']);
+        exit;
+    }
+
     
     // Check if work history exists
     $checkStmt = $pdo->prepare("SELECT id FROM user_work_details WHERE user_id = ?");

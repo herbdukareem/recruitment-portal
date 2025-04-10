@@ -411,6 +411,9 @@
 				if(status.data !== null){
 					document.getElementById('prof_test').style.display = 'none'
 				}
+				if(status.data === null){
+					document.getElementById('application-status_screen').innerHTML = `<p style="color:red">"You must complete the test before accessing this page. Please go to the test page now.</p>`
+				}
 				populateUserStatus(status.data)
 
 			} catch (error) {
@@ -624,15 +627,14 @@
 				if (status.status === 'shortlisted') {
 					statusButton.style.backgroundColor = 'green';
 					statusButton.innerText = status.status;  
-				} else if(status.status === 'eejected') {
+				} else if(status.status === 'rejected') {
 					statusButton.style.backgroundColor = 'red';
 					statusButtoninnerTexts = status.status;  
 				} else if(status.status === 'interviewed'){
 					statusButton.style.backgroundColor = 'blue';
 					statusButton.innerText = status.status; 
 				} else {
-					statusButton.style.backgroundColor = 'blue';
-					statusButton.innerText = status.status; 
+					statusButton.innerText = 'pending...'; 
 				}
 				
 				// Optionally, update the button or send an update request to the backend

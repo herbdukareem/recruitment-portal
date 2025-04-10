@@ -17,7 +17,7 @@ $user_id = $_SESSION['user']['user_id'];
 try {
     $pdo->beginTransaction();
     
-    $input = json_decode(file_get_contents('php://input'), true);
+    $input = $_POST;
     
     // Check if a record exists
     $checkQuizScore = $pdo->prepare("SELECT COUNT(*) FROM quiz_scores WHERE user_id = :user_id");
