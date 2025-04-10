@@ -360,6 +360,7 @@
 		}
 
 		const fetchUserSum = async () => {
+			const testButton = document.getElementById('prof_test')
 			try {
 				const user_id = JSON.parse(localStorage.getItem('user'));
 				const response = await fetch(`/test/backend/user/summary?user_id=${user_id.id}`, {
@@ -371,8 +372,19 @@
 				});
 
 				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
+				html = `
+						<button id="cpl-btn" class="all-bt-bg">
+							<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
+								<path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M38.5 5.5h-29c-2.2 0-4 1.8-4 4v29c0 2.2 1.8 4 4 4h29c2.2 0 4-1.8 4-4v-29c0-2.2-1.8-4-4-4" stroke-width="1"/>
+								<path fill="none" stroke="#e4b535" stroke-linecap="round" stroke-linejoin="round" d="M34.3 35.9L24 30.5l-10.3 5.4V19L24 12.1L34.3 19zM24 12.1v18.4z" stroke-width="1"/>
+							</svg>
+							CPL Test
+						</button>	
+					`;
 				const sum = await response.json();
+				if(sum.data.files.pmc_certificate !== null && sum.data.files.pmc_certificate !== ''){
+					testButton.innerHTML = html
+				};
 				form = true
 				populateUserSum(sum.data)
 
@@ -409,6 +421,7 @@
 
 		function populateUserProfile(data) {
 			const profile = document.getElementById('profile');
+			const ninCon = document.querySelector('input[name="nin"]');
 
 			if (!data) {
 				profile.innerHTML = `
@@ -425,7 +438,10 @@
 					</svg>
 				`;
 			} else {
+
 				profile.innerText = `${data.data.firstname} ${data.data.lastname}`;
+				ninCon.value = data.nin || '';
+
 			}
 
 		}

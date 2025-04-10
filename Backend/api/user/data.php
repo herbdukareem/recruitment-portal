@@ -16,9 +16,8 @@ try {
     $stmt = $pdo->prepare("
         SELECT 
             u.id, u.email, u.created_at, u.last_login,
-            b.firstname, b.lastname, b.phoneNumber, b.position, b.status
+            u.firstname, u.lastname, u.nin
         FROM users u
-        LEFT JOIN user_applications b ON u.id = b.user_id
         WHERE u.id = :user_id
     ");
     $stmt->execute([':user_id' => $user_id]);

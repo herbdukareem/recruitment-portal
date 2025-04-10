@@ -89,7 +89,7 @@ document.getElementById('signup_section').addEventListener('submit', async (e) =
 
         const data = await response.json();
 
-        if (data.ok) {
+        if (data.success) {
             showAlert('alert_container', 'Admin created successfully!', 'success');
             localStorage.setItem('user_id', JSON.stringify(data.user));
             window.location.href = '../index.php';

@@ -1,8 +1,5 @@
 <?php 
 
-	// error_reporting(E_ERROR | E_PARSE); // Only show critical errors
-	// ini_set('display_errors', 0);
-
     $positions = [
         "Administrative Cadre" => [
             "Administrative Cadre",

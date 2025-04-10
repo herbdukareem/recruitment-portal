@@ -55,5 +55,5 @@ try {
 } catch (Exception $e) {
     $pdo->rollBack();
     http_response_code(500);
-    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+    echo json_encode(['error' => 'Database error: ' . $e->getMessage(), 'data' => ['startDate' => $input['startDate'], 'endDate' => $input['endDate']]]);
 }

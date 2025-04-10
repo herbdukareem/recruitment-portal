@@ -95,7 +95,7 @@
                         <input type="email"  name="email"  id="semail" placeholder="Email">
                     </div>
                     <div class="input-set">
-                        <input type="text"  name="nin"  id="snin" placeholder="1234567890">
+                        <input type="text"  name="nin"  id="snin" placeholder="NIN">
                     </div>
                     <div class="input-set">
                         <input type="password" name="password"  id="spass" placeholder="Password">
