@@ -22,6 +22,49 @@
 
 	<script>
 
+
+		// On page load, check if there's a stored section and show it
+		window.addEventListener('DOMContentLoaded', function() {
+			const activeSection = localStorage.getItem('activeSection') || 'sort_applicant';
+			showSection(activeSection);
+		});
+		
+		document.addEventListener('DOMContentLoaded', () => {
+			checkSession();
+			loadAdminData();
+			loadStats();
+			loadApplicants();
+			handleStatusUpdate();
+			fetchUserBio();
+			fetchUserEducation();
+			fetchUserWork();
+			fetchUserPmc();
+			fetchUserSum();
+			fetchUserStatus();
+			setupFormHandlers();
+			
+			// Form filtering setup
+			const filterForm = document.getElementById('filterForm');
+
+			if (filterForm) {
+				const filterInputs = filterForm.querySelectorAll('select, input');
+				
+				// Real-time filtering with debounce
+				filterInputs.forEach(input => {
+				input.addEventListener('input', debounce(function() {
+					loadApplicants();
+				}, 300));
+				});
+				
+				// Prevent default form submission
+				filterForm.addEventListener('submit', function(e) {
+					e.preventDefault();
+					loadApplicants();
+				});
+			}
+
+		});
+
 		let adminRole;
 		let user_data;
 		let form;
@@ -426,16 +469,16 @@
 			const defaultAvatar = '../assets/images/default-avatar.png';
 			const avatarPath = applicant.passport_file_path || defaultAvatar;
 			console.log(adminRole + ": admin_Role for applicant table");
-			
+
 			return `
 				<tr>
 					<td>${index + 1}</td>
 					<td>
 						<a href="../..${avatarPath}" target="_blank">
-						<img src="../..${avatarPath}" 
-							alt="${applicant.lastname || 'Applicant'}" 
-							width="50" height="50" style="border-radius:50%"
-							onerror="this.onerror=null;this.src='${defaultAvatar}'">
+							<img src="../..${avatarPath}" 
+								alt="${applicant.lastname || 'Applicant'}" 
+								width="50" height="50" style="border-radius:50%"
+								onerror="this.onerror=null;this.src='${defaultAvatar}'">
 						</a>
 					</td>
 					<td>${applicant.email || 'N/A'}</td>
@@ -446,16 +489,16 @@
 							View Details
 						</button>
 					</td>
-					${adminRole === 'sup_admin' ? `
-					<td>
+					${adminRole === 'sup_admin' ? 
+					`<td>
 						<form id="setSession_${applicant.user_id}" method="POST" class="d-inline" style="all:unset">
 							<input type="hidden" id="setUserId_${applicant.user_id}" name="setUserId" value="${applicant.user_id}" />
 							<button type="submit" class="btn btn-primary edit-btn" data-user-id="${applicant.user_id}">
 								Edit
 							</button>
 						</form>
-					</td>
-					` : ''}
+					</td>` 
+					: ''}
 				</tr>
 				<tr class="details-row" id="details_${applicant.user_id}-${index}" style="display:none;">
 					<td colspan="${adminRole === 'sup_admin' ? '7' : '6'}">
@@ -463,7 +506,6 @@
 					</td>
 				</tr>
 			`;
-			
 		}
 
 		// Render applicant details
@@ -773,39 +815,43 @@
 			
 		}
 
+		
+
 		const setupFormHandlers = () => {
-			// Biodata form
+			// Set session form handler
+			// const setSessionForms = document.querySelectorAll('[id^="setSession_"]');
+			// setSessionForms.forEach(form => {
+			// 	form.addEventListener('submit', async (e) => {
+			// 		e.preventDefault();
+			// 		const userId = form.querySelector('input[name="setUserId"]').value;
+			// 		console.log(`Form submitted for userId: ${userId}`);
+			// 		const formData = new FormData(form);
+			// 		await setSession('session', formData);
+			// 	});
+			// });
+
+			// Other form handlers like bio, education, etc.
 			document.getElementById('bioForm').addEventListener('submit', async (e) => {
 				e.preventDefault();
 				await submitForm('bio', new FormData(e.target));
 			});
-			
-			// Education form
+
 			document.getElementById('eduForm').addEventListener('submit', async (e) => {
 				e.preventDefault();
 				await submitForm('education', new FormData(e.target));
 			});
-			
-			// Work history form
+
 			document.getElementById('workForm').addEventListener('submit', async (e) => {
 				e.preventDefault();
 				await submitForm('work', new FormData(e.target));
 			});
-			
-			// PMC form
+
 			document.getElementById('pmcForm').addEventListener('submit', async (e) => {
 				e.preventDefault();
 				await submitForm('pmc', new FormData(e.target));
 			});
-			
-			// Set Session
-			document.getElementById(`setSession_${applicant.user_id}`).addEventListener('submit', async (e) => {
-				e.preventDefault();
-				consloe.log(`setSession_${applicant.user_id}`)
-				const formData = new FormData(form);
-				await submitForm('session', formData);
-			});
 		}
+
 
 		const submitForm = async (endpoint, formData) => {
 			try {
@@ -915,45 +961,6 @@
 				return false;
 			}
 		}
-
-		// const setSession = async (endpoint, formData) => {
-		// 	try {
-		// 		// Convert FormData to a plain object
-		// 		const formObject = {};
-		// 		formData.forEach((value, key) => {
-		// 			formObject[key] = value;
-		// 		});
-
-		// 		// Send the form data as JSON
-		// 		const response = await fetch(`/test/backend/submit/${endpoint}`, {
-		// 			method: 'POST',
-		// 			body: JSON.stringify(formObject),  // JSON stringified object
-		// 			headers: {
-		// 				'Content-Type': 'application/json'
-		// 			}
-		// 		});
-
-		// 		const data = await response.json();
-
-		// 		if (data.success) {
-		// 			showAlert('alert-container-application', data.message, 'success');
-		// 			localStorage.setItem('userID', data.user_id);
-		// 			fetchUserData(data.user_id);
-
-		// 			if (data.next) {
-		// 				setTimeout(() => {
-		// 					navigateToStep(data.next);
-		// 				}, 5200);
-		// 			}
-		// 		} else {
-		// 			showAlert('alert-container-application', data.error || 'Submission failed', 'danger');
-		// 		}
-		// 	} catch (error) {
-		// 		console.error('Form submission error:', error);
-		// 		showAlert('alert-container-application', 'Network error', 'danger');
-		// 	}
-		// };
-
 
 		function renderUserLoginInput() {
 
@@ -1311,50 +1318,7 @@
 			});
 		}
 
-		// On page load, check if there's a stored section and show it
-		window.addEventListener('DOMContentLoaded', function() {
-			const activeSection = localStorage.getItem('activeSection') || 'sort_applicant';
-			showSection(activeSection);
-		});
 		
-		// Initialize when DOM is loaded
-		document.addEventListener('DOMContentLoaded', () => {
-			// Initialize functions
-			checkSession();
-			loadAdminData();
-			loadStats();
-			loadApplicants();
-			handleStatusUpdate();
-			// fetchUserData();
-			fetchUserBio();
-			fetchUserEducation();
-			fetchUserWork();
-			fetchUserPmc();
-			fetchUserSum();
-			fetchUserStatus();
-			setupFormHandlers();
-			
-			// Form filtering setup
-			const filterForm = document.getElementById('filterForm');
-
-			if (filterForm) {
-				const filterInputs = filterForm.querySelectorAll('select, input');
-				
-				// Real-time filtering with debounce
-				filterInputs.forEach(input => {
-				input.addEventListener('input', debounce(function() {
-					loadApplicants();
-				}, 300));
-				});
-				
-				// Prevent default form submission
-				filterForm.addEventListener('submit', function(e) {
-					e.preventDefault();
-					loadApplicants();
-				});
-			}
-
-		});
 
 		
 		
@@ -1756,6 +1720,59 @@
 
 	<!-- <script src="./script/get_script.js"></script> -->
 	<script>
+
+
+		function bindSetSessionHandlers() {
+			const setSessionForms = document.querySelectorAll('[id^="setSession_"]');
+			setSessionForms.forEach(form => {
+				form.addEventListener('submit', async (e) => {
+					e.preventDefault();
+					const userId = form.querySelector('input[name="setUserId"]').value;
+					console.log(`Form submitted for userId: ${userId}`);
+					const formData = new FormData(form);
+					await setSession('session', formData);
+				});
+			});
+		};
+
+		const setSession = async (endpoint, formData) => {
+			try {
+				// Convert FormData to a plain object
+				const formObject = {};
+				formData.forEach((value, key) => {
+					formObject[key] = value;
+				});
+
+				// Send the form data as JSON
+				const response = await fetch(`/test/backend/admin/${endpoint}`, {
+					method: 'POST',
+					body: JSON.stringify(formObject),  // JSON stringified object
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+
+				const data = await response.json();
+
+				if (data.success) {
+					showAlert('alert-container-application', data.message, 'success');
+					localStorage.setItem('userID', data.user_id);
+					fetchUserData(data.user_id);
+
+					if (data.next) {
+						setTimeout(() => {
+							navigateToStep(data.next);
+						}, 5200);
+					}
+				} else {
+					showAlert('alert-container-application', data.error || 'Submission failed', 'danger');
+				}
+			} catch (error) {
+				console.error('Form submission error:', error);
+				showAlert('alert-container-application', 'Network error', 'danger');
+			}
+		};
+
 		let openPanel = false;
 
 		function closePanelHandler() {

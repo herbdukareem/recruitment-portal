@@ -22,9 +22,13 @@ try {
     }
 
     $_SESSION['user']['user_id'] = $input['user_id']
+    $user_id = $input['user_id']
 
     echo json_encode([
         'success' => true,
+        'data' => {
+            'user'=> $user_id
+        }
         'message' => 'Edit session initiated successfully'
     ]);
 
