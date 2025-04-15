@@ -64,6 +64,10 @@ try {
             require __DIR__ . '/api/admin/editsession.php';
             break;
 
+        case '/admin/update_status':
+            require __DIR__ . '/api/admin/update_status.php';
+            break;
+
         // User Authetication Routes
         case '/auth/user/session':
             require __DIR__ . '/api/auth/user/userSession.php';

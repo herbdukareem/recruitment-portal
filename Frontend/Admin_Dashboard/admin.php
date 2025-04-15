@@ -300,16 +300,24 @@
 		// Main function to load applicants
 		const loadApplicants = async () => {
 			try {
-				
-				// Get current filter values
+				// Ensure token is available
+				const token = localStorage.getItem('admin_token');
+				if (!token) {
+					showError('No admin token found. Please login.');
+					return;
+				}
+
+				// Get filter values
 				const position = document.getElementById('filter_position')?.value || '';
 				const status = document.getElementById('filter_status')?.value || '';
 				const nin = document.getElementById('filter_nin')?.value || '';
-				
-				const response = await fetch(`/test/backend/admin/applicants?position=${position}&status=${status}&nin=${nin}`, {
+
+				const url = `/test/backend/admin/applicants?position=${position}&status=${status}&nin=${nin}`;
+
+				const response = await fetch(url, {
 					method: 'GET',
 					headers: {
-						'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+						'Authorization': `Bearer ${token}`
 					}
 				});
 
@@ -317,10 +325,15 @@
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
 
+				const contentType = response.headers.get("content-type");
+				if (!contentType || !contentType.includes("application/json")) {
+					throw new Error("Invalid response format. Expected JSON.");
+				}
+
 				const result = await response.json();
-				
+
 				if (result.success) {
-      				renderTable(result.data);
+					renderTable(result.data);
 				} else {
 					throw new Error(result.message || 'Failed to load applicants');
 				}
@@ -329,6 +342,7 @@
 				showError('Failed to load applicants: ' + error.message);
 			}
 		};
+
 
 		// Show loading animation
 		function showLoading() {

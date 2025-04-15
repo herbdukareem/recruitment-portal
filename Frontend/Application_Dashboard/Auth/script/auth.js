@@ -52,7 +52,7 @@ document.getElementById('login_section').addEventListener('submit', async (e) =>
             showAlert('alert_container', data.error || 'Login failed', 'danger');
         }
     } catch (error) {
-        showAlert('alert_container', 'Network error', 'danger');
+        showAlert('alert_container', 'Something went wrong', 'danger');
     }
 });
 
@@ -90,7 +90,7 @@ document.getElementById('signup_section').addEventListener('submit', async (e) =
         const data = await response.json();
 
         if (data.success) {
-            showAlert('alert_container', 'Admin created successfully!', 'success');
+            showAlert('alert_container', 'Account created successfully!', 'success');
             localStorage.setItem('user_id', JSON.stringify(data.user));
             window.location.href = '../index.php';
             setTimeout(() => {
@@ -105,6 +105,6 @@ document.getElementById('signup_section').addEventListener('submit', async (e) =
             showAlert('alert_container', data.error || 'Registration failed', 'danger');
         }
     } catch (error) {
-        showAlert('alert_container', 'Network error', 'danger');
+        showAlert('alert_container', 'Something went wrong', 'danger');
     }
 });

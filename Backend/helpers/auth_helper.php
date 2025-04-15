@@ -3,19 +3,25 @@
  * Authentication helper functions
  */
 
-function authenticateUser() {
-    if (!isset($_SESSION['user']['user_id'])) {
-        http_response_code(401);
-        echo json_encode(['error' => 'Unauthorized']);
-        exit;
+ function authenticateUser() {
+    if (
+        (isset($_SESSION['admin_id']) && $_SESSION['admin_id']) ||
+        (isset($_SESSION['user']['user_id']))
+    ) {
+        return true;
     }
+
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized']);
+    exit;
 }
+
 
 function validateUserAccess($pdo, $user_id) {
     authenticateUser();
     
     // Admins can access any user data
-    if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
+    if (isset($_SESSION['admin_id']) && $_SESSION['admin_id']) {
         return true;
     }
     

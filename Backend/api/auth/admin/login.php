@@ -48,6 +48,7 @@ try {
     
     // Set CSRF token
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    $token = $_SESSION['csrf_token'];
 
     echo json_encode([
         'success' => true,
@@ -56,7 +57,8 @@ try {
             'id' => $admin['id'],
             'admin_id' => $admin['admin_id'],
             'role' => $admin['admin_role']
-        ]
+        ],
+        'admin_token' => $token
     ]);
 
     // Regenerate session ID to prevent fixation

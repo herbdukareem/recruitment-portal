@@ -1,4 +1,4 @@
-function showAlert(id, message, type = 'info', duration = 5000) {
+function showAlert(id, message, type = 'info', duration = 2000) {
     const alertCon = document.getElementById(id);
     
     // Create alert element

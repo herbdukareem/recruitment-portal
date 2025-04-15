@@ -15,6 +15,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             body: JSON.stringify(formData)
         });
 
+        console.log(response)
         // Get rate limit info from headers
         const limit = response.headers.get('X-RateLimit-Limit');
         const remaining = response.headers.get('X-RateLimit-Remaining');
@@ -29,12 +30,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         }
 
         const data = await response.json();
-        console.log('finally')
+
         if (response.ok) {
-            console.log(data)
             showAlert('login_alert', 'Login Successful', 'sucess');
             // Store admin data and redirect
             localStorage.setItem('admin', JSON.stringify(data.admin));
+            localStorage.setItem('admin_token', JSON.stringify(data.admin_token));
             window.location.href = 'admin.php';
         } else {
             showAlert('admin_login', data.error || 'Login failed', 'danger');

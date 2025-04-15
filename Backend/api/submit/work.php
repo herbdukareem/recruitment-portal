@@ -54,7 +54,7 @@ try {
         $input['rank'] ?? '',
         $input['responsibilities'] ?? '',
         !empty($input['startDate']) ? $input['startDate'] : null,
-        !empty($input['endDate']) ? $input['endDate'] : null
+        $input['endDate'] ?? null
     ]);
     
     $pdo->commit();
