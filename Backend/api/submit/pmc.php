@@ -50,126 +50,126 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Validate session
-if (!isset($_SESSION['user']['user_id'])) {
+// Validate session and user_id
+if (!isset($_SESSION['user']['user_id']) || !is_numeric($_SESSION['user']['user_id'])) {
     http_response_code(401);
-    echo json_encode(['error' => 'No applicant session']);
+    echo json_encode(['error' => 'No valid applicant session']);
     exit;
 }
 
-$user_id = $_SESSION['user']['user_id'];
+$user_id = (int) $_SESSION['user']['user_id'];
+if ($user_id <= 0) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Invalid user ID']);
+    exit;
+}
+
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 $files = $_FILES ?? [];
 
 try {
     $pdo->beginTransaction();
     
-    // Handle PMC details
+    // Check for existing PMC record
     $checkStmt = $pdo->prepare("SELECT id FROM user_pmc_details WHERE user_id = ?");
     $checkStmt->execute([$user_id]);
-    
-    if ($checkStmt->rowCount() > 0) {
-        // Update existing PMC details
+
+    $isUpdate = $checkStmt->rowCount() > 0;
+
+    if ($isUpdate) {
         $sql = "UPDATE user_pmc_details SET
-                    bodyName = ?,
-                    membershipID = ?,
-                    membershipType = ?,
-                    membershipResposibilities = ?,
-                    certificateDate = ?
+                    bodyName = ?, membershipID = ?, membershipType = ?,
+                    membershipResposibilities = ?, certificateDate = ?
                 WHERE user_id = ?";
+        $params = [
+            $input['bodyName'] ?? '',
+            $input['membershipID'] ?? '',
+            $input['membershipType'] ?? '',
+            $input['membershipResposibilities'] ?? '',
+            !empty($input['certificateDate']) ? $input['certificateDate'] : null,
+            $user_id
+        ];
     } else {
-        // Insert new PMC details
         $sql = "INSERT INTO user_pmc_details (
                     user_id, bodyName, membershipID,
-                    membershipType, membershipResposibilities,
-                    certificateDate
+                    membershipType, membershipResposibilities, certificateDate
                 ) VALUES (?, ?, ?, ?, ?, ?)";
+        $params = [
+            $user_id,
+            $input['bodyName'] ?? '',
+            $input['membershipID'] ?? '',
+            $input['membershipType'] ?? '',
+            $input['membershipResposibilities'] ?? '',
+            !empty($input['certificateDate']) ? $input['certificateDate'] : null
+        ];
     }
-    
+
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        $input['bodyName'] ?? '',
-        $input['membershipID'] ?? '',
-        $input['membershipType'] ?? '',
-        $input['membershipResposibilities'] ?? '',
-        !empty($input['certificateDate']) ? $input['certificateDate'] : null,
-        $user_id
-    ]);
+    $stmt->execute($params);
 
     // Process file uploads
-    $filePaths = [
-        'pmc_file_path' => null,
-    ];
-
-    $fileFields = [
-        'membershipCertificate' => 'pmc_file_path',
-    ];
+    $filePaths = ['pmc_file_path' => null];
+    $fileFields = ['membershipCertificate' => 'pmc_file_path'];
 
     foreach ($fileFields as $field => $dbField) {
         if (!empty($files[$field]['tmp_name'])) {
             $file = $files[$field];
-
-            // Validate file extension
             $fileExt = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
             if (!in_array($fileExt, ALLOWED_FILE_TYPES)) {
-                throw new Exception("Invalid file type. Allowed: " . implode(', ', ALLOWED_FILE_TYPES));
+                throw new Exception("Invalid file type for $field. Allowed types: " . implode(', ', ALLOWED_FILE_TYPES));
             }
 
-            // Validate file size
             if ($file['size'] > MAX_FILE_SIZE) {
-                throw new Exception("File exceeds maximum size of " . (MAX_FILE_SIZE / 1024 / 1024) . "MB");
+                throw new Exception("File exceeds max size (" . (MAX_FILE_SIZE / 1024 / 1024) . "MB)");
             }
 
-            // Generate secure filename
-            $newFilename = "user_{$user_id}_" . "_{$field}" . ".{$fileExt}";
+            $newFilename = "user_{$user_id}_{$field}." . $fileExt;
             $destination = UPLOAD_DIR . $newFilename;
 
-            // Move uploaded file
             if (!move_uploaded_file($file['tmp_name'], $destination)) {
-                throw new Exception("Failed to move uploaded file: " . error_get_last()['message']);
+                throw new Exception("Failed to save uploaded file.");
             }
 
             $filePaths[$dbField] = "/uploads/" . $newFilename;
-            
+
             // Delete old file if exists
             $stmt = $pdo->prepare("SELECT $dbField FROM user_files WHERE user_id = ?");
             $stmt->execute([$user_id]);
             $oldFile = $stmt->fetchColumn();
-            
-            if ($oldFile && file_exists($oldFile)) {
-                @unlink($oldFile);
+
+            if ($oldFile && file_exists($_SERVER['DOCUMENT_ROOT'] . $oldFile)) {
+                @unlink($_SERVER['DOCUMENT_ROOT'] . $oldFile);
             }
         }
     }
 
-    // Handle file records in database
+    // Handle file record in DB
     $checkFiles = $pdo->prepare("SELECT 1 FROM user_files WHERE user_id = ?");
     $checkFiles->execute([$user_id]);
     $filesExist = $checkFiles->fetchColumn();
 
     if ($filesExist) {
-        // Update existing files
         $updates = [];
         $params = [];
-        
+
         foreach ($filePaths as $field => $path) {
             if ($path !== null) {
                 $updates[] = "$field = ?";
                 $params[] = $path;
             }
         }
-        
+
         if (!empty($updates)) {
             $params[] = $user_id;
             $sql = "UPDATE user_files SET " . implode(', ', $updates) . " WHERE user_id = ?";
             $pdo->prepare($sql)->execute($params);
         }
     } else {
-        // Insert new files
         $fields = [];
         $values = [];
         $params = [$user_id];
-        
+
         foreach ($filePaths as $field => $path) {
             if ($path !== null) {
                 $fields[] = $field;
@@ -177,35 +177,34 @@ try {
                 $params[] = $path;
             }
         }
-        
+
         if (!empty($fields)) {
-            $sql = "INSERT INTO user_files (user_id, " . implode(', ', $fields) . 
-                   ") VALUES (?, " . implode(', ', $values) . ")";
+            $sql = "INSERT INTO user_files (user_id, " . implode(', ', $fields) . ") VALUES (?, " . implode(', ', $values) . ")";
             $pdo->prepare($sql)->execute($params);
         }
     }
 
     $pdo->commit();
-    
+
     echo json_encode([
-        'success' => true, 
-        'message' => 'PMC details and files saved successfully', 
+        'success' => true,
+        'message' => 'PMC details and file uploaded successfully',
         'next' => 'summary'
     ]);
 
 } catch (Exception $e) {
     $pdo->rollBack();
-    
-    // Clean up any uploaded files on error
+
+    // Clean up uploaded files
     foreach ($filePaths as $path) {
-        if ($path !== null && file_exists($path)) {
-            @unlink($path);
+        if ($path !== null && file_exists($_SERVER['DOCUMENT_ROOT'] . $path)) {
+            @unlink($_SERVER['DOCUMENT_ROOT'] . $path);
         }
     }
-    
+
     http_response_code(500);
     echo json_encode([
-        'error' => 'Error processing request',
+        'error' => 'An error occurred',
         'message' => $e->getMessage()
     ]);
 }

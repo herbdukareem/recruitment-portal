@@ -42,8 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 $files = $_FILES ?? [];
 
-
-
 // Check if admin role
 if (empty($input['admin_role'])) {
     // Validate session for admin role

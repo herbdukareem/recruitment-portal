@@ -161,7 +161,7 @@
 				}
 			} catch (error) {
 				console.error('Form submission error:', error);
-				showAlert('dashboard_alert_con', 'Network error', 'danger');
+				showAlert('dashboard_alert_con', 'Something went wrong', 'danger');
 			}
 		}
 		
@@ -245,50 +245,70 @@
 			}
 		}
 
-		// AJAX call to fetch user data
 		const fetchUserProfile = async () => {
 			try {
-				const user_id = JSON.parse(localStorage.getItem('user'));
-				const response = await fetch(`/test/backend/user/data?user_id=${user_id.id}`, {
+				const user = JSON.parse(localStorage.getItem('user'));
+				const token = localStorage.getItem('csrf_token');
+
+				if (!user?.id || !token) {
+					console.error("User ID or CSRF token not found.");
+					return;
+				}
+
+				const response = await fetch(`/test/backend/user/data?user_id=${user.id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+						'Authorization': `Bearer ${token}`
 					}
 				});
 
 				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
 				const data = await response.json();
+				const user_cred = data;
+
 				populateUserProfile(data)
 
+				// Fetch bio and pass both sets of data to the populate function
+				await fetchUserBio(user_cred.data);
+
 			} catch (error) {
-				console.error("Error fetching user data:", error);
-				throw error;
+				console.error("Error fetching user profile:", error);
 			}
 		};
 
-		const fetchUserBio = async () => {
+		const fetchUserBio = async (user_cred = {}) => {
 			try {
-				const user_id = JSON.parse(localStorage.getItem('user'));
-				const response = await fetch(`/test/backend/user/bio?user_id=${user_id.id}`, {
+				const user = JSON.parse(localStorage.getItem('user'));
+				const token = localStorage.getItem('csrf_token');
+
+				if (!user?.id || !token) {
+					console.error("User ID or CSRF token not found.");
+					return;
+				}
+
+				const response = await fetch(`/test/backend/user/bio?user_id=${user.id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						'Authorization': `Bearer ${localStorage.getItem('csrf_token')}`
+						'Authorization': `Bearer ${token}`
 					}
 				});
 
 				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
 				const bio = await response.json();
-				populateUserData(bio.data)
+				const user_data = bio?.data || {};
+				console.log(user_cred.data)
+
+				populateUserData(user_data, user_cred); 
 
 			} catch (error) {
-				console.error("Error fetching user data:", error);
-				throw error;
+				console.error("Error fetching user bio:", error);
 			}
-		}
+		};
+
 
 		const fetchUserEducation = async () => {
 			try {
@@ -449,13 +469,13 @@
 
 		}
 
-		function populateUserData(user_data) {
+		function populateUserData(user_data, user_cred) {
 			document.getElementById('positionType').value = user_data.positionType || '';
 			document.getElementById('supPosition').value = user_data.supPosition || '';
 			document.getElementById('position').value = user_data.position || '';
-			document.querySelector('input[name="firstname"]').value = user_data.firstname || '';
+			document.querySelector('input[name="firstname"]').value = user_cred.firstname || '';
 			document.querySelector('input[name="middlename"]').value = user_data.middlename || '';
-			document.querySelector('input[name="lastname"]').value = user_data.lastname || '';
+			document.querySelector('input[name="lastname"]').value = user_cred.lastname || '';
 			if (user_data.email) {
 				document.querySelector('input[name="email"]').value = user_data.email || '';
 				document.querySelector('input[name="password"]').value = '';
@@ -465,7 +485,7 @@
 			document.querySelector('select[name="maritalStatus"]').value = user_data.maritalStatus || '';
 			document.getElementById('state').value = user_data.stateOfOrigin || '';
 			document.getElementById('lga').value = user_data.lga || '';
-			document.querySelector('input[name="nin"]').value = user_data.nin || '';
+			document.querySelector('input[name="nin"]').value = user_cred.nin || '';
 			document.querySelector('input[name="phoneNumber"]').value = user_data.phoneNumber || '';
 			document.querySelector('input[name="emergencyNumber"]').value = user_data.emergencyNumber || '';
 			document.querySelector('input[name="address"]').value = user_data.address || '';

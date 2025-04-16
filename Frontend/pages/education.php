@@ -42,7 +42,7 @@
                         <td>
                             <div>
                                 <input type="text" name="primary_school_name" id="primary_school_name" value="" >
-                                <input type="text" name="userId" class="userId" value="" hidden >
+                                <!-- <input type="text" name="userId" class="userId" value="" hidden > -->
                             </div>
                         </td>
                         <td>
