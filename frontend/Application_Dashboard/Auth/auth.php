@@ -1,4 +1,15 @@
 <?php 
+    // ini_set('display_errors', 1);
+    // ini_set('display_startup_errors', 1);
+    // error_reporting(E_ALL);
+
+    require_once __DIR__ . '/../../vendor/autoload.php';
+
+	use Dotenv\Dotenv;
+
+	$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+	$dotenv->load();
+
     $display = $_GET['display'];
     
     if (in_array($display, ['login', 'signup', 'forget_password'])) {
@@ -190,6 +201,8 @@
         <?php endif; ?>
         
     </script>
+	<script> const API_URI = "<?php echo $_ENV['API_URI'] ?>"</script>
+
     <script src="./script/action.js"></script>
     <script src="./script/auth.js"></script>
 </body>

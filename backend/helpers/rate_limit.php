@@ -1,8 +1,4 @@
 <?php
-/**
- * Rate limiting helper functions
- */
-
 // Directory to store rate limit files
 define('RATE_LIMIT_DIR', __DIR__ . '/../../storage/rate_limits/');
 

@@ -27,7 +27,7 @@ const AppState = {
         try {
             console.log('Initiating session check...');
             
-            const response = await fetch('/test/backend/admin/session', {
+            const response = await fetch(`${API_URI}admin/session`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -199,7 +199,7 @@ const AppState = {
    // Fetch basic user info
     async fetchUserData() {
         try {
-            const response = await fetch('/test/backend/user/data');
+            const response = await fetch(`${API_URI}user/data`);
             const data = await response.json();
             
             if (data.success) {

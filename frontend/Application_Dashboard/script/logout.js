@@ -1,7 +1,7 @@
 document.getElementById('logout').addEventListener('click', async () => {
     try {
         // Call server-side logout
-        const response = await fetch('/test/backend/auth/user/logout', {
+        const response = await fetch(`${API_URI}auth/user/logout`, {
           method: 'POST',
           credentials: 'include',
           headers: {

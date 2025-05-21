@@ -1,3 +1,13 @@
+<?php
+
+	require_once __DIR__ . '/../vendor/autoload.php';
+
+	use Dotenv\Dotenv;
+
+	$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+	$dotenv->load();
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -32,7 +42,7 @@
 			try {
 				console.log('Initiating session check...');
 				
-				const response = await fetch('/test/backend/admin/session', {
+				const response = await fetch(`${API_URI}admin/session`, {
 					method: 'GET',
 					credentials: 'include',
 					headers: {
@@ -96,7 +106,7 @@
 		const loadAdminData = async () => {
 			try {
 				// 1. Fetch admin data from server
-				const response = await fetch('/test/backend/admin/data', {
+				const response = await fetch('${API_URI}admin/data', {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -181,7 +191,7 @@
 		// Render Applications Stats
 		const loadStats =  async () => {
 			try {
-				const response = await fetch('/test/backend/admin/stats', {
+				const response = await fetch(`${API_URI}admin/stats`, {
 					method: 'GET',
 					headers: {
 						'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
@@ -312,7 +322,7 @@
 				const status = document.getElementById('filter_status')?.value || '';
 				const nin = document.getElementById('filter_nin')?.value || '';
 
-				const url = `/test/backend/admin/applicants?position=${position}&status=${status}&nin=${nin}`;
+				const url = `${API_URI}admin/applicants?position=${position}&status=${status}&nin=${nin}`;
 
 				const response = await fetch(url, {
 					method: 'GET',
@@ -685,7 +695,7 @@
 					const formDataObj = {};
 					formData.forEach((value, key) => formDataObj[key] = value);
 					
-					const response = await fetch('/test/backend/admin/update_status', {
+					const response = await fetch(`${API_URI}admin/update_status`, {
 						method: 'POST',
 						headers: {
 						'Authorization': `Bearer ${localStorage.getItem('admin_token')}`,
@@ -730,7 +740,7 @@
 		const fetchUserData = async (id) => {
 			const user_id = localStorage.getItem('userID')
 			try {
-				const response = await fetch(`/test/backend/user/data?user_id=${user_id}`, {
+				const response = await fetch(`${API_URI}user/data?user_id=${user_id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -824,7 +834,7 @@
 
 		const submitForm = async (endpoint, formData) => {
 			try {
-				const response = await fetch(`/test/backend/submit/${endpoint}`, {
+				const response = await fetch(`${API_URI}submit/${endpoint}`, {
 					method: 'POST',
 					body: JSON.stringify(Object.fromEntries(formData)),
 					headers: {
@@ -940,7 +950,7 @@
 				});
 
 				// Send the form data a`s JSON
-				const response = await fetch(`/test/backend/admin/${endpoint}`, {
+				const response = await fetch(`${API_URI}admin/${endpoint}`, {
 					method: 'POST',
 					body: JSON.stringify(formObject),  // JSON stringified object
 					headers: {
@@ -1030,7 +1040,7 @@
 		const fetchUserBio = async () => {
 			try {
 				const user_id = JSON.parse(localStorage.getItem('user'));
-				const response = await fetch(`/test/backend/user/bio?user_id=${user_id.id}`, {
+				const response = await fetch(`${API_URI}user/bio?user_id=${user_id.id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -1052,7 +1062,7 @@
 		const fetchUserEducation = async () => {
 			try {
 				const user_id = JSON.parse(localStorage.getItem('user'));
-				const response = await fetch(`/test/backend/user/education?user_id=${user_id.id}`, {
+				const response = await fetch(`${API_URI}user/education?user_id=${user_id.id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -1075,7 +1085,7 @@
 		const fetchUserWork = async () => {
 			try {
 				const user_id = JSON.parse(localStorage.getItem('user'));
-				const response = await fetch(`/test/backend/user/work?user_id=${user_id.id}`, {
+				const response = await fetch(`${API_URI}user/work?user_id=${user_id.id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -1098,7 +1108,7 @@
 		const fetchUserPmc = async () => {
 			try {
 				const user_id = JSON.parse(localStorage.getItem('user'));
-				const response = await fetch(`/test/backend/user/pmc?user_id=${user_id.id}`, {
+				const response = await fetch(`${API_URI}user/pmc?user_id=${user_id.id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -1121,7 +1131,7 @@
 		const fetchUserSum = async () => {
 			try {
 				const user_id = JSON.parse(localStorage.getItem('user'));
-				const response = await fetch(`/test/backend/user/summary?user_id=${user_id.id}`, {
+				const response = await fetch(`${API_URI}user/summary?user_id=${user_id.id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -1144,7 +1154,7 @@
 		const fetchUserStatus = async () => {
 			try {
 				const user_id = JSON.parse(localStorage.getItem('user'));
-				const response = await fetch(`/test/backend/user/status?user_id=${user_id.id}`, {
+				const response = await fetch(`${API_URI}user/status?user_id=${user_id.id}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -1880,6 +1890,8 @@
 	<script src="assets/modules/jquery/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 	<!-- Template JS File -->
+		<script> const API_URI = "<?php echo $_ENV['API_URI'] ?>"</script>
+
 	<script src="assets/js/script.js"></script>
 	<script type="module" src="../scripts/main.js"></script>
 	<script src="./script/auth/register.js"></script>

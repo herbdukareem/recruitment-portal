@@ -17,7 +17,7 @@ document.getElementById('login_section').addEventListener('submit', async (e) =>
     }
 
     try {
-        const response = await fetch('/test/backend/auth/user/login', {
+        const response = await fetch(`${API_URI}auth/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ document.getElementById('signup_section').addEventListener('submit', async (e) =
     };
 
     try {
-        const response = await fetch('/test/backend/auth/user/signup', {
+        const response = await fetch(`${API_URI}auth/user/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -7,7 +7,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     };
 
     try {
-        const response = await fetch('/test/backend/auth/admin/login', {
+        const response = await fetch(`${API_URI}auth/admin/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

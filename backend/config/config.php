@@ -28,7 +28,7 @@ ini_set('session.sid_bits_per_character', '6');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'recruitment_portal');
 define('DB_USER', 'root'); // Consider using a limited-privilege user
-define('DB_PASS', ''); // Use a strong password in production
+define('DB_PASS', 'Root123!'); // Use a strong password in production
 
 // Create PDO instance with enhanced security
 try {

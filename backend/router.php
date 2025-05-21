@@ -20,12 +20,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // Get request method and URI
 $method = $_SERVER['REQUEST_METHOD'];
-// $request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$request = str_replace('/test/backend', '', $_SERVER['REQUEST_URI']);
-$request = strtok($request, '?');
+$requestUri = $_SERVER['REQUEST_URI'] ?? '';
+$basePath = '/recruitment-portal/backend/';
 
-// Remove trailing slash and normalize
+// Remove base path
+if (str_starts_with($requestUri, $basePath)) {
+    $request = substr($requestUri, strlen($basePath));
+} else {
+    $request = $requestUri;
+}
+
+$request = strtok($request, '?');
 $request = '/' . trim($request, '/');
+
 
 try {
     // Route the request

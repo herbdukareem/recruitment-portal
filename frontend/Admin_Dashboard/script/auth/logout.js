@@ -1,6 +1,6 @@
 document.getElementById('logoutBtn').addEventListener('click', async () => {
     try {
-        const response = await fetch('/test/backend/auth/admin/logout', {
+        const response = await fetch(`${API_URI}auth/admin/logout`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -238,14 +238,6 @@ try {
         if($checkUser){
             $updateUserStmt = $pdo->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname WHERE id = :user_id");
             $updateUserStmt->execute($updateData);
-
-            if($updateUserStmt){
-                 http_response_code(500);
-                echo json_encode([
-                    'error' => 'Unable to upload user data',
-                    'success' => false
-                ]);
-            }
         }
     };
     
