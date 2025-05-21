@@ -1,5 +1,0 @@
-Order deny,allow
-Deny from all
-<FilesMatch "\.(pdf|doc|docx|jpg|jpeg|png)$">
-Allow from all
-</FilesMatch>
