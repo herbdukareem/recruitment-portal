@@ -1,7 +1,10 @@
 <?php
-// =============================================
-// SECURITY & ERROR HANDLING CONFIGURATION
-// =============================================
+use Dotenv\Dotenv;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
 // Debug mode configuration (should be false in production)
 define('DEBUG_MODE', true);
@@ -25,10 +28,11 @@ ini_set('session.sid_bits_per_character', '6');
 // =============================================
 // DATABASE CONFIGURATION
 // =============================================
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'recruitment_portal');
-define('DB_USER', 'root'); // Consider using a limited-privilege user
-define('DB_PASS', 'Root123!'); // Use a strong password in production
+define('DB_HOST', $_ENV['DB_HOST']);
+define('DB_NAME', $_ENV['DB_NAME']);
+define('DB_USER', $_ENV['DB_USER']);
+define('DB_PASS', $_ENV['DB_PASS']);
+
 
 // Create PDO instance with enhanced security
 try {
