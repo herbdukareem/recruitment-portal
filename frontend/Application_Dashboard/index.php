@@ -137,36 +137,43 @@
 				
 			}
 
-			const submitForm = async (endpoint, formData) => {
-				try {
-					const response = await fetch(`${API_URI}submit/${endpoint}`, {
-						method: 'POST',
-						body: formData, 
-					});
-					
-					const data = await response.json();
-					
-					if (data.success) {
-						showAlert('dashboard_alert_con', data.message, 'success');
-						const user_id = data.user_id;
-						localStorage.setItem('userID', user_id);
-						if (data.next) {
-							setTimeout(() => {
-								if (data.next === 'application-status_screen') {
-									document.getElementById('cpl-screen').style.display = 'none';
-									this.navigateToStep(data.next);
-								}
-								this.navigateToStep(data.next);
-							}, 5200);
-						}
-					} else {
-						showAlert('dashboard_alert_con', data.error || 'Submission failed', 'danger');
+		const submitForm = async (endpoint, formData) => {
+			try {
+				const response = await fetch(`${API_URI}submit/${endpoint}`, {
+					method: 'POST',
+					body: formData,
+				});
+
+				const data = await response.json();
+
+				if (data.success) {
+					showAlert('dashboard_alert_con', data.message, 'success');
+
+					// Store user ID if returned
+					if (data.user_id) {
+						localStorage.setItem('userID', data.user_id);
 					}
-				} catch (error) {
-					console.error('Form submission error:', error);
-					showAlert('dashboard_alert_con', 'Something went wrong', 'danger');
+
+					// Navigate to next screen if specified
+					if (data.next) {
+						setTimeout(() => {
+							if (data.next === 'application-status_screen') {
+								document.getElementById('cpl-screen').style.display = 'none';
+								this.navigateToStep(data.next);
+							}
+							this.navigateToStep(data.next);
+						}, 5200);
+					}
+				} else {
+					showAlert('dashboard_alert_con', data.message || 'Submission failed', 'danger');
+					console.error('Form submission error response:', data);
 				}
+			} catch (error) {
+				console.error('Form submission exception:', error);
+				showAlert('dashboard_alert_con', 'Something went wrong', 'danger');
 			}
+		};
+
 			
 			const uploadFiles = async (formData) => {
 				try {
@@ -431,7 +438,7 @@
 						document.getElementById('prof_test').style.display = 'none'
 					}
 					if(status.data === null){
-						document.getElementById('application-status_screen').innerHTML = `<p style="color:red">"You must complete the test before accessing this page. Please go to the test page now.</p>`
+						document.getElementById('application-status_screen').innerHTML = `<p style="color:red;text-align:center">"Complete the proficiency test to view your application status.<br/> Refresh page!</p>`
 					}
 					populateUserStatus(status.data)
 

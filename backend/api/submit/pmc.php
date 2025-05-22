@@ -67,6 +67,8 @@ if ($user_id <= 0) {
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 $files = $_FILES ?? [];
 
+$filePaths = ['pmc_file_path' => null];
+
 try {
     $pdo->beginTransaction();
     
@@ -108,7 +110,6 @@ try {
     $stmt->execute($params);
 
     // Process file uploads
-    $filePaths = ['pmc_file_path' => null];
     $fileFields = ['membershipCertificate' => 'pmc_file_path'];
 
     foreach ($fileFields as $field => $dbField) {
@@ -196,9 +197,13 @@ try {
     $pdo->rollBack();
 
     // Clean up uploaded files
+    // Clean up uploaded files on error
     foreach ($filePaths as $path) {
-        if ($path !== null && file_exists($_SERVER['DOCUMENT_ROOT'] . $path)) {
-            @unlink($_SERVER['DOCUMENT_ROOT'] . $path);
+        if ($path !== null) {
+            $fullPath = __DIR__ . '/../../' . ltrim($path, '/');
+            if (file_exists($fullPath)) {
+                @unlink($fullPath);
+            }
         }
     }
 

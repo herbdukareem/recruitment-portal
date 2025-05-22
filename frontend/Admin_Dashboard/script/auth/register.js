@@ -1,8 +1,8 @@
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     let adminIdValue =  document.getElementById('admin_id');
-    let adminRoleValue =  document.getElementById('admin_role');
-    let adminPasswordValue =  document.getElementById('password');
+    let adminRoleValue =  document.getElementById('aadmin_role');
+    let adminPasswordValue =  document.getElementById('apassword');
     let adminCPasswordValue =  document.getElementById('confirm_password');
 
     const formData = {

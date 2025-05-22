@@ -160,6 +160,13 @@ if ($ninCheck->rowCount() > 0) {
     exit;
 }
 
+// Process file uploads
+    $filePaths = [
+        'lga_file_path' => null,
+        'birth_certificate_file_path' => null,
+        'passport_file_path' => null
+    ];
+
 try {
     // Start transaction
     $pdo->beginTransaction();
@@ -251,13 +258,6 @@ try {
             'permissions' => substr(sprintf('%o', fileperms(UPLOAD_DIR)), -4)
         ]));
     }
-    
-    // Process file uploads
-    $filePaths = [
-        'lga_file_path' => null,
-        'birth_certificate_file_path' => null,
-        'passport_file_path' => null
-    ];
     
     $fileFields = [
         'lgaCertificate' => 'lga_file_path',
@@ -363,10 +363,14 @@ try {
     
     // Clean up uploaded files on error
     foreach ($filePaths as $path) {
-        if ($path !== null && file_exists(UPLOAD_DIR . substr($path, 9))) {
-            @unlink(UPLOAD_DIR . substr($path, 9));
+        if ($path !== null) {
+            $fullPath = __DIR__ . '/../../' . ltrim($path, '/');
+            if (file_exists($fullPath)) {
+                @unlink($fullPath);
+            }
         }
     }
+
     
     http_response_code(500);
     echo json_encode([

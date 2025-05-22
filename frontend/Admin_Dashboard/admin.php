@@ -106,7 +106,7 @@
 		const loadAdminData = async () => {
 			try {
 				// 1. Fetch admin data from server
-				const response = await fetch('${API_URI}admin/data', {
+				const response = await fetch(`${API_URI}admin/data`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -189,23 +189,36 @@
 		}
 
 		// Render Applications Stats
-		const loadStats =  async () => {
+		const loadStats = async () => {
 			try {
+				const token = localStorage.getItem('admin_token');
+				if (!token) {
+					console.error("Admin token missing.");
+					showAlert('dashboard_alert_con', 'Admin token missing. Please login.', 'danger');
+					return;
+				}
+
 				const response = await fetch(`${API_URI}admin/stats`, {
 					method: 'GET',
 					headers: {
-						'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+						'Authorization': `Bearer ${token}`
 					}
 				});
-				
-				const dashboardData = await response.json();
-				
-				const applicationStats = document.getElementById('dashboard');
 
-				applicationStats.innerHTML = `
+				if (!response.ok) {
+					throw new Error(`HTTP Error ${response.status}: ${response.success}`);
+				}
+
+				const dashboardData = await response.json();
+
+				// Validate structure
+				if (!dashboardData.filters || !dashboardData.filters.status_counts) {
+					throw new Error("Unexpected API response structure.");
+				}
+
+				document.getElementById('dashboard').innerHTML = `
 					<div class="container-fluid">
 						<div class="row flex1">
-
 							<div class="col-md-6 col-lg-3">
 								<div class="card">
 									<div class="card-body">
@@ -297,32 +310,39 @@
 							</div>
 
 						</div>
-					</div>
-				`;
-
-				renderTable(dashboardData.data)
+					</div>`;
+				
+				// Render applicants table
+				if (dashboardData.data) {
+					renderTable(dashboardData.data);
+				} else {
+					console.warn("No sttats data to render.");
+				}
 
 			} catch (error) {
-				showAlert('dashboard_alert_con', 'Failed to load applicants', 'danger');
+				console.error("Error in loadStats:", error);
+				showAlert('dashboard_alert_con', 'Failed to load stats data: ' + error.message, 'danger');
 			}
 		};
 
 		// Main function to load applicants
 		const loadApplicants = async () => {
 			try {
-				// Ensure token is available
+				// Get and validate token
 				const token = localStorage.getItem('admin_token');
 				if (!token) {
+					console.error("No admin token found.");
 					showError('No admin token found. Please login.');
 					return;
 				}
 
-				// Get filter values
+				// Get filter values safely
 				const position = document.getElementById('filter_position')?.value || '';
 				const status = document.getElementById('filter_status')?.value || '';
 				const nin = document.getElementById('filter_nin')?.value || '';
 
-				const url = `${API_URI}admin/applicants?position=${position}&status=${status}&nin=${nin}`;
+				const url = `${API_URI}admin/applicants?position=${encodeURIComponent(position)}&status=${encodeURIComponent(status)}&nin=${encodeURIComponent(nin)}`;
+				console.log("Requesting applicants from:", url);
 
 				const response = await fetch(url, {
 					method: 'GET',
@@ -331,28 +351,32 @@
 					}
 				});
 
+				// Handle HTTP-level errors
 				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
+					throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
 				}
 
+				// Verify content type
 				const contentType = response.headers.get("content-type");
 				if (!contentType || !contentType.includes("application/json")) {
-					throw new Error("Invalid response format. Expected JSON.");
+					throw new Error(`Invalid response format. Expected JSON but got: ${contentType}`);
 				}
 
 				const result = await response.json();
+				console.log("Applicants response:", result);
 
-				if (result.success) {
+				// Handle API-level errors
+				if (result.success && Array.isArray(result.data)) {
 					renderTable(result.data);
 				} else {
-					throw new Error(result.message || 'Failed to load applicants');
+					const message = result.message || 'API did not return expected format';
+					throw new Error(message);
 				}
 			} catch (error) {
 				console.error('Error loading applicants:', error);
 				showError('Failed to load applicants: ' + error.message);
 			}
 		};
-
 
 		// Show loading animation
 		function showLoading() {

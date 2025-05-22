@@ -43,7 +43,7 @@
         <form action="" method="post" class="sp" id="registerForm">
             <div class="mb-3">
                 <label for="admin_role" class="form-label">Admin Role</label>
-                <select class="form-select" name="admin_role" id="admin_role">
+                <select class="form-select" name="admin_role" id="aadmin_role">
                     <option value="admin">Admin</option>
                     <option value="sup_admin">Super Admin</option>
                 </select>
@@ -54,7 +54,7 @@
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control" id="apassword" name="password" required>
             </div>
             <div class="mb-3">
                 <label for="confirm_password" class="form-label">Confirm Password</label>
