@@ -5,34 +5,53 @@ use Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+// Load environment variables
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
+/**
+ * Send password reset email
+ *
+ * @param string $email Recipient's email address
+ * @param string $token Password reset token
+ * @return bool True if email was sent, false otherwise
+ */
 function sendResetEmail($email, $token) {
     $mail = new PHPMailer(true);
+
     try {
-        //Server settings
+        // SMTP server configuration
         $mail->isSMTP();
-        $mail->SMTPAuth   = $_ENV['MAILER_SMTPAUTH'];
+        $mail->Host       = $_ENV['MAILER_HOST']; 
+        $mail->SMTPAuth   = filter_var($_ENV['MAILER_SMTPAUTH'], FILTER_VALIDATE_BOOLEAN);
         $mail->Username   = $_ENV['MAILER_USERNAME']; 
         $mail->Password   = $_ENV['MAILER_PASSWORD'];
-        $mail->SMTPSecure = $_ENV['MAILER_SMTPSECURE'];
-        $mail->Port       = $_ENV['MAILER_PORT'];
-        $mail->Host       = $_ENV['MAILER_HOST']; 
+        $mail->SMTPSecure = $_ENV['MAILER_SMTPSECURE']; // 'tls' or 'ssl'
+        $mail->Port       = (int) $_ENV['MAILER_PORT']; 
 
-        //Recipients
-        $mail->setFrom( $_ENV['MAILER_USERNAME'], 'UNILORIN');
+        // Sender and recipient
+        $mail->setFrom($_ENV['MAILER_USERNAME'], 'UNILORIN Recruitment Portal');
         $mail->addAddress($email);
 
-        //Content
+        // Email content
         $mail->isHTML(true);
         $mail->Subject = 'Password Reset Request';
-        $mail->Body    = "Click the link to reset your password: <a href='https://yourdomain.com/reset-password.php?token=$token&email=$email'>Reset Password</a>";
+
+        $resetLink =  $_ENV['DOMAIN'] . "reset-password.php?token=" . urlencode($token) . "&email=" . urlencode($email);
+        $mail->Body = "
+            <h3>Password Reset Request</h3>
+            <p>We received a request to reset your password.</p>
+            <p>Click the link below to reset it:</p>
+            <a href='{$resetLink}'>Reset Password</a>
+            <p>If you didn’t request this, please ignore this email.</p>
+        ";
+
+        $mail->AltBody = "To reset your password, visit this link: $resetLink";
 
         $mail->send();
         return true;
     } catch (Exception $e) {
-        // Handle error
+        error_log("Mailer Error: " . $mail->ErrorInfo); // log the error for debugging
         return false;
     }
 }

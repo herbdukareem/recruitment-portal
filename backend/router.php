@@ -1,4 +1,8 @@
 <?php
+
+    ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
 use Dotenv\Dotenv;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -98,6 +102,14 @@ try {
         case '/auth/user/signup':
             require __DIR__ . '/api/auth/user/signup.php';
             break;
+
+        case '/auth/user/reset-request':
+            require __DIR__ . '/api/auth/user/resetToken.php';
+            break;
+            
+        case '/auth/user/reset-password':
+            require __DIR__ . '/api/auth/user/resetPassword.php';
+            break;
             
         // Applicant data routes
         case '/user/data':
@@ -127,7 +139,7 @@ try {
         case '/user/status':
             require __DIR__ . '/api/user/status.php';
             break;
-            
+
         // Form submission routes
         case '/submit/bio':
             require __DIR__ . '/api/submit/bio.php';
