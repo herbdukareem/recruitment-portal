@@ -1,8 +1,5 @@
 <?php 
-    // ini_set('display_errors', 1);
-    // ini_set('display_startup_errors', 1);
-    // error_reporting(E_ALL);
-
+  
     require_once __DIR__ . '/../../vendor/autoload.php';
 
 	use Dotenv\Dotenv;
@@ -12,7 +9,7 @@
 
     $display = $_GET['display'];
     
-    if (in_array($display, ['login', 'signup', 'forget_password'])) {
+    if (in_array($display, ['login', 'signup', 'forget_password', 'reset_password'])) {
         // Dynamically inject the JavaScript for each section
         echo '
             <script>
@@ -20,11 +17,13 @@
                     var logIn = document.getElementById("login_section");
                     var forgotPass = document.getElementById("forgot_password_section");
                     var signUp = document.getElementById("signup_section");
+                    var passwordReset = document.getElementById("password_reset_section");
                     
                     // Hide all sections initially
                     logIn.style.display = "none";
                     forgotPass.style.display = "none";
                     signUp.style.display = "none";
+                    passwordReset.style.display = "none";
     
                     // Show the relevant section based on the "display" parameter
                     if ("' . $display . '" === "login") {
@@ -33,6 +32,8 @@
                         signUp.style.display = "block";
                     } else if ("' . $display . '" === "forget_password") {
                         forgotPass.style.display = "block";
+                    } else if ("' . $display . '" === "reset_password") {
+                        passwordReset.style.display = "block";
                     }
                 });
             </script>
@@ -67,7 +68,7 @@
                 <div id="alert_container"></div>
                 
                 <!-- login  -->
-                <form action="" method='post' id="login_section"  style="display: none;">
+               <form action="" method='post' id="login_section"  style="display: none;">
                     <input type="hidden" name="login" value="1">
                     <b>Login in with <span onclick="loginOptionHandler('lemail')" style="cursor:pointer;color:darkblue;text-decoration:underline;">Email</span> / <span onclick="loginOptionHandler('lnin')" style="cursor:pointer;color:darkblue;text-decoration:underline;">NIN</span></b>
                     <div class="input-set" id="logOption">
@@ -135,17 +136,35 @@
                 <!-- Password -->
                 <form action="" method='post' id="forgot_password_section" style="display: none;">
                     <div class="input-set">
-                        <input type="email" name="email" id="Email" placeholder="Enter your register email">
-                    </div>
-                    <div class="input-set" style="display: none;">
-                        <input type="email" name="password" id="text" placeholder="Enter confirmation code">
+                        <input type="email" name="email" id="resetEmail" placeholder="Enter your register email">
                     </div>
                     <div>
-                        <input type="button" value="Send confirmation code">
-                        <input type="submit" value="Confirm code" style="display: none;">
+                        <input type="submit" value="Send password reset link">
                     </div>
                     <div class="intel-prop">
-                        <a href="#">Resend code</a>
+                        <a href="#"></a>
+                    </div>
+                    <div class="intel-prop">
+                        <a href="auth.php?display=login">
+                            <input type="button" value="Login" id="login-btn" >
+                        </a>
+                    </div>
+                </form>
+                <!-- Password Reset -->
+                <form action="" method='post' id="password_reset_section" style="display: none;">
+                   <div class="input-set">
+                        <input type="password" name="password"  id="reset_password" placeholder="Password">
+                        <svg id="hide-spass" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 14 14"><g fill="none" stroke="var(--main-bg)" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5.5H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1m-.5 0V4a3.5 3.5 0 1 0-7 0v1.5"/><path d="M7 10a.5.5 0 1 0 0-1a.5.5 0 0 0 0 1"/></g></svg>
+                        <svg id="show-spass" style="visibility:hidden;" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="-5 -2 24 24"><path fill="var(--main-bg)" d="M12 5h-2a3 3 0 1 0-6 0v5h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2V5a5 5 0 1 1 10 0M7 17a2 2 0 1 0 0-4a2 2 0 0 0 0 4"/></svg>
+                    
+                    </div>
+                    <div class="input-set">
+                        <input type="password" name="confirm_password"  id="reset_confirm_password" placeholder="Confirm Password">
+                        <svg id="hide-spass-sec" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 14 14"><g fill="none" stroke="var(--main-bg)" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5.5H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1m-.5 0V4a3.5 3.5 0 1 0-7 0v1.5"/><path d="M7 10a.5.5 0 1 0 0-1a.5.5 0 0 0 0 1"/></g></svg>
+                        <svg id="show-spass-sec" style="visibility:hidden;" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="-5 -2 24 24"><path fill="var(--main-bg)" d="M12 5h-2a3 3 0 1 0-6 0v5h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2V5a5 5 0 1 1 10 0M7 17a2 2 0 1 0 0-4a2 2 0 0 0 0 4"/></svg>
+                    </div>
+                    <div>
+                        <input type="submit" value="Reset Password">
                     </div>
                     <div class="intel-prop">
                         <a href="auth.php?display=login">

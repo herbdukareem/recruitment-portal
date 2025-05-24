@@ -1,7 +1,4 @@
 <?php
-/**
- * Authentication helper functions
- */
 
  function authenticateUser() {
     if (
@@ -34,18 +31,6 @@ function validateUserAccess($pdo, $user_id) {
     
     return true;
 }
-
-// function authenticateAdmin() {
-//     if (session_status() === PHP_SESSION_NONE) {
-//         session_start();
-//     }
-
-//     if (empty($_SESSION['admin']) || empty($_SESSION['admin']['logged_in'])) {
-//         http_response_code(401);
-//         echo json_encode(['error' => 'Unauthorized']);
-//         exit;
-//     }
-// }
 
 function isAdminLoggedIn() {
     if (session_status() === PHP_SESSION_NONE) {

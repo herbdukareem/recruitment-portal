@@ -1,3 +1,22 @@
+// Email Validator
+const validateHandler = (key, message) => {
+        let emailValue = key.value.trim();
+
+        if (emailValue === '') {
+            showAlert('alert_container', 'Email is required. Please enter your email.', 'danger');
+            return false
+        }
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(emailValue)) {
+            showAlert('alert_container', 'Please enter a valid email address.', 'danger');
+            return false
+        }
+
+        return true;
+    };
+
+// Login Script
 document.getElementById('login_section').addEventListener('submit', async (e) => {
     e.preventDefault();
     const emailInput = document.getElementById('lemail');
@@ -54,12 +73,14 @@ document.getElementById('login_section').addEventListener('submit', async (e) =>
     } catch (error) {
         showAlert('alert_container', 'Something went wrong', 'danger');
     }
+
 });
 
 function getCsrfToken() {
     return document.querySelector('meta[name="user-token"]').getAttribute('content');
 }
 
+// Sign Up Script
 document.getElementById('signup_section').addEventListener('submit', async (e) => {
     e.preventDefault();
     let firstname =  document.getElementById('sfname');
@@ -106,5 +127,110 @@ document.getElementById('signup_section').addEventListener('submit', async (e) =
         }
     } catch (error) {
         showAlert('alert_container', 'Something went wrong', 'danger');
+    }
+});
+
+// Forgot Password Script
+document.getElementById('forgot_password_section').addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const email  = document.getElementById('resetEmail');
+    let emailValue = email.value.trim();
+
+
+    try {
+        if (emailValue === '') {
+            showAlert('alert_container', 'Email is required. Please enter your email.', 'danger');
+            return false
+        }
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(emailValue)) {
+            showAlert('alert_container', 'Please enter a valid email address.', 'danger');
+            return false
+        }
+        const response = await fetch(`${API_URI}auth/user/reset-request`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(email.value)
+        });
+        const data = response.json()
+        if(data.success){
+            return showAlert('alert_container', 'Password resent link sent successfully', 'success');
+        } else {
+            return showAlert('alert_container', 'Unable to send password reset link.', 'danger');
+        }
+    } catch (error) {
+        showAlert('alert_container', 'Something went wrong', 'danger');
+    };
+})
+
+// Helper to get query params from URL
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+// Password Reset Script
+document.getElementById('password_reset_section').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const password = document.getElementById('reset_password');
+    const confirmPassword = document.getElementById('reset_confirm_password');
+
+    const passwordValue = password.value.trim();
+    const confirmPasswordValue = confirmPassword.value.trim();
+
+    // Extract token and email from URL
+    const token = getQueryParam('token');
+    const email = getQueryParam('email');
+
+    // Basic validation
+    if (!passwordValue || !confirmPasswordValue) {
+        showAlert('alert_container', 'Both password fields are required.', 'danger');
+        return;
+    }
+    if (passwordValue.length < 6) {
+        showAlert('alert_container', 'Password must be at least 6 characters.', 'danger');
+        return;
+    }
+    if (passwordValue !== confirmPasswordValue) {
+        showAlert('alert_container', 'Passwords do not match.', 'danger');
+        return;
+    }
+    if (!token || !email) {
+        showAlert('alert_container', 'Invalid or missing reset token/email.', 'danger');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URI}auth/user/reset-password`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                password: passwordValue,
+                confirm_password: confirmPasswordValue,
+                token: token,
+                email: email
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            showAlert('alert_container', 'Password reset successful!', 'success');
+            setTimeout(() => {
+                password.value = '';
+                confirmPassword.value = '';
+                window.location.href = './Auth/auth?display=login';
+            }, 1500);
+        } else {
+            showAlert('alert_container', data.error || 'Password reset failed.', 'danger');
+        }
+    } catch (error) {
+        showAlert('alert_container', 'Something went wrong. Please try again.', 'danger');
     }
 });

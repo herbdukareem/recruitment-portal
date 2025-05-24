@@ -9,13 +9,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-/**
- * Send password reset email
- *
- * @param string $email Recipient's email address
- * @param string $token Password reset token
- * @return bool True if email was sent, false otherwise
- */
+
 function sendResetEmail($email, $token) {
     $mail = new PHPMailer(true);
 
@@ -37,7 +31,7 @@ function sendResetEmail($email, $token) {
         $mail->isHTML(true);
         $mail->Subject = 'Password Reset Request';
 
-        $resetLink =  $_ENV['DOMAIN'] . "reset-password.php?token=" . urlencode($token) . "&email=" . urlencode($email);
+        $resetLink =  $_ENV['DOMAIN'] . "reset-password.php?display=reset_password&token=" . urlencode($token) . "&email=" . urlencode($email);
         $mail->Body = "
             <h3>Password Reset Request</h3>
             <p>We received a request to reset your password.</p>
@@ -51,7 +45,10 @@ function sendResetEmail($email, $token) {
         $mail->send();
         return true;
     } catch (Exception $e) {
-        error_log("Mailer Error: " . $mail->ErrorInfo); // log the error for debugging
+        error_log("Mailer Error: " . $mail->ErrorInfo); // log error
+        echo json_encode([
+            'message' => $mail->ErrorInfo,  
+        ]);
         return false;
     }
 }

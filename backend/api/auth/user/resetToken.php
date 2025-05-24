@@ -11,18 +11,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+$input = json_decode(file_get_contents('php://input'), true);
+
 try {
     $pdo->beginTransaction();
 
-    $input = $_POST;
-    $email = $input['email'] ?? '';
+    $email = $input['email'];
 
     // Validate email
-    // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    //     http_response_code(400);
-    //     echo json_encode(['success' => false, 'message' => 'Invalid email address']);
-    //     exit;
-    // }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Invalid email address']);
+        exit;
+    }
 
     // Check if user exists
     $checkUserEmail = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
@@ -36,12 +37,12 @@ try {
     }
 
     // Generate token and expiry time (5 minutes)
-    $token = generateNewString(32);
+    $token = generateNewString();
     $tokenExpire = date('Y-m-d H:i:s', time() + (5 * 60));
 
-    // Send the reset email
-    if (!sendResetEmail($email, $token)) {
-        throw new Exception('Failed to send reset email');
+    $mailer = sendResetEmail($email, $token);
+    if (!$mailer) {
+        throw new Exception("Failed to send reset email");
     }
 
     // Store token and expiry in DB
@@ -63,12 +64,12 @@ try {
         'message' => 'Password reset email sent'
     ]);
 
-} catch (\Throwable $th) {
+} catch (Exception $e) {
     $pdo->rollBack();
     http_response_code(500);
     echo json_encode([
         'success' => false,
         'message' => 'Something went wrong',
-        'error' => $th->getMessage()
+        'error' => $e
     ]);
 }
