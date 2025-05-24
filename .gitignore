@@ -5,4 +5,4 @@
 /frontend/vendor/
 /frontend/.env
 /frontend/Admin_Dashboard/assets/modules/
-.env1
+/.env
