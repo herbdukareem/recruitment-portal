@@ -272,7 +272,7 @@
                                     </button>
                                 <?php } ?>
                             </div>
-                            <button class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">
+                            <button class="mt-6 bg-[#00044B] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition" onClick="applyhereHandler()">
                                 Apply Now
                             </button>
                         </div>
